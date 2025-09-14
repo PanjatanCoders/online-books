@@ -1,0 +1,210 @@
+/* ===== Modern Footer ===== */
+.modern-footer {
+  position: relative;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: white;
+  padding: 20px 20px 20px;
+  text-align: center;
+  overflow: hidden;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+/* Align main footer sections horizontally */
+.footer-main-sections {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin: 0 auto 24px auto;
+  width: 100%;
+  max-width: 1000px;
+}
+
+/* Glitch Text Effect */
+.footer-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  animation: glitch 2s infinite;
+}
+.footer-title::before,
+.footer-title::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  width: 100%;
+  color: #f0f;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+.footer-title::before {
+  animation: glitchTop 2s infinite;
+  color: #0ff;
+}
+.footer-title::after {
+  animation: glitchBottom 2s infinite;
+  color: #f00;
+}
+
+@keyframes glitchTop {
+  0% { clip: rect(0, 9999px, 0, 0); }
+  10% { clip: rect(0, 9999px, 20px, 0); transform: translate(-2px, -2px); }
+  50% { clip: rect(0, 9999px, 0, 0); }
+}
+@keyframes glitchBottom {
+  0% { clip: rect(0, 9999px, 0, 0); }
+  10% { clip: rect(10px, 9999px, 40px, 0); transform: translate(2px, 2px); }
+  50% { clip: rect(0, 9999px, 0, 0); }
+}
+@keyframes glitch {
+  2% { transform: skew(2deg); }
+  4% { transform: skew(-2deg); }
+  6% { transform: skew(2deg); }
+  8% { transform: skew(0deg); }
+  100% { transform: skew(0deg); }
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 0 auto 20px auto;
+  color: #fff;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  text-align: left;
+}
+.glass-card:hover {
+  transform: scale(1.05);
+  border-color: #667eea;
+}
+
+.footer-contacts,
+.footer-stats,
+.creator-card {
+  flex: 1 1 250px;
+  min-width: 220px;
+  max-width: 320px;
+  margin: 0;
+}
+
+/* Contact List */
+.footer-contacts ul {
+  list-style: none;
+  padding: 0;
+}
+.footer-contacts li {
+  margin: 12px 0;
+  transition: transform 0.3s ease;
+}
+.footer-contacts a {
+  color: #fff;
+  text-decoration: none;
+}
+.footer-contacts li:hover {
+  transform: translateX(10px);
+  color: #00e5ff;
+}
+
+/* Stats Section */
+.footer-stats {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin: 0px 0;
+}
+.stat-card {
+  padding: 15px 25px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.3);
+  transition: transform 0.3s ease;
+}
+.stat-card:hover {
+  transform: scale(1.1);
+  border-image: linear-gradient(45deg, #667eea, #764ba2) 1;
+}
+
+/* Creator Card */
+.creator-card .avatar {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+.creator-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+.status-dot {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 16px;
+  height: 16px;
+  background: #4caf50;
+  border-radius: 50%;
+  border: 2px solid #000;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7); }
+  70% { box-shadow: 0 0 0 20px rgba(102, 126, 234, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(102, 126, 234, 0); }
+}
+
+/* Waves */
+.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 120px;
+  background: url('https://i.ibb.co/9nbL7JQ/wave.png') repeat-x;
+  background-size: cover;
+  animation: wave 10s linear infinite;
+  opacity: 0.7;
+}
+.wave2 {
+  bottom: 15px;
+  animation: wave 15s linear reverse infinite;
+  opacity: 0.5;
+}
+@keyframes wave {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  margin-top: 40px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 900px) {
+  .footer-main-sections {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+  .footer-contacts,
+  .footer-stats,
+  .creator-card {
+    max-width: 98vw;
+    min-width: 0;
+  }
+  .glass-card {
+    max-width: 90vw;
+    text-align: left;
+  }
+}
