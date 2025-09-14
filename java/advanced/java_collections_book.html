@@ -1,0 +1,2807 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Collections Framework - Complete Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .book-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
+        }
+
+        .cover-page {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 60px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            page-break-after: always;
+        }
+
+        .cover-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .cover-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cover-author {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-top: auto;
+        }
+
+        .content {
+            padding: 60px;
+        }
+
+        .chapter {
+            margin-bottom: 80px;
+            page-break-before: always;
+        }
+
+        .chapter:first-child {
+            page-break-before: auto;
+        }
+
+        .chapter-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid #667eea;
+            position: relative;
+        }
+
+        .chapter-title::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: #764ba2;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #764ba2;
+            margin: 40px 0 20px 0;
+            padding-left: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .subsection-title {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #34495e;
+            margin: 30px 0 15px 0;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: 'Java';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: #667eea;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .code-block pre {
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .note-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .note-box .note-title {
+            font-weight: 600;
+            color: #c0392b;
+            margin-bottom: 10px;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #27ae60;
+        }
+
+        .tip-box .tip-title {
+            font-weight: 600;
+            color: #27ae60;
+            margin-bottom: 10px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .toc {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+
+        .toc-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .toc-item {
+            padding: 8px 0;
+            border-bottom: 1px dotted #bdc3c7;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toc-item:last-child {
+            border-bottom: none;
+        }
+
+        .toc-chapter {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .toc-page {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .book-container {
+                box-shadow: none;
+            }
+
+            .chapter {
+                page-break-before: always;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="book-container">
+        <!-- Cover Page -->
+        <div class="cover-page">
+            <h1 class="cover-title">Java Collections Framework</h1>
+            <p class="cover-subtitle">Complete Guide from Basic to Advanced</p>
+            <div style="margin: 40px 0;">
+                <div style="width: 100px; height: 2px; background: rgba(255,255,255,0.5); margin: 0 auto;"></div>
+            </div>
+            <p class="cover-author">by Mohammad S Hossain</p>
+            <div style="margin: 20px 0; font-size: 1rem; opacity: 0.8;">
+                Comprehensive Developer's Reference
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Table of Contents -->
+            <div class="toc">
+                <h2 class="toc-title">Table of Contents</h2>
+                <div class="toc-item">
+                    <span class="toc-chapter">1. Introduction to Java Collections</span>
+                    <span class="toc-page">3</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-chapter">2. Collection Interface Hierarchy</span>
+                    <span class="toc-page">5</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-chapter">3. List Interface & Implementations</span>
+                    <span class="toc-page">7</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-chapter">4. Set Interface & Implementations</span>
+                    <span class="toc-page">12</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-chapter">5. Map Interface & Implementations</span>
+                    <span class="toc-page">16</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-chapter">6. Queue & Deque Interfaces</span>
+                    <span class="toc-page">22</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-chapter">7. Advanced Collections Operations</span>
+                    <span class="toc-page">26</span>
+                </div>
+                <div class="toc-item">
+                    <span class="toc-chapter">8. Performance & Best Practices</span>
+                    <span class="toc-page">30</span>
+                </div>
+            </div>
+
+            <!-- Chapter 1: Introduction -->
+            <div class="chapter">
+                <h1 class="chapter-title">1. Introduction to Java Collections</h1>
+
+                <p>The <span class="highlight">Java Collections Framework</span> is a unified architecture for
+                    representing and manipulating collections of objects. It provides a set of interfaces,
+                    implementations, and algorithms that enable efficient data manipulation.</p>
+
+                <h2 class="section-title">What are Collections?</h2>
+                <p>A collection is simply an object that groups multiple elements into a single unit. Collections are
+                    used to store, retrieve, manipulate, and communicate aggregate data.</p>
+
+                <h3 class="subsection-title">Benefits of Collections Framework</h3>
+                <ul style="margin: 20px 0; padding-left: 30px;">
+                    <li><strong>Reduces programming effort</strong> - Provides ready-to-use data structures</li>
+                    <li><strong>Increases performance</strong> - High-performance implementations</li>
+                    <li><strong>Interoperability</strong> - Common interface for all collections</li>
+                    <li><strong>Reduces learning effort</strong> - Consistent API design</li>
+                </ul>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Pro Tip</div>
+                    <p>Always prefer collection interfaces over concrete classes when declaring variables. This makes
+                        your code more flexible and easier to maintain.</p>
+                </div>
+
+                <h2 class="section-title">Core Interfaces</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Interface</th>
+                                <th>Description</th>
+                                <th>Key Features</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Collection</td>
+                                <td>Root interface</td>
+                                <td>Basic operations: add, remove, contains</td>
+                            </tr>
+                            <tr>
+                                <td>List</td>
+                                <td>Ordered collection</td>
+                                <td>Allows duplicates, indexed access</td>
+                            </tr>
+                            <tr>
+                                <td>Set</td>
+                                <td>No duplicates</td>
+                                <td>Mathematical set operations</td>
+                            </tr>
+                            <tr>
+                                <td>Map</td>
+                                <td>Key-value pairs</td>
+                                <td>Unique keys, value mapping</td>
+                            </tr>
+                            <tr>
+                                <td>Queue</td>
+                                <td>Processing order</td>
+                                <td>FIFO operations</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="section-title">Basic Example</h2>
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class CollectionsIntro {
+    public static void main(String[] args) {
+        // Creating different types of collections
+        List&lt;String&gt; list = new ArrayList&lt;&gt;();
+        Set&lt;Integer&gt; set = new HashSet&lt;&gt;();
+        Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
+        Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
+        
+        // Basic operations
+        list.add("Java");
+        list.add("Collections");
+        
+        set.add(1);
+        set.add(2);
+        set.add(1); // Duplicate - won't be added
+        
+        map.put("Java", 25);
+        map.put("Python", 30);
+        
+        queue.offer("First");
+        queue.offer("Second");
+        
+        System.out.println("List: " + list);        // [Java, Collections]
+        System.out.println("Set: " + set);          // [1, 2]
+        System.out.println("Map: " + map);          // {Java=25, Python=30}
+        System.out.println("Queue: " + queue);      // [First, Second]
+    }
+}
+                    </pre>
+                </div>
+            </div>
+
+            <!-- Chapter 2: Collection Interface Hierarchy -->
+            <div class="chapter">
+                <h1 class="chapter-title">2. Collection Interface Hierarchy</h1>
+
+                <p>Understanding the hierarchy is crucial for choosing the right collection type for your specific use
+                    case.</p>
+
+                <h2 class="section-title">The Collection Hierarchy</h2>
+
+                <div
+                    style="background: #f8f9fa; border-radius: 8px; padding: 30px; margin: 20px 0; text-align: center;">
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; line-height: 1.8;">
+                        <div style="color: #667eea; font-weight: 600;">Iterable&lt;T&gt;</div>
+                        <div style="margin: 10px 0;">│</div>
+                        <div style="color: #764ba2; font-weight: 600;">Collection&lt;E&gt;</div>
+                        <div style="margin: 10px 0;">├── List&lt;E&gt;</div>
+                        <div style="margin-left: 20px;">├── ArrayList</div>
+                        <div style="margin-left: 20px;">├── LinkedList</div>
+                        <div style="margin-left: 20px;">└── Vector</div>
+                        <div style="margin: 10px 0;">├── Set&lt;E&gt;</div>
+                        <div style="margin-left: 20px;">├── HashSet</div>
+                        <div style="margin-left: 20px;">├── LinkedHashSet</div>
+                        <div style="margin-left: 20px;">└── TreeSet</div>
+                        <div style="margin: 10px 0;">└── Queue&lt;E&gt;</div>
+                        <div style="margin-left: 20px;">├── PriorityQueue</div>
+                        <div style="margin-left: 20px;">├── ArrayDeque</div>
+                        <div style="margin-left: 20px;">└── LinkedList</div>
+                    </div>
+                </div>
+
+                <h2 class="section-title">Collection Interface Methods</h2>
+                <div class="code-block">
+                    <pre>
+public interface Collection&lt;E&gt; extends Iterable&lt;E&gt; {
+    // Basic Operations
+    int size();
+    boolean isEmpty();
+    boolean contains(Object o);
+    boolean add(E e);
+    boolean remove(Object o);
+    Iterator&lt;E&gt; iterator();
+    
+    // Bulk Operations
+    boolean containsAll(Collection&lt;?&gt; c);
+    boolean addAll(Collection&lt;? extends E&gt; c);
+    boolean removeAll(Collection&lt;?&gt; c);
+    boolean retainAll(Collection&lt;?&gt; c);
+    void clear();
+    
+    // Array Operations
+    Object[] toArray();
+    &lt;T&gt; T[] toArray(T[] a);
+    
+    // Java 8+ Stream Operations
+    default Stream&lt;E&gt; stream() { ... }
+    default Stream&lt;E&gt; parallelStream() { ... }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">Common Collection Operations</h2>
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class CollectionOperations {
+    public static void main(String[] args) {
+        List&lt;String&gt; languages = new ArrayList&lt;&gt;();
+        
+        // Adding elements
+        languages.add("Java");
+        languages.add("Python");
+        languages.add("JavaScript");
+        
+        // Size and emptiness
+        System.out.println("Size: " + languages.size()); // 3
+        System.out.println("Is Empty: " + languages.isEmpty()); // false
+        
+        // Contains check
+        System.out.println("Contains Java: " + languages.contains("Java")); // true
+        
+        // Iteration
+        System.out.println("\nIterating with for-each:");
+        for (String lang : languages) {
+            System.out.println(lang);
+        }
+        
+        // Iterator
+        System.out.println("\nIterating with Iterator:");
+        Iterator&lt;String&gt; it = languages.iterator();
+        while (it.hasNext()) {
+            String lang = it.next();
+            System.out.println(lang);
+            // Safe removal during iteration
+            if ("Python".equals(lang)) {
+                it.remove();
+            }
+        }
+        
+        System.out.println("After removal: " + languages); // [Java, JavaScript]
+        
+        // Bulk operations
+        List&lt;String&gt; newLanguages = Arrays.asList("C++", "Go", "Rust");
+        languages.addAll(newLanguages);
+        System.out.println("After bulk add: " + languages);
+        
+        // Convert to array
+        String[] langArray = languages.toArray(new String[0]);
+        System.out.println("Array: " + Arrays.toString(langArray));
+    }
+}
+                    </pre>
+                </div>
+
+                <div class="note-box">
+                    <div class="note-title">⚠️ Important</div>
+                    <p>When iterating over a collection and modifying it, always use Iterator.remove() instead of
+                        Collection.remove() to avoid ConcurrentModificationException.</p>
+                </div>
+            </div>
+
+            <!-- Chapter 3: List Interface -->
+            <div class="chapter">
+                <h1 class="chapter-title">3. List Interface & Implementations</h1>
+
+                <p>The <span class="highlight">List interface</span> extends Collection and represents an ordered
+                    collection (sequence) that can contain duplicate elements.</p>
+
+                <h2 class="section-title">Key Characteristics</h2>
+                <ul style="margin: 20px 0; padding-left: 30px;">
+                    <li>Maintains insertion order</li>
+                    <li>Allows duplicate elements</li>
+                    <li>Provides positional access (indexed)</li>
+                    <li>Supports list-specific operations</li>
+                </ul>
+
+                <h2 class="section-title">ArrayList</h2>
+                <p>Dynamic array implementation that provides fast random access and efficient iteration.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class ArrayListExample {
+    public static void main(String[] args) {
+        // Creation with initial capacity
+        List&lt;String&gt; fruits = new ArrayList&lt;&gt;(10);
+        
+        // Adding elements
+        fruits.add("Apple");
+        fruits.add("Banana");
+        fruits.add("Orange");
+        fruits.add(1, "Mango"); // Insert at index 1
+        
+        System.out.println("Fruits: " + fruits); // [Apple, Mango, Banana, Orange]
+        
+        // Accessing elements
+        String firstFruit = fruits.get(0);
+        System.out.println("First fruit: " + firstFruit); // Apple
+        
+        // Modifying elements
+        fruits.set(2, "Grapes");
+        System.out.println("After modification: " + fruits); // [Apple, Mango, Grapes, Orange]
+        
+        // Finding elements
+        int index = fruits.indexOf("Mango");
+        System.out.println("Index of Mango: " + index); // 1
+        
+        // Removing elements
+        fruits.remove(0); // Remove by index
+        fruits.remove("Orange"); // Remove by value
+        System.out.println("After removal: " + fruits); // [Mango, Grapes]
+        
+        // Sublist operations
+        List&lt;String&gt; moreFruits = Arrays.asList("Pineapple", "Watermelon", "Strawberry");
+        fruits.addAll(moreFruits);
+        
+        List&lt;String&gt; subList = fruits.subList(1, 3);
+        System.out.println("Sublist: " + subList); // [Grapes, Pineapple]
+        
+        // Sorting
+        Collections.sort(fruits);
+        System.out.println("Sorted: " + fruits);
+        
+        // Converting to array
+        String[] fruitArray = fruits.toArray(new String[0]);
+        System.out.println("Array: " + Arrays.toString(fruitArray));
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">LinkedList</h2>
+                <p>Doubly-linked list implementation that provides efficient insertion and deletion at both ends.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class LinkedListExample {
+    public static void main(String[] args) {
+        LinkedList&lt;Integer&gt; numbers = new LinkedList&lt;&gt;();
+        
+        // Adding elements
+        numbers.add(10);
+        numbers.add(20);
+        numbers.add(30);
+        
+        // LinkedList specific methods
+        numbers.addFirst(5);  // Add to beginning
+        numbers.addLast(40);  // Add to end
+        
+        System.out.println("Numbers: " + numbers); // [5, 10, 20, 30, 40]
+        
+        // Accessing first and last elements
+        System.out.println("First: " + numbers.getFirst()); // 5
+        System.out.println("Last: " + numbers.getLast());   // 40
+        
+        // Peek operations (don't remove)
+        System.out.println("Peek First: " + numbers.peekFirst()); // 5
+        System.out.println("Peek Last: " + numbers.peekLast());   // 40
+        
+        // Poll operations (remove and return)
+        Integer first = numbers.pollFirst();
+        Integer last = numbers.pollLast();
+        System.out.println("Removed first: " + first + ", last: " + last); // 5, 40
+        System.out.println("After polling: " + numbers); // [10, 20, 30]
+        
+        // Using as a Stack (LIFO)
+        LinkedList&lt;String&gt; stack = new LinkedList&lt;&gt;();
+        stack.push("First");
+        stack.push("Second");
+        stack.push("Third");
+        
+        System.out.println("Stack: " + stack); // [Third, Second, First]
+        System.out.println("Pop: " + stack.pop()); // Third
+        
+        // Using as a Queue (FIFO)
+        LinkedList&lt;String&gt; queue = new LinkedList&lt;&gt;();
+        queue.offer("A");
+        queue.offer("B");
+        queue.offer("C");
+        
+        System.out.println("Queue: " + queue); // [A, B, C]
+        System.out.println("Poll: " + queue.poll()); // A
+        System.out.println("After poll: " + queue); // [B, C]
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">Performance Comparison</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operation</th>
+                                <th>ArrayList</th>
+                                <th>LinkedList</th>
+                                <th>Best Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Random Access (get)</td>
+                                <td>O(1)</td>
+                                <td>O(n)</td>
+                                <td>ArrayList for frequent access</td>
+                            </tr>
+                            <tr>
+                                <td>Insert at beginning</td>
+                                <td>O(n)</td>
+                                <td>O(1)</td>
+                                <td>LinkedList for frequent insertions</td>
+                            </tr>
+                            <tr>
+                                <td>Insert at end</td>
+                                <td>O(1) amortized</td>
+                                <td>O(1)</td>
+                                <td>Both are efficient</td>
+                            </tr>
+                            <tr>
+                                <td>Insert at middle</td>
+                                <td>O(n)</td>
+                                <td>O(n)</td>
+                                <td>Depends on access pattern</td>
+                            </tr>
+                            <tr>
+                                <td>Memory overhead</td>
+                                <td>Low</td>
+                                <td>High</td>
+                                <td>ArrayList for memory efficiency</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Choosing Between ArrayList and LinkedList</div>
+                    <p><strong>Use ArrayList when:</strong> You need frequent random access, have more reads than
+                        writes, or memory is a concern.</p>
+                    <p><strong>Use LinkedList when:</strong> You frequently insert/delete at the beginning/end, use it
+                        as a stack/queue, or have unpredictable insertion patterns.</p>
+                </div>
+
+                <h2 class="section-title">Advanced List Operations</h2>
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class AdvancedListOperations {
+    public static void main(String[] args) {
+        List&lt;Integer&gt; numbers = new ArrayList&lt;&gt;(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        
+        // Filtering with streams
+        List&lt;Integer&gt; evenNumbers = numbers.stream()
+            .filter(n -&gt; n % 2 == 0)
+            .collect(Collectors.toList());
+        System.out.println("Even numbers: " + evenNumbers);
+        
+        // Mapping
+        List&lt;String&gt; stringNumbers = numbers.stream()
+            .map(String::valueOf)
+            .collect(Collectors.toList());
+        System.out.println("String numbers: " + stringNumbers);
+        
+        // Finding elements
+        Optional&lt;Integer&gt; firstEven = numbers.stream()
+            .filter(n -&gt; n % 2 == 0)
+            .findFirst();
+        System.out.println("First even: " + firstEven.orElse(-1));
+        
+        // Reducing
+        int sum = numbers.stream()
+            .reduce(0, Integer::sum);
+        System.out.println("Sum: " + sum);
+        
+        // Partitioning
+        Map&lt;Boolean, List&lt;Integer&gt;&gt; partitioned = numbers.stream()
+            .collect(Collectors.partitioningBy(n -&gt; n % 2 == 0));
+        System.out.println("Even: " + partitioned.get(true));
+        System.out.println("Odd: " + partitioned.get(false));
+        
+        // Custom sorting
+        List&lt;String&gt; words = new ArrayList&lt;&gt;(Arrays.asList("apple", "banana", "cherry", "date"));
+        words.sort((a, b) -&gt; Integer.compare(a.length(), b.length()));
+        System.out.println("Sorted by length: " + words);
+        
+        // Reverse sorting
+        words.sort(Comparator.comparing(String::length).reversed());
+        System.out.println("Reverse sorted by length: " + words);
+    }
+}
+                    </pre>
+                </div>
+            </div>
+
+            <!-- Chapter 4: Set Interface -->
+            <div class="chapter">
+                <h1 class="chapter-title">4. Set Interface & Implementations</h1>
+
+                <p>The <span class="highlight">Set interface</span> models the mathematical set abstraction - a
+                    collection that contains no duplicate elements.</p>
+
+                <h2 class="section-title">Key Characteristics</h2>
+                <ul style="margin: 20px 0; padding-left: 30px;">
+                    <li>No duplicate elements allowed</li>
+                    <li>At most one null element</li>
+                    <li>Mathematical set operations</li>
+                    <li>Various ordering guarantees depending on implementation</li>
+                </ul>
+
+                <h2 class="section-title">HashSet</h2>
+                <p>Hash table implementation offering constant-time performance for basic operations.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class HashSetExample {
+    public static void main(String[] args) {
+        Set&lt;String&gt; colors = new HashSet&lt;&gt;();
+        
+        // Adding elements
+        colors.add("Red");
+        colors.add("Green");
+        colors.add("Blue");
+        colors.add("Red"); // Duplicate - won't be added
+        
+        System.out.println("Colors: " + colors); // [Red, Green, Blue] (order not guaranteed)
+        System.out.println("Size: " + colors.size()); // 3
+        
+        // Checking membership
+        System.out.println("Contains Red: " + colors.contains("Red")); // true
+        System.out.println("Contains Yellow: " + colors.contains("Yellow")); // false
+        
+        // Set operations
+        Set&lt;String&gt; moreColors = new HashSet&lt;&gt;(Arrays.asList("Blue", "Yellow", "Purple"));
+        
+        // Union (addAll)
+        Set&lt;String&gt; allColors = new HashSet&lt;&gt;(colors);
+        allColors.addAll(moreColors);
+        System.out.println("Union: " + allColors); // [Red, Green, Blue, Yellow, Purple]
+        
+        // Intersection (retainAll)
+        Set&lt;String&gt; intersection = new HashSet&lt;&gt;(colors);
+        intersection.retainAll(moreColors);
+        System.out.println("Intersection: " + intersection); // [Blue]
+        
+        // Difference (removeAll)
+        Set&lt;String&gt; difference = new HashSet&lt;&gt;(colors);
+        difference.removeAll(moreColors);
+        System.out.println("Difference: " + difference); // [Red, Green]
+        
+        // Iteration
+        System.out.println("Iterating over colors:");
+        for (String color : colors) {
+            System.out.println("Color: " + color);
+        }
+        
+        // Using streams
+        colors.stream()
+            .filter(c -&gt; c.startsWith("R"))
+            .forEach(System.out::println); // Red
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">LinkedHashSet</h2>
+                <p>Hash table with linked list implementation that maintains insertion order.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class LinkedHashSetExample {
+    public static void main(String[] args) {
+        Set&lt;Integer&gt; numbers = new LinkedHashSet&lt;&gt;();
+        
+        // Adding elements in specific order
+        numbers.add(5);
+        numbers.add(2);
+        numbers.add(8);
+        numbers.add(1);
+        numbers.add(5); // Duplicate - won't be added
+        
+        System.out.println("LinkedHashSet: " + numbers); // [5, 2, 8, 1] - maintains insertion order
+        
+        // Comparison with HashSet
+        Set&lt;Integer&gt; hashSet = new HashSet&lt;&gt;(numbers);
+        System.out.println("HashSet: " + hashSet); // Order not guaranteed
+        
+        // Useful for maintaining order while ensuring uniqueness
+        List&lt;String&gt; duplicateNames = Arrays.asList("John", "Alice", "Bob", "Alice", "John", "Charlie");
+        Set&lt;String&gt; uniqueNames = new LinkedHashSet&lt;&gt;(duplicateNames);
+        System.out.println("Unique names in order: " + uniqueNames); // [John, Alice, Bob, Charlie]
+        
+        // Performance characteristics
+        long startTime = System.nanoTime();
+        for (int i = 0; i < 10000; i++) {
+            numbers.contains(i);
+        }
+        long endTime = System.nanoTime();
+        System.out.println("LinkedHashSet lookup time: " + (endTime - startTime) + " ns");
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">TreeSet</h2>
+                <p>NavigableSet implementation based on a Red-Black tree that keeps elements in sorted order.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class TreeSetExample {
+    public static void main(String[] args) {
+        TreeSet&lt;Integer&gt; numbers = new TreeSet&lt;&gt;();
+        
+        // Adding elements
+        numbers.add(5);
+        numbers.add(2);
+        numbers.add(8);
+        numbers.add(1);
+        numbers.add(9);
+        numbers.add(3);
+        
+        System.out.println("TreeSet: " + numbers); // [1, 2, 3, 5, 8, 9] - automatically sorted
+        
+        // NavigableSet operations
+        System.out.println("First (smallest): " + numbers.first()); // 1
+        System.out.println("Last (largest): " + numbers.last()); // 9
+        
+        // Range operations
+        System.out.println("Lower than 5: " + numbers.lower(5)); // 3
+        System.out.println("Floor of 4: " + numbers.floor(4)); // 3
+        System.out.println("Ceiling of 4: " + numbers.ceiling(4)); // 5
+        System.out.println("Higher than 5: " + numbers.higher(5)); // 8
+        
+        // Subset operations
+        SortedSet&lt;Integer&gt; subset = numbers.subSet(3, 8); // 3 (inclusive) to 8 (exclusive)
+        System.out.println("Subset [3, 8): " + subset); // [3, 5]
+        
+        SortedSet&lt;Integer&gt; headSet = numbers.headSet(5); // Elements < 5
+        System.out.println("Head set < 5: " + headSet); // [1, 2, 3]
+        
+        SortedSet&lt;Integer&gt; tailSet = numbers.tailSet(5); // Elements >= 5
+        System.out.println("Tail set >= 5: " + tailSet); // [5, 8, 9]
+        
+        // Descending operations
+        NavigableSet&lt;Integer&gt; descendingSet = numbers.descendingSet();
+        System.out.println("Descending: " + descendingSet); // [9, 8, 5, 3, 2, 1]
+        
+        // Poll operations (remove and return)
+        System.out.println("Poll first: " + numbers.pollFirst()); // 1
+        System.out.println("Poll last: " + numbers.pollLast()); // 9
+        System.out.println("After polling: " + numbers); // [2, 3, 5, 8]
+        
+        // Custom comparator
+        TreeSet&lt;String&gt; words = new TreeSet&lt;&gt;(Comparator.comparing(String::length));
+        words.add("elephant");
+        words.add("cat");
+        words.add("dog");
+        words.add("butterfly");
+        
+        System.out.println("Words by length: " + words); // [cat, dog, elephant, butterfly]
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">Set Implementations Comparison</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>HashSet</th>
+                                <th>LinkedHashSet</th>
+                                <th>TreeSet</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ordering</td>
+                                <td>No guarantee</td>
+                                <td>Insertion order</td>
+                                <td>Natural/Comparator</td>
+                            </tr>
+                            <tr>
+                                <td>Performance (add, remove, contains)</td>
+                                <td>O(1)</td>
+                                <td>O(1)</td>
+                                <td>O(log n)</td>
+                            </tr>
+                            <tr>
+                                <td>Memory overhead</td>
+                                <td>Lowest</td>
+                                <td>Medium</td>
+                                <td>Highest</td>
+                            </tr>
+                            <tr>
+                                <td>Null values</td>
+                                <td>One allowed</td>
+                                <td>One allowed</td>
+                                <td>Not allowed</td>
+                            </tr>
+                            <tr>
+                                <td>Range operations</td>
+                                <td>No</td>
+                                <td>No</td>
+                                <td>Yes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Choosing the Right Set Implementation</div>
+                    <p><strong>HashSet:</strong> Best general-purpose choice for maximum performance</p>
+                    <p><strong>LinkedHashSet:</strong> When you need to maintain insertion order</p>
+                    <p><strong>TreeSet:</strong> When you need sorted elements or range operations</p>
+                </div>
+
+                <h2 class="section-title">Advanced Set Operations</h2>
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class AdvancedSetOperations {
+    public static void main(String[] args) {
+        // Creating sets from collections
+        List&lt;Integer&gt; numbers = Arrays.asList(1, 2, 2, 3, 3, 3, 4, 4, 5);
+        Set&lt;Integer&gt; uniqueNumbers = new HashSet&lt;&gt;(numbers);
+        System.out.println("Unique numbers: " + uniqueNumbers);
+        
+        // Set operations with streams
+        Set&lt;String&gt; set1 = new HashSet&lt;&gt;(Arrays.asList("A", "B", "C", "D"));
+        Set&lt;String&gt; set2 = new HashSet&lt;&gt;(Arrays.asList("C", "D", "E", "F"));
+        
+        // Union using streams
+        Set&lt;String&gt; union = Stream.concat(set1.stream(), set2.stream())
+            .collect(Collectors.toSet());
+        System.out.println("Union: " + union);
+        
+        // Intersection using streams
+        Set&lt;String&gt; intersection = set1.stream()
+            .filter(set2::contains)
+            .collect(Collectors.toSet());
+        System.out.println("Intersection: " + intersection);
+        
+        // Difference using streams
+        Set&lt;String&gt; difference = set1.stream()
+            .filter(s -&gt; !set2.contains(s))
+            .collect(Collectors.toSet());
+        System.out.println("Difference (set1 - set2): " + difference);
+        
+        // Symmetric difference
+        Set&lt;String&gt; symmetricDiff = Stream.concat(
+                set1.stream().filter(s -&gt; !set2.contains(s)),
+                set2.stream().filter(s -&gt; !set1.contains(s))
+            ).collect(Collectors.toSet());
+        System.out.println("Symmetric difference: " + symmetricDiff);
+        
+        // Custom object sets
+        Set&lt;Person&gt; people = new HashSet&lt;&gt;();
+        people.add(new Person("Alice", 30));
+        people.add(new Person("Bob", 25));
+        people.add(new Person("Alice", 30)); // Duplicate based on equals/hashCode
+        
+        System.out.println("People set size: " + people.size()); // 2 if equals/hashCode implemented correctly
+        
+        // Using TreeSet with custom objects
+        Set&lt;Person&gt; sortedPeople = new TreeSet&lt;&gt;(Comparator.comparing(Person::getName));
+        sortedPeople.addAll(people);
+        System.out.println("Sorted people: " + sortedPeople);
+    }
+    
+    static class Person {
+        private String name;
+        private int age;
+        
+        public Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+        
+        public String getName() { return name; }
+        public int getAge() { return age; }
+        
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Person person = (Person) o;
+            return age == person.age && Objects.equals(name, person.name);
+        }
+        
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, age);
+        }
+        
+        @Override
+        public String toString() {
+            return name + "(" + age + ")";
+        }
+    }
+}
+                    </pre>
+                </div>
+            </div>
+
+            <!-- Chapter 5: Map Interface -->
+            <div class="chapter">
+                <h1 class="chapter-title">5. Map Interface & Implementations</h1>
+
+                <p>The <span class="highlight">Map interface</span> represents a mapping between keys and values. It
+                    cannot contain duplicate keys, and each key can map to at most one value.</p>
+
+                <h2 class="section-title">Key Characteristics</h2>
+                <ul style="margin: 20px 0; padding-left: 30px;">
+                    <li>Key-value pair storage</li>
+                    <li>Unique keys (no duplicates)</li>
+                    <li>One-to-one or one-to-many mapping</li>
+                    <li>Not part of Collection hierarchy</li>
+                </ul>
+
+                <h2 class="section-title">HashMap</h2>
+                <p>Hash table implementation providing constant-time performance for get and put operations.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class HashMapExample {
+    public static void main(String[] args) {
+        Map&lt;String, Integer&gt; studentGrades = new HashMap&lt;&gt;();
+        
+        // Adding key-value pairs
+        studentGrades.put("Alice", 95);
+        studentGrades.put("Bob", 87);
+        studentGrades.put("Charlie", 92);
+        studentGrades.put("Diana", 88);
+        
+        System.out.println("Student grades: " + studentGrades);
+        
+        // Accessing values
+        Integer aliceGrade = studentGrades.get("Alice");
+        System.out.println("Alice's grade: " + aliceGrade); // 95
+        
+        // Checking for keys and values
+        System.out.println("Contains Alice: " + studentGrades.containsKey("Alice")); // true
+        System.out.println("Contains grade 90: " + studentGrades.containsValue(90)); // false
+        
+        // Updating values
+        studentGrades.put("Alice", 98); // Updates existing key
+        System.out.println("Alice's new grade: " + studentGrades.get("Alice")); // 98
+        
+        // Safe get operations
+        Integer eveGrade = studentGrades.getOrDefault("Eve", 0);
+        System.out.println("Eve's grade (default): " + eveGrade); // 0
+        
+        // Conditional put
+        studentGrades.putIfAbsent("Eve", 85);
+        studentGrades.putIfAbsent("Alice", 100); // Won't update existing key
+        System.out.println("After putIfAbsent: " + studentGrades);
+        
+        // Removing entries
+        Integer removedGrade = studentGrades.remove("Charlie");
+        System.out.println("Removed Charlie's grade: " + removedGrade); // 92
+        
+        // Iterating over entries
+        System.out.println("\nIterating over entries:");
+        for (Map.Entry&lt;String, Integer&gt; entry : studentGrades.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        
+        // Iterating over keys
+        System.out.println("\nStudents:");
+        for (String student : studentGrades.keySet()) {
+            System.out.println(student);
+        }
+        
+        // Iterating over values
+        System.out.println("\nGrades:");
+        for (Integer grade : studentGrades.values()) {
+            System.out.println(grade);
+        }
+        
+        // Using streams
+        double averageGrade = studentGrades.values().stream()
+            .mapToInt(Integer::intValue)
+            .average()
+            .orElse(0.0);
+        System.out.println("Average grade: " + averageGrade);
+        
+        // Find top student
+        Optional&lt;Map.Entry&lt;String, Integer&gt;&gt; topStudent = studentGrades.entrySet().stream()
+            .max(Map.Entry.comparingByValue());
+        topStudent.ifPresent(entry -&gt; 
+            System.out.println("Top student: " + entry.getKey() + " with grade " + entry.getValue()));
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">LinkedHashMap</h2>
+                <p>HashMap with predictable iteration order (insertion-order or access-order).</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class LinkedHashMapExample {
+    public static void main(String[] args) {
+        // Insertion-order LinkedHashMap
+        Map&lt;String, String&gt; capitals = new LinkedHashMap&lt;&gt;();
+        capitals.put("USA", "Washington D.C.");
+        capitals.put("UK", "London");
+        capitals.put("France", "Paris");
+        capitals.put("Germany", "Berlin");
+        
+        System.out.println("Insertion order: " + capitals);
+        // Output maintains insertion order: {USA=Washington D.C., UK=London, France=Paris, Germany=Berlin}
+        
+        // Access-order LinkedHashMap (LRU Cache behavior)
+        Map&lt;String, String&gt; lruMap = new LinkedHashMap&lt;&gt;(16, 0.75f, true);
+        lruMap.put("A", "Apple");
+        lruMap.put("B", "Banana");
+        lruMap.put("C", "Cherry");
+        
+        System.out.println("Before access: " + lruMap); // {A=Apple, B=Banana, C=Cherry}
+        
+        lruMap.get("A"); // Access A, moves it to end
+        System.out.println("After accessing A: " + lruMap); // {B=Banana, C=Cherry, A=Apple}
+        
+        // LRU Cache implementation
+        LRUCache&lt;Integer, String&gt; cache = new LRUCache&lt;&gt;(3);
+        cache.put(1, "One");
+        cache.put(2, "Two");
+        cache.put(3, "Three");
+        System.out.println("Cache: " + cache); // {1=One, 2=Two, 3=Three}
+        
+        cache.get(1); // Access 1
+        cache.put(4, "Four"); // This should evict 2 (least recently used)
+        System.out.println("After adding 4: " + cache); // {3=Three, 1=One, 4=Four}
+    }
+    
+    static class LRUCache&lt;K, V&gt; extends LinkedHashMap&lt;K, V&gt; {
+        private final int capacity;
+        
+        public LRUCache(int capacity) {
+            super(capacity + 1, 1.0f, true);
+            this.capacity = capacity;
+        }
+        
+        @Override
+        protected boolean removeEldestEntry(Map.Entry&lt;K, V&gt; eldest) {
+            return size() &gt; capacity;
+        }
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">TreeMap</h2>
+                <p>Red-Black tree implementation that keeps entries sorted by keys.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class TreeMapExample {
+    public static void main(String[] args) {
+        TreeMap&lt;String, Double&gt; stockPrices = new TreeMap&lt;&gt;();
+        
+        // Adding entries
+        stockPrices.put("AAPL", 150.25);
+        stockPrices.put("GOOGL", 2800.50);
+        stockPrices.put("MSFT", 300.75);
+        stockPrices.put("AMZN", 3200.00);
+        stockPrices.put("TSLA", 800.25);
+        
+        System.out.println("Stock prices (sorted by symbol): " + stockPrices);
+        // Automatically sorted by key: {AAPL=150.25, AMZN=3200.0, GOOGL=2800.5, MSFT=300.75, TSLA=800.25}
+        
+        // NavigableMap operations
+        System.out.println("First entry: " + stockPrices.firstEntry()); // AAPL=150.25
+        System.out.println("Last entry: " + stockPrices.lastEntry());   // TSLA=800.25
+        
+        // Range queries
+        System.out.println("Stocks from A to M: " + stockPrices.subMap("A", "M"));
+        System.out.println("Stocks up to G: " + stockPrices.headMap("G"));
+        System.out.println("Stocks from M onwards: " + stockPrices.tailMap("M"));
+        
+        // Floor and ceiling operations
+        System.out.println("Floor key of 'G': " + stockPrices.floorKey("G")); // AAPL (largest key <= G)
+        System.out.println("Ceiling key of 'G': " + stockPrices.ceilingKey("G")); // GOOGL (smallest key >= G)
+        
+        // Descending operations
+        NavigableMap&lt;String, Double&gt; descendingPrices = stockPrices.descendingMap();
+        System.out.println("Descending order: " + descendingPrices);
+        
+        // Custom comparator TreeMap
+        TreeMap&lt;String, Double&gt; pricesByLength = new TreeMap&lt;&gt;(Comparator.comparing(String::length));
+        pricesByLength.putAll(stockPrices);
+        System.out.println("Sorted by symbol length: " + pricesByLength);
+        
+        // Finding highest and lowest priced stocks
+        Map.Entry&lt;String, Double&gt; highestPriced = stockPrices.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .orElse(null);
+        
+        Map.Entry&lt;String, Double&gt; lowestPriced = stockPrices.entrySet().stream()
+            .min(Map.Entry.comparingByValue())
+            .orElse(null);
+        
+        System.out.println("Highest priced: " + highestPriced);
+        System.out.println("Lowest priced: " + lowestPriced);
+        
+        // Polling operations
+        System.out.println("Poll first: " + stockPrices.pollFirstEntry());
+        System.out.println("Poll last: " + stockPrices.pollLastEntry());
+        System.out.println("After polling: " + stockPrices);
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">Map Implementations Comparison</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>HashMap</th>
+                                <th>LinkedHashMap</th>
+                                <th>TreeMap</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ordering</td>
+                                <td>No guarantee</td>
+                                <td>Insertion/Access order</td>
+                                <td>Natural/Comparator</td>
+                            </tr>
+                            <tr>
+                                <td>Performance (get, put)</td>
+                                <td>O(1)</td>
+                                <td>O(1)</td>
+                                <td>O(log n)</td>
+                            </tr>
+                            <tr>
+                                <td>Memory overhead</td>
+                                <td>Lowest</td>
+                                <td>Medium</td>
+                                <td>Highest</td>
+                            </tr>
+                            <tr>
+                                <td>Null keys</td>
+                                <td>One allowed</td>
+                                <td>One allowed</td>
+                                <td>Not allowed</td>
+                            </tr>
+                            <tr>
+                                <td>Range operations</td>
+                                <td>No</td>
+                                <td>No</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Best use case</td>
+                                <td>General purpose</td>
+                                <td>Predictable iteration, LRU cache</td>
+                                <td>Sorted data, range queries</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="section-title">Advanced Map Operations</h2>
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class AdvancedMapOperations {
+    public static void main(String[] args) {
+        Map&lt;String, List&lt;Integer&gt;&gt; studentScores = new HashMap&lt;&gt;();
+        
+        // Building multi-value map
+        addScore(studentScores, "Alice", 95);
+        addScore(studentScores, "Alice", 87);
+        addScore(studentScores, "Bob", 92);
+        addScore(studentScores, "Bob", 88);
+        addScore(studentScores, "Charlie", 90);
+        
+        System.out.println("Student scores: " + studentScores);
+        
+        // Calculate averages
+        Map&lt;String, Double&gt; averages = studentScores.entrySet().stream()
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                entry -&gt; entry.getValue().stream().mapToInt(Integer::intValue).average().orElse(0.0)
+            ));
+        System.out.println("Averages: " + averages);
+        
+        // Merge operations
+        Map&lt;String, Integer&gt; map1 = new HashMap&lt;&gt;();
+        map1.put("A", 1);
+        map1.put("B", 2);
+        
+        Map&lt;String, Integer&gt; map2 = new HashMap&lt;&gt;();
+        map2.put("B", 3);
+        map2.put("C", 4);
+        
+        // Merge with sum function
+        Map&lt;String, Integer&gt; merged = new HashMap&lt;&gt;(map1);
+        map2.forEach((key, value) -&gt; merged.merge(key, value, Integer::sum));
+        System.out.println("Merged with sum: " + merged); // {A=1, B=5, C=4}
+        
+        // Compute operations
+        Map&lt;String, Integer&gt; wordCount = new HashMap&lt;&gt;();
+        String[] words = {"hello", "world", "hello", "java", "world", "hello"};
+        
+        for (String word : words) {
+            wordCount.compute(word, (key, val) -&gt; val == null ? 1 : val + 1);
+        }
+        System.out.println("Word count: " + wordCount);
+        
+        // Alternative using merge
+        Map&lt;String, Integer&gt; wordCount2 = new HashMap&lt;&gt;();
+        for (String word : words) {
+            wordCount2.merge(word, 1, Integer::sum);
+        }
+        System.out.println("Word count (merge): " + wordCount2);
+        
+        // Group by operations
+        List&lt;Person&gt; people = Arrays.asList(
+            new Person("Alice", 25, "Engineering"),
+            new Person("Bob", 30, "Marketing"), 
+            new Person("Charlie", 28, "Engineering"),
+            new Person("Diana", 32, "Marketing")
+        );
+        
+        Map&lt;String, List&lt;Person&gt;&gt; byDepartment = people.stream()
+            .collect(Collectors.groupingBy(Person::getDepartment));
+        System.out.println("Grouped by department: " + byDepartment);
+        
+        // Counting
+        Map&lt;String, Long&gt; departmentCounts = people.stream()
+            .collect(Collectors.groupingBy(Person::getDepartment, Collectors.counting()));
+        System.out.println("Department counts: " + departmentCounts);
+        
+        // Partitioning
+        Map&lt;Boolean, List&lt;Person&gt;&gt; partitioned = people.stream()
+            .collect(Collectors.partitioningBy(p -&gt; p.getAge() &gt; 28));
+        System.out.println("Over 28: " + partitioned.get(true));
+        System.out.println("28 or under: " + partitioned.get(false));
+    }
+    
+    private static void addScore(Map&lt;String, List&lt;Integer&gt;&gt; map, String student, Integer score) {
+        map.computeIfAbsent(student, k -&gt; new ArrayList&lt;&gt;()).add(score);
+    }
+    
+    static class Person {
+        private String name;
+        private int age;
+        private String department;
+        
+        public Person(String name, int age, String department) {
+            this.name = name;
+            this.age = age;
+            this.department = department;
+        }
+        
+        public String getName() { return name; }
+        public int getAge() { return age; }
+        public String getDepartment() { return department; }
+        
+        @Override
+        public String toString() {
+            return name + "(" + age + ", " + department + ")";
+        }
+    }
+}
+                    </pre>
+                </div>
+            </div>
+
+            <!-- Chapter 6: Queue & Deque Interfaces -->
+            <div class="chapter">
+                <h1 class="chapter-title">6. Queue & Deque Interfaces</h1>
+
+                <p>The <span class="highlight">Queue interface</span> represents a collection designed for holding
+                    elements prior to processing, typically in a FIFO (first-in-first-out) manner.</p>
+
+                <h2 class="section-title">Queue Interface</h2>
+                <p>Queue extends Collection and provides additional insertion, extraction, and inspection operations.
+                </p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operation Type</th>
+                                <th>Throws Exception</th>
+                                <th>Returns Special Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Insert</td>
+                                <td>add(e)</td>
+                                <td>offer(e)</td>
+                            </tr>
+                            <tr>
+                                <td>Remove</td>
+                                <td>remove()</td>
+                                <td>poll()</td>
+                            </tr>
+                            <tr>
+                                <td>Examine</td>
+                                <td>element()</td>
+                                <td>peek()</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h2 class="section-title">PriorityQueue</h2>
+                <p>A heap-based priority queue that orders elements according to their natural ordering or by a
+                    Comparator.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class PriorityQueueExample {
+    public static void main(String[] args) {
+        // Natural ordering (min-heap)
+        PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();
+        
+        // Adding elements
+        minHeap.offer(5);
+        minHeap.offer(2);
+        minHeap.offer(8);
+        minHeap.offer(1);
+        minHeap.offer(9);
+        
+        System.out.println("PriorityQueue: " + minHeap); // Internal array representation
+        
+        // Polling elements (always returns smallest)
+        System.out.println("Polling elements:");
+        while (!minHeap.isEmpty()) {
+            System.out.println(minHeap.poll()); // 1, 2, 5, 8, 9
+        }
+        
+        // Max-heap using reverse comparator
+        PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;(Collections.reverseOrder());
+        maxHeap.addAll(Arrays.asList(5, 2, 8, 1, 9));
+        
+        System.out.println("\nMax heap polling:");
+        while (!maxHeap.isEmpty()) {
+            System.out.println(maxHeap.poll()); // 9, 8, 5, 2, 1
+        }
+        
+        // Custom objects with Comparator
+        PriorityQueue&lt;Task&gt; taskQueue = new PriorityQueue&lt;&gt;(
+            Comparator.comparing(Task::getPriority).reversed()
+        );
+        
+        taskQueue.offer(new Task("Low priority task", 1));
+        taskQueue.offer(new Task("High priority task", 10));
+        taskQueue.offer(new Task("Medium priority task", 5));
+        taskQueue.offer(new Task("Critical task", 15));
+        
+        System.out.println("\nTask execution order:");
+        while (!taskQueue.isEmpty()) {
+            Task task = taskQueue.poll();
+            System.out.println(task.getName() + " (Priority: " + task.getPriority() + ")");
+        }
+        
+        // Using peek to examine without removing
+        PriorityQueue&lt;String&gt; wordQueue = new PriorityQueue&lt;&gt;();
+        wordQueue.addAll(Arrays.asList("banana", "apple", "cherry", "date"));
+        
+        System.out.println("\nFirst element: " + wordQueue.peek()); // apple (lexicographically smallest)
+        System.out.println("Queue size: " + wordQueue.size()); // 4 (peek doesn't remove)
+        
+        // Finding top K elements
+        int[] numbers = {64, 34, 25, 12, 22, 11, 90, 88, 76, 50};
+        List&lt;Integer&gt; topK = findTopK(numbers, 3);
+        System.out.println("Top 3 elements: " + topK); // [90, 88, 76]
+    }
+    
+    // Helper method to find top K elements
+    public static List&lt;Integer&gt; findTopK(int[] arr, int k) {
+        PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();
+        
+        for (int num : arr) {
+            if (minHeap.size() &lt; k) {
+                minHeap.offer(num);
+            } else if (num &gt; minHeap.peek()) {
+                minHeap.poll();
+                minHeap.offer(num);
+            }
+        }
+        
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;(minHeap);
+        result.sort(Collections.reverseOrder());
+        return result;
+    }
+    
+    static class Task {
+        private String name;
+        private int priority;
+        
+        public Task(String name, int priority) {
+            this.name = name;
+            this.priority = priority;
+        }
+        
+        public String getName() { return name; }
+        public int getPriority() { return priority; }
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">ArrayDeque</h2>
+                <p>Resizable array implementation of the Deque interface, providing fast operations at both ends.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class ArrayDequeExample {
+    public static void main(String[] args) {
+        ArrayDeque&lt;String&gt; deque = new ArrayDeque&lt;&gt;();
+        
+        // Adding elements to both ends
+        deque.addFirst("Second");
+        deque.addFirst("First");
+        deque.addLast("Third");
+        deque.addLast("Fourth");
+        
+        System.out.println("Deque: " + deque); // [First, Second, Third, Fourth]
+        
+        // Peeking at both ends
+        System.out.println("First element: " + deque.peekFirst()); // First
+        System.out.println("Last element: " + deque.peekLast());   // Fourth
+        
+        // Using as a Stack (LIFO)
+        ArrayDeque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();
+        
+        // Push operations
+        stack.push(1);
+        stack.push(2);
+        stack.push(3);
+        stack.push(4);
+        
+        System.out.println("Stack: " + stack); // [4, 3, 2, 1]
+        
+        // Pop operations
+        System.out.println("Popping from stack:");
+        while (!stack.isEmpty()) {
+            System.out.println(stack.pop()); // 4, 3, 2, 1
+        }
+        
+        // Using as a Queue (FIFO)
+        ArrayDeque&lt;String&gt; queue = new ArrayDeque&lt;&gt;();
+        
+        // Enqueue operations
+        queue.offer("A");
+        queue.offer("B");
+        queue.offer("C");
+        queue.offer("D");
+        
+        System.out.println("Queue: " + queue); // [A, B, C, D]
+        
+        // Dequeue operations
+        System.out.println("Dequeuing from queue:");
+        while (!queue.isEmpty()) {
+            System.out.println(queue.poll()); // A, B, C, D
+        }
+        
+        // Sliding window maximum problem
+        int[] arr = {1, 3, -1, -3, 5, 3, 6, 7};
+        int windowSize = 3;
+        List&lt;Integer&gt; slidingMaximums = slidingWindowMaximum(arr, windowSize);
+        System.out.println("Sliding window maximums: " + slidingMaximums); // [3, 3, 5, 5, 6, 7]
+        
+        // Palindrome checker using deque
+        System.out.println("Is 'racecar' palindrome? " + isPalindrome("racecar")); // true
+        System.out.println("Is 'hello' palindrome? " + isPalindrome("hello"));     // false
+    }
+    
+    // Sliding window maximum using deque
+    public static List&lt;Integer&gt; slidingWindowMaximum(int[] arr, int k) {
+        List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+        ArrayDeque&lt;Integer&gt; deque = new ArrayDeque&lt;&gt;(); // Store indices
+        
+        for (int i = 0; i &lt; arr.length; i++) {
+            // Remove indices outside current window
+            while (!deque.isEmpty() && deque.peekFirst() &lt;= i - k) {
+                deque.pollFirst();
+            }
+            
+            // Remove smaller elements from rear
+            while (!deque.isEmpty() && arr[deque.peekLast()] &lt;= arr[i]) {
+                deque.pollLast();
+            }
+            
+            deque.offerLast(i);
+            
+            // Add result for current window
+            if (i &gt;= k - 1) {
+                result.add(arr[deque.peekFirst()]);
+            }
+        }
+        
+        return result;
+    }
+    
+    // Palindrome checker
+    public static boolean isPalindrome(String str) {
+        ArrayDeque&lt;Character&gt; deque = new ArrayDeque&lt;&gt;();
+        
+        // Add all characters to deque
+        for (char c : str.toLowerCase().toCharArray()) {
+            if (Character.isLetterOrDigit(c)) {
+                deque.offer(c);
+            }
+        }
+        
+        // Compare from both ends
+        while (deque.size() &gt; 1) {
+            if (!deque.pollFirst().equals(deque.pollLast())) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">BlockingQueue Interface</h2>
+                <p>Thread-safe queues that support blocking operations for concurrent programming.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.concurrent.*;
+import java.util.*;
+
+public class BlockingQueueExample {
+    public static void main(String[] args) throws InterruptedException {
+        // ArrayBlockingQueue - bounded blocking queue
+        BlockingQueue&lt;String&gt; boundedQueue = new ArrayBlockingQueue&lt;&gt;(3);
+        
+        // Producer thread
+        Thread producer = new Thread(() -&gt; {
+            try {
+                for (int i = 1; i &lt;= 5; i++) {
+                    String item = "Item " + i;
+                    boundedQueue.put(item); // Blocks if queue is full
+                    System.out.println("Produced: " + item);
+                    Thread.sleep(500);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        
+        // Consumer thread
+        Thread consumer = new Thread(() -&gt; {
+            try {
+                Thread.sleep(1000); // Start consuming after delay
+                for (int i = 1; i &lt;= 5; i++) {
+                    String item = boundedQueue.take(); // Blocks if queue is empty
+                    System.out.println("Consumed: " + item);
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        
+        producer.start();
+        consumer.start();
+        
+        producer.join();
+        consumer.join();
+        
+        // LinkedBlockingQueue - unbounded blocking queue
+        BlockingQueue&lt;Integer&gt; unboundedQueue = new LinkedBlockingQueue&lt;&gt;();
+        
+        // Priority blocking queue
+        BlockingQueue&lt;Task&gt; priorityQueue = new PriorityBlockingQueue&lt;&gt;(
+            10, Comparator.comparing(Task::getPriority).reversed()
+        );
+        
+        priorityQueue.put(new Task("Low priority", 1));
+        priorityQueue.put(new Task("High priority", 10));
+        priorityQueue.put(new Task("Medium priority", 5));
+        
+        System.out.println("\nPriority queue order:");
+        while (!priorityQueue.isEmpty()) {
+            Task task = priorityQueue.take();
+            System.out.println(task.getName() + " (Priority: " + task.getPriority() + ")");
+        }
+        
+        // DelayQueue - elements can only be taken when their delay has expired
+        DelayQueue&lt;DelayedTask&gt; delayQueue = new DelayQueue&lt;&gt;();
+        long currentTime = System.currentTimeMillis();
+        
+        delayQueue.put(new DelayedTask("Task 1", currentTime + 1000));
+        delayQueue.put(new DelayedTask("Task 2", currentTime + 2000));
+        delayQueue.put(new DelayedTask("Task 3", currentTime + 500));
+        
+        System.out.println("\nDelay queue (will execute in delay order):");
+        while (!delayQueue.isEmpty()) {
+            DelayedTask task = delayQueue.take();
+            System.out.println("Executed: " + task.getName() + 
+                " at " + (System.currentTimeMillis() - currentTime) + "ms");
+        }
+    }
+    
+    static class Task {
+        private String name;
+        private int priority;
+        
+        public Task(String name, int priority) {
+            this.name = name;
+            this.priority = priority;
+        }
+        
+        public String getName() { return name; }
+        public int getPriority() { return priority; }
+    }
+    
+    static class DelayedTask implements Delayed {
+        private String name;
+        private long executeTime;
+        
+        public DelayedTask(String name, long executeTime) {
+            this.name = name;
+            this.executeTime = executeTime;
+        }
+        
+        @Override
+        public long getDelay(TimeUnit unit) {
+            long delay = executeTime - System.currentTimeMillis();
+            return unit.convert(delay, TimeUnit.MILLISECONDS);
+        }
+        
+        @Override
+        public int compareTo(Delayed other) {
+            return Long.compare(this.executeTime, ((DelayedTask) other).executeTime);
+        }
+        
+        public String getName() { return name; }
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">Queue Implementations Comparison</h2>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Implementation</th>
+                                <th>Backing Structure</th>
+                                <th>Ordering</th>
+                                <th>Capacity</th>
+                                <th>Thread Safe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>LinkedList</td>
+                                <td>Doubly-linked list</td>
+                                <td>FIFO</td>
+                                <td>Unbounded</td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td>ArrayDeque</td>
+                                <td>Resizable array</td>
+                                <td>FIFO/LIFO</td>
+                                <td>Unbounded</td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td>PriorityQueue</td>
+                                <td>Binary heap</td>
+                                <td>Priority order</td>
+                                <td>Unbounded</td>
+                                <td>No</td>
+                            </tr>
+                            <tr>
+                                <td>ArrayBlockingQueue</td>
+                                <td>Array</td>
+                                <td>FIFO</td>
+                                <td>Bounded</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>LinkedBlockingQueue</td>
+                                <td>Linked nodes</td>
+                                <td>FIFO</td>
+                                <td>Optionally bounded</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>PriorityBlockingQueue</td>
+                                <td>Binary heap</td>
+                                <td>Priority order</td>
+                                <td>Unbounded</td>
+                                <td>Yes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tip-box">
+                    <div class="tip-title">💡 Choosing the Right Queue</div>
+                    <p><strong>ArrayDeque:</strong> Best general-purpose deque, faster than LinkedList</p>
+                    <p><strong>PriorityQueue:</strong> When you need elements processed by priority</p>
+                    <p><strong>BlockingQueue implementations:</strong> For producer-consumer scenarios in multithreaded
+                        applications</p>
+                </div>
+            </div>
+
+            <!-- Chapter 7: Advanced Collections Operations -->
+            <div class="chapter">
+                <h1 class="chapter-title">7. Advanced Collections Operations</h1>
+
+                <p>This chapter covers advanced operations and utilities for working with Java Collections effectively.
+                </p>
+
+                <h2 class="section-title">Collections Utility Class</h2>
+                <p>The Collections class provides static utility methods for common collection operations.</p>
+
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+
+public class CollectionsUtilityExample {
+    public static void main(String[] args) {
+        List&lt;Integer&gt; numbers = new ArrayList&lt;&gt;(Arrays.asList(5, 2, 8, 1, 9, 3));
+        
+        System.out.println("Original list: " + numbers);
+        
+        // Sorting
+        Collections.sort(numbers);
+        System.out.println("Sorted: " + numbers);
+        
+        Collections.sort(numbers, Collections.reverseOrder());
+        System.out.println("Reverse sorted: " + numbers);
+        
+        // Shuffling
+        Collections.shuffle(numbers);
+        System.out.println("Shuffled: " + numbers);
+        
+        // Binary search (requires sorted list)
+        Collections.sort(numbers);
+        int index = Collections.binarySearch(numbers, 5);
+        System.out.println("Index of 5: " + index);
+        
+        // Min and Max
+        System.out.println("Min: " + Collections.min(numbers));
+        System.out.println("Max: " + Collections.max(numbers));
+        
+        // Frequency
+        List&lt;String&gt; words = Arrays.asList("hello", "world", "hello", "java", "hello");
+        System.out.println("Frequency of 'hello': " + Collections.frequency(words, "hello"));
+        
+        // Rotate
+        List&lt;String&gt; list = new ArrayList&lt;&gt;(Arrays.asList("A", "B", "C", "D", "E"));
+        Collections.rotate(list, 2);
+        System.out.println("Rotated by 2: " + list); // [D, E, A, B, C]
+        
+        // Reverse
+        Collections.reverse(list);
+        System.out.println("Reversed: " + list);
+        
+        // Fill
+        List&lt;String&gt; fillList = new ArrayList&lt;&gt;(Arrays.asList("A", "B", "C"));
+        Collections.fill(fillList, "X");
+        System.out.println("Filled with X: " + fillList);
+        
+        // Copy
+        List&lt;String&gt; source = Arrays.asList("1", "2", "3");
+        List&lt;String&gt; dest = new ArrayList&lt;&gt;(Arrays.asList("A", "B", "C"));
+        Collections.copy(dest, source);
+        System.out.println("After copy: " + dest);
+        
+        // Replace all
+        List&lt;String&gt; replaceList = new ArrayList&lt;&gt;(Arrays.asList("A", "B", "A", "C", "A"));
+        Collections.replaceAll(replaceList, "A", "X");
+        System.out.println("After replace: " + replaceList);
+        
+        // Swap
+        Collections.swap(replaceList, 0, 2);
+        System.out.println("After swap: " + replaceList);
+        
+        // Create unmodifiable collections
+        List&lt;String&gt; modifiable = new ArrayList&lt;&gt;(Arrays.asList("A", "B", "C"));
+        List&lt;String&gt; unmodifiable = Collections.unmodifiableList(modifiable);
+        System.out.println("Unmodifiable list: " + unmodifiable);
+        // unmodifiable.add("D"); // Would throw UnsupportedOperationException
+        
+        // Create synchronized collections
+        List&lt;String&gt; synchronizedList = Collections.synchronizedList(new ArrayList&lt;&gt;());
+        Map&lt;String, String&gt; synchronizedMap = Collections.synchronizedMap(new HashMap&lt;&gt;());
+        
+        // Singleton collections
+        Set&lt;String&gt; singletonSet = Collections.singleton("OnlyElement");
+        List&lt;String&gt; singletonList = Collections.singletonList("OnlyElement");
+        Map&lt;String, String&gt; singletonMap = Collections.singletonMap("key", "value");
+        
+        System.out.println("Singleton set: " + singletonSet);
+        System.out.println("Singleton list: " + singletonList);
+        System.out.println("Singleton map: " + singletonMap);
+        
+        // Empty collections
+        List&lt;String&gt; emptyList = Collections.emptyList();
+        Set&lt;String&gt; emptySet = Collections.emptySet();
+        Map&lt;String, String&gt; emptyMap = Collections.emptyMap();
+        
+        // Disjoint check
+        List&lt;Integer&gt; list1 = Arrays.asList(1, 2, 3);
+        List&lt;Integer&gt; list2 = Arrays.asList(4, 5, 6);
+        List&lt;Integer&gt; list3 = Arrays.asList(3, 4, 5);
+        
+        System.out.println("list1 and list2 disjoint: " + Collections.disjoint(list1, list2)); // true
+        System.out.println("list1 and list3 disjoint: " + Collections.disjoint(list1, list3)); // false
+        
+        // Add all with varargs
+        List&lt;String&gt; addAllList = new ArrayList&lt;&gt;();
+        Collections.addAll(addAllList, "A", "B", "C", "D");
+        System.out.println("AddAll result: " + addAllList);
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">Custom Comparators</h2>
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+import java.util.function.Function;
+
+public class CustomComparatorsExample {
+    public static void main(String[] args) {
+        List&lt;Employee&gt; employees = Arrays.asList(
+            new Employee("Alice", 30, 75000),
+            new Employee("Bob", 25, 65000),
+            new Employee("Charlie", 35, 80000),
+            new Employee("Diana", 28, 70000),
+            new Employee("Eve", 32, 75000)
+        );
+        
+        System.out.println("Original list:");
+        employees.forEach(System.out::println);
+        
+        // Sort by age
+        List&lt;Employee&gt; byAge = new ArrayList&lt;&gt;(employees);
+        Collections.sort(byAge, Comparator.comparing(Employee::getAge));
+        System.out.println("\nSorted by age:");
+        byAge.forEach(System.out::println);
+        
+        // Sort by salary (descending)
+        List&lt;Employee&gt; bySalaryDesc = new ArrayList&lt;&gt;(employees);
+        Collections.sort(bySalaryDesc, Comparator.comparing(Employee::getSalary).reversed());
+        System.out.println("\nSorted by salary (descending):");
+        bySalaryDesc.forEach(System.out::println);
+        
+        // Sort by multiple criteria: salary descending, then age ascending
+        List&lt;Employee&gt; multiSort = new ArrayList&lt;&gt;(employees);
+        Collections.sort(multiSort, 
+            Comparator.comparing(Employee::getSalary).reversed()
+                     .thenComparing(Employee::getAge));
+        System.out.println("\nSorted by salary desc, then age asc:");
+        multiSort.forEach(System.out::println);
+        
+        // Sort by name length, then alphabetically
+        List&lt;Employee&gt; byNameLength = new ArrayList&lt;&gt;(employees);
+        Collections.sort(byNameLength,
+            Comparator.comparing((Employee e) -&gt; e.getName().length())
+                     .thenComparing(Employee::getName));
+        System.out.println("\nSorted by name length, then alphabetically:");
+        byNameLength.forEach(System.out::println);
+        
+        // Using TreeSet with custom comparator
+        Set&lt;Employee&gt; employeesByAge = new TreeSet&lt;&gt;(Comparator.comparing(Employee::getAge));
+        employeesByAge.addAll(employees);
+        System.out.println("\nTreeSet sorted by age:");
+        employeesByAge.forEach(System.out::println);
+        
+        // Custom comparator for case-insensitive string sorting
+        List&lt;String&gt; names = Arrays.asList("alice", "Bob", "CHARLIE", "diana", "Eve");
+        Collections.sort(names, String.CASE_INSENSITIVE_ORDER);
+        System.out.println("\nCase-insensitive sorted names: " + names);
+        
+        // Null-safe comparator
+        List&lt;String&gt; namesWithNull = new ArrayList&lt;&gt;(Arrays.asList("Alice", null, "Bob", "Charlie", null));
+        Collections.sort(namesWithNull, Comparator.nullsLast(Comparator.naturalOrder()));
+        System.out.println("Null-safe sorted (nulls last): " + namesWithNull);
+        
+        // Complex sorting example
+        List&lt;Product&gt; products = Arrays.asList(
+            new Product("Laptop", "Electronics", 999.99, 4.5),
+            new Product("Phone", "Electronics", 699.99, 4.2),
+            new Product("Book", "Education", 29.99, 4.8),
+            new Product("Tablet", "Electronics", 399.99, 4.0),
+            new Product("Course", "Education", 199.99, 4.9)
+        );
+        
+        // Sort by category, then by rating descending, then by price ascending
+        Collections.sort(products,
+            Comparator.comparing(Product::getCategory)
+                     .thenComparing(Product::getRating).reversed()
+                     .thenComparing(Product::getPrice));
+        
+        System.out.println("\nProducts sorted by category, rating desc, price asc:");
+        products.forEach(System.out::println);
+    }
+    
+    static class Employee {
+        private String name;
+        private int age;
+        private double salary;
+        
+        public Employee(String name, int age, double salary) {
+            this.name = name;
+            this.age = age;
+            this.salary = salary;
+        }
+        
+        public String getName() { return name; }
+        public int getAge() { return age; }
+        public double getSalary() { return salary; }
+        
+        @Override
+        public String toString() {
+            return String.format("Employee{name='%s', age=%d, salary=%.0f}", name, age, salary);
+        }
+    }
+    
+    static class Product {
+        private String name;
+        private String category;
+        private double price;
+        private double rating;
+        
+        public Product(String name, String category, double price, double rating) {
+            this.name = name;
+            this.category = category;
+            this.price = price;
+            this.rating = rating;
+        }
+        
+        public String getName() { return name; }
+        public String getCategory() { return category; }
+        public double getPrice() { return price; }
+        public double getRating() { return rating; }
+        
+        @Override
+        public String toString() {
+            return String.format("Product{name='%s', category='%s', price=%.2f, rating=%.1f}", 
+                                name, category, price, rating);
+        }
+    }
+}
+                    </pre>
+                </div>
+
+                <h2 class="section-title">Stream API with Collections</h2>
+                <div class="code-block">
+                    <pre>
+import java.util.*;
+import java.util.stream.*;
+
+public class StreamAPIExample {
+    public static void main(String[] args) {
+        List<String> words = Arrays.asList(
+            "hello", "world", "java", "stream", "api", "collection", "framework"
+        );
+        
+        // Basic stream operations
+        List<String> longWords = words.stream()
+            .filter(word -> word.length() > 4)
+            .map(String::toUpperCase)
+            .sorted()
+            .collect(Collectors.toList());
+        System.out.println("Long words (uppercase, sorted): " + longWords);
+        
+        // Find operations
+        Optional<String> firstLongWord = words.stream()
+            .filter(word -> word.length() > 5)
+            .findFirst();
+        System.out.println("First long word: " + firstLongWord.orElse("None"));
+        
+        boolean anyMatch = words.stream().anyMatch(word -> word.startsWith("j"));
+        boolean allMatch = words.stream().allMatch(word -> word.length() > 2);
+        boolean noneMatch = words.stream().noneMatch(word -> word.contains("xyz"));
+        
+        System.out.println("Any starts with 'j': " + anyMatch);
+        System.out.println("All length > 2: " + allMatch);
+        System.out.println("None contains 'xyz': " + noneMatch);
+        
+        // Reduction operations
+        String concatenated = words.stream()
+            .reduce("", (a, b) -> a + " " + b)
+            .trim();
+        System.out.println("Concatenated: " + concatenated);
+        
+        Optional<String> longest = words.stream()
+            .reduce((a, b) -> a.length() > b.length() ? a : b);
+        System.out.println("Longest word: " + longest.orElse("None"));
+        
+        // Collectors
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        
+        // Collect to different types
+        Set<Integer> evenSet = numbers.stream()
+            .filter(n -> n % 2 == 0)
+            .collect(Collectors.toSet());
+        System.out.println("Even numbers set: " + evenSet);
+        
+        // Collect to TreeSet
+        TreeSet<String> sortedWords = words.stream()
+            .collect(Collectors.toCollection(TreeSet::new));
+        System.out.println("Sorted words in TreeSet: " + sortedWords);
+        
+        // Grouping
+        Map<Integer, List<String>> wordsByLength = words.stream()
+            .collect(Collectors.groupingBy(String::length));
+        System.out.println("Words grouped by length: " + wordsByLength);
+        
+        // Partitioning
+        Map<Boolean, List<String>> partitionedWords = words.stream()
+            .collect(Collectors.partitioningBy(word -> word.length() > 4));
+        System.out.println("Long words: " + partitionedWords.get(true));
+        System.out.println("Short words: " + partitionedWords.get(false));
+        
+        // Joining
+        String joinedWords = words.stream()
+            .collect(Collectors.joining(", ", "[", "]"));
+        System.out.println("Joined words: " + joinedWords);
+        
+        // Statistics
+        IntSummaryStatistics stats = numbers.stream()
+            .mapToInt(Integer::intValue)
+            .summaryStatistics();
+        System.out.println("Statistics: " + stats);
+        
+        // Advanced grouping
+        List<Transaction> transactions = Arrays.asList(
+            new Transaction("Alice", 1000, "CREDIT"),
+            new Transaction("Bob", 500, "DEBIT"),
+            new Transaction("Alice", 2000, "CREDIT"),
+            new Transaction("Charlie", 1500, "CREDIT"),
+            new Transaction("Bob", 300, "DEBIT")
+        );
+        
+        // Group by person and sum amounts
+        Map<String, Integer> totalByPerson = transactions.stream()
+            .collect(Collectors.groupingBy(
+                Transaction::getPerson,
+                Collectors.summingInt(Transaction::getAmount)
+            ));
+        System.out.println("Total by person: " + totalByPerson);
+        
+        // Group by type and collect names
+        Map<String, Set<String>> namesByType = transactions.stream()
+            .collect(Collectors.groupingBy(
+                Transaction::getType,
+                Collectors.mapping(Transaction::getPerson, Collectors.toSet())
+            ));
+        System.out.println("Names by transaction type: " + namesByType);
+        
+        // Parallel streams
+        List<Integer> largeList = IntStream.rangeClosed(1, 1000000)
+            .boxed()
+            .collect(Collectors.toList());
+        
+        long startTime = System.currentTimeMillis();
+        long sum1 = largeList.stream()
+            .mapToLong(Integer::longValue)
+            .sum();
+        long sequentialTime = System.currentTimeMillis() - startTime;
+        
+        startTime = System.currentTimeMillis();
+        long sum2 = largeList.parallelStream()
+            .mapToLong(Integer::longValue)
+            .sum();
+        long parallelTime = System.currentTimeMillis() - startTime;
+        
+        System.out.println("Sequential sum: " + sum1 + " (time: " + sequentialTime + "ms)");
+        System.out.println("Parallel sum: " + sum2 + " (time: " + parallelTime + "ms)");
+    }
+    
+    static class Transaction {
+        private String person;
+        private int amount;
+        private String type;
+        
+        public Transaction(String person, int amount, String type) {
+            this.person = person;
+            this.amount = amount;
+            this.type = type;
+        }
+        
+        public String getPerson() { return person; }
+        public int getAmount() { return amount; }
+        public String getType() { return type; }
+        
+        @Override
+        public String toString() {
+            return String.format("Transaction{person='%s', amount=%d, type='%s'}", person, amount, type);
+        }
+    }
+}
+</pre>
+                </div>
+
+                <div class="header">
+                    <h1 class="title">Performance & Best Practices</h1>
+                    <p class="subtitle">Java Collections Framework Optimization Guide</p>
+                </div>
+                <div class="content">
+                    <h1 class="chapter-title">8. Performance & Best Practices</h1>
+
+                    <p>Understanding performance characteristics and following best practices is crucial for efficient
+                        collection usage.</p>
+
+                    <h2 class="section-title">Performance Characteristics</h2>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Collection</th>
+                                    <th>Get/Access</th>
+                                    <th>Add</th>
+                                    <th>Remove</th>
+                                    <th>Contains</th>
+                                    <th>Memory</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ArrayList</td>
+                                    <td>O(1)</td>
+                                    <td>O(1) amortized</td>
+                                    <td>O(n)</td>
+                                    <td>O(n)</td>
+                                    <td>Low</td>
+                                </tr>
+                                <tr>
+                                    <td>LinkedList</td>
+                                    <td>O(n)</td>
+                                    <td>O(1)</td>
+                                    <td>O(1) if node known</td>
+                                    <td>O(n)</td>
+                                    <td>High</td>
+                                </tr>
+                                <tr>
+                                    <td>HashSet</td>
+                                    <td>N/A</td>
+                                    <td>O(1)</td>
+                                    <td>O(1)</td>
+                                    <td>O(1)</td>
+                                    <td>Medium</td>
+                                </tr>
+                                <tr>
+                                    <td>TreeSet</td>
+                                    <td>N/A</td>
+                                    <td>O(log n)</td>
+                                    <td>O(log n)</td>
+                                    <td>O(log n)</td>
+                                    <td>High</td>
+                                </tr>
+                                <tr>
+                                    <td>HashMap</td>
+                                    <td>O(1)</td>
+                                    <td>O(1)</td>
+                                    <td>O(1)</td>
+                                    <td>O(1)</td>
+                                    <td>Medium</td>
+                                </tr>
+                                <tr>
+                                    <td>TreeMap</td>
+                                    <td>O(log n)</td>
+                                    <td>O(log n)</td>
+                                    <td>O(log n)</td>
+                                    <td>O(log n)</td>
+                                    <td>High</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 class="section-title">Best Practices Example</h2>
+
+                    <div class="code-block">
+                        <pre>import java.util.*;
+                    import java.util.concurrent.ConcurrentHashMap;
+
+public class BestPracticesExample {
+    public static void main(String[] args) {
+        // 1. Choose the right collection type
+        demonstrateCollectionChoice();
+        
+        // 2. Initialize with appropriate capacity
+        demonstrateCapacityInitialization();
+        
+        // 3. Use appropriate iteration methods
+        demonstrateIteration();
+        
+        // 4. Implement equals() and hashCode() properly
+        demonstrateEqualsHashCode();
+        
+        // 5. Use immutable collections when possible
+        demonstrateImmutableCollections();
+        
+        // 6. Thread safety considerations
+        demonstrateThreadSafety();
+        
+        // 7. Memory efficiency tips
+        demonstrateMemoryEfficiency();
+    }
+    
+    private static void demonstrateCollectionChoice() {
+        System.out.println("1. Choosing the right collection:");
+        
+        // Use ArrayList for frequent random access
+        List&lt;String&gt; frequentAccess = new ArrayList&lt;&gt;();
+        
+        // Use LinkedList for frequent insertions/deletions at beginning/end
+        List&lt;String&gt; frequentModification = new LinkedList&lt;&gt;();
+        
+        // Use HashSet for fast membership testing
+        Set&lt;String&gt; fastLookup = new HashSet&lt;&gt;();
+        
+        // Use TreeSet for sorted unique elements
+        Set&lt;String&gt; sortedUnique = new TreeSet&lt;&gt;();
+        
+        // Use HashMap for key-value mapping with fast access
+        Map&lt;String, String&gt; fastMapping = new HashMap&lt;&gt;();
+        
+        // Use ArrayDeque instead of Stack
+        Deque&lt;String&gt; stack = new ArrayDeque&lt;&gt;(); // Better than Stack class
+        
+        System.out.println("✓ Choose collection based on usage patterns\n");
+    }
+    
+    private static void demonstrateCapacityInitialization() {
+        System.out.println("2. Capacity initialization:");
+        
+        // Bad: Default capacity may cause multiple resizings
+        List&lt;Integer&gt; badList = new ArrayList&lt;&gt;();
+        
+        // Good: Initialize with expected size
+        List&lt;Integer&gt; goodList = new ArrayList&lt;&gt;(1000);
+        
+        // For maps, consider load factor
+        Map&lt;String, String&gt; map = new HashMap&lt;&gt;(16, 0.75f);
+        
+        // Better approach for known size
+        int expectedSize = 1000;
+        Map&lt;String, String&gt; betterMap = new HashMap&lt;&gt;((int) (expectedSize / 0.75f) + 1);
+        
+        System.out.println("✓ Initialize collections with appropriate capacity\n");
+    }
+    
+    private static void demonstrateIteration() {
+        System.out.println("3. Efficient iteration:");
+        
+        List&lt;String&gt; list = Arrays.asList("A", "B", "C", "D", "E");
+        
+        // Enhanced for-loop (preferred for most cases)
+        System.out.println("Enhanced for-loop:");
+        for (String item : list) {
+            System.out.print(item + " ");
+        }
+        System.out.println();
+        
+        // Iterator (use when you need to remove elements)
+        Iterator&lt;String&gt; iterator = new ArrayList&lt;&gt;(list).iterator();
+        while (iterator.hasNext()) {
+            String item = iterator.next();
+            // Safe to call iterator.remove() here
+        }
+        
+        // Avoid indexed loops for LinkedList
+        // Bad for LinkedList:
+        // for (int i = 0; i &lt; linkedList.size(); i++) {
+        //     linkedList.get(i); // O(n) for each access!
+        // }
+        
+        // Stream API for functional operations
+        list.stream()
+            .filter(s -&gt; !s.equals("C"))
+            .forEach(System.out::print);
+        System.out.println("\n✓ Use appropriate iteration method\n");
+    }
+    
+    private static void demonstrateEqualsHashCode() {
+        System.out.println("4. Proper equals() and hashCode():");
+        
+        Set&lt;Person&gt; people = new HashSet&lt;&gt;();
+        people.add(new Person("Alice", 30));
+        people.add(new Person("Alice", 30)); // Should be considered duplicate
+        
+        System.out.println("Set size: " + people.size()); // Should be 1 if implemented correctly
+        System.out.println("✓ Implement equals() and hashCode() consistently\n");
+    }
+    
+    private static void demonstrateImmutableCollections() {
+        System.out.println("5. Immutable collections:");
+        
+        // Java 9+ immutable collections
+        List&lt;String&gt; immutableList = List.of("A", "B", "C");
+        Set&lt;String&gt; immutableSet = Set.of("X", "Y", "Z");
+        Map&lt;String, Integer&gt; immutableMap = Map.of("one", 1, "two", 2);
+        
+        // Collections.unmodifiable* (view of mutable collection)
+        List&lt;String&gt; mutable = new ArrayList&lt;&gt;(Arrays.asList("A", "B", "C"));
+        List&lt;String&gt; unmodifiableView = Collections.unmodifiableList(mutable);
+        
+        System.out.println("Immutable list: " + immutableList);
+        System.out.println("✓ Use immutable collections when data won't change\n");
+    }
+    
+    private static void demonstrateThreadSafety() {
+        System.out.println("6. Thread safety:");
+        
+        // Thread-safe collections
+        Map&lt;String, String&gt; concurrentMap = new ConcurrentHashMap&lt;&gt;();
+        List&lt;String&gt; synchronizedList = Collections.synchronizedList(new ArrayList&lt;&gt;());
+        
+        // For synchronized collections, synchronize on iteration
+        synchronized (synchronizedList) {
+            for (String item : synchronizedList) {
+                // Process item
+            }
+        }
+        
+        // Copy-on-write collections for read-heavy scenarios
+        java.util.concurrent.CopyOnWriteArrayList&lt;String&gt; cowList = 
+            new java.util.concurrent.CopyOnWriteArrayList&lt;&gt;();
+        
+        System.out.println("✓ Choose appropriate thread-safe collections\n");
+    }
+    
+    private static void demonstrateMemoryEfficiency() {
+        System.out.println("7. Memory efficiency:");
+        
+        // Trim to size for ArrayList after bulk operations
+        List&lt;String&gt; list = new ArrayList&lt;&gt;(1000);
+        // ... add only 100 elements
+        if (list instanceof ArrayList) {
+            ((ArrayList&lt;String&gt;) list).trimToSize();
+        }
+        
+        // Use primitive collections when possible (external libraries like Trove, Eclipse Collections)
+        // Instead of List&lt;Integer&gt;, consider using TIntArrayList from Trove
+        
+        // Avoid boxing/unboxing in streams when possible
+        int[] numbers = {1, 2, 3, 4, 5};
+        int sum = Arrays.stream(numbers).sum(); // Uses IntStream, no boxing
+        
+        System.out.println("✓ Consider memory efficiency optimizations\n");
+    }
+    
+    static class Person {
+        private String name;
+        private int age;
+        
+        public Person(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+        
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Person person = (Person) o;
+            return age == person.age && Objects.equals(name, person.name);
+        }
+        
+        @Override
+        public int hashCode() {
+            return Objects.hash(name, age);
+        }
+        
+        @Override
+        public String toString() {
+            return "Person{name='" + name + "', age=" + age + "}";
+        }
+    }
+}</pre>
+                    </div>
+
+                    <h2 class="section-title">Common Pitfalls and Solutions</h2>
+
+                    <div class="note-box">
+                        <div class="note-title">⚠️ Common Pitfalls</div>
+                        <p><strong>1. ConcurrentModificationException:</strong> Occurs when modifying a collection while
+                            iterating. Use Iterator.remove() or iterate over a copy.</p>
+                        <p><strong>2. Memory Leaks:</strong> Holding references to unused objects in collections. Remove
+                            unused elements promptly.</p>
+                        <p><strong>3. Poor hashCode() Implementation:</strong> Can lead to performance degradation in
+                            hash-based collections.</p>
+                        <p><strong>4. Using raw types:</strong> Always use generics for type safety.</p>
+                        <p><strong>5. Wrong collection choice:</strong> Using ArrayList for frequent insertions at the
+                            beginning.</p>
+                    </div>
+
+                    <h2 class="section-title">Performance Testing Example</h2>
+                    <div class="code-block">
+                        <pre>import java.util.*;
+
+public class PerformanceComparison {
+    private static final int SIZE = 100000;
+    private static final int ITERATIONS = 1000;
+    
+    public static void main(String[] args) {
+        System.out.println("Performance Comparison (operations on " + SIZE + " elements):");
+        System.out.println("=" + "=".repeat(60));
+        
+        compareListInsertions();
+        compareSetOperations();
+        compareMapOperations();
+    }
+    
+    private static void compareListInsertions() {
+        System.out.println("\nList Insertion Performance:");
+        System.out.println("-" + "-".repeat(30));
+        
+        // ArrayList - add at end
+        long startTime = System.nanoTime();
+        List&lt;Integer&gt; arrayList = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; SIZE; i++) {
+            arrayList.add(i);
+        }
+        long arrayListTime = System.nanoTime() - startTime;
+        
+        // LinkedList - add at end
+        startTime = System.nanoTime();
+        List&lt;Integer&gt; linkedList = new LinkedList&lt;&gt;();
+        for (int i = 0; i &lt; SIZE; i++) {
+            linkedList.add(i);
+        }
+        long linkedListTime = System.nanoTime() - startTime;
+        
+        // ArrayList - add at beginning (worst case)
+        startTime = System.nanoTime();
+        List&lt;Integer&gt; arrayListBeginning = new ArrayList&lt;&gt;();
+        for (int i = 0; i &lt; SIZE / 10; i++) { // Smaller size due to O(n²) complexity
+            arrayListBeginning.add(0, i);
+        }
+        long arrayListBeginningTime = System.nanoTime() - startTime;
+        
+        // LinkedList - add at beginning
+        startTime = System.nanoTime();
+        List&lt;Integer&gt; linkedListBeginning = new LinkedList&lt;&gt;();
+        for (int i = 0; i &lt; SIZE; i++) {
+            linkedListBeginning.add(0, i);
+        }
+        long linkedListBeginningTime = System.nanoTime() - startTime;
+        
+        System.out.printf("ArrayList (add at end):       %,10d ns%n", arrayListTime);
+        System.out.printf("LinkedList (add at end):      %,10d ns%n", linkedListTime);
+        System.out.printf("ArrayList (add at beginning): %,10d ns (size: %d)%n", 
+                         arrayListBeginningTime, SIZE / 10);
+        System.out.printf("LinkedList (add at beginning):%,10d ns%n", linkedListBeginningTime);
+    }
+    
+    private static void compareSetOperations() {
+        System.out.println("\nSet Operations Performance:");
+        System.out.println("-" + "-".repeat(30));
+        
+        // Prepare data
+        Integer[] data = new Integer[SIZE];
+        for (int i = 0; i &lt; SIZE; i++) {
+            data[i] = i;
+        }
+        
+        // HashSet
+        long startTime = System.nanoTime();
+        Set&lt;Integer&gt; hashSet = new HashSet&lt;&gt;();
+        for (Integer value : data) {
+            hashSet.add(value);
+        }
+        long hashSetTime = System.nanoTime() - startTime;
+        
+        // TreeSet
+        startTime = System.nanoTime();
+        Set&lt;Integer&gt; treeSet = new TreeSet&lt;&gt;();
+        for (Integer value : data) {
+            treeSet.add(value);
+        }
+        long treeSetTime = System.nanoTime() - startTime;
+        
+        // Contains operation comparison
+        startTime = System.nanoTime();
+        for (int i = 0; i &lt; ITERATIONS; i++) {
+            hashSet.contains(SIZE / 2);
+        }
+        long hashSetContainsTime = System.nanoTime() - startTime;
+        
+        startTime = System.nanoTime();
+        for (int i = 0; i &lt; ITERATIONS; i++) {
+            treeSet.contains(SIZE / 2);
+        }
+        long treeSetContainsTime = System.nanoTime() - startTime;
+        
+        System.out.printf("HashSet insertion:   %,10d ns%n", hashSetTime);
+        System.out.printf("TreeSet insertion:   %,10d ns%n", treeSetTime);
+        System.out.printf("HashSet contains:    %,10d ns (%d iterations)%n", 
+                         hashSetContainsTime, ITERATIONS);
+        System.out.printf("TreeSet contains:    %,10d ns (%d iterations)%n", 
+                         treeSetContainsTime, ITERATIONS);
+    }
+    
+    private static void compareMapOperations() {
+        System.out.println("\nMap Operations Performance:");
+        System.out.println("-" + "-".repeat(30));
+        
+        // HashMap
+        long startTime = System.nanoTime();
+        Map&lt;Integer, String&gt; hashMap = new HashMap&lt;&gt;();
+        for (int i = 0; i &lt; SIZE; i++) {
+            hashMap.put(i, "Value" + i);
+        }
+        long hashMapTime = System.nanoTime() - startTime;
+        
+        // TreeMap
+        startTime = System.nanoTime();
+        Map&lt;Integer, String&gt; treeMap = new TreeMap&lt;&gt;();
+        for (int i = 0; i &lt; SIZE; i++) {
+            treeMap.put(i, "Value" + i);
+        }
+        long treeMapTime = System.nanoTime() - startTime;
+        
+        // Get operation comparison
+        startTime = System.nanoTime();
+        for (int i = 0; i &lt; ITERATIONS; i++) {
+            hashMap.get(SIZE / 2);
+        }
+        long hashMapGetTime = System.nanoTime() - startTime;
+        
+        startTime = System.nanoTime();
+        for (int i = 0; i &lt; ITERATIONS; i++) {
+            treeMap.get(SIZE / 2);
+        }
+        long treeMapGetTime = System.nanoTime() - startTime;
+        
+        System.out.printf("HashMap put:         %,10d ns%n", hashMapTime);
+        System.out.printf("TreeMap put:         %,10d ns%n", treeMapTime);
+        System.out.printf("HashMap get:         %,10d ns (%d iterations)%n", 
+                         hashMapGetTime, ITERATIONS);
+        System.out.printf("TreeMap get:         %,10d ns (%d iterations)%n", 
+                         treeMapGetTime, ITERATIONS);
+    }
+}</pre>
+                    </div>
+
+                    <div class="tip-box">
+                        <div class="tip-title">💡 Final Tips</div>
+                        <p>1. <strong>Profile your application</strong> to identify actual bottlenecks before optimizing
+                        </p>
+                        <p>2. <strong>Understand your data access patterns</strong> before choosing collections</p>
+                        <p>3. <strong>Consider using specialized libraries</strong> like Guava or Eclipse Collections
+                            for advanced use cases</p>
+                        <p>4. <strong>Stay updated</strong> with new Java versions for performance improvements and new
+                            collection features</p>
+                        <p>5. <strong>Write unit tests</strong> to verify collection behavior, especially with custom
+                            objects</p>
+                    </div>
+
+                    <h2 class="section-title">Key Performance Insights</h2>
+                    <ul>
+                        <li><span class="highlight">ArrayList:</span> O(1) access, O(n) insertion at beginning</li>
+                        <li><span class="highlight">LinkedList:</span> O(n) access, O(1) insertion at ends</li>
+                        <li><span class="highlight">HashMap:</span> O(1) average case operations</li>
+                        <li><span class="highlight">TreeMap:</span> O(log n) operations but sorted order</li>
+                        <li><span class="highlight">HashSet:</span> Fastest for membership testing</li>
+                        <li><span class="highlight">TreeSet:</span> Maintains sorted order automatically</li>
+                    </ul>
+
+                    <h2 class="section-title">Conclusion</h2>
+                    <p>The Java Collections Framework is a powerful and comprehensive set of tools for data
+                        manipulation. By understanding the characteristics, performance implications, and best practices
+                        of different collection types, you can write more efficient and maintainable Java applications.
+                    </p>
+
+                    <p>Remember to always consider your specific use case when choosing collections, and don't hesitate
+                        to measure performance when it matters. The right collection choice can make a significant
+                        difference in your application's performance and memory usage.</p>
+
+                    <div
+                        style="text-align: center; margin: 40px 0; padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px;">
+                        <h3 style="margin: 0 0 10px 0;">Master Collections, Master Performance!</h3>
+                        <p style="margin: 0; font-size: 0.9rem; opacity: 0.9;">Choose wisely, code efficiently</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
