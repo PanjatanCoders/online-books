@@ -22,11 +22,12 @@ A collection of online HTML quick-reference books for developers and learners. E
 3. Use the Table of Contents for quick navigation.
 
 ## Directory Structure
+
 Workspace
 (rerun without)
 Collecting workspace information
 
-java/ advanced/ java_collections_book.html 
+java/ advanced/ java_collections_book.html
 
 ## License
 
