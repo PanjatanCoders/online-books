@@ -4,3260 +4,535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java Arrays - Complete Handbook</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background: white;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .header {
-            text-align: center;
-            padding: 40px 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 15px 15px 0 0;
-            margin: -20px -20px 40px -20px;
-        }
-
-        h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        .author {
-            margin-top: 15px;
-            font-size: 1em;
-            opacity: 0.8;
-        }
-
-        .toc {
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 40px;
-            border-left: 5px solid #667eea;
-        }
-
-        .toc h2 {
-            color: #667eea;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
-
-        .toc ul {
-            list-style: none;
-        }
-
-        .toc li {
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .toc a {
-            color: #555;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .toc a:hover {
-            color: #667eea;
-        }
-
-        .chapter {
-            margin-bottom: 50px;
-            padding: 30px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .chapter h2 {
-            color: #667eea;
-            font-size: 2.2em;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #667eea;
-        }
-
-        .chapter h3 {
-            color: #764ba2;
-            font-size: 1.6em;
-            margin: 30px 0 15px 0;
-        }
-
-        .chapter h4 {
-            color: #555;
-            font-size: 1.3em;
-            margin: 25px 0 10px 0;
-        }
-
-        .code-block {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-            overflow-x: auto;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .code-block pre {
-            margin: 0;
-        }
-
-        .highlight {
-            background: linear-gradient(120deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .tip-box,
-        .note-box,
-        .warning-box {
-            margin: 25px 0;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 5px solid;
-        }
-
-        .tip-box {
-            background: #e8f5e8;
-            border-left-color: #28a745;
-        }
-
-        .note-box {
-            background: #e3f2fd;
-            border-left-color: #2196f3;
-        }
-
-        .warning-box {
-            background: #fff3cd;
-            border-left-color: #ffc107;
-        }
-
-        .tip-box h4,
-        .note-box h4,
-        .warning-box h4 {
-            margin-top: 0;
-            margin-bottom: 10px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        th,
-        td {
-            padding: 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-weight: 600;
-        }
-
-        tr:hover {
-            background: #f5f5f5;
-        }
-
-        .visual-diagram {
-            background: #f8f9fa;
-            border: 2px solid #667eea;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            text-align: center;
-            font-family: monospace;
-            font-size: 14px;
-        }
-
-        .complexity-table {
-            font-size: 0.9em;
-        }
-
-        .complexity-good {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .complexity-ok {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .complexity-bad {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 30px;
-            color: #666;
-            border-top: 2px solid #eee;
-            margin-top: 50px;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 2em;
-            }
-
-            .chapter {
-                padding: 20px;
-            }
-
-            .code-block {
-                font-size: 12px;
-                padding: 15px;
-            }
-        }
-    </style>
+    <title>Java Arrays Guide - TechTok Cafe</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/array.css">
 </head>
 
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Java Arrays</h1>
-            <div class="subtitle">Complete Handbook - From Basics to Advanced</div>
-            <div class="author">By Mohammad S Hossain</div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
+                    height="50px" alt="TechTok Cafe"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../index.html" class="nav-link"><i class="fas fa-home"></i>Home</a>
+                </li>
+                <li class="nav-item"><a href="#" class="nav-link"><i class="fab fa-java"></i>Java Guides</a></li>
+                <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i>All Tutorials</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="../../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="guide-container">
+        <!-- Header -->
+        <div class="guide-header">
+            <h1 class="guide-title">Java Arrays Guide</h1>
+            <p class="guide-subtitle">Master arrays in Java with practical examples and best practices</p>
         </div>
 
+        <!-- Table of Contents -->
         <div class="toc">
-            <h2>Table of Contents</h2>
+            <h3><i class="fas fa-list"></i> Table of Contents</h3>
             <ul>
-                <li><a href="#chapter6">Chapter 6: Sorting Algorithms (Continued)</a></li>
-                <li><a href="#chapter7">Chapter 7: Advanced Array Techniques</a></li>
-                <li><a href="#chapter8">Chapter 8: Performance & Best Practices</a></li>
+                <li><a href="#introduction">1. Introduction to Arrays</a></li>
+                <li><a href="#declaration">2. Array Declaration & Initialization</a></li>
+                <li><a href="#access">3. Accessing Array Elements</a></li>
+                <li><a href="#iteration">4. Array Iteration</a></li>
+                <li><a href="#multidimensional">5. Multidimensional Arrays</a></li>
+                <li><a href="#common-operations">6. Common Array Operations</a></li>
+                <li><a href="#best-practices">7. Best Practices</a></li>
             </ul>
         </div>
 
-        <div class="chapter" id="chapter6">
-            <h2>Chapter 6: Sorting Algorithms (Continued)</h2>
-
-            <h3>Efficient Sorting Algorithms - Complete Implementation</h3>
-
-            <div class="code-block">
-                <pre>
-public class EfficientSortingAlgorithms {
-    
-    // Heap Sort Implementation
-    public static void heapSort(int[] arr) {
-        int n = arr.length;
-        
-        // Build max heap
-        for (int i = n / 2 - 1; i >= 0; i--) {
-            heapify(arr, n, i);
-        }
-        
-        // Extract elements from heap one by one
-        for (int i = n - 1; i > 0; i--) {
-            swap(arr, 0, i);
-            heapify(arr, i, 0);
-        }
-    }
-    
-    private static void benchmarkArrayCopying() {
-        System.out.println("3. Array Copying Benchmark:");
-        int size = 100_000;
-        int[] source = IntStream.range(0, size).toArray();
-        
-        // System.arraycopy
-        long start = System.nanoTime();
-        int[] dest1 = new int[size];
-        System.arraycopy(source, 0, dest1, 0, size);
-        long arraycopyTime = System.nanoTime() - start;
-        
-        // Arrays.copyOf
-        start = System.nanoTime();
-        int[] dest2 = Arrays.copyOf(source, size);
-        long copyOfTime = System.nanoTime() - start;
-        
-        // Manual loop
-        start = System.nanoTime();
-        int[] dest3 = new int[size];
-        for (int i = 0; i < size; i++) {
-            dest3[i] = source[i];
-        }
-        long manualTime = System.nanoTime() - start;
-        
-        // Clone
-        start = System.nanoTime();
-        int[] dest4 = source.clone();
-        long cloneTime = System.nanoTime() - start;
-        
-        System.out.printf("System.arraycopy: %.2f ms%n", arraycopyTime / 1_000_000.0);
-        System.out.printf("Arrays.copyOf:    %.2f ms%n", copyOfTime / 1_000_000.0);
-        System.out.printf("Manual loop:      %.2f ms%n", manualTime / 1_000_000.0);
-        System.out.printf("Clone:            %.2f ms%n", cloneTime / 1_000_000.0);
-        System.out.println();
-    }
-    
-    private static void benchmarkSearchAlgorithms() {
-        System.out.println("4. Search Algorithms Benchmark:");
-        int size = 100_000;
-        int[] arr = IntStream.range(0, size).toArray();
-        int target = size / 2;
-        
-        // Linear search
-        long start = System.nanoTime();
-        int result1 = linearSearch(arr, target);
-        long linearTime = System.nanoTime() - start;
-        
-        // Binary search
-        start = System.nanoTime();
-        int result2 = Arrays.binarySearch(arr, target);
-        long binaryTime = System.nanoTime() - start;
-        
-        System.out.printf("Linear search:  %.2f μs%n", linearTime / 1_000.0);
-        System.out.printf("Binary search:  %.2f μs%n", binaryTime / 1_000.0);
-        System.out.printf("Binary is %.2fx faster%n", (double) linearTime / binaryTime);
-        System.out.println();
-    }
-    
-    private static int linearSearch(int[] arr, int target) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] == target) return i;
-        }
-        return -1;
-    }
-    
-    private static void benchmarkSortingAlgorithms() {
-        System.out.println("5. Sorting Algorithms Benchmark:");
-        int size = 10_000;
-        
-        // Test different array types
-        int[] random = generateRandomArray(size);
-        int[] sorted = Arrays.copyOf(random, size);
-        Arrays.sort(sorted);
-        int[] reversed = IntStream.range(0, size).map(i -> size - 1 - i).toArray();
-        
-        System.out.println("Random array:");
-        benchmarkSortsOnArray(Arrays.copyOf(random, size));
-        
-        System.out.println("Already sorted array:");
-        benchmarkSortsOnArray(Arrays.copyOf(sorted, size));
-        
-        System.out.println("Reverse sorted array:");
-        benchmarkSortsOnArray(Arrays.copyOf(reversed, size));
-        System.out.println();
-    }
-    
-    private static void benchmarkSortsOnArray(int[] arr) {
-        // Arrays.sort (Dual-Pivot Quicksort)
-        int[] test1 = Arrays.copyOf(arr, arr.length);
-        long start = System.nanoTime();
-        Arrays.sort(test1);
-        long javaSort = System.nanoTime() - start;
-        
-        // Quick sort implementation
-        int[] test2 = Arrays.copyOf(arr, arr.length);
-        start = System.nanoTime();
-        quickSort(test2, 0, test2.length - 1);
-        long quickSort = System.nanoTime() - start;
-        
-        // Merge sort implementation
-        int[] test3 = Arrays.copyOf(arr, arr.length);
-        start = System.nanoTime();
-        mergeSort(test3, 0, test3.length - 1);
-        long mergeSort = System.nanoTime() - start;
-        
-        System.out.printf("  Java Arrays.sort: %.2f ms%n", javaSort / 1_000_000.0);
-        System.out.printf("  Quick sort:       %.2f ms%n", quickSort / 1_000_000.0);
-        System.out.printf("  Merge sort:       %.2f ms%n", mergeSort / 1_000_000.0);
-    }
-    
-    private static int[] generateRandomArray(int size) {
-        Random rand = new Random(42);
-        return rand.ints(size, 0, 10000).toArray();
-    }
-    
-    // Quick sort implementation for benchmarking
-    private static void quickSort(int[] arr, int low, int high) {
-        if (low < high) {
-            int pi = partition(arr, low, high);
-            quickSort(arr, low, pi - 1);
-            quickSort(arr, pi + 1, high);
-        }
-    }
-    
-    private static int partition(int[] arr, int low, int high) {
-        int pivot = arr[high];
-        int i = low - 1;
-        
-        for (int j = low; j < high; j++) {
-            if (arr[j] <= pivot) {
-                i++;
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
-            }
-        }
-        
-        int temp = arr[i + 1];
-        arr[i + 1] = arr[high];
-        arr[high] = temp;
-        
-        return i + 1;
-    }
-    
-    // Merge sort implementation for benchmarking
-    private static void mergeSort(int[] arr, int left, int right) {
-        if (left < right) {
-            int mid = (left + right) / 2;
-            mergeSort(arr, left, mid);
-            mergeSort(arr, mid + 1, right);
-            merge(arr, left, mid, right);
-        }
-    }
-    
-    private static void merge(int[] arr, int left, int mid, int right) {
-        int[] temp = new int[right - left + 1];
-        int i = left, j = mid + 1, k = 0;
-        
-        while (i <= mid && j <= right) {
-            if (arr[i] <= arr[j]) {
-                temp[k++] = arr[i++];
-            } else {
-                temp[k++] = arr[j++];
-            }
-        }
-        
-        while (i <= mid) temp[k++] = arr[i++];
-        while (j <= right) temp[k++] = arr[j++];
-        
-        System.arraycopy(temp, 0, arr, left, temp.length);
-    }
-}
-</pre>
-            </div>
-
-            <h3>Best Practices Summary</h3>
-
-            <div class="tip-box">
-                <h4>Array Best Practices Checklist:</h4>
-                <ul>
-                    <li>✅ <strong>Always validate array bounds</strong> before accessing elements</li>
-                    <li>✅ <strong>Check for null arrays</strong> before performing operations</li>
-                    <li>✅ <strong>Use Arrays.equals()</strong> for content comparison, not ==</li>
-                    <li>✅ <strong>Use Arrays.deepEquals()</strong> for multidimensional arrays</li>
-                    <li>✅ <strong>Prefer enhanced for loops</strong> when index is not needed</li>
-                    <li>✅ <strong>Use System.arraycopy()</strong> for efficient array copying</li>
-                    <li>✅ <strong>Consider Collections</strong> for dynamic sizing needs</li>
-                    <li>✅ <strong>Use appropriate data structures</strong> - arrays for fixed size, Collections for
-                        dynamic</li>
-                    <li>✅ <strong>Access arrays sequentially</strong> when possible for better cache performance</li>
-                    <li>✅ <strong>Choose the right sorting algorithm</strong> based on data characteristics</li>
-                </ul>
-            </div>
-
-            <div class="code-block">
-                <pre>
-public class BestPracticesDemo {
-    
-    // Best practice: Safe array operations
-    public static class SafeArrayOperations {
-        
-        public static Optional<Integer> safeGet(int[] array, int index) {
-            if (array != null && index >= 0 && index < array.length) {
-                return Optional.of(array[index]);
-            }
-            return Optional.empty();
-        }
-        
-        public static boolean safeSet(int[] array, int index, int value) {
-            if (array != null && index >= 0 && index < array.length) {
-                array[index] = value;
-                return true;
-            }
-            return false;
-        }
-        
-        public static int[] safeSubarray(int[] array, int start, int end) {
-            if (array == null) return new int[0];
-            
-            int safeStart = Math.max(0, Math.min(start, array.length));
-            int safeEnd = Math.max(safeStart, Math.min(end, array.length));
-            
-            return Arrays.copyOfRange(array, safeStart, safeEnd);
-        }
-    }
-    
-    // Best practice: Immutable array wrapper
-    public static class ImmutableArray {
-        private final int[] array;
-        
-        public ImmutableArray(int[] array) {
-            this.array = Arrays.copyOf(array, array.length);
-        }
-        
-        public int get(int index) {
-            if (index < 0 || index >= array.length) {
-                throw new IndexOutOfBoundsException("Index: " + index);
-            }
-            return array[index];
-        }
-        
-        public int length() {
-            return array.length;
-        }
-        
-        public int[] toArray() {
-            return Arrays.copyOf(array, array.length);
-        }
-        
-        public Stream<Integer> stream() {
-            return Arrays.stream(array).boxed();
-        }
-        
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) return true;
-            if (!(obj instanceof ImmutableArray)) return false;
-            ImmutableArray other = (ImmutableArray) obj;
-            return Arrays.equals(this.array, other.array);
-        }
-        
-        @Override
-        public int hashCode() {
-            return Arrays.hashCode(array);
-        }
-        
-        @Override
-        public String toString() {
-            return Arrays.toString(array);
-        }
-    }
-    
-    // Best practice: Builder pattern for arrays
-    public static class ArrayBuilder {
-        private int[] array;
-        private int size;
-        private int capacity;
-        
-        public ArrayBuilder() {
-            this(16);
-        }
-        
-        public ArrayBuilder(int initialCapacity) {
-            this.capacity = initialCapacity;
-            this.array = new int[capacity];
-            this.size = 0;
-        }
-        
-        public ArrayBuilder add(int value) {
-            ensureCapacity(size + 1);
-            array[size++] = value;
-            return this;
-        }
-        
-        public ArrayBuilder addAll(int... values) {
-            ensureCapacity(size + values.length);
-            System.arraycopy(values, 0, array, size, values.length);
-            size += values.length;
-            return this;
-        }
-        
-        private void ensureCapacity(int minCapacity) {
-            if (minCapacity > capacity) {
-                int newCapacity = Math.max(capacity * 2, minCapacity);
-                array = Arrays.copyOf(array, newCapacity);
-                capacity = newCapacity;
-            }
-        }
-        
-        public int[] build() {
-            return Arrays.copyOf(array, size);
-        }
-        
-        public ImmutableArray buildImmutable() {
-            return new ImmutableArray(Arrays.copyOf(array, size));
-        }
-    }
-    
-    // Best practice: Functional array operations
-    public static class FunctionalArrays {
-        
-        public static int[] map(int[] array, IntUnaryOperator mapper) {
-            return Arrays.stream(array).map(mapper).toArray();
-        }
-        
-        public static int[] filter(int[] array, IntPredicate predicate) {
-            return Arrays.stream(array).filter(predicate).toArray();
-        }
-        
-        public static int reduce(int[] array, int identity, IntBinaryOperator accumulator) {
-            return Arrays.stream(array).reduce(identity, accumulator);
-        }
-        
-        public static boolean anyMatch(int[] array, IntPredicate predicate) {
-            return Arrays.stream(array).anyMatch(predicate);
-        }
-        
-        public static boolean allMatch(int[] array, IntPredicate predicate) {
-            return Arrays.stream(array).allMatch(predicate);
-        }
-        
-        // Example usage
-        public static void demonstrateFunctionalOperations() {
-            int[] numbers = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-            
-            // Map: square all numbers
-            int[] squares = map(numbers, x -> x * x);
-            System.out.println("Squares: " + Arrays.toString(squares));
-            
-            // Filter: get even numbers
-            int[] evens = filter(numbers, x -> x % 2 == 0);
-            System.out.println("Evens: " + Arrays.toString(evens));
-            
-            // Reduce: sum all numbers
-            int sum = reduce(numbers, 0, Integer::sum);
-            System.out.println("Sum: " + sum);
-            
-            // Any match: check if any number > 5
-            boolean hasLarge = anyMatch(numbers, x -> x > 5);
-            System.out.println("Has number > 5: " + hasLarge);
-        }
-    }
-    
-    // Best practice: Documentation and examples
-    /**
-     * Finds the maximum element in an array using a divide-and-conquer approach.
-     * 
-     * @param array the array to search (must not be null or empty)
-     * @param start the starting index (inclusive)
-     * @param end the ending index (exclusive)
-     * @return the maximum element in the specified range
-     * @throws IllegalArgumentException if array is null or empty, or indices are invalid
-     * 
-     * Time Complexity: O(n)
-     * Space Complexity: O(log n) due to recursion
-     * 
-     * Example:
-     * <pre>
-     * int[] arr = {3, 7, 1, 9, 4};
-     * int max = findMax(arr, 0, arr.length); // returns 9
-     * </pre>
-                */
-                public static int findMax(int[] array, int start, int end) {
-                // Input validation
-                if (array == null || array.length == 0) {
-                throw new IllegalArgumentException("Array cannot be null or empty");
-                }
-                if (start < 0 || end> array.length || start >= end) {
-                    throw new IllegalArgumentException("Invalid indices: start=" + start + ", end=" + end);
-                    }
-
-                    // Base case
-                    if (end - start == 1) {
-                    return array[start];
-                    }
-
-                    // Divide and conquer
-                    int mid = start + (end - start) / 2;
-                    int leftMax = findMax(array, start, mid);
-                    int rightMax = findMax(array, mid, end);
-
-                    return Math.max(leftMax, rightMax);
-                    }
-
-                    // Demo method
-                    public static void demonstrateBestPractices() {
-                    System.out.println("=== Best Practices Demo ===\n");
-
-                    // Safe operations
-                    int[] arr = {1, 2, 3, 4, 5};
-                    SafeArrayOperations.safeGet(arr, 10)
-                    .ifPresentOrElse(
-                    value -> System.out.println("Value: " + value),
-                    () -> System.out.println("Index out of bounds handled safely")
-                    );
-
-                    // Builder pattern
-                    int[] built = new ArrayBuilder()
-                    .add(1)
-                    .addAll(2, 3, 4)
-                    .add(5)
-                    .build();
-                    System.out.println("Built array: " + Arrays.toString(built));
-
-                    // Immutable array
-                    ImmutableArray immutable = new ImmutableArray(built);
-                    System.out.println("Immutable array: " + immutable);
-
-                    // Functional operations
-                    FunctionalArrays.demonstrateFunctionalOperations();
-                    }
-                    }
-                    </pre>
-            </div>
-        </div>
-
-        <div class="footer">
-            <p><strong>Java Arrays - Complete Handbook</strong></p>
-            <p>This comprehensive guide covers everything from basic array operations to advanced techniques and
-                performance optimization.</p>
-            <p>Keep practicing and experimenting with these concepts to master Java arrays!</p>
-            <p><em>© 2024 Mohammad S Hossain. This handbook serves as a complete reference for Java array
-                    programming.</em></p>
-        </div>
-    </div>
-</body>
-
-</html>d heapify(int[] arr, int n, int i) {
-int largest = i;
-int left = 2 * i + 1;
-int right = 2 * i + 2;
-
-if (left < n && arr[left]> arr[largest]) {
-    largest = left;
-    }
-
-    if (right < n && arr[right]> arr[largest]) {
-        largest = right;
-        }
-
-        if (largest != i) {
-        swap(arr, i, largest);
-        heapify(arr, n, largest);
-        }
-        }
-
-        // Performance Testing
-        public static void performanceTest() {
-        int[] sizes = {1000, 10000, 100000};
-
-        for (int size : sizes) {
-        System.out.println("\nTesting with array size: " + size);
-
-        // Test different sorting algorithms
-        int[] original = generateRandomArray(size);
-
-        // Heap Sort Test
-        int[] heapTest = Arrays.copyOf(original, original.length);
-        long startTime = System.nanoTime();
-        heapSort(heapTest);
-        long heapTime = System.nanoTime() - startTime;
-
-        // Quick Sort Test
-        int[] quickTest = Arrays.copyOf(original, original.length);
-        startTime = System.nanoTime();
-        quickSort(quickTest, 0, quickTest.length - 1);
-        long quickTime = System.nanoTime() - startTime;
-
-        // Merge Sort Test
-        int[] mergeTest = Arrays.copyOf(original, original.length);
-        startTime = System.nanoTime();
-        mergeSort(mergeTest, 0, mergeTest.length - 1);
-        long mergeTime = System.nanoTime() - startTime;
-
-        // Built-in Sort Test
-        int[] builtinTest = Arrays.copyOf(original, original.length);
-        startTime = System.nanoTime();
-        Arrays.sort(builtinTest);
-        long builtinTime = System.nanoTime() - startTime;
-
-        System.out.printf("Heap Sort: %.2f ms%n", heapTime / 1_000_000.0);
-        System.out.printf("Quick Sort: %.2f ms%n", quickTime / 1_000_000.0);
-        System.out.printf("Merge Sort: %.2f ms%n", mergeTime / 1_000_000.0);
-        System.out.printf("Built-in: %.2f ms%n", builtinTime / 1_000_000.0);
-        }
-        }
-
-        private static int[] generateRandomArray(int size) {
-        Random rand = new Random();
-        int[] arr = new int[size];
-        for (int i = 0; i < size; i++) { arr[i]=rand.nextInt(10000); } return arr; } private static void swap(int[] arr,
-            int i, int j) { int temp=arr[i]; arr[i]=arr[j]; arr[j]=temp; } // Quick Sort (for comparison) public static
-            void quickSort(int[] arr, int low, int high) { if (low < high) { int pi=partition(arr, low, high);
-            quickSort(arr, low, pi - 1); quickSort(arr, pi + 1, high); } } private static int partition(int[] arr, int
-            low, int high) { int pivot=arr[high]; int i=low - 1; for (int j=low; j < high; j++) { if (arr[j] <=pivot) {
-            i++; swap(arr, i, j); } } swap(arr, i + 1, high); return i + 1; } // Merge Sort (for comparison) public
-            static void mergeSort(int[] arr, int left, int right) { if (left < right) { int mid=(left + right) / 2;
-            mergeSort(arr, left, mid); mergeSort(arr, mid + 1, right); merge(arr, left, mid, right); } } private static
-            void merge(int[] arr, int left, int mid, int right) { int[] temp=new int[right - left + 1]; int i=left,
-            j=mid + 1, k=0; while (i <=mid && j <=right) { if (arr[i] <=arr[j]) { temp[k++]=arr[i++]; } else {
-            temp[k++]=arr[j++]; } } while (i <=mid) temp[k++]=arr[i++]; while (j <=right) temp[k++]=arr[j++];
-            System.arraycopy(temp, 0, arr, left, temp.length); } } </pre>
-            </div>
-
-            <h3>Specialized Sorting Algorithms</h3>
-
-            <h4>Radix Sort</h4>
-            <p>Radix sort is a non-comparison sorting algorithm that works on integers by sorting digit by digit.</p>
-
-            <div class="code-block">
-                <pre>
-public class RadixSort {
-    
-    public static void radixSort(int[] arr) {
-        if (arr.length <= 1) return;
-        
-        // Find maximum number to determine number of digits
-        int max = getMax(arr);
-        
-        // Do counting sort for every digit
-        for (int exp = 1; max / exp > 0; exp *= 10) {
-            countingSortByDigit(arr, exp);
-        }
-    }
-    
-    private static void countingSortByDigit(int[] arr, int exp) {
-        int n = arr.length;
-        int[] output = new int[n];
-        int[] count = new int[10];
-        
-        // Store count of occurrences of each digit
-        for (int i = 0; i < n; i++) {
-            count[(arr[i] / exp) % 10]++;
-        }
-        
-        // Change count[i] so it contains actual position
-        for (int i = 1; i < 10; i++) {
-            count[i] += count[i - 1];
-        }
-        
-        // Build output array
-        for (int i = n - 1; i >= 0; i--) {
-            output[count[(arr[i] / exp) % 10] - 1] = arr[i];
-            count[(arr[i] / exp) % 10]--;
-        }
-        
-        // Copy output array to arr[]
-        System.arraycopy(output, 0, arr, 0, n);
-    }
-    
-    private static int getMax(int[] arr) {
-        int max = arr[0];
-        for (int i = 1; i < arr.length; i++) {
-            if (arr[i] > max) {
-                max = arr[i];
-            }
-        }
-        return max;
-    }
-    
-    // Demo method
-    public static void demo() {
-        int[] arr = {170, 45, 75, 90, 2, 802, 24, 66};
-        System.out.println("Original: " + Arrays.toString(arr));
-        
-        radixSort(arr);
-        System.out.println("Sorted:   " + Arrays.toString(arr));
-    }
-}
-</pre>
-            </div>
-
-            <h4>Counting Sort</h4>
-            <p>Counting sort works well when the range of input data is small compared to the number of objects.</p>
-
-            <div class="code-block">
-                <pre>
-public class CountingSort {
-    
-    public static void countingSort(int[] arr, int maxVal) {
-        int[] count = new int[maxVal + 1];
-        int[] output = new int[arr.length];
-        
-        // Count occurrences of each element
-        for (int num : arr) {
-            count[num]++;
-        }
-        
-        // Modify count array to store actual positions
-        for (int i = 1; i <= maxVal; i++) {
-            count[i] += count[i - 1];
-        }
-        
-        // Build output array
-        for (int i = arr.length - 1; i >= 0; i--) {
-            output[count[arr[i]] - 1] = arr[i];
-            count[arr[i]]--;
-        }
-        
-        // Copy output array to original array
-        System.arraycopy(output, 0, arr, 0, arr.length);
-    }
-    
-    // Version that automatically finds the range
-    public static void countingSort(int[] arr) {
-        if (arr.length <= 1) return;
-        
-        int max = Arrays.stream(arr).max().getAsInt();
-        int min = Arrays.stream(arr).min().getAsInt();
-        int range = max - min + 1;
-        
-        int[] count = new int[range];
-        int[] output = new int[arr.length];
-        
-        // Count occurrences
-        for (int num : arr) {
-            count[num - min]++;
-        }
-        
-        // Modify count array
-        for (int i = 1; i < count.length; i++) {
-            count[i] += count[i - 1];
-        }
-        
-        // Build output array
-        for (int i = arr.length - 1; i >= 0; i--) {
-            output[count[arr[i] - min] - 1] = arr[i];
-            count[arr[i] - min]--;
-        }
-        
-        System.arraycopy(output, 0, arr, 0, arr.length);
-    }
-}
-</pre>
-            </div>
-
-            <h4>Bucket Sort</h4>
-            <p>Bucket sort distributes elements into buckets, sorts each bucket, then concatenates the results.</p>
-
-            <div class="code-block">
-                <pre>
-public class BucketSort {
-    
-    public static void bucketSort(double[] arr) {
-        if (arr.length <= 1) return;
-        
-        int bucketCount = arr.length;
-        List&lt;Double&gt;[] buckets = new ArrayList[bucketCount];
-        
-        // Initialize buckets
-        for (int i = 0; i < bucketCount; i++) {
-            buckets[i] = new ArrayList&lt;&gt;();
-        }
-        
-        // Distribute elements into buckets
-        for (double num : arr) {
-            int bucketIndex = (int) (num * bucketCount);
-            // Handle edge case where num == 1.0
-            if (bucketIndex >= bucketCount) {
-                bucketIndex = bucketCount - 1;
-            }
-            buckets[bucketIndex].add(num);
-        }
-        
-        // Sort individual buckets and concatenate
-        int index = 0;
-        for (List&lt;Double&gt; bucket : buckets) {
-            Collections.sort(bucket);
-            for (double num : bucket) {
-                arr[index++] = num;
-            }
-        }
-    }
-    
-    // Integer version using ranges
-    public static void bucketSort(int[] arr, int bucketSize) {
-        if (arr.length <= 1) return;
-        
-        int max = Arrays.stream(arr).max().getAsInt();
-        int min = Arrays.stream(arr).min().getAsInt();
-        int bucketCount = (max - min) / bucketSize + 1;
-        
-        List&lt;Integer&gt;[] buckets = new ArrayList[bucketCount];
-        for (int i = 0; i < bucketCount; i++) {
-            buckets[i] = new ArrayList&lt;&gt;();
-        }
-        
-        // Distribute elements
-        for (int num : arr) {
-            int bucketIndex = (num - min) / bucketSize;
-            buckets[bucketIndex].add(num);
-        }
-        
-        // Sort and concatenate
-        int index = 0;
-        for (List&lt;Integer&gt; bucket : buckets) {
-            Collections.sort(bucket);
-            for (int num : bucket) {
-                arr[index++] = num;
-            }
-        }
-    }
-}
-</pre>
-            </div>
-
-            <h3>Sorting Performance Comparison</h3>
-
-            <table class="complexity-table">
-                <thead>
-                    <tr>
-                        <th>Algorithm</th>
-                        <th>Best Case</th>
-                        <th>Average Case</th>
-                        <th>Worst Case</th>
-                        <th>Space Complexity</th>
-                        <th>Stable</th>
-                        <th>In-place</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Bubble Sort</strong></td>
-                        <td class="complexity-good">O(n)</td>
-                        <td class="complexity-bad">O(n²)</td>
-                        <td class="complexity-bad">O(n²)</td>
-                        <td class="complexity-good">O(1)</td>
-                        <td>✓</td>
-                        <td>✓</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Selection Sort</strong></td>
-                        <td class="complexity-bad">O(n²)</td>
-                        <td class="complexity-bad">O(n²)</td>
-                        <td class="complexity-bad">O(n²)</td>
-                        <td class="complexity-good">O(1)</td>
-                        <td>✗</td>
-                        <td>✓</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Insertion Sort</strong></td>
-                        <td class="complexity-good">O(n)</td>
-                        <td class="complexity-bad">O(n²)</td>
-                        <td class="complexity-bad">O(n²)</td>
-                        <td class="complexity-good">O(1)</td>
-                        <td>✓</td>
-                        <td>✓</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Merge Sort</strong></td>
-                        <td class="complexity-ok">O(n log n)</td>
-                        <td class="complexity-ok">O(n log n)</td>
-                        <td class="complexity-ok">O(n log n)</td>
-                        <td class="complexity-ok">O(n)</td>
-                        <td>✓</td>
-                        <td>✗</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Quick Sort</strong></td>
-                        <td class="complexity-ok">O(n log n)</td>
-                        <td class="complexity-ok">O(n log n)</td>
-                        <td class="complexity-bad">O(n²)</td>
-                        <td class="complexity-ok">O(log n)</td>
-                        <td>✗</td>
-                        <td>✓</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Heap Sort</strong></td>
-                        <td class="complexity-ok">O(n log n)</td>
-                        <td class="complexity-ok">O(n log n)</td>
-                        <td class="complexity-ok">O(n log n)</td>
-                        <td class="complexity-good">O(1)</td>
-                        <td>✗</td>
-                        <td>✓</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Radix Sort</strong></td>
-                        <td class="complexity-good">O(d×n)</td>
-                        <td class="complexity-good">O(d×n)</td>
-                        <td class="complexity-good">O(d×n)</td>
-                        <td class="complexity-ok">O(n+k)</td>
-                        <td>✓</td>
-                        <td>✗</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Counting Sort</strong></td>
-                        <td class="complexity-good">O(n+k)</td>
-                        <td class="complexity-good">O(n+k)</td>
-                        <td class="complexity-good">O(n+k)</td>
-                        <td class="complexity-ok">O(k)</td>
-                        <td>✓</td>
-                        <td>✗</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="note-box">
-                <h4>Legend:</h4>
-                <p><strong>n</strong> = number of elements<br>
-                    <strong>k</strong> = range of input values<br>
-                    <strong>d</strong> = number of digits in the largest number
-                </p>
-            </div>
-
-            <h3>Sorting Stability Demonstration</h3>
-
-            <div class="code-block">
-                <pre>
-public class SortingStabilityDemo {
-    
-    static class Person {
-        String name;
-        int age;
-        
-        Person(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
-        
-        @Override
-        public String toString() {
-            return name + "(" + age + ")";
-        }
-    }
-    
-    public static void demonstrateStability() {
-        Person[] people = {
-            new Person("Alice", 25),
-            new Person("Bob", 30),
-            new Person("Charlie", 25),
-            new Person("David", 30),
-            new Person("Eve", 25)
-        };
-        
-        System.out.println("Original order:");
-        System.out.println(Arrays.toString(people));
-        
-        // Stable sort by age (maintains relative order of equal elements)
-        Arrays.sort(people, Comparator.comparingInt(p -> p.age));
-        
-        System.out.println("\nAfter stable sort by age:");
-        System.out.println(Arrays.toString(people));
-        System.out.println("Notice: Alice comes before Charlie and Eve (all age 25)");
-        System.out.println("        Bob comes before David (both age 30)");
-    }
-    
-    // Custom stable sorting implementation
-    public static void stableSortByAge(Person[] people) {
-        // Using merge sort which is stable
-        mergeSort(people, 0, people.length - 1);
-    }
-    
-    private static void mergeSort(Person[] arr, int left, int right) {
-        if (left < right) {
-            int mid = (left + right) / 2;
-            mergeSort(arr, left, mid);
-            mergeSort(arr, mid + 1, right);
-            merge(arr, left, mid, right);
-        }
-    }
-    
-    private static void merge(Person[] arr, int left, int mid, int right) {
-        Person[] temp = new Person[right - left + 1];
-        int i = left, j = mid + 1, k = 0;
-        
-        while (i <= mid && j <= right) {
-            if (arr[i].age <= arr[j].age) {  // <= maintains stability
-                temp[k++] = arr[i++];
-            } else {
-                temp[k++] = arr[j++];
-            }
-        }
-        
-        while (i <= mid) temp[k++] = arr[i++];
-        while (j <= right) temp[k++] = arr[j++];
-        
-        System.arraycopy(temp, 0, arr, left, temp.length);
-    }
-}
-</pre>
-            </div>
-
-            <div class="tip-box">
-                <h4>When to Use Which Sorting Algorithm:</h4>
-                <ul>
-                    <li><strong>Small arrays (&lt;50 elements):</strong> Insertion Sort</li>
-                    <li><strong>General purpose:</strong> Quick Sort or Arrays.sort()</li>
-                    <li><strong>Guaranteed O(n log n):</strong> Merge Sort or Heap Sort</li>
-                    <li><strong>Nearly sorted data:</strong> Insertion Sort or Bubble Sort</li>
-                    <li><strong>Integer data with small range:</strong> Counting Sort</li>
-                    <li><strong>Uniform distribution:</strong> Bucket Sort</li>
-                    <li><strong>Large integers:</strong> Radix Sort</li>
-                </ul>
-            </div>
-            </div>
-
-            <div class="chapter" id="chapter7">
-                <h2>Chapter 7: Advanced Array Techniques</h2>
-
-                <h3>Dynamic Programming with Arrays</h3>
-                <p>Dynamic Programming (DP) uses arrays to store solutions to subproblems, avoiding redundant
-                    calculations.</p>
-
-                <h4>Classic DP Problems</h4>
-
-                <div class="code-block">
-                    <pre>
-public class DynamicProgramming {
-    
-    // Fibonacci with memoization
-    public static long fibonacciDP(int n) {
-        if (n <= 1) return n;
-        
-        long[] dp = new long[n + 1];
-        dp[0] = 0;
-        dp[1] = 1;
-        
-        for (int i = 2; i <= n; i++) {
-            dp[i] = dp[i - 1] + dp[i - 2];
-        }
-        
-        return dp[n];
-    }
-    
-    // Longest Increasing Subsequence
-    public static int longestIncreasingSubsequence(int[] nums) {
-        if (nums.length == 0) return 0;
-        
-        int[] dp = new int[nums.length];
-        Arrays.fill(dp, 1);
-        
-        for (int i = 1; i < nums.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (nums[i] > nums[j]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-            }
-        }
-        
-        return Arrays.stream(dp).max().getAsInt();
-    }
-    
-    // Coin Change Problem
-    public static int coinChange(int[] coins, int amount) {
-        int[] dp = new int[amount + 1];
-        Arrays.fill(dp, amount + 1);
-        dp[0] = 0;
-        
-        for (int i = 1; i <= amount; i++) {
-            for (int coin : coins) {
-                if (coin <= i) {
-                    dp[i] = Math.min(dp[i], dp[i - coin] + 1);
-                }
-            }
-        }
-        
-        return dp[amount] > amount ? -1 : dp[amount];
-    }
-    
-    // 0/1 Knapsack Problem
-    public static int knapsack(int[] weights, int[] values, int capacity) {
-        int n = weights.length;
-        int[][] dp = new int[n + 1][capacity + 1];
-        
-        for (int i = 1; i <= n; i++) {
-            for (int w = 1; w <= capacity; w++) {
-                if (weights[i - 1] <= w) {
-                    dp[i][w] = Math.max(
-                        values[i - 1] + dp[i - 1][w - weights[i - 1]],
-                        dp[i - 1][w]
-                    );
-                } else {
-                    dp[i][w] = dp[i - 1][w];
-                }
-            }
-        }
-        
-        return dp[n][capacity];
-    }
-    
-    // House Robber Problem
-    public static int rob(int[] nums) {
-        if (nums.length == 0) return 0;
-        if (nums.length == 1) return nums[0];
-        
-        int[] dp = new int[nums.length];
-        dp[0] = nums[0];
-        dp[1] = Math.max(nums[0], nums[1]);
-        
-        for (int i = 2; i < nums.length; i++) {
-            dp[i] = Math.max(dp[i - 1], nums[i] + dp[i - 2]);
-        }
-        
-        return dp[nums.length - 1];
-    }
-    
-    // Space-optimized version
-    public static int robOptimized(int[] nums) {
-        if (nums.length == 0) return 0;
-        if (nums.length == 1) return nums[0];
-        
-        int prev2 = nums[0];
-        int prev1 = Math.max(nums[0], nums[1]);
-        
-        for (int i = 2; i < nums.length; i++) {
-            int current = Math.max(prev1, nums[i] + prev2);
-            prev2 = prev1;
-            prev1 = current;
-        }
-        
-        return prev1;
-    }
-}
-</pre>
-                </div>
-
-                <h3>Sliding Window Technique</h3>
-                <p>The sliding window technique maintains a window of elements and efficiently processes subarrays.</p>
-
-                <div class="visual-diagram">
-                    <p>Sliding Window Example: Finding maximum sum of k consecutive elements</p>
-                    <pre>
-Array: [1, 4, 2, 9, 5, 10, 8, 6], k = 3
-
-Window 1: [1, 4, 2] → sum = 7
-Window 2: [4, 2, 9] → sum = 15
-Window 3: [2, 9, 5] → sum = 16
-Window 4: [9, 5, 10] → sum = 24 ← Maximum
-Window 5: [5, 10, 8] → sum = 23
-Window 6: [10, 8, 6] → sum = 24
-                </pre>
-                </div>
-
-                <div class="code-block">
-                    <pre>
-public class SlidingWindow {
-    
-    // Maximum sum of k consecutive elements
-    public static int maxSumSubarray(int[] arr, int k) {
-        if (arr.length < k) return -1;
-        
-        // Calculate sum of first window
-        int windowSum = 0;
-        for (int i = 0; i < k; i++) {
-            windowSum += arr[i];
-        }
-        
-        int maxSum = windowSum;
-        
-        // Slide the window and update sum
-        for (int i = k; i < arr.length; i++) {
-            windowSum = windowSum - arr[i - k] + arr[i];
-            maxSum = Math.max(maxSum, windowSum);
-        }
-        
-        return maxSum;
-    }
-    
-    // Longest substring with at most k distinct characters
-    public static int longestSubstringKDistinct(String s, int k) {
-        if (s.length() == 0 || k == 0) return 0;
-        
-        Map<Character, Integer> charCount = new HashMap<>();
-        int left = 0, maxLen = 0;
-        
-        for (int right = 0; right < s.length(); right++) {
-            char rightChar = s.charAt(right);
-            charCount.put(rightChar, charCount.getOrDefault(rightChar, 0) + 1);
-            
-            // Shrink window if we have more than k distinct characters
-            while (charCount.size() > k) {
-                char leftChar = s.charAt(left);
-                charCount.put(leftChar, charCount.get(leftChar) - 1);
-                if (charCount.get(leftChar) == 0) {
-                    charCount.remove(leftChar);
-                }
-                left++;
-            }
-            
-            maxLen = Math.max(maxLen, right - left + 1);
-        }
-        
-        return maxLen;
-    }
-    
-    // Minimum window substring
-    public static String minWindowSubstring(String s, String t) {
-        if (s.length() == 0 || t.length() == 0) return "";
-        
-        Map<Character, Integer> targetMap = new HashMap<>();
-        for (char c : t.toCharArray()) {
-            targetMap.put(c, targetMap.getOrDefault(c, 0) + 1);
-        }
-        
-        int required = targetMap.size();
-        int left = 0, right = 0;
-        int formed = 0;
-        
-        Map<Character, Integer> windowMap = new HashMap<>();
-        
-        int[] ans = {-1, 0, 0}; // length, left, right
-        
-        while (right < s.length()) {
-            char rightChar = s.charAt(right);
-            windowMap.put(rightChar, windowMap.getOrDefault(rightChar, 0) + 1);
-            
-            if (targetMap.containsKey(rightChar) && 
-                windowMap.get(rightChar).intValue() == targetMap.get(rightChar).intValue()) {
-                formed++;
-            }
-            
-            while (left <= right && formed == required) {
-                if (ans[0] == -1 || right - left + 1 < ans[0]) {
-                    ans[0] = right - left + 1;
-                    ans[1] = left;
-                    ans[2] = right;
-                }
-                
-                char leftChar = s.charAt(left);
-                windowMap.put(leftChar, windowMap.get(leftChar) - 1);
-                if (targetMap.containsKey(leftChar) && 
-                    windowMap.get(leftChar).intValue() < targetMap.get(leftChar).intValue()) {
-                    formed--;
-                }
-                left++;
-            }
-            right++;
-        }
-        
-        return ans[0] == -1 ? "" : s.substring(ans[1], ans[2] + 1);
-    }
-    
-    // Sliding window maximum
-    public static int[] slidingWindowMaximum(int[] nums, int k) {
-        Deque<Integer> deque = new ArrayDeque<>();
-        int[] result = new int[nums.length - k + 1];
-        
-        for (int i = 0; i < nums.length; i++) {
-            // Remove indices that are out of current window
-            while (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {
-                deque.pollFirst();
-            }
-            
-            // Remove indices of smaller elements from rear
-            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
-                deque.pollLast();
-            }
-            
-            deque.offerLast(i);
-            
-            // Add to result if window is complete
-            if (i >= k - 1) {
-                result[i - k + 1] = nums[deque.peekFirst()];
-            }
-        }
-        
-        return result;
-    }
-}
-</pre>
-                </div>
-
-                <h3>Two Pointers Technique</h3>
-                <p>The two pointers technique uses two pointers moving towards each other or in the same direction to
-                    solve problems efficiently.</p>
-
-                <div class="visual-diagram">
-                    <p>Two Pointers Example: Finding pair with target sum</p>
-                    <pre>
-Sorted Array: [1, 2, 4, 6, 8, 9, 14, 15], Target: 13
-
-left=0, right=7: arr[0] + arr[7] = 1 + 15 = 16 > 13 → right--
-left=0, right=6: arr[0] + arr[6] = 1 + 14 = 15 > 13 → right--
-left=0, right=5: arr[0] + arr[5] = 1 + 9  = 10 < 13 → left++
-left=1, right=5: arr[1] + arr[5] = 2 + 9  = 11 < 13 → left++
-left=2, right=5: arr[2] + arr[5] = 4 + 9  = 13 = 13 → Found!
-                </pre>
-                </div>
-
-                <div class="code-block">
-                    <pre>
-public class TwoPointers {
-    
-    // Two Sum in sorted array
-    public static int[] twoSum(int[] nums, int target) {
-        int left = 0, right = nums.length - 1;
-        
-        while (left < right) {
-            int sum = nums[left] + nums[right];
-            if (sum == target) {
-                return new int[]{left, right};
-            } else if (sum < target) {
-                left++;
-            } else {
-                right--;
-            }
-        }
-        
-        return new int[]{-1, -1}; // Not found
-    }
-    
-    // Three Sum
-    public static List<List<Integer>> threeSum(int[] nums) {
-        Arrays.sort(nums);
-        List<List<Integer>> result = new ArrayList<>();
-        
-        for (int i = 0; i < nums.length - 2; i++) {
-            // Skip duplicates
-            if (i > 0 && nums[i] == nums[i - 1]) continue;
-            
-            int left = i + 1, right = nums.length - 1;
-            int target = -nums[i];
-            
-            while (left < right) {
-                int sum = nums[left] + nums[right];
-                if (sum == target) {
-                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
-                    
-                    // Skip duplicates
-                    while (left < right && nums[left] == nums[left + 1]) left++;
-                    while (left < right && nums[right] == nums[right - 1]) right--;
-                    
-                    left++;
-                    right--;
-                } else if (sum < target) {
-                    left++;
-                } else {
-                    right--;
-                }
-            }
-        }
-        
-        return result;
-    }
-    
-    // Remove duplicates from sorted array
-    public static int removeDuplicates(int[] nums) {
-        if (nums.length == 0) return 0;
-        
-        int writeIndex = 1;
-        for (int readIndex = 1; readIndex < nums.length; readIndex++) {
-            if (nums[readIndex] != nums[readIndex - 1]) {
-                nums[writeIndex++] = nums[readIndex];
-            }
-        }
-        
-        return writeIndex;
-    }
-    
-    // Container with most water
-    public static int maxArea(int[] height) {
-        int left = 0, right = height.length - 1;
-        int maxWater = 0;
-        
-        while (left < right) {
-            int width = right - left;
-            int currentWater = width * Math.min(height[left], height[right]);
-            maxWater = Math.max(maxWater, currentWater);
-            
-            // Move the pointer with smaller height
-            if (height[left] < height[right]) {
-                left++;
-            } else {
-                right--;
-            }
-        }
-        
-        return maxWater;
-    }
-    
-    // Palindrome check
-    public static boolean isPalindrome(String s) {
-        int left = 0, right = s.length() - 1;
-        
-        while (left < right) {
-            while (left < right && !Character.isLetterOrDigit(s.charAt(left))) {
-                left++;
-            }
-            while (left < right && !Character.isLetterOrDigit(s.charAt(right))) {
-                right--;
-            }
-            
-            if (Character.toLowerCase(s.charAt(left)) != 
-                Character.toLowerCase(s.charAt(right))) {
-                return false;
-            }
-            
-            left++;
-            right--;
-        }
-        
-        return true;
-    }
-}
-</pre>
-                </div>
-
-                <h3>Array Rotation Algorithms</h3>
-                <p>Various efficient methods to rotate arrays left or right by k positions.</p>
-
-                <div class="code-block">
-                    <pre>
-public class ArrayRotation {
-    
-    // Method 1: Using temporary array
-    public static void rotateRight(int[] nums, int k) {
-        int n = nums.length;
-        k = k % n; // Handle k > n
-        
-        int[] temp = new int[n];
-        
-        // Copy elements to their new positions
-        for (int i = 0; i < n; i++) {
-            temp[(i + k) % n] = nums[i];
-        }
-        
-        // Copy back to original array
-        System.arraycopy(temp, 0, nums, 0, n);
-    }
-    
-    // Method 2: Reverse algorithm (most efficient)
-    public static void rotateRightReverse(int[] nums, int k) {
-        int n = nums.length;
-        k = k % n;
-        
-        // Step 1: Reverse entire array
-        reverse(nums, 0, n - 1);
-        
-        // Step 2: Reverse first k elements
-        reverse(nums, 0, k - 1);
-        
-        // Step 3: Reverse remaining elements
-        reverse(nums, k, n - 1);
-    }
-    
-    private static void reverse(int[] nums, int start, int end) {
-        while (start < end) {
-            int temp = nums[start];
-            nums[start] = nums[end];
-            nums[end] = temp;
-            start++;
-            end--;
-        }
-    }
-    
-    // Method 3: Cyclic replacements
-    public static void rotateRightCyclic(int[] nums, int k) {
-        int n = nums.length;
-        k = k % n;
-        int count = 0;
-        
-        for (int start = 0; count < n; start++) {
-            int current = start;
-            int prev = nums[start];
-            
-            do {
-                int next = (current + k) % n;
-                int temp = nums[next];
-                nums[next] = prev;
-                prev = temp;
-                current = next;
-                count++;
-            } while (start != current);
-        }
-    }
-    
-    // Left rotation
-    public static void rotateLeft(int[] nums, int k) {
-        rotateRight(nums, nums.length - k);
-    }
-    
-    // Search in rotated sorted array
-    public static int searchRotated(int[] nums, int target) {
-        int left = 0, right = nums.length - 1;
-        
-        while (left <= right) {
-            int mid = left + (right - left) / 2;
-            
-            if (nums[mid] == target) {
-                return mid;
-            }
-            
-            // Left half is sorted
-            if (nums[left] <= nums[mid]) {
-                if (target >= nums[left] && target < nums[mid]) {
-                    right = mid - 1;
-                } else {
-                    left = mid + 1;
-                }
-            }
-            // Right half is sorted
-            else {
-                if (target > nums[mid] && target <= nums[right]) {
-                    left = mid + 1;
-                } else {
-                    right = mid - 1;
-                }
-            }
-        }
-        
-        return -1;
-    }
-    
-    // Find rotation point
-    public static int findRotationPoint(int[] nums) {
-        int left = 0, right = nums.length - 1;
-        
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-            
-            if (nums[mid] > nums[right]) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
-        }
-        
-        return left;
-    }
-    
-    // Demo method
-    public static void demonstrateRotation() {
-        int[] original = {1, 2, 3, 4, 5, 6, 7};
-        
-        System.out.println("Original: " + Arrays.toString(original));
-        
-        int[] arr1 = Arrays.copyOf(original, original.length);
-        rotateRight(arr1, 3);
-        System.out.println("Rotate right by 3: " + Arrays.toString(arr1));
-        
-        int[] arr2 = Arrays.copyOf(original, original.length);
-        rotateRightReverse(arr2, 3);
-        System.out.println("Reverse method: " + Arrays.toString(arr2));
-        
-        int[] arr3 = Arrays.copyOf(original, original.length);
-        rotateLeft(arr3, 2);
-        System.out.println("Rotate left by 2: " + Arrays.toString(arr3));
-    }
-}
-</pre>
-                </div>
-
-                <h3>Kadane's Algorithm (Maximum Subarray)</h3>
-                <p>Kadane's algorithm efficiently finds the maximum sum of a contiguous subarray.</p>
-
-                <div class="visual-diagram">
-                    <p>Kadane's Algorithm Example: [-2, 1, -3, 4, -1, 2, 1, -5, 4]</p>
-                    <pre>
-i=0: current_sum = -2, max_sum = -2
-i=1: current_sum = 1,  max_sum = 1   (reset, as -2+1 < 1)
-i=2: current_sum = -2, max_sum = 1
-i=3: current_sum = 4,  max_sum = 4   (reset, as -2+4 < 4)
-i=4: current_sum = 3,  max_sum = 4
-i=5: current_sum = 5,  max_sum = 5
-i=6: current_sum = 6,  max_sum = 6   ← Maximum subarray: [4,-1,2,1]
-i=7: current_sum = 1,  max_sum = 6
-i=8: current_sum = 5,  max_sum = 6
-                </pre>
-                </div>
-
-                <div class="code-block">
-                    <pre>
-public class KadaneAlgorithm {
-    
-    // Basic Kadane's Algorithm
-    public static int maxSubarraySum(int[] nums) {
-        if (nums.length == 0) return 0;
-        
-        int currentSum = nums[0];
-        int maxSum = nums[0];
-        
-        for (int i = 1; i < nums.length; i++) {
-            currentSum = Math.max(nums[i], currentSum + nums[i]);
-            maxSum = Math.max(maxSum, currentSum);
-        }
-        
-        return maxSum;
-    }
-    
-    // Return the actual subarray
-    public static int[] maxSubarray(int[] nums) {
-        if (nums.length == 0) return new int[0];
-        
-        int currentSum = nums[0];
-        int maxSum = nums[0];
-        int start = 0, end = 0, tempStart = 0;
-        
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] > currentSum + nums[i]) {
-                currentSum = nums[i];
-                tempStart = i;
-            } else {
-                currentSum += nums[i];
-            }
-            
-            if (currentSum > maxSum) {
-                maxSum = currentSum;
-                start = tempStart;
-                end = i;
-            }
-        }
-        
-        return Arrays.copyOfRange(nums, start, end + 1);
-    }
-    
-    // Maximum subarray with at least k elements
-    public static int maxSubarrayAtLeastK(int[] nums, int k) {
-        int n = nums.length;
-        int[] prefixSum = new int[n + 1];
-        
-        // Calculate prefix sums
-        for (int i = 0; i < n; i++) {
-            prefixSum[i + 1] = prefixSum[i] + nums[i];
-        }
-        
-        int maxSum = Integer.MIN_VALUE;
-        
-        for (int i = k; i <= n; i++) {
-            for (int j = 0; j <= i - k; j++) {
-                maxSum = Math.max(maxSum, prefixSum[i] - prefixSum[j]);
-            }
-        }
-        
-        return maxSum;
-    }
-    
-    // Maximum product subarray
-    public static int maxProductSubarray(int[] nums) {
-        if (nums.length == 0) return 0;
-        
-        int maxProduct = nums[0];
-        int minProduct = nums[0];
-        int result = nums[0];
-        
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] < 0) {
-                // Swap max and min when multiplying by negative
-                int temp = maxProduct;
-                maxProduct = minProduct;
-                minProduct = temp;
-            }
-            
-            maxProduct = Math.max(nums[i], maxProduct * nums[i]);
-            minProduct = Math.min(nums[i], minProduct * nums[i]);
-            
-            result = Math.max(result, maxProduct);
-        }
-        
-        return result;
-    }
-    
-    // Maximum sum circular subarray
-    public static int maxSubarrayCircular(int[] nums) {
-        // Case 1: Maximum subarray is non-circular (standard Kadane's)
-        int maxKadane = maxSubarraySum(nums);
-        
-        // Case 2: Maximum subarray is circular
-        int totalSum = Arrays.stream(nums).sum();
-        
-        // Find minimum subarray sum and subtract from total
-        int minSubarraySum = minSubarraySum(nums);
-        int maxCircular = totalSum - minSubarraySum;
-        
-        // Handle edge case where all elements are negative
-        if (maxCircular == 0) {
-            return maxKadane;
-        }
-        
-        return Math.max(maxKadane, maxCircular);
-    }
-    
-    private static int minSubarraySum(int[] nums) {
-        int currentSum = nums[0];
-        int minSum = nums[0];
-        
-        for (int i = 1; i < nums.length; i++) {
-            currentSum = Math.min(nums[i], currentSum + nums[i]);
-            minSum = Math.min(minSum, currentSum);
-        }
-        
-        return minSum;
-    }
-    
-    // Demo method
-    public static void demonstrateKadane() {
-        int[] arr = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
-        
-        System.out.println("Array: " + Arrays.toString(arr));
-        System.out.println("Maximum sum: " + maxSubarraySum(arr));
-        System.out.println("Maximum subarray: " + Arrays.toString(maxSubarray(arr)));
-        
-        int[] productArr = {2, 3, -2, 4};
-        System.out.println("Product array: " + Arrays.toString(productArr));
-        System.out.println("Maximum product: " + maxProductSubarray(productArr));
-        
-        int[] circularArr = {1, -2, 3, -2};
-        System.out.println("Circular array: " + Arrays.toString(circularArr));
-        System.out.println("Maximum circular sum: " + maxSubarrayCircular(circularArr));
-    }
-}
-</pre>
-                </div>
-
-                <h3>Dutch National Flag Problem</h3>
-                <p>The Dutch National Flag problem partitions an array into three sections efficiently.</p>
-
-                <div class="visual-diagram">
-                    <p>Dutch National Flag: Sorting 0s, 1s, and 2s</p>
-                    <pre>
-Initial: [2, 0, 2, 1, 1, 0]
-         ^low    ^mid      ^high
-
-Step 1: nums[mid] = 2, swap with high, high--
-        [0, 0, 2, 1, 1, 2]
-         ^low ^mid   ^high
-
-Step 2: nums[mid] = 0, swap with low, low++, mid++
-        [0, 0, 2, 1, 1, 2]
-           ^low ^mid ^high
-
-Final:  [0, 0, 1, 1, 2, 2] ← Sorted!
-                </pre>
-                </div>
-
-                <div class="code-block">
-                    <pre>
-public class DutchNationalFlag {
-    
-    // Sort colors (0s, 1s, 2s)
-    public static void sortColors(int[] nums) {
-        int low = 0, mid = 0, high = nums.length - 1;
-        
-        while (mid <= high) {
-            switch (nums[mid]) {
-                case 0: // Red
-                    swap(nums, low++, mid++);
-                    break;
-                case 1: // White
-                    mid++;
-                    break;
-                case 2: // Blue
-                    swap(nums, mid, high--);
-                    break;
-            }
-        }
-    }
-    
-    // Generic version for three values
-    public static void dutchFlagPartition(int[] nums, int pivot) {
-        int low = 0, mid = 0, high = nums.length - 1;
-        
-        while (mid <= high) {
-            if (nums[mid] < pivot) {
-                swap(nums, low++, mid++);
-            } else if (nums[mid] > pivot) {
-                swap(nums, mid, high--);
-            } else {
-                mid++;
-            }
-        }
-    }
-    
-    // Partition around pivot (QuickSort partition)
-    public static int partition(int[] nums, int pivot) {
-        int left = 0, right = nums.length - 1;
-        
-        while (left <= right) {
-            while (left <= right && nums[left] < pivot) left++;
-            while (left <= right && nums[right] > pivot) right--;
-            
-            if (left <= right) {
-                swap(nums, left++, right--);
-            }
-        }
-        
-        return left;
-    }
-    
-    // Move all zeros to end
-    public static void moveZerosToEnd(int[] nums) {
-        int writeIndex = 0;
-        
-        // Move all non-zero elements to the front
-        for (int readIndex = 0; readIndex < nums.length; readIndex++) {
-            if (nums[readIndex] != 0) {
-                nums[writeIndex++] = nums[readIndex];
-            }
-        }
-        
-        // Fill remaining positions with zeros
-        while (writeIndex < nums.length) {
-            nums[writeIndex++] = 0;
-        }
-    }
-    
-    // Move zeros to end while maintaining relative order
-    public static void moveZerosToEndStable(int[] nums) {
-        int writeIndex = 0;
-        
-        for (int readIndex = 0; readIndex < nums.length; readIndex++) {
-            if (nums[readIndex] != 0) {
-                if (writeIndex != readIndex) {
-                    nums[writeIndex] = nums[readIndex];
-                    nums[readIndex] = 0;
-                }
-                writeIndex++;
-            }
-        }
-    }
-    
-    private static void swap(int[] nums, int i, int j) {
-        int temp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = temp;
-    }
-    
-    // Demo method
-    public static void demonstrateDutchFlag() {
-        System.out.println("=== Dutch National Flag Demo ===");
-        
-        int[] colors = {2, 0, 2, 1, 1, 0};
-        System.out.println("Before sorting colors: " + Arrays.toString(colors));
-        sortColors(colors);
-        System.out.println("After sorting colors:  " + Arrays.toString(colors));
-        
-        int[] withZeros = {0, 1, 0, 3, 12};
-        System.out.println("Before moving zeros: " + Arrays.toString(withZeros));
-        moveZerosToEnd(withZeros);
-        System.out.println("After moving zeros:  " + Arrays.toString(withZeros));
-        
-        int[] partition = {3, 1, 4, 1, 5, 9, 2, 6, 5};
-        System.out.println("Before partition around 4: " + Arrays.toString(partition));
-        dutchFlagPartition(partition, 4);
-        System.out.println("After partition around 4:  " + Arrays.toString(partition));
-    }
-}
-</pre>
-                </div>
-
-                <h3>Array Manipulation Tricks</h3>
-
-                <div class="code-block">
-                    <pre>
-public class ArrayManipulationTricks {
-    
-    // Find missing number (1 to n)
-    public static int findMissingNumber(int[] nums) {
-        int n = nums.length + 1;
-        int expectedSum = n * (n + 1) / 2;
-        int actualSum = Arrays.stream(nums).sum();
-        return expectedSum - actualSum;
-    }
-    
-    // Using XOR (more efficient for large numbers)
-    public static int findMissingNumberXOR(int[] nums) {
-        int xor = nums.length + 1;
-        for (int i = 0; i < nums.length; i++) {
-            xor ^= (i + 1) ^ nums[i];
-        }
-        return xor;
-    }
-    
-    // Find duplicate number
-    public static int findDuplicate(int[] nums) {
-        // Using Floyd's cycle detection
-        int slow = nums[0];
-        int fast = nums[0];
-        
-        // Find intersection point in cycle
-        do {
-            slow = nums[slow];
-            fast = nums[nums[fast]];
-        } while (slow != fast);
-        
-        // Find entrance to cycle
-        slow = nums[0];
-        while (slow != fast) {
-            slow = nums[slow];
-            fast = nums[fast];
-        }
-        
-        return fast;
-    }
-    
-    // Product of array except self (without division)
-    public static int[] productExceptSelf(int[] nums) {
-        int n = nums.length;
-        int[] result = new int[n];
-        
-        // Left pass: result[i] contains product of all elements to the left
-        result[0] = 1;
-        for (int i = 1; i < n; i++) {
-            result[i] = result[i - 1] * nums[i - 1];
-        }
-        
-        // Right pass: multiply with product of all elements to the right
-        int rightProduct = 1;
-        for (int i = n - 1; i >= 0; i--) {
-            result[i] *= rightProduct;
-            rightProduct *= nums[i];
-        }
-        
-        return result;
-    }
-    
-    // Find peak element
-    public static int findPeakElement(int[] nums) {
-        int left = 0, right = nums.length - 1;
-        
-        while (left < right) {
-            int mid = left + (right - left) / 2;
-            
-            if (nums[mid] < nums[mid + 1]) {
-                left = mid + 1; // Peak is on the right
-            } else {
-                right = mid; // Peak is on the left or at mid
-            }
-        }
-        
-        return left;
-    }
-    
-    // Next greater element
-    public static int[] nextGreaterElement(int[] nums) {
-        int n = nums.length;
-        int[] result = new int[n];
-        Stack<Integer> stack = new Stack<>();
-        
-        // Initialize result array with -1
-        Arrays.fill(result, -1);
-        
-        for (int i = 0; i < n; i++) {
-            // Pop elements smaller than current element
-            while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
-                result[stack.pop()] = nums[i];
-            }
-            stack.push(i);
-        }
-        
-        return result;
-    }
-    
-    // Trapping rainwater
-    public static int trapRainwater(int[] height) {
-        if (height.length <= 2) return 0;
-        
-        int left = 0, right = height.length - 1;
-        int leftMax = 0, rightMax = 0;
-        int water = 0;
-        
-        while (left < right) {
-            if (height[left] < height[right]) {
-                if (height[left] >= leftMax) {
-                    leftMax = height[left];
-                } else {
-                    water += leftMax - height[left];
-                }
-                left++;
-            } else {
-                if (height[right] >= rightMax) {
-                    rightMax = height[right];
-                } else {
-                    water += rightMax - height[right];
-                }
-                right--;
-            }
-        }
-        
-        return water;
-    }
-    
-    // Subarray with given sum
-    public static int[] subarrayWithSum(int[] nums, int targetSum) {
-        Map<Integer, Integer> prefixSumMap = new HashMap<>();
-        prefixSumMap.put(0, -1); // Handle case where subarray starts at index 0
-        
-        int currentSum = 0;
-        for (int i = 0; i < nums.length; i++) {
-            currentSum += nums[i];
-            
-            if (prefixSumMap.containsKey(currentSum - targetSum)) {
-                int startIndex = prefixSumMap.get(currentSum - targetSum) + 1;
-                return Arrays.copyOfRange(nums, startIndex, i + 1);
-            }
-            
-            prefixSumMap.put(currentSum, i);
-        }
-        
-        return new int[0]; // No subarray found
-    }
-    
-    // Majority element (Boyer-Moore algorithm)
-    public static int majorityElement(int[] nums) {
-        int candidate = nums[0];
-        int count = 1;
-        
-        // Find candidate
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] == candidate) {
-                count++;
-            } else {
-                count--;
-                if (count == 0) {
-                    candidate = nums[i];
-                    count = 1;
-                }
-            }
-        }
-        
-        return candidate; // Assuming majority element always exists
-    }
-    
-    // Check if array can be sorted by swapping adjacent elements
-    public static boolean canBeSortedBySwaps(int[] nums) {
-        int[] sorted = Arrays.copyOf(nums, nums.length);
-        Arrays.sort(sorted);
-        
-        // Count inversions
-        int inversions = 0;
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = i + 1; j < nums.length; j++) {
-                if (nums[i] > nums[j]) {
-                    inversions++;
-                }
-            }
-        }
-        
-        // If number of inversions is even, array can be sorted by swaps
-        return inversions % 2 == 0;
-    }
-}
-</pre>
-                </div>
-            </div>
-
-            <div class="chapter" id="chapter8">
-                <h2>Chapter 8: Performance & Best Practices</h2>
-
-                <h3>Memory Usage Optimization</h3>
-                <p>Understanding and optimizing memory usage is crucial for efficient array operations.</p>
-
-                <div class="code-block">
-                    <pre>
-public class MemoryOptimization {
-    
-    // Memory-efficient matrix operations
-    public static class CompressedMatrix {
-        private int[] values;
-        private int[] rowIndices;
-        private int[] colIndices;
-        private int rows, cols, nonZeroCount;
-        
-        public CompressedMatrix(int[][] matrix) {
-            this.rows = matrix.length;
-            this.cols = matrix[0].length;
-            
-            // Count non-zero elements
-            int count = 0;
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    if (matrix[i][j] != 0) count++;
-                }
-            }
-            
-            this.nonZeroCount = count;
-            this.values = new int[count];
-            this.rowIndices = new int[count];
-            this.colIndices = new int[count];
-            
-            // Store non-zero elements
-            int index = 0;
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < cols; j++) {
-                    if (matrix[i][j] != 0) {
-                        values[index] = matrix[i][j];
-                        rowIndices[index] = i;
-                        colIndices[index] = j;
-                        index++;
-                    }
-                }
-            }
-        }
-        
-        public int get(int row, int col) {
-            for (int i = 0; i < nonZeroCount; i++) {
-                if (rowIndices[i] == row && colIndices[i] == col) {
-                    return values[i];
-                }
-            }
-            return 0;
-        }
-        
-        public double getMemorySavings(int originalRows, int originalCols) {
-            int originalMemory = originalRows * originalCols * 4; // 4 bytes per int
-            int compressedMemory = nonZeroCount * 3 * 4; // 3 arrays of ints
-            return 1.0 - ((double) compressedMemory / originalMemory);
-        }
-    }
-    
-    // Bit manipulation for boolean arrays
-    public static class BitArray {
-        private long[] bits;
-        private int size;
-        
-        public BitArray(int size) {
-            this.size = size;
-            this.bits = new long[(size + 63) / 64]; // 64 bits per long
-        }
-        
-        public void set(int index, boolean value) {
-            if (index >= size) throw new IndexOutOfBoundsException();
-            
-            int wordIndex = index / 64;
-            int bitIndex = index % 64;
-            
-            if (value) {
-                bits[wordIndex] |= (1L << bitIndex);
-            } else {
-                bits[wordIndex] &= ~(1L << bitIndex);
-            }
-        }
-        
-        public boolean get(int index) {
-            if (index >= size) throw new IndexOutOfBoundsException();
-            
-            int wordIndex = index / 64;
-            int bitIndex = index % 64;
-            
-            return (bits[wordIndex] & (1L << bitIndex)) != 0;
-        }
-        
-        public int getMemoryUsage() {
-            return bits.length * 8; // 8 bytes per long
-        }
-        
-        public double getMemorySavings() {
-            int booleanArrayMemory = size; // 1 byte per boolean
-            return 1.0 - ((double) getMemoryUsage() / booleanArrayMemory);
-        }
-    }
-    
-    // Pool arrays to avoid frequent allocations
-    public static class ArrayPool {
-        private final Queue<int[]> smallArrays = new LinkedList<>();
-        private final Queue<int[]> mediumArrays = new LinkedList<>();
-        private final Queue<int[]> largeArrays = new LinkedList<>();
-        
-        public int[] borrowArray(int size) {
-            Queue<int[]> pool = getPoolForSize(size);
-            
-            if (!pool.isEmpty()) {
-                int[] array = pool.poll();
-                Arrays.fill(array, 0); // Clear the array
-                return array;
-            }
-            
-            return new int[getPoolSize(size)];
-        }
-        
-        public void returnArray(int[] array) {
-            if (array == null) return;
-            
-            Queue<int[]> pool = getPoolForSize(array.length);
-            if (pool.size() < 10) { // Limit pool size
-                pool.offer(array);
-            }
-        }
-        
-        private Queue<int[]> getPoolForSize(int size) {
-            if (size <= 100) return smallArrays;
-            if (size <= 1000) return mediumArrays;
-            return largeArrays;
-        }
-        
-        private int getPoolSize(int requestedSize) {
-            if (requestedSize <= 100) return 100;
-            if (requestedSize <= 1000) return 1000;
-            return 10000;
-        }
-    }
-}
-</pre>
-                </div>
-
-                <h3>Cache-Friendly Array Access Patterns</h3>
-                <p>Understanding CPU cache behavior can significantly improve array processing performance.</p>
-
-                <div class="tip-box">
-                    <h4>Cache-Friendly Principles:</h4>
+        <!-- Chapter 1: Introduction -->
+        <div id="introduction" class="chapter">
+            <h2 class="chapter-title">1. Introduction to Arrays</h2>
+            <div class="chapter-content">
+                <p>Arrays are fundamental data structures in Java that store multiple elements of the same type in a
+                    contiguous memory location. They provide efficient access to elements using an index and are
+                    essential for many programming tasks.</p>
+
+                <div class="key-points">
+                    <h4><i class="fas fa-key"></i> Key Characteristics</h4>
                     <ul>
-                        <li><strong>Sequential Access:</strong> Access array elements in order</li>
-                        <li><strong>Row-Major Order:</strong> For 2D arrays, iterate rows first, then columns</li>
-                        <li><strong>Locality:</strong> Keep related data close together</li>
-                        <li><strong>Blocking:</strong> Process data in blocks that fit in cache</li>
+                        <li><strong>Fixed Size:</strong> Array size is determined at creation time</li>
+                        <li><strong>Homogeneous:</strong> All elements must be of the same data type</li>
+                        <li><strong>Zero-indexed:</strong> Array indices start from 0</li>
+                        <li><strong>Reference Type:</strong> Arrays are objects in Java</li>
+                    </ul>
+                </div>
+
+                <div class="array-visual">
+                    <div class="array-cell" data-index="0">10</div>
+                    <div class="array-cell" data-index="1">20</div>
+                    <div class="array-cell" data-index="2">30</div>
+                    <div class="array-cell" data-index="3">40</div>
+                    <div class="array-cell" data-index="4">50</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 2: Declaration & Initialization -->
+        <div id="declaration" class="chapter">
+            <h2 class="chapter-title">2. Array Declaration & Initialization</h2>
+            <div class="chapter-content">
+                <p>There are multiple ways to declare and initialize arrays in Java. Let's explore the different
+                    approaches:</p>
+
+                <h4>Array Declaration</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Array Declaration Syntax</div>
+                    <pre><span class="comment">// Method 1: Square brackets after type</span>
+<span class="keyword">int</span>[] numbers;
+<span class="keyword">String</span>[] names;
+
+<span class="comment">// Method 2: Square brackets after variable name</span>
+<span class="keyword">int</span> numbers[];
+<span class="keyword">String</span> names[];</pre>
+                </div>
+
+                <h4>Array Initialization</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Array Initialization Examples</div>
+                    <pre><span class="comment">// Creating array with specific size</span>
+<span class="keyword">int</span>[] numbers = <span class="keyword">new int</span>[<span class="number">5</span>]; <span class="comment">// Array of 5 integers (all 0)</span>
+
+<span class="comment">// Initialize with values</span>
+<span class="keyword">int</span>[] primes = {<span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">11</span>};
+
+<span class="comment">// Alternative initialization syntax</span>
+<span class="keyword">String</span>[] colors = <span class="keyword">new String</span>[]{<span class="string">"Red"</span>, <span class="string">"Green"</span>, <span class="string">"Blue"</span>};
+
+<span class="comment">// Dynamic size initialization</span>
+<span class="keyword">int</span> size = <span class="number">10</span>;
+<span class="keyword">double</span>[] values = <span class="keyword">new double</span>[size];</pre>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-lightbulb"></i> Important Note</h4>
+                    <p>When you create an array without explicit values, Java initializes it with default values: 0 for
+                        numeric types, false for boolean, and null for reference types.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 3: Accessing Elements -->
+        <div id="access" class="chapter">
+            <h2 class="chapter-title">3. Accessing Array Elements</h2>
+            <div class="chapter-content">
+                <p>Array elements are accessed using square bracket notation with the index position. Remember that
+                    array indices start from 0.</p>
+
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Accessing Array Elements</div>
+                    <pre><span class="keyword">int</span>[] scores = {<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>, <span class="number">96</span>, <span class="number">88</span>};
+
+<span class="comment">// Reading elements</span>
+<span class="keyword">int</span> firstScore = scores[<span class="number">0</span>];    <span class="comment">// 85</span>
+<span class="keyword">int</span> lastScore = scores[<span class="number">4</span>];     <span class="comment">// 88</span>
+
+<span class="comment">// Modifying elements</span>
+scores[<span class="number">2</span>] = <span class="number">95</span>;  <span class="comment">// Change third element to 95</span>
+
+<span class="comment">// Getting array length</span>
+<span class="keyword">int</span> arrayLength = scores.length;  <span class="comment">// 5</span>
+
+<span class="comment">// Access last element dynamically</span>
+<span class="keyword">int</span> lastElement = scores[scores.length - <span class="number">1</span>];</pre>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> ArrayIndexOutOfBoundsException</h4>
+                    <p>Accessing an array with an invalid index (negative or >= array.length) throws an
+                        ArrayIndexOutOfBoundsException at runtime. Always validate indices before accessing elements.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 4: Array Iteration -->
+        <div id="iteration" class="chapter">
+            <h2 class="chapter-title">4. Array Iteration</h2>
+            <div class="chapter-content">
+                <p>There are several ways to iterate through arrays in Java. Each method has its own advantages
+                    depending on the use case.</p>
+
+                <h4>Traditional For Loop</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Traditional For Loop</div>
+                    <pre><span class="keyword">int</span>[] numbers = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+
+<span class="comment">// Forward iteration</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numbers.length; i++) {
+    System.out.println(<span class="string">"Element at index "</span> + i + <span class="string">": "</span> + numbers[i]);
+}
+
+<span class="comment">// Reverse iteration</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = numbers.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
+    System.out.println(numbers[i]);
+}</pre>
+                </div>
+
+                <h4>Enhanced For Loop (For-Each)</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Enhanced For Loop</div>
+                    <pre><span class="keyword">String</span>[] fruits = {<span class="string">"Apple"</span>, <span class="string">"Banana"</span>, <span class="string">"Orange"</span>, <span class="string">"Mango"</span>};
+
+<span class="comment">// For-each loop (read-only access)</span>
+<span class="keyword">for</span> (<span class="keyword">String</span> fruit : fruits) {
+    System.out.println(<span class="string">"Fruit: "</span> + fruit);
+}
+
+<span class="comment">// Calculate sum using for-each</span>
+<span class="keyword">int</span>[] values = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};
+<span class="keyword">int</span> sum = <span class="number">0</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> value : values) {
+    sum += value;
+}
+System.out.println(<span class="string">"Sum: "</span> + sum); <span class="comment">// Output: 15</span></pre>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-info-circle"></i> When to Use Each Loop</h4>
+                    <p><strong>Traditional for loop:</strong> When you need the index or want to modify array
+                        elements.<br>
+                        <strong>Enhanced for loop:</strong> When you only need to read values and don't need the index.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 5: Multidimensional Arrays -->
+        <div id="multidimensional" class="chapter">
+            <h2 class="chapter-title">5. Multidimensional Arrays</h2>
+            <div class="chapter-content">
+                <p>Java supports multidimensional arrays, which are essentially arrays of arrays. The most common type
+                    is the 2D array, often used to represent matrices or tables.</p>
+
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> 2D Array Declaration and Initialization</div>
+                    <pre><span class="comment">// Creating a 3x3 matrix</span>
+<span class="keyword">int</span>[][] matrix = <span class="keyword">new int</span>[<span class="number">3</span>][<span class="number">3</span>];
+
+<span class="comment">// Initialize with values</span>
+<span class="keyword">int</span>[][] grid = {
+    {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>},
+    {<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>},
+    {<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>}
+};
+
+<span class="comment">// Jagged array (different row lengths)</span>
+<span class="keyword">int</span>[][] jaggedArray = {
+    {<span class="number">1</span>, <span class="number">2</span>},
+    {<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>},
+    {<span class="number">6</span>}
+};</pre>
+                </div>
+
+                <h4>Accessing 2D Array Elements</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> 2D Array Access and Iteration</div>
+                    <pre><span class="keyword">int</span>[][] matrix = {{<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>}, {<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>}, {<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>}};
+
+<span class="comment">// Access specific element</span>
+<span class="keyword">int</span> element = matrix[<span class="number">1</span>][<span class="number">2</span>]; <span class="comment">// Gets 6 (row 1, column 2)</span>
+
+<span class="comment">// Nested loops for iteration</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; matrix.length; i++) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; matrix[i].length; j++) {
+        System.out.print(matrix[i][j] + <span class="string">" "</span>);
+    }
+    System.out.println(); <span class="comment">// New line after each row</span>
+}
+
+<span class="comment">// Enhanced for loop for 2D arrays</span>
+<span class="keyword">for</span> (<span class="keyword">int</span>[] row : matrix) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> element : row) {
+        System.out.print(element + <span class="string">" "</span>);
+    }
+    System.out.println();
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 6: Common Array Operations -->
+        <div id="common-operations" class="chapter">
+            <h2 class="chapter-title">6. Common Array Operations</h2>
+            <div class="chapter-content">
+                <p>Here are some frequently used array operations that every Java developer should know:</p>
+
+                <h4>Finding Maximum and Minimum</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Find Max and Min Values</div>
+                    <pre><span class="keyword">public static int</span> findMax(<span class="keyword">int</span>[] array) {
+    <span class="keyword">if</span> (array.length == <span class="number">0</span>) <span class="keyword">return</span> Integer.MIN_VALUE;
+    
+    <span class="keyword">int</span> max = array[<span class="number">0</span>];
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; array.length; i++) {
+        <span class="keyword">if</span> (array[i] &gt; max) {
+            max = array[i];
+        }
+    }
+    <span class="keyword">return</span> max;
+}
+
+<span class="keyword">public static int</span> findMin(<span class="keyword">int</span>[] array) {
+    <span class="keyword">if</span> (array.length == <span class="number">0</span>) <span class="keyword">return</span> Integer.MAX_VALUE;
+    
+    <span class="keyword">int</span> min = array[<span class="number">0</span>];
+    <span class="keyword">for</span> (<span class="keyword">int</span> value : array) {
+        <span class="keyword">if</span> (value &lt; min) {
+            min = value;
+        }
+    }
+    <span class="keyword">return</span> min;
+}</pre>
+                </div>
+
+                <h4>Array Copying</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Array Copying Methods</div>
+                    <pre><span class="keyword">int</span>[] original = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};
+
+<span class="comment">// Method 1: Manual copying</span>
+<span class="keyword">int</span>[] copy1 = <span class="keyword">new int</span>[original.length];
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; original.length; i++) {
+    copy1[i] = original[i];
+}
+
+<span class="comment">// Method 2: System.arraycopy()</span>
+<span class="keyword">int</span>[] copy2 = <span class="keyword">new int</span>[original.length];
+System.arraycopy(original, <span class="number">0</span>, copy2, <span class="number">0</span>, original.length);
+
+<span class="comment">// Method 3: Arrays.copyOf()</span>
+<span class="keyword">int</span>[] copy3 = Arrays.copyOf(original, original.length);
+
+<span class="comment">// Method 4: clone() method</span>
+<span class="keyword">int</span>[] copy4 = original.clone();</pre>
+                </div>
+
+                <h4>Searching in Arrays</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Linear Search Implementation</div>
+                    <pre><span class="keyword">public static int</span> linearSearch(<span class="keyword">int</span>[] array, <span class="keyword">int</span> target) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) {
+        <span class="keyword">if</span> (array[i] == target) {
+            <span class="keyword">return</span> i; <span class="comment">// Return index if found</span>
+        }
+    }
+    <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// Return -1 if not found</span>
+}
+
+<span class="comment">// Usage example</span>
+<span class="keyword">int</span>[] numbers = {<span class="number">10</span>, <span class="number">25</span>, <span class="number">30</span>, <span class="number">45</span>, <span class="number">50</span>};
+<span class="keyword">int</span> index = linearSearch(numbers, <span class="number">30</span>);
+System.out.println(<span class="string">"Found at index: "</span> + index); <span class="comment">// Output: 2</span></pre>
+                </div>
+
+                <h4>Array Reversal</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Reverse Array In-Place</div>
+                    <pre><span class="keyword">public static void</span> reverseArray(<span class="keyword">int</span>[] array) {
+    <span class="keyword">int</span> start = <span class="number">0</span>;
+    <span class="keyword">int</span> end = array.length - <span class="number">1</span>;
+    
+    <span class="keyword">while</span> (start &lt; end) {
+        <span class="comment">// Swap elements</span>
+        <span class="keyword">int</span> temp = array[start];
+        array[start] = array[end];
+        array[end] = temp;
+        
+        start++;
+        end--;
+    }
+}
+
+<span class="comment">// Usage</span>
+<span class="keyword">int</span>[] arr = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};
+reverseArray(arr);
+<span class="comment">// arr is now {5, 4, 3, 2, 1}</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 7: Best Practices -->
+        <div id="best-practices" class="chapter">
+            <h2 class="chapter-title">7. Best Practices</h2>
+            <div class="chapter-content">
+                <p>Following these best practices will help you write more efficient and maintainable code when working
+                    with arrays:</p>
+
+                <div class="key-points">
+                    <h4><i class="fas fa-check-circle"></i> Performance Best Practices</h4>
+                    <ul>
+                        <li><strong>Initialize with known size:</strong> When you know the array size, specify it during
+                            creation</li>
+                        <li><strong>Use enhanced for-loops:</strong> When you don't need indices, for-each loops are
+                            cleaner</li>
+                        <li><strong>Avoid repeated length calls:</strong> Cache array.length in a variable for long
+                            loops</li>
+                        <li><strong>Consider ArrayList:</strong> For dynamic sizing, use ArrayList instead of arrays
+                        </li>
                     </ul>
                 </div>
 
                 <div class="code-block">
-                    <pre>
-public class CacheFriendlyPatterns {
-    
-    // Matrix multiplication: cache-friendly vs cache-unfriendly
-    public static void multiplyMatricesCacheFriendly(int[][] a, int[][] b, int[][] c) {
-        int n = a.length;
-        
-        // Standard approach (cache-friendly)
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
-                    c[i][j] += a[i][k] * b[k][j];
-                }
-            }
-        }
-    }
-    
-    // Blocked matrix multiplication for better cache performance
-    public static void multiplyMatricesBlocked(int[][] a, int[][] b, int[][] c, int blockSize) {
-        int n = a.length;
-        
-        for (int ii = 0; ii < n; ii += blockSize) {
-            for (int jj = 0; jj < n; jj += blockSize) {
-                for (int kk = 0; kk < n; kk += blockSize) {
-                    // Multiply blocks
-                    for (int i = ii; i < Math.min(ii + blockSize, n); i++) {
-                        for (int j = jj; j < Math.min(jj + blockSize, n); j++) {
-                            for (int k = kk; k < Math.min(kk + blockSize, n); k++) {
-                                c[i][j] += a[i][k] * b[k][j];
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    // Cache-unfriendly column-major access (avoid this!)
-    public static void columnMajorAccess(int[][] matrix) {
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-        
-        // BAD: Accessing by columns first
-        for (int j = 0; j < cols; j++) {
-            for (int i = 0; i < rows; i++) {
-                matrix[i][j] *= 2; // Poor cache locality
-            }
-        }
-    }
-    
-    // Cache-friendly row-major access
-    public static void rowMajorAccess(int[][] matrix) {
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-        
-        // GOOD: Accessing by rows first
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                matrix[i][j] *= 2; // Good cache locality
-            }
-        }
-    }
-    
-    // Prefetching and loop unrolling
-    public static void optimizedArraySum(int[] arr) {
-        int sum = 0;
-        int length = arr.length;
-        int i = 0;
-        
-        // Process 4 elements at a time (loop unrolling)
-        for (; i <= length - 4; i += 4) {
-            sum += arr[i] + arr[i + 1] + arr[i + 2] + arr[i + 3];
-        }
-        
-        // Handle remaining elements
-        for (; i < length; i++) {
-            sum += arr[i];
-        }
-    }
-    
-    // Performance comparison
-    public static void performanceComparison() {
-        int size = 1000;
-        int[][] a = new int[size][size];
-        int[][] b = new int[size][size];
-        int[][] c1 = new int[size][size];
-        int[][] c2 = new int[size][size];
-        
-        // Initialize matrices
-        Random rand = new Random();
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                a[i][j] = rand.nextInt(10);
-                b[i][j] = rand.nextInt(10);
-            }
-        }
-        
-        // Test standard multiplication
-        long start = System.nanoTime();
-        multiplyMatricesCacheFriendly(a, b, c1);
-        long standardTime = System.nanoTime() - start;
-        
-        // Test blocked multiplication
-        start = System.nanoTime();
-        multiplyMatricesBlocked(a, b, c2, 64);
-        long blockedTime = System.nanoTime() - start;
-        
-        System.out.printf("Standard multiplication: %.2f ms%n", standardTime / 1_000_000.0);
-        System.out.printf("Blocked multiplication:  %.2f ms%n", blockedTime / 1_000_000.0);
-        System.out.printf("Improvement: %.2fx%n", (double) standardTime / blockedTime);
-    }
+                    <div class="code-title"><i class="fab fa-java"></i> Good Practices Example</div>
+                    <pre><span class="comment">// Good: Cache array length</span>
+<span class="keyword">int</span>[] data = getData();
+<span class="keyword">int</span> length = data.length;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) {
+    processData(data[i]);
 }
-</pre>
-                </div>
 
-                <h3>When to Use Arrays vs Collections</h3>
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Scenario</th>
-                            <th>Use Arrays When</th>
-                            <th>Use Collections When</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Size</strong></td>
-                            <td>Fixed size known at compile time</td>
-                            <td>Dynamic size or unknown size</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Performance</strong></td>
-                            <td>Maximum speed needed</td>
-                            <td>Convenience over raw speed</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Memory</strong></td>
-                            <td>Memory is critical concern</td>
-                            <td>Memory usage is not critical</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Operations</strong></td>
-                            <td>Simple access/modification</td>
-                            <td>Need built-in methods (sort, search)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Type Safety</strong></td>
-                            <td>Primitive types needed</td>
-                            <td>Object wrapper types acceptable</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Multi-dimensional</strong></td>
-                            <td>Need true multi-dimensional structure</td>
-                            <td>Can work with nested collections</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="code-block">
-                    <pre>
-public class ArraysVsCollections {
-    
-    // Performance comparison
-    public static void performanceComparison() {
-        int size = 1_000_000;
-        
-        // Array performance test
-        int[] array = new int[size];
-        long start = System.nanoTime();
-        for (int i = 0; i < size; i++) {
-            array[i] = i;
-        }
-        for (int i = 0; i < size; i++) {
-            array[i] *= 2;
-        }
-        long arrayTime = System.nanoTime() - start;
-        
-        // ArrayList performance test
-        ArrayList<Integer> list = new ArrayList<>(size);
-        start = System.nanoTime();
-        for (int i = 0; i < size; i++) {
-            list.add(i);
-        }
-        for (int i = 0; i < size; i++) {
-            list.set(i, list.get(i) * 2);
-        }
-        long listTime = System.nanoTime() - start;
-        
-        System.out.printf("Array time:     %.2f ms%n", arrayTime / 1_000_000.0);
-        System.out.printf("ArrayList time: %.2f ms%n", listTime / 1_000_000.0);
-        System.out.printf("ArrayList is %.2fx slower%n", (double) listTime / arrayTime);
+<span class="comment">// Good: Null check before operations</span>
+<span class="keyword">public static int</span> sumArray(<span class="keyword">int</span>[] array) {
+    <span class="keyword">if</span> (array == <span class="keyword">null</span> || array.length == <span class="number">0</span>) {
+        <span class="keyword">return</span> <span class="number">0</span>;
     }
     
-    // Memory usage comparison
-    public static void memoryComparison() {
-        Runtime runtime = Runtime.getRuntime();
-        
-        // Test array memory usage
-        runtime.gc();
-        long beforeArray = runtime.totalMemory() - runtime.freeMemory();
-        int[] array = new int[100_000];
-        long afterArray = runtime.totalMemory() - runtime.freeMemory();
-        
-        // Test ArrayList memory usage
-        array = null; // Allow GC
-        runtime.gc();
-        long beforeList = runtime.totalMemory() - runtime.freeMemory();
-        ArrayList<Integer> list = new ArrayList<>(100_000);
-        for (int i = 0; i < 100_000; i++) {
-            list.add(i);
-        }
-        long afterList = runtime.totalMemory() - runtime.freeMemory();
-        
-        System.out.printf("Array memory:     %d bytes%n", afterArray - beforeArray);
-        System.out.printf("ArrayList memory: %d bytes%n", afterList - beforeList);
+    <span class="keyword">int</span> sum = <span class="number">0</span>;
+    <span class="keyword">for</span> (<span class="keyword">int</span> value : array) {
+        sum += value;
     }
-    
-    // When to choose each approach
-    public static void demonstrateUseCases() {
-        // Use array for mathematical computations
-        double[] coordinates = new double[3]; // x, y, z
-        coordinates[0] = 1.5;
-        coordinates[1] = 2.7;
-        coordinates[2] = 3.2;
-        
-        // Use collection for dynamic data
-        List<String> usernames = new ArrayList<>();
-        usernames.add("alice");
-        usernames.add("bob");
-        usernames.removeIf(name -> name.startsWith("a"));
-        
-        // Use array for matrix operations
-        int[][] matrix = new int[100][100];
-        for (int i = 0; i < 100; i++) {
-            for (int j = 0; j < 100; j++) {
-                matrix[i][j] = i * j;
-            }
-        }
-        
-        // Use collection for complex operations
-        Map<String, List<Integer>> groupedData = new HashMap<>();
-        groupedData.computeIfAbsent("scores", k -> new ArrayList<>()).add(95);
-    }
+    <span class="keyword">return</span> sum;
 }
-</pre>
-                </div>
 
-                <h3>Common Pitfalls and How to Avoid Them</h3>
+<span class="comment">// Good: Use meaningful variable names</span>
+<span class="keyword">String</span>[] studentNames = <span class="keyword">new String</span>[<span class="number">30</span>];
+<span class="keyword">int</span>[] testScores = <span class="keyword">new int</span>[studentNames.length];</pre>
+                </div>
 
                 <div class="warning-box">
-                    <h4>Array Pitfall #1: ArrayIndexOutOfBoundsException</h4>
-                    <p>Always validate array bounds before accessing elements.</p>
+                    <h4><i class="fas fa-exclamation-triangle"></i> Common Pitfalls to Avoid</h4>
+                    <ul>
+                        <li><strong>Index out of bounds:</strong> Always validate array indices</li>
+                        <li><strong>Null pointer exceptions:</strong> Check for null arrays before operations</li>
+                        <li><strong>Memory leaks:</strong> Set array elements to null when no longer needed</li>
+                        <li><strong>Comparing arrays with ==:</strong> Use Arrays.equals() for content comparison</li>
+                    </ul>
                 </div>
 
                 <div class="code-block">
-                    <pre>
-public class CommonPitfalls {
-    
-    // Pitfall 1: Index out of bounds
-    public static void safeArrayAccess() {
-        int[] arr = {1, 2, 3, 4, 5};
-        
-        // BAD: No bounds checking
-        // int value = arr[10]; // Throws ArrayIndexOutOfBoundsException
-        
-        // GOOD: Safe access
-        public static int safeGet(int[] array, int index) {
-            if (index >= 0 && index < array.length) {
-                return array[index];
-            }
-            throw new IllegalArgumentException("Index out of bounds: " + index);
-        }
-        
-        // BETTER: Using Optional for safety
-        public static Optional<Integer> safeGetOptional(int[] array, int index) {
-            if (index >= 0 && index < array.length) {
-                return Optional.of(array[index]);
-            }
-            return Optional.empty();
-        }
-    }
-    
-    // Pitfall 2: Null array handling
-    public static int sumArray(int[] arr) {
-        // BAD: No null check
-        // int sum = 0;
-        // for (int num : arr) { // NullPointerException if arr is null
-        //     sum += num;
-        // }
-        
-        // GOOD: Null safety
-        if (arr == null || arr.length == 0) {
-            return 0;
-        }
-        
-        return Arrays.stream(arr).sum();
-    }
-    
-    // Pitfall 3: Array aliasing and unintended mutations
-    public static void arrayAliasingPitfall() {
-        int[] original = {1, 2, 3, 4, 5};
-        
-        // BAD: Aliasing - both variables point to same array
-        int[] alias = original;
-        alias[0] = 999; // This modifies original array too!
-        
-        System.out.println("Original after alias modification: " + Arrays.toString(original));
-        // Output: [999, 2, 3, 4, 5] - original is modified!
-        
-        // GOOD: Create a copy
-        int[] copy = Arrays.copyOf(original, original.length);
-        copy[0] = 100; // This doesn't affect original
-        
-        System.out.println("Original after copy modification: " + Arrays.toString(original));
-        // Output: [999, 2, 3, 4, 5] - original unchanged by copy modification
-    }
-    
-    // Pitfall 4: Comparing arrays incorrectly
-    public static void arrayComparisonPitfall() {
-        int[] arr1 = {1, 2, 3};
-        int[] arr2 = {1, 2, 3};
-        
-        // BAD: Using == (compares references, not content)
-        System.out.println("arr1 == arr2: " + (arr1 == arr2)); // false
-        
-        // GOOD: Using Arrays.equals()
-        System.out.println("Arrays.equals(arr1, arr2): " + Arrays.equals(arr1, arr2)); // true
-        
-        // For multidimensional arrays
-        int[][] matrix1 = {{1, 2}, {3, 4}};
-        int[][] matrix2 = {{1, 2}, {3, 4}};
-        
-        // BAD: Arrays.equals() doesn't work for 2D arrays
-        System.out.println("Arrays.equals(matrix1, matrix2): " + Arrays.equals(matrix1, matrix2)); // false
-        
-        // GOOD: Using Arrays.deepEquals()
-        System.out.println("Arrays.deepEquals(matrix1, matrix2): " + Arrays.deepEquals(matrix1, matrix2)); // true
-    }
-    
-    // Pitfall 5: Inefficient array resizing
-    public static void inefficientResizing() {
-        // BAD: Repeatedly creating new arrays
-        int[] arr = new int[1];
-        for (int i = 0; i < 1000; i++) {
-            int[] newArr = new int[arr.length + 1];
-            System.arraycopy(arr, 0, newArr, 0, arr.length);
-            newArr[arr.length] = i;
-            arr = newArr; // O(n²) complexity!
-        }
-        
-        // GOOD: Use ArrayList for dynamic resizing
-        List<Integer> list = new ArrayList<>(); // Grows efficiently
-        for (int i = 0; i < 1000; i++) {
-            list.add(i); // O(1) amortized
-        }
-        
-        // Convert back to array if needed
-        int[] result = list.stream().mapToInt(Integer::intValue).toArray();
-    }
-    
-    // Pitfall 6: Incorrect loop conditions
-    public static void loopConditionPitfalls() {
-        int[] arr = {1, 2, 3, 4, 5};
-        
-        // BAD: Off-by-one error
-        // for (int i = 0; i <= arr.length; i++) { // i <= is wrong!
-        //     System.out.println(arr[i]); // ArrayIndexOutOfBoundsException
-        // }
-        
-        // GOOD: Correct bounds
-        for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i]);
-        }
-        
-        // BETTER: Enhanced for loop (no index management)
-        for (int num : arr) {
-            System.out.println(num);
-        }
-    }
-    
-    // Pitfall 7: Sorting and stability assumptions
-    public static void sortingPitfalls() {
-        Person[] people = {
-            new Person("Alice", 25),
-            new Person("Bob", 25),
-            new Person("Charlie", 30)
-        };
-        
-        // Arrays.sort() is not guaranteed to be stable for objects
-        Arrays.sort(people, Comparator.comparing(p -> p.age));
-        
-        // If you need stable sorting, be explicit
-        Arrays.sort(people, Comparator.comparingInt((Person p) -> p.age)
-                                      .thenComparing(p -> p.name));
-        
-        // Or use a stable sort algorithm
-        people = Arrays.stream(people)
-                      .sorted(Comparator.comparingInt(p -> p.age))
-                      .toArray(Person[]::new);
-    }
-    
-    static class Person {
-        String name;
-        int age;
-        
-        Person(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
-    }
-}
-</pre>
+                    <div class="code-title"><i class="fab fa-java"></i> Array Comparison and Utility Methods</div>
+                    <pre><span class="keyword">import</span> java.util.Arrays;
+
+<span class="comment">// Comparing arrays</span>
+<span class="keyword">int</span>[] arr1 = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};
+<span class="keyword">int</span>[] arr2 = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};
+
+<span class="comment">// Wrong way</span>
+<span class="keyword">boolean</span> isEqual = (arr1 == arr2); <span class="comment">// false (compares references)</span>
+
+<span class="comment">// Correct way</span>
+<span class="keyword">boolean</span> isEqual = Arrays.equals(arr1, arr2); <span class="comment">// true (compares content)</span>
+
+<span class="comment">// Useful Arrays utility methods</span>
+Arrays.sort(arr1);                    <span class="comment">// Sort array</span>
+<span class="keyword">String</span> str = Arrays.toString(arr1);     <span class="comment">// Convert to string</span>
+<span class="keyword">int</span> index = Arrays.binarySearch(arr1, <span class="number">2</span>); <span class="comment">// Binary search</span>
+Arrays.fill(arr1, <span class="number">0</span>);                  <span class="comment">// Fill with value</span></pre>
                 </div>
 
-                <h3>Performance Benchmarking</h3>
+                <div class="highlight-box">
+                    <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
+                    <ul>
+                        <li>Arrays are fixed-size, zero-indexed collections of elements</li>
+                        <li>Always validate array bounds to prevent exceptions</li>
+                        <li>Use enhanced for-loops when you don't need indices</li>
+                        <li>Consider ArrayList for dynamic collections</li>
+                        <li>Leverage Arrays utility class for common operations</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-                <div class="code-block">
-                    <pre>
-public class ArrayBenchmark {
-    
-    public static void main(String[] args) {
-        runComprehensiveBenchmark();
-    }
-    
-    public static void runComprehensiveBenchmark() {
-        System.out.println("=== Comprehensive Array Performance Benchmark ===\n");
-        
-        benchmarkArrayCreation();
-        benchmarkArrayAccess();
-        benchmarkArrayCopying();
-        benchmarkSearchAlgorithms();
-        benchmarkSortingAlgorithms();
-    }
-    
-    private static void benchmarkArrayCreation() {
-        System.out.println("1. Array Creation Benchmark:");
-        int[] sizes = {1_000, 10_000, 100_000, 1_000_000};
-        
-        for (int size : sizes) {
-            // Direct allocation
-            long start = System.nanoTime();
-            int[] arr1 = new int[size];
-            long directTime = System.nanoTime() - start;
-            
-            // Initialization during creation
-            start = System.nanoTime();
-            int[] arr2 = new int[size];
-            Arrays.fill(arr2, 42);
-            long fillTime = System.nanoTime() - start;
-            
-            // Stream creation
-            start = System.nanoTime();
-            int[] arr3 = IntStream.range(0, size).toArray();
-            long streamTime = System.nanoTime() - start;
-            
-            System.out.printf("Size %,7d: Direct=%.2fμs, Fill=%.2fμs, Stream=%.2fμs%n",
-                            size, directTime/1000.0, fillTime/1000.0, streamTime/1000.0);
-        }
-        System.out.println();
-    }
-    
-    private static void benchmarkArrayAccess() {
-        System.out.println("2. Array Access Benchmark:");
-        int size = 1_000_000;
-        int[] arr = IntStream.range(0, size).toArray();
-        Random rand = new Random(42);
-        
-        // Sequential access
-        long start = System.nanoTime();
-        long sum1 = 0;
-        for (int i = 0; i < size; i++) {
-            sum1 += arr[i];
-        }
-        long sequentialTime = System.nanoTime() - start;
-        
-        // Random access
-        start = System.nanoTime();
-        long sum2 = 0;
-        for (int i = 0; i < size; i++) {
-            sum2 += arr[rand.nextInt(size)];
-        }
-        long randomTime = System.nanoTime() - start;
-        
-        // Enhanced for loop
-        start = System.nanoTime();
-        long sum3 = 0;
-        for (int num : arr) {
-            sum3 += num;
-        }
-        long enhancedTime = System.nanoTime() - start;
-        
-        // Stream
-        start = System.nanoTime();
-        long sum4 = Arrays.stream(arr).sum();
-        long streamTime = System.nanoTime() - start;
-        
-        System.out.printf("Sequential: %.2f ms%n", sequentialTime / 1_000_000.0);
-        System.out.printf("Random:     %.2f ms%n", randomTime / 1_000_000.0);
-        System.out.printf("Enhanced:   %.2f ms%n", enhancedTime / 1_000_000.0);
-        System.out.printf("Stream:     %.2f ms%n", streamTime / 1_000_000.0);
-        System.out.println();
-    }
-    
-    private static void benchmarkArrayCopying() {
-        System.out.println("3. Array Copying Benchmark:");
-        int size = 1_000_000;
-        int[] arr = IntStream.range(0, size).toArray();
-        
-        // System.arraycopy()
-        long start = System.nanoTime();
-        int[] copy1 = new int[size];
-        System.arraycopy(arr, 0, copy1, 0, size);
-        long copyTime1 = System.nanoTime() - start;
-        
-        // Arrays.copyOf()
-        start = System.nanoTime();
-        int[] copy2 = Arrays.copyOf(arr, size);
-        long copyTime2 = System.nanoTime() - start;
-        
-        // Arrays.copyOfRange()
-        start = System.nanoTime();
-        int[] copy3 = Arrays.copyOfRange(arr, 0, size);
-        long copyTime3 = System.nanoTime() - start;
-        
-        // Manual loop
-        start = System.nanoTime();
-        int[] copy4 = new int[size];
-        for (int i = 0; i < size; i++) {
-            copy4[i] = arr[i];
-        }
-        long copyTime4 = System.nanoTime() - start;
-        
-        System.out.printf("System.arraycopy(): %.2f ms%n", copyTime1 / 1_000_000.0);
-        System.out.printf("Arrays.copyOf():    %.2f ms%n", copyTime2 / 1_000_000.0);
-        System.out.printf("Arrays.copyOfRange(): %.2f ms%n", copyTime3 / 1_000_000.0);
-        System.out.printf("Manual loop:        %.2f ms%n", copyTime4 / 1_000_000.0);
-        System.out.println();
-    }
-}
-</code></pre>
-                    <footer
-                        style="text-align: center; margin-top: 50px; padding: 30px; background: #f8f9ff; border-radius: 10px; border-top: 3px solid #667eea;">
-                        <h3 style="color: #667eea; margin-bottom: 15px;">📖 Java Arrays - Complete Handbook</h3>
-                        <p style="color: #666; margin-bottom: 10px;">A comprehensive reference for testing professionals
-                            preparing for interviews</p>
-                        <p style="color: #888; font-size: 0.9rem; font-style: italic; margin-bottom: 20px;">
-                            Created by <strong>Mohammad S Hossain</strong> |
-                            <span style="color: #667eea;">Software Quality Assurance Professional</span>
-                        </p>
-                        <div
-                            style="margin-top: 20px; padding: 15px; background: white; border-radius: 8px; display: inline-block; max-width: 600px;">
-                            <p style="margin: 0; color: #555; font-size: 0.9rem; line-height: 1.5;">
-                                💡 <strong>Remember:</strong> Quality is not an act, it is a habit. Keep learning, keep
-                                testing, and always strive for excellence in your testing practice!
-                            </p>
-                        </div>
-                        <div style="margin-top: 15px; font-size: 0.8rem; color: #999;">
-                            <p>📅 Last Updated: September 2025 | 📊 32 Interview Questions Covered</p>
-                        </div>
-                    </footer>
-                    <script>
-                        // Add smooth scrolling for table of contents links
-                        document.querySelectorAll('.toc a').forEach(anchor => {
-                            anchor.addEventListener('click', function (e) {
-                                e.preventDefault();
-                                const target = document.querySelector(this.getAttribute('href'));
-                                if (target) {
-                                    target.scrollIntoView({
-                                        behavior: 'smooth',
-                                        block: 'start'
-                                    });
-                                }
-                            });
-                        });
+        <!-- Summary Section -->
+        <div class="chapter">
+            <h2 class="chapter-title">Summary</h2>
+            <div class="chapter-content">
+                <p>Arrays are fundamental to Java programming and understanding them thoroughly is crucial for any
+                    developer. From basic declaration and initialization to advanced operations like searching and
+                    sorting, arrays provide the foundation for many data structures and algorithms.</p>
 
-                        // Add copy button to code blocks
-                        document.querySelectorAll('.code-block').forEach(block => {
-                            const button = document.createElement('button');
-                            button.textContent = 'Copy Code';
-                            button.style.cssText = `
-                position: absolute;
-                top: 10px;
-                right: 10px;
-                padding: 5px 10px;
-                background: #667eea;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-                font-size: 12px;
-                opacity: 0;
-                transition: opacity 0.3s;
-            `;
+                <p>Remember to always validate your inputs, handle edge cases, and choose the right iteration method for
+                    your specific use case. With practice, working with arrays will become second nature, and you'll be
+                    able to leverage their power effectively in your Java applications.</p>
 
-                            block.style.position = 'relative';
-                            block.appendChild(button);
+                <div class="key-points">
+                    <h4><i class="fas fa-rocket"></i> Next Steps</h4>
+                    <ul>
+                        <li>Practice implementing common array algorithms</li>
+                        <li>Explore the Java Collections Framework</li>
+                        <li>Learn about ArrayList and other dynamic collections</li>
+                        <li>Study sorting and searching algorithms</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 
-                            block.addEventListener('mouseenter', () => {
-                                button.style.opacity = '1';
-                            });
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
 
-                            block.addEventListener('mouseleave', () => {
-                                button.style.opacity = '0';
-                            });
-
-                            button.addEventListener('click', () => {
-                                const code = block.querySelector('pre').textContent;
-                                navigator.clipboard.writeText(code).then(() => {
-                                    button.textContent = 'Copied!';
-                                    setTimeout(() => {
-                                        button.textContent = 'Copy Code';
-                                    }, 2000);
-                                });
-                            });
-                        });
-
-                        // Add progress indicator
-                        const progressBar = document.createElement('div');
-                        progressBar.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0%;
-            height: 3px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            z-index: 9999;
-            transition: width 0.3s;
-        `;
-                        document.body.appendChild(progressBar);
-
-                        window.addEventListener('scroll', () => {
-                            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                            const scrolled = (winScroll / height) * 100;
-                            progressBar.style.width = scrolled + "%";
-                        });
-
-                        // Add back to top button
-                        const backToTop = document.createElement('button');
-                        backToTop.innerHTML = '↑';
-                        backToTop.style.cssText = `
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.3s;
-            z-index: 1000;
-        `;
-                        document.body.appendChild(backToTop);
-
-                        window.addEventListener('scroll', () => {
-                            if (window.scrollY > 300) {
-                                backToTop.style.opacity = '1';
-                                backToTop.style.transform = 'translateY(0)';
-                            } else {
-                                backToTop.style.opacity = '0';
-                                backToTop.style.transform = 'translateY(20px)';
-                            }
-                        });
-
-                        backToTop.addEventListener('click', () => {
-                            window.scrollTo({
-                                top: 0,
-                                behavior: 'smooth'
-                            });
-                        });
-
-                        // Add print styles
-                        const printStyles = document.createElement('style');
-                        printStyles.textContent = `
-            @media print {
-                body {
-                    background: white !important;
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
-                .header {
-                    background: white !important;
-                    color: black !important;
-                    border: 2px solid #333 !important;
+            });
+        });
+
+        // Highlight current section in table of contents
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.chapter');
+            const tocLinks = document.querySelectorAll('.toc a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
                 }
-                .code-block {
-                    border: 1px solid #333 !important;
-                    break-inside: avoid;
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
                 }
-                .chapter {
-                    break-inside: avoid;
-                    page-break-before: always;
-                }
-                .chapter:first-child {
-                    page-break-before: auto;
-                }
-                button {
-                    display: none !important;
-                }
-                .visual-diagram {
-                    border: 2px solid #333 !important;
-                    background: #f9f9f9 !important;
-                }
-                .tip-box, .note-box, .warning-box {
-                    border: 1px solid #333 !important;
-                    background: white !important;
-                }
-            }
-        `;
-                        document.head.appendChild(printStyles);
+            });
+        });
+    </script>
+</body>
 
-                        // Add keyboard shortcuts
-                        document.addEventListener('keydown', (e) => {
-                            // Ctrl/Cmd + P for print
-                            if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
-                                e.preventDefault();
-                                window.print();
-                            }
-
-                            // Ctrl/Cmd + F for search
-                            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
-                                // Let browser handle default search
-                                return;
-                            }
-
-                            // Home key to go to top
-                            if (e.key === 'Home' && !e.ctrlKey && !e.metaKey) {
-                                e.preventDefault();
-                                window.scrollTo({ top: 0, behavior: 'smooth' });
-                            }
-
-                            // End key to go to bottom
-                            if (e.key === 'End' && !e.ctrlKey && !e.metaKey) {
-                                e.preventDefault();
-                                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-                            }
-                        });
-
-                        // Add chapter navigation
-                        const chapters = document.querySelectorAll('.chapter');
-                        const nav = document.createElement('nav');
-                        nav.style.cssText = `
-            position: fixed;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            transition: opacity 0.3s;
-            z-index: 1000;
-        `;
-
-                        const navList = document.createElement('ul');
-                        navList.style.cssText = `
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        `;
-
-                        chapters.forEach((chapter, index) => {
-                            const id = chapter.id;
-                            const title = chapter.querySelector('h2').textContent;
-
-                            const listItem = document.createElement('li');
-                            listItem.style.cssText = 'margin: 5px 0;';
-
-                            const link = document.createElement('a');
-                            link.href = '#' + id;
-                            link.textContent = `${index + 6}. ${title.replace(/Chapter \d+: /, '')}`;
-                            link.style.cssText = `
-                color: #667eea;
-                text-decoration: none;
-                font-size: 12px;
-                display: block;
-                padding: 5px;
-                border-radius: 4px;
-                transition: background-color 0.3s;
-            `;
-
-                            link.addEventListener('mouseenter', () => {
-                                link.style.backgroundColor = 'rgba(102, 126, 234, 0.1)';
-                            });
-
-                            link.addEventListener('mouseleave', () => {
-                                link.style.backgroundColor = 'transparent';
-                            });
-
-                            link.addEventListener('click', (e) => {
-                                e.preventDefault();
-                                chapter.scrollIntoView({ behavior: 'smooth' });
-                            });
-
-                            listItem.appendChild(link);
-                            navList.appendChild(listItem);
-                        });
-
-                        nav.appendChild(navList);
-                        document.body.appendChild(nav);
-
-                        // Show/hide navigation based on scroll
-                        let scrollTimer = null;
-                        window.addEventListener('scroll', () => {
-                            nav.style.opacity = '1';
-
-                            clearTimeout(scrollTimer);
-                            scrollTimer = setTimeout(() => {
-                                nav.style.opacity = '0';
-                            }, 2000);
-                        });
-
-                        // Show navigation on mouse movement near left edge
-                        document.addEventListener('mousemove', (e) => {
-                            if (e.clientX < 100) {
-                                nav.style.opacity = '1';
-                            }
-                        });
-
-                        nav.addEventListener('mouseenter', () => {
-                            nav.style.opacity = '1';
-                            clearTimeout(scrollTimer);
-                        });
-
-                        nav.addEventListener('mouseleave', () => {
-                            scrollTimer = setTimeout(() => {
-                                nav.style.opacity = '0';
-                            }, 1000);
-                        });
-                    </script>
-                    </body>
-
-                    </html>
+</html>
