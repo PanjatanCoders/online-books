@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Loops Guide - TechTok Cafe</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/java-loops.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
+                    height="50px" alt="TechTok Cafe"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link"><i class="fab fa-java"></i>Java Guides</a></li>
+                <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i>All Tutorials</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="../../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="guide-container">
+        <!-- Header -->
+        <div class="guide-header">
+            <h1 class="guide-title">Java Loops Guide</h1>
+            <p class="guide-subtitle">Master repetitive tasks with for, while, and do-while loops</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3><i class="fas fa-list"></i> Quick Navigation</h3>
+            <ul>
+                <li><a href="#overview">1. Loop Overview & Types</a></li>
+                <li><a href="#for-loops">2. For Loops</a></li>
+                <li><a href="#while-loops">3. While Loops</a></li>
+                <li><a href="#do-while-loops">4. Do-While Loops</a></li>
+                <li><a href="#loop-control">5. Loop Control Statements</a></li>
+                <li><a href="#practical-examples">6. Practical Examples</a></li>
+                <li><a href="#best-practices">7. Best Practices</a></li>
+            </ul>
+        </div>
+
+        <!-- Chapter 1: Overview -->
+        <div id="overview" class="chapter">
+            <h2 class="chapter-title">1. Loop Overview & Types</h2>
+            <div class="chapter-content">
+                <p>Loops execute a block of code repeatedly until a specified condition is met. They eliminate code duplication and handle repetitive tasks efficiently.</p>
+
+                <div class="loop-types">
+                    <div class="loop-card">
+                        <div class="loop-icon">
+                            <i class="fas fa-sync"></i>
+                        </div>
+                        <h4>For Loop</h4>
+                        <p>Known number of iterations</p>
+                        <div class="syntax-preview">for (init; condition; increment)</div>
+                        <div class="use-case">Best for: Counting, arrays, ranges</div>
+                    </div>
+                    
+                    <div class="loop-card">
+                        <div class="loop-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h4>While Loop</h4>
+                        <p>Condition checked before execution</p>
+                        <div class="syntax-preview">while (condition)</div>
+                        <div class="use-case">Best for: Unknown iterations, user input</div>
+                    </div>
+                    
+                    <div class="loop-card">
+                        <div class="loop-icon">
+                            <i class="fas fa-redo"></i>
+                        </div>
+                        <h4>Do-While Loop</h4>
+                        <p>Execute at least once</p>
+                        <div class="syntax-preview">do { } while (condition)</div>
+                        <div class="use-case">Best for: Menu systems, validation</div>
+                    </div>
+                    
+                    <div class="loop-card">
+                        <div class="loop-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <h4>Enhanced For</h4>
+                        <p>Iterate through collections</p>
+                        <div class="syntax-preview">for (type item : collection)</div>
+                        <div class="use-case">Best for: Arrays, collections</div>
+                    </div>
+                </div>
+
+                <div class="loop-flow">
+                    <h4><i class="fas fa-sitemap"></i> Loop Execution Flow</h4>
+                    <div class="flow-diagram">
+                        <div class="flow-step">
+                            <div class="step-box start">Start</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <div class="step-box init">Initialize</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <div class="step-box condition">Check Condition</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <div class="step-box execute">Execute Body</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">
+                            <div class="step-box update">Update/Increment</div>
+                        </div>
+                        <div class="flow-arrow flow-back">↑</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 2: For Loops -->
+        <div id="for-loops" class="chapter">
+            <h2 class="chapter-title">2. For Loops</h2>
+            <div class="chapter-content">
+                
+                <div class="for-variants">
+                    <div class="variant-section">
+                        <h4><i class="fas fa-cog"></i> Traditional For Loop</h4>
+                        <div class="code-block">
+                            <div class="code-title"><i class="fab fa-java"></i> Basic Syntax</div>
+                            <pre><span class="comment">// Print numbers 1 to 5</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= <span class="number">5</span>; i++) {
+    System.out.println(<span class="string">"Number: "</span> + i);
+}
+
+<span class="comment">// Countdown from 10 to 1</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">10</span>; i >= <span class="number">1</span>; i--) {
+    System.out.println(i);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="variant-section">
+                        <h4><i class="fas fa-layer-group"></i> Enhanced For Loop (For-Each)</h4>
+                        <div class="code-block">
+                            <div class="code-title"><i class="fab fa-java"></i> Array and Collection Iteration</div>
+                            <pre><span class="comment">// Iterate through array</span>
+<span class="keyword">int</span>[] numbers = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+<span class="keyword">for</span> (<span class="keyword">int</span> num : numbers) {
+    System.out.println(num);
+}
+
+<span class="comment">// Iterate through String array</span>
+String[] fruits = {<span class="string">"Apple"</span>, <span class="string">"Banana"</span>, <span class="string">"Orange"</span>};
+<span class="keyword">for</span> (String fruit : fruits) {
+    System.out.println(<span class="string">"Fruit: "</span> + fruit);
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="for-components">
+                    <h4><i class="fas fa-puzzle-piece"></i> For Loop Components</h4>
+                    <div class="component-breakdown">
+                        <div class="component-part">
+                            <div class="part-label">Initialization</div>
+                            <div class="part-code">int i = 0</div>
+                            <div class="part-description">Executed once at the start</div>
+                        </div>
+                        <div class="component-part">
+                            <div class="part-label">Condition</div>
+                            <div class="part-code">i < 10</div>
+                            <div class="part-description">Checked before each iteration</div>
+                        </div>
+                        <div class="component-part">
+                            <div class="part-label">Update</div>
+                            <div class="part-code">i++</div>
+                            <div class="part-description">Executed after each iteration</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="for-patterns">
+                    <h4><i class="fas fa-chart-line"></i> Common For Loop Patterns</h4>
+                    <div class="pattern-grid">
+                        <div class="pattern-card">
+                            <h5>Count Up</h5>
+                            <code>for (int i = 0; i < n; i++)</code>
+                        </div>
+                        <div class="pattern-card">
+                            <h5>Count Down</h5>
+                            <code>for (int i = n; i > 0; i--)</code>
+                        </div>
+                        <div class="pattern-card">
+                            <h5>Step by 2</h5>
+                            <code>for (int i = 0; i < n; i += 2)</code>
+                        </div>
+                        <div class="pattern-card">
+                            <h5>Array Index</h5>
+                            <code>for (int i = 0; i < arr.length; i++)</code>
+                        </div>
+                        <div class="pattern-card">
+                            <h5>Reverse Array</h5>
+                            <code>for (int i = arr.length-1; i >= 0; i--)</code>
+                        </div>
+                        <div class="pattern-card">
+                            <h5>Multiple Variables</h5>
+                            <code>for (int i = 0, j = n-1; i < j; i++, j--)</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nested-loops">
+                    <h4><i class="fas fa-sitemap"></i> Nested For Loops</h4>
+                    <div class="code-block">
+                        <div class="code-title"><i class="fab fa-java"></i> Matrix Operations</div>
+                        <pre><span class="comment">// Print multiplication table</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= <span class="number">5</span>; i++) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j <= <span class="number">5</span>; j++) {
+        System.out.print((i * j) + <span class="string">"\t"</span>);
+    }
+    System.out.println(); <span class="comment">// New line after each row</span>
+}
+
+<span class="comment">// Pattern printing</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= <span class="number">5</span>; i++) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j <= i; j++) {
+        System.out.print(<span class="string">"* "</span>);
+    }
+    System.out.println();
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 3: While Loops -->
+        <div id="while-loops" class="chapter">
+            <h2 class="chapter-title">3. While Loops</h2>
+            <div class="chapter-content">
+                <p>While loops continue executing as long as the condition remains true. The condition is checked before each iteration.</p>
+
+                <div class="while-structure">
+                    <div class="structure-visual">
+                        <div class="while-flow">
+                            <div class="flow-box condition-check">Condition Check</div>
+                            <div class="flow-arrow">↓ (if true)</div>
+                            <div class="flow-box execute-body">Execute Body</div>
+                            <div class="flow-arrow return-arrow">↑ (repeat)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="while-syntax">
+                        <div class="code-block">
+                            <div class="code-title"><i class="fab fa-java"></i> While Loop Syntax</div>
+                            <pre><span class="keyword">while</span> (condition) {
+    <span class="comment">// Code to execute repeatedly</span>
+    <span class="comment">// Don't forget to update condition variable!</span>
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="while-examples">
+                    <div class="example-section">
+                        <h4><i class="fas fa-calculator"></i> Basic While Loop Examples</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Count from 1 to 5</span>
+<span class="keyword">int</span> count = <span class="number">1</span>;
+<span class="keyword">while</span> (count <= <span class="number">5</span>) {
+    System.out.println(<span class="string">"Count: "</span> + count);
+    count++; <span class="comment">// Important: update condition variable</span>
+}
+
+<span class="comment">// Sum of numbers until user enters 0</span>
+Scanner scanner = <span class="keyword">new</span> Scanner(System.in);
+<span class="keyword">int</span> sum = <span class="number">0</span>;
+<span class="keyword">int</span> number = <span class="number">1</span>; <span class="comment">// Initialize to non-zero</span>
+
+<span class="keyword">while</span> (number != <span class="number">0</span>) {
+    System.out.print(<span class="string">"Enter a number (0 to stop): "</span>);
+    number = scanner.nextInt();
+    sum += number;
+}
+System.out.println(<span class="string">"Total sum: "</span> + sum);</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-section">
+                        <h4><i class="fas fa-user-check"></i> Input Validation</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Validate user input</span>
+Scanner input = <span class="keyword">new</span> Scanner(System.in);
+<span class="keyword">int</span> age = -<span class="number">1</span>; <span class="comment">// Invalid initial value</span>
+
+<span class="keyword">while</span> (age < <span class="number">0</span> || age > <span class="number">150</span>) {
+    System.out.print(<span class="string">"Enter your age (0-150): "</span>);
+    age = input.nextInt();
+    
+    <span class="keyword">if</span> (age < <span class="number">0</span> || age > <span class="number">150</span>) {
+        System.out.println(<span class="string">"Invalid age! Please try again."</span>);
+    }
+}
+System.out.println(<span class="string">"Valid age entered: "</span> + age);</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Infinite Loop Warning</h4>
+                    <p>Always ensure the loop condition will eventually become false. Forgetting to update the condition variable is a common cause of infinite loops.</p>
+                    <div class="warning-examples">
+                        <div class="bad-example">
+                            <h5>❌ Infinite Loop</h5>
+                            <code>int i = 0; while (i < 5) { println(i); } // i never changes!</code>
+                        </div>
+                        <div class="good-example">
+                            <h5>✅ Proper Loop</h5>
+                            <code>int i = 0; while (i < 5) { println(i); i++; }</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 4: Do-While Loops -->
+        <div id="do-while-loops" class="chapter">
+            <h2 class="chapter-title">4. Do-While Loops</h2>
+            <div class="chapter-content">
+                <p>Do-while loops execute the body at least once, then check the condition. Perfect for scenarios where you need guaranteed execution.</p>
+
+                <div class="do-while-comparison">
+                    <div class="comparison-grid">
+                        <div class="comparison-item">
+                            <h4>While Loop</h4>
+                            <div class="flow-mini">
+                                <div class="mini-step">Check Condition</div>
+                                <div class="mini-arrow">↓</div>
+                                <div class="mini-step">Execute (if true)</div>
+                            </div>
+                            <p>May not execute at all</p>
+                        </div>
+                        
+                        <div class="comparison-item">
+                            <h4>Do-While Loop</h4>
+                            <div class="flow-mini">
+                                <div class="mini-step">Execute Body</div>
+                                <div class="mini-arrow">↓</div>
+                                <div class="mini-step">Check Condition</div>
+                            </div>
+                            <p>Always executes at least once</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="do-while-syntax">
+                    <div class="code-block">
+                        <div class="code-title"><i class="fab fa-java"></i> Do-While Syntax</div>
+                        <pre><span class="keyword">do</span> {
+    <span class="comment">// Code to execute at least once</span>
+    <span class="comment">// Update condition variable</span>
+} <span class="keyword">while</span> (condition);</pre>
+                    </div>
+                </div>
+
+                <div class="do-while-examples">
+                    <div class="example-card">
+                        <h4><i class="fas fa-list"></i> Menu System</h4>
+                        <div class="code-block">
+                            <pre>Scanner input = <span class="keyword">new</span> Scanner(System.in);
+<span class="keyword">int</span> choice;
+
+<span class="keyword">do</span> {
+    System.out.println(<span class="string">"=== MENU ==="</span>);
+    System.out.println(<span class="string">"1. Option 1"</span>);
+    System.out.println(<span class="string">"2. Option 2"</span>);
+    System.out.println(<span class="string">"3. Option 3"</span>);
+    System.out.println(<span class="string">"0. Exit"</span>);
+    System.out.print(<span class="string">"Enter your choice: "</span>);
+    
+    choice = input.nextInt();
+    
+    <span class="keyword">switch</span> (choice) {
+        <span class="keyword">case</span> <span class="number">1</span>: System.out.println(<span class="string">"Option 1 selected"</span>); <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="number">2</span>: System.out.println(<span class="string">"Option 2 selected"</span>); <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="number">3</span>: System.out.println(<span class="string">"Option 3 selected"</span>); <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="number">0</span>: System.out.println(<span class="string">"Goodbye!"</span>); <span class="keyword">break</span>;
+        <span class="keyword">default</span>: System.out.println(<span class="string">"Invalid choice!"</span>);
+    }
+} <span class="keyword">while</span> (choice != <span class="number">0</span>);</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-dice"></i> Game Loop</h4>
+                        <div class="code-block">
+                            <pre>Scanner input = <span class="keyword">new</span> Scanner(System.in);
+String playAgain;
+
+<span class="keyword">do</span> {
+    <span class="comment">// Game logic here</span>
+    System.out.println(<span class="string">"Playing the game..."</span>);
+    <span class="keyword">int</span> score = (<span class="keyword">int</span>)(Math.random() * <span class="number">100</span>);
+    System.out.println(<span class="string">"Your score: "</span> + score);
+    
+    System.out.print(<span class="string">"Play again? (y/n): "</span>);
+    playAgain = input.next();
+    
+} <span class="keyword">while</span> (playAgain.equalsIgnoreCase(<span class="string">"y"</span>) || 
+         playAgain.equalsIgnoreCase(<span class="string">"yes"</span>));</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="when-to-use">
+                    <h4><i class="fas fa-lightbulb"></i> When to Use Do-While</h4>
+                    <div class="use-cases">
+                        <div class="use-case">
+                            <i class="fas fa-list-alt"></i>
+                            <span>Menu systems that must show at least once</span>
+                        </div>
+                        <div class="use-case">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Input validation with guaranteed prompt</span>
+                        </div>
+                        <div class="use-case">
+                            <i class="fas fa-gamepad"></i>
+                            <span>Game loops that run until player quits</span>
+                        </div>
+                        <div class="use-case">
+                            <i class="fas fa-redo"></i>
+                            <span>Operations that must execute at least once</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 5: Loop Control -->
+        <div id="loop-control" class="chapter">
+            <h2 class="chapter-title">5. Loop Control Statements</h2>
+            <div class="chapter-content">
+                <p>Control statements modify the normal flow of loop execution: break exits the loop, continue skips to the next iteration.</p>
+
+                <div class="control-statements">
+                    <div class="control-card">
+                        <div class="control-icon break">
+                            <i class="fas fa-stop"></i>
+                        </div>
+                        <h4>break Statement</h4>
+                        <p>Exits the loop immediately</p>
+                        <div class="control-flow">
+                            <span>Loop → Condition → break → Exit</span>
+                        </div>
+                    </div>
+                    
+                    <div class="control-card">
+                        <div class="control-icon continue">
+                            <i class="fas fa-forward"></i>
+                        </div>
+                        <h4>continue Statement</h4>
+                        <p>Skips rest of current iteration</p>
+                        <div class="control-flow">
+                            <span>Loop → continue → Next Iteration</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-examples">
+                    <div class="control-example">
+                        <h4><i class="fas fa-stop"></i> Break Statement Examples</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Find first even number</span>
+<span class="keyword">int</span>[] numbers = {<span class="number">1</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">5</span>, <span class="number">9</span>};
+<span class="keyword">for</span> (<span class="keyword">int</span> num : numbers) {
+    <span class="keyword">if</span> (num % <span class="number">2</span> == <span class="number">0</span>) {
+        System.out.println(<span class="string">"First even number: "</span> + num);
+        <span class="keyword">break</span>; <span class="comment">// Exit loop immediately</span>
+    }
+}
+
+<span class="comment">// Search for value</span>
+<span class="keyword">int</span> target = <span class="number">25</span>;
+<span class="keyword">boolean</span> found = <span class="keyword">false</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < numbers.length; i++) {
+    <span class="keyword">if</span> (numbers[i] == target) {
+        found = <span class="keyword">true</span>;
+        <span class="keyword">break</span>; <span class="comment">// Stop searching</span>
+    }
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="control-example">
+                        <h4><i class="fas fa-forward"></i> Continue Statement Examples</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Print only positive numbers</span>
+<span class="keyword">int</span>[] numbers = {-<span class="number">2</span>, <span class="number">5</span>, -<span class="number">1</span>, <span class="number">8</span>, <span class="number">0</span>, <span class="number">3</span>};
+<span class="keyword">for</span> (<span class="keyword">int</span> num : numbers) {
+    <span class="keyword">if</span> (num <= <span class="number">0</span>) {
+        <span class="keyword">continue</span>; <span class="comment">// Skip negative and zero</span>
+    }
+    System.out.println(<span class="string">"Positive: "</span> + num);
+}
+
+<span class="comment">// Skip multiples of 3</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= <span class="number">10</span>; i++) {
+    <span class="keyword">if</span> (i % <span class="number">3</span> == <span class="number">0</span>) {
+        <span class="keyword">continue</span>; <span class="comment">// Skip 3, 6, 9</span>
+    }
+    System.out.print(i + <span class="string">" "</span>); <span class="comment">// Prints: 1 2 4 5 7 8 10</span>
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="labeled-loops">
+                    <h4><i class="fas fa-tags"></i> Labeled Loops (Advanced)</h4>
+                    <div class="code-block">
+                        <div class="code-title"><i class="fab fa-java"></i> Breaking from Nested Loops</div>
+                        <pre>outerLoop: <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= <span class="number">3</span>; i++) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j <= <span class="number">3</span>; j++) {
+        <span class="keyword">if</span> (i * j == <span class="number">4</span>) {
+            System.out.println(<span class="string">"Found 4 at "</span> + i + <span class="string">","</span> + j);
+            <span class="keyword">break outerLoop</span>; <span class="comment">// Break from outer loop</span>
+        }
+        System.out.println(i + <span class="string">" x "</span> + j + <span class="string">" = "</span> + (i * j));
+    }
+}</pre>
+                    </div>
+                    
+                    <div class="highlight-box">
+                        <h4><i class="fas fa-info-circle"></i> Label Guidelines</h4>
+                        <p>Use labels sparingly and only when absolutely necessary. They can make code harder to read and maintain. Consider restructuring your logic instead.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 6: Practical Examples -->
+        <div id="practical-examples" class="chapter">
+            <h2 class="chapter-title">6. Practical Examples</h2>
+            <div class="chapter-content">
+                
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4><i class="fas fa-calculator"></i> Sum Calculator</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Calculate sum of numbers 1 to n</span>
+Scanner input = <span class="keyword">new</span> Scanner(System.in);
+System.out.print(<span class="string">"Enter a number: "</span>);
+<span class="keyword">int</span> n = input.nextInt();
+
+<span class="keyword">int</span> sum = <span class="number">0</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= n; i++) {
+    sum += i;
+}
+System.out.println(<span class="string">"Sum of 1 to "</span> + n + <span class="string">" = "</span> + sum);</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-hashtag"></i> Factorial Calculator</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Calculate factorial using while loop</span>
+<span class="keyword">int</span> number = <span class="number">5</span>;
+<span class="keyword">int</span> factorial = <span class="number">1</span>;
+<span class="keyword">int</span> i = <span class="number">1</span>;
+
+<span class="keyword">while</span> (i <= number) {
+    factorial *= i;
+    i++;
+}
+System.out.println(number + <span class="string">"! = "</span> + factorial); <span class="comment">// 5! = 120</span></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-search"></i> Array Search</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Linear search in array</span>
+<span class="keyword">int</span>[] arr = {<span class="number">10</span>, <span class="number">25</span>, <span class="number">30</span>, <span class="number">45</span>, <span class="number">50</span>};
+<span class="keyword">int</span> target = <span class="number">30</span>;
+<span class="keyword">int</span> index = -<span class="number">1</span>;
+
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < arr.length; i++) {
+    <span class="keyword">if</span> (arr[i] == target) {
+        index = i;
+        <span class="keyword">break</span>; <span class="comment">// Found it, stop searching</span>
+    }
+}
+
+<span class="keyword">if</span> (index != -<span class="number">1</span>) {
+    System.out.println(<span class="string">"Found "</span> + target + <span class="string">" at index "</span> + index);
+} <span class="keyword">else</span> {
+    System.out.println(target + <span class="string">" not found"</span>);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-star"></i> Pattern Printing</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Print triangle pattern</span>
+<span class="keyword">int</span> rows = <span class="number">5</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i <= rows; i++) {
+    <span class="comment">// Print spaces</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j <= rows - i; j++) {
+        System.out.print(<span class="string">" "</span>);
+    }
+    <span class="comment">// Print stars</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j <= (<span class="number">2</span> * i - <span class="number">1</span>); j++) {
+        System.out.print(<span class="string">"*"</span>);
+    }
+    System.out.println();
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-random"></i> Number Guessing Game</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Simple guessing game</span>
+Scanner input = <span class="keyword">new</span> Scanner(System.in);
+<span class="keyword">int</span> secretNumber = (<span class="keyword">int</span>)(Math.random() * <span class="number">100</span>) + <span class="number">1</span>;
+<span class="keyword">int</span> guess;
+<span class="keyword">int</span> attempts = <span class="number">0</span>;
+
+<span class="keyword">do</span> {
+    System.out.print(<span class="string">"Guess the number (1-100): "</span>);
+    guess = input.nextInt();
+    attempts++;
+    
+    <span class="keyword">if</span> (guess < secretNumber) {
+        System.out.println(<span class="string">"Too low!"</span>);
+    } <span class="keyword">else if</span> (guess > secretNumber) {
+        System.out.println(<span class="string">"Too high!"</span>);
+    } <span class="keyword">else</span> {
+        System.out.println(<span class="string">"Correct! You won in "</span> + attempts + <span class="string">" attempts."</span>);
+    }
+} <span class="keyword">while</span> (guess != secretNumber);</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-chart-bar"></i> Statistics Calculator</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Calculate average of array elements</span>
+<span class="keyword">double</span>[] scores = {<span class="number">85.5</span>, <span class="number">92.0</span>, <span class="number">78.5</span>, <span class="number">96.0</span>, <span class="number">88.5</span>};
+<span class="keyword">double</span> sum = <span class="number">0</span>;
+<span class="keyword">double</span> max = scores[<span class="number">0</span>];
+<span class="keyword">double</span> min = scores[<span class="number">0</span>];
+
+<span class="keyword">for</span> (<span class="keyword">double</span> score : scores) {
+    sum += score;
+    <span class="keyword">if</span> (score > max) max = score;
+    <span class="keyword">if</span> (score < min) min = score;
+}
+
+<span class="keyword">double</span> average = sum / scores.length;
+System.out.println(<span class="string">"Average: "</span> + average);
+System.out.println(<span class="string">"Highest: "</span> + max);
+System.out.println(<span class="string">"Lowest: "</span> + min);</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 7: Best Practices -->
+        <div id="best-practices" class="chapter">
+            <h2 class="chapter-title">7. Best Practices</h2>
+            <div class="chapter-content">
+                
+                <div class="best-practices-grid">
+                    <div class="practice-section good">
+                        <h4><i class="fas fa-check-circle"></i> Do's</h4>
+                        <ul>
+                            <li>Choose the right loop type for your scenario</li>
+                            <li>Always update the loop condition variable</li>
+                            <li>Use meaningful variable names</li>
+                            <li>Keep loop bodies simple and focused</li>
+                            <li>Use enhanced for-loops for simple iteration</li>
+                            <li>Initialize variables before the loop</li>
+                            <li>Consider loop invariants for correctness</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="practice-section bad">
+                        <h4><i class="fas fa-times-circle"></i> Don'ts</h4>
+                        <ul>
+                            <li>Don't create infinite loops accidentally</li>
+                            <li>Don't modify loop variables inside enhanced for-loops</li>
+                            <li>Don't use magic numbers in loop conditions</li>
+                            <li>Don't nest loops too deeply (max 2-3 levels)</li>
+                            <li>Don't ignore loop efficiency for large datasets</li>
+                            <li>Don't use break/continue excessively</li>
+                            <li>Don't forget to handle empty collections</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="loop-selection-guide">
+                    <h4><i class="fas fa-compass"></i> Loop Selection Guide</h4>
+                    <div class="selection-chart">
+                        <div class="selection-item">
+                            <div class="scenario">Known iterations count</div>
+                            <div class="arrow">→</div>
+                            <div class="recommendation">For Loop</div>
+                        </div>
+                        <div class="selection-item">
+                            <div class="scenario">Iterate through collection</div>
+                            <div class="arrow">→</div>
+                            <div class="recommendation">Enhanced For Loop</div>
+                        </div>
+                        <div class="selection-item">
+                            <div class="scenario">Unknown iterations, condition-based</div>
+                            <div class="arrow">→</div>
+                            <div class="recommendation">While Loop</div>
+                        </div>
+                        <div class="selection-item">
+                            <div class="scenario">Must execute at least once</div>
+                            <div class="arrow">→</div>
+                            <div class="recommendation">Do-While Loop</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-tips">
+                    <h4><i class="fas fa-tachometer-alt"></i> Performance Considerations</h4>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <h5><i class="fas fa-memory"></i> Cache Array Length</h5>
+                            <div class="tip-comparison">
+                                <div class="tip-bad">
+                                    <span>❌ Slow</span>
+                                    <code>for (int i = 0; i < arr.length; i++)</code>
+                                </div>
+                                <div class="tip-good">
+                                    <span>✅ Fast</span>
+                                    <code>int len = arr.length; for (int i = 0; i < len; i++)</code>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <h5><i class="fas fa-layer-group"></i> Minimize Nested Loops</h5>
+                            <p>Nested loops multiply complexity. O(n) becomes O(n²) with nesting.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <h5><i class="fas fa-bolt"></i> Early Exit Optimization</h5>
+                            <p>Use break statements to exit loops early when the result is found.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <h5><i class="fas fa-code-branch"></i> Move Conditions Outside</h5>
+                            <p>If a condition doesn't change during iteration, check it before the loop.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="debugging-tips">
+                    <h4><i class="fas fa-bug"></i> Debugging Loop Issues</h4>
+                    <div class="debug-checklist">
+                        <div class="debug-item">
+                            <i class="fas fa-check"></i>
+                            <span>Is the loop condition correct?</span>
+                        </div>
+                        <div class="debug-item">
+                            <i class="fas fa-check"></i>
+                            <span>Are variables properly initialized?</span>
+                        </div>
+                        <div class="debug-item">
+                            <i class="fas fa-check"></i>
+                            <span>Is the loop variable being updated?</span>
+                        </div>
+                        <div class="debug-item">
+                            <i class="fas fa-check"></i>
+                            <span>Will the condition eventually become false?</span>
+                        </div>
+                        <div class="debug-item">
+                            <i class="fas fa-check"></i>
+                            <span>Are array bounds being respected?</span>
+                        </div>
+                        <div class="debug-item">
+                            <i class="fas fa-check"></i>
+                            <span>Is the loop body executing as expected?</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="common-patterns">
+                    <h4><i class="fas fa-puzzle-piece"></i> Common Loop Patterns</h4>
+                    <div class="pattern-examples">
+                        <div class="pattern-item">
+                            <h5>Accumulator Pattern</h5>
+                            <code>int sum = 0; for (int x : array) sum += x;</code>
+                        </div>
+                        <div class="pattern-item">
+                            <h5>Counter Pattern</h5>
+                            <code>int count = 0; for (int x : array) if (condition) count++;</code>
+                        </div>
+                        <div class="pattern-item">
+                            <h5>Flag Pattern</h5>
+                            <code>boolean found = false; for (int x : array) if (x == target) { found = true; break; }</code>
+                        </div>
+                        <div class="pattern-item">
+                            <h5>Min/Max Pattern</h5>
+                            <code>int max = array[0]; for (int x : array) if (x > max) max = x;</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="final-summary">
+                    <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
+                    <div class="takeaway-grid">
+                        <div class="takeaway">
+                            <i class="fas fa-sync"></i>
+                            <span>Loops eliminate code repetition and handle repetitive tasks efficiently</span>
+                        </div>
+                        <div class="takeaway">
+                            <i class="fas fa-tools"></i>
+                            <span>Choose the right loop type: for (counting), while (condition), do-while (at least once)</span>
+                        </div>
+                        <div class="takeaway">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Always ensure loop termination to avoid infinite loops</span>
+                        </div>
+                        <div class="takeaway">
+                            <i class="fas fa-code"></i>
+                            <span>Use break and continue judiciously to control loop flow</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="next-topics">
+                    <h4><i class="fas fa-arrow-right"></i> What's Next?</h4>
+                    <div class="next-steps">
+                        <div class="next-step">
+                            <i class="fas fa-function"></i>
+                            <span>Learn Methods and Functions</span>
+                        </div>
+                        <div class="next-step">
+                            <i class="fas fa-cube"></i>
+                            <span>Explore Object-Oriented Programming</span>
+                        </div>
+                        <div class="next-step">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Master Exception Handling</span>
+                        </div>
+                        <div class="next-step">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Dive into Data Structures</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in table of contents
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.chapter');
+            const tocLinks = document.querySelectorAll('.toc a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Interactive hover effects for loop cards
+        document.querySelectorAll('.loop-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Flow diagram animation
+        document.querySelectorAll('.flow-step').forEach((step, index) => {
+            step.addEventListener('mouseenter', () => {
+                step.style.transform = 'scale(1.1)';
+                step.style.transition = 'all 0.3s ease';
+            });
+            step.addEventListener('mouseleave', () => {
+                step.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+
+</html>
