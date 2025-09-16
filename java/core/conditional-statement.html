@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Conditional Statements Guide - TechTok Cafe</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/java-conditionals.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
+                    height="50px" alt="TechTok Cafe"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link"><i class="fab fa-java"></i>Java Guides</a></li>
+                <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i>All Tutorials</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="../../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="guide-container">
+        <!-- Header -->
+        <div class="guide-header">
+            <h1 class="guide-title">Java Conditional Statements</h1>
+            <p class="guide-subtitle">Master decision-making in Java with if, switch, and ternary operators</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3><i class="fas fa-list"></i> Quick Navigation</h3>
+            <ul>
+                <li><a href="#overview">1. Overview & Types</a></li>
+                <li><a href="#if-statements">2. If Statements</a></li>
+                <li><a href="#switch-statements">3. Switch Statements</a></li>
+                <li><a href="#ternary-operator">4. Ternary Operator</a></li>
+                <li><a href="#practical-examples">5. Practical Examples</a></li>
+                <li><a href="#best-practices">6. Best Practices</a></li>
+            </ul>
+        </div>
+
+        <!-- Chapter 1: Overview -->
+        <div id="overview" class="chapter">
+            <h2 class="chapter-title">1. Overview & Types</h2>
+            <div class="chapter-content">
+                <p>Conditional statements control program flow by executing different code blocks based on conditions.</p>
+
+                <div class="conditional-types">
+                    <div class="type-card">
+                        <div class="type-icon">
+                            <i class="fas fa-code-branch"></i>
+                        </div>
+                        <h4>If Statement</h4>
+                        <p>Execute code when condition is true</p>
+                        <div class="syntax-preview">if (condition) { }</div>
+                    </div>
+                    
+                    <div class="type-card">
+                        <div class="type-icon">
+                            <i class="fas fa-list-alt"></i>
+                        </div>
+                        <h4>Switch Statement</h4>
+                        <p>Multiple conditions with single variable</p>
+                        <div class="syntax-preview">switch (variable) { }</div>
+                    </div>
+                    
+                    <div class="type-card">
+                        <div class="type-icon">
+                            <i class="fas fa-question"></i>
+                        </div>
+                        <h4>Ternary Operator</h4>
+                        <p>Shorthand for simple if-else</p>
+                        <div class="syntax-preview">condition ? value1 : value2</div>
+                    </div>
+                </div>
+
+                <div class="flow-diagram">
+                    <h4><i class="fas fa-sitemap"></i> Decision Flow</h4>
+                    <div class="flow-steps">
+                        <div class="flow-step">
+                            <div class="step-box condition">Condition</div>
+                            <div class="step-label">Evaluate Expression</div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <div class="step-box decision">Decision</div>
+                            <div class="step-label">True or False?</div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-step">
+                            <div class="step-box action">Action</div>
+                            <div class="step-label">Execute Code Block</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 2: If Statements -->
+        <div id="if-statements" class="chapter">
+            <h2 class="chapter-title">2. If Statements</h2>
+            <div class="chapter-content">
+                
+                <div class="if-variants">
+                    <div class="variant-card">
+                        <h4><i class="fas fa-arrow-right"></i> Simple If</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">int</span> age = <span class="number">18</span>;
+<span class="keyword">if</span> (age >= <span class="number">18</span>) {
+    System.out.println(<span class="string">"You can vote!"</span>);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="variant-card">
+                        <h4><i class="fas fa-arrows-alt-h"></i> If-Else</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">int</span> score = <span class="number">85</span>;
+<span class="keyword">if</span> (score >= <span class="number">90</span>) {
+    System.out.println(<span class="string">"Grade A"</span>);
+} <span class="keyword">else</span> {
+    System.out.println(<span class="string">"Grade B or below"</span>);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="variant-card">
+                        <h4><i class="fas fa-layer-group"></i> If-Else If-Else</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">int</span> score = <span class="number">85</span>;
+<span class="keyword">if</span> (score >= <span class="number">90</span>) {
+    System.out.println(<span class="string">"Grade A"</span>);
+} <span class="keyword">else if</span> (score >= <span class="number">80</span>) {
+    System.out.println(<span class="string">"Grade B"</span>);
+} <span class="keyword">else if</span> (score >= <span class="number">70</span>) {
+    System.out.println(<span class="string">"Grade C"</span>);
+} <span class="keyword">else</span> {
+    System.out.println(<span class="string">"Grade F"</span>);
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="conditions-grid">
+                    <div class="condition-category">
+                        <h4><i class="fas fa-equals"></i> Comparison Conditions</h4>
+                        <div class="condition-examples">
+                            <code>age > 18</code>
+                            <code>score == 100</code>
+                            <code>name != null</code>
+                            <code>price <= 50.0</code>
+                        </div>
+                    </div>
+                    
+                    <div class="condition-category">
+                        <h4><i class="fas fa-link"></i> Logical Conditions</h4>
+                        <div class="condition-examples">
+                            <code>age >= 18 && hasLicense</code>
+                            <code>day == "Saturday" || day == "Sunday"</code>
+                            <code>!isExpired</code>
+                            <code>(x > 0) && (x < 100)</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nested-example">
+                    <h4><i class="fas fa-sitemap"></i> Nested If Statements</h4>
+                    <div class="code-block">
+                        <div class="code-title"><i class="fab fa-java"></i> Weather Decision System</div>
+                        <pre><span class="keyword">boolean</span> isRaining = <span class="keyword">true</span>;
+<span class="keyword">int</span> temperature = <span class="number">25</span>;
+
+<span class="keyword">if</span> (isRaining) {
+    <span class="keyword">if</span> (temperature < <span class="number">15</span>) {
+        System.out.println(<span class="string">"Wear a raincoat and jacket"</span>);
+    } <span class="keyword">else</span> {
+        System.out.println(<span class="string">"Just carry an umbrella"</span>);
+    }
+} <span class="keyword">else</span> {
+    <span class="keyword">if</span> (temperature > <span class="number">30</span>) {
+        System.out.println(<span class="string">"Wear light clothes"</span>);
+    } <span class="keyword">else</span> {
+        System.out.println(<span class="string">"Normal clothes are fine"</span>);
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 3: Switch Statements -->
+        <div id="switch-statements" class="chapter">
+            <h2 class="chapter-title">3. Switch Statements</h2>
+            <div class="chapter-content">
+                <p>Switch statements provide a clean way to handle multiple conditions on a single variable.</p>
+
+                <div class="switch-examples">
+                    <div class="switch-type">
+                        <h4><i class="fas fa-calendar-day"></i> Traditional Switch</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">int</span> dayOfWeek = <span class="number">3</span>;
+<span class="keyword">switch</span> (dayOfWeek) {
+    <span class="keyword">case</span> <span class="number">1</span>:
+        System.out.println(<span class="string">"Monday"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="number">2</span>:
+        System.out.println(<span class="string">"Tuesday"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="number">3</span>:
+        System.out.println(<span class="string">"Wednesday"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        System.out.println(<span class="string">"Other day"</span>);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="switch-type">
+                        <h4><i class="fas fa-arrow-right"></i> Switch Expression (Java 14+)</h4>
+                        <div class="code-block">
+                            <pre>String dayName = <span class="keyword">switch</span> (dayOfWeek) {
+    <span class="keyword">case</span> <span class="number">1</span> -> <span class="string">"Monday"</span>;
+    <span class="keyword">case</span> <span class="number">2</span> -> <span class="string">"Tuesday"</span>;
+    <span class="keyword">case</span> <span class="number">3</span> -> <span class="string">"Wednesday"</span>;
+    <span class="keyword">case</span> <span class="number">4</span> -> <span class="string">"Thursday"</span>;
+    <span class="keyword">case</span> <span class="number">5</span> -> <span class="string">"Friday"</span>;
+    <span class="keyword">default</span> -> <span class="string">"Weekend"</span>;
+};</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="switch-features">
+                    <div class="feature-item">
+                        <h4><i class="fas fa-layer-group"></i> Multiple Cases</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">switch</span> (grade) {
+    <span class="keyword">case</span> <span class="string">'A'</span>:
+    <span class="keyword">case</span> <span class="string">'B'</span>:
+        System.out.println(<span class="string">"Good work!"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">'C'</span>:
+        System.out.println(<span class="string">"Average"</span>);
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        System.out.println(<span class="string">"Needs improvement"</span>);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <h4><i class="fas fa-text-width"></i> String Switch</h4>
+                        <div class="code-block">
+                            <pre>String operation = <span class="string">"add"</span>;
+<span class="keyword">switch</span> (operation) {
+    <span class="keyword">case</span> <span class="string">"add"</span>:
+        result = a + b;
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">"subtract"</span>:
+        result = a - b;
+        <span class="keyword">break</span>;
+    <span class="keyword">case</span> <span class="string">"multiply"</span>:
+        result = a * b;
+        <span class="keyword">break</span>;
+    <span class="keyword">default</span>:
+        System.out.println(<span class="string">"Unknown operation"</span>);
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Important Notes</h4>
+                    <ul>
+                        <li><strong>Break statements:</strong> Prevent fall-through to next case</li>
+                        <li><strong>Default case:</strong> Always include for unmatched values</li>
+                        <li><strong>Supported types:</strong> byte, short, int, char, String, enum</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 4: Ternary Operator -->
+        <div id="ternary-operator" class="chapter">
+            <h2 class="chapter-title">4. Ternary Operator</h2>
+            <div class="chapter-content">
+                <p>The ternary operator provides a concise way to write simple if-else statements in one line.</p>
+
+                <div class="ternary-syntax">
+                    <div class="syntax-breakdown">
+                        <div class="syntax-part condition-part">condition</div>
+                        <div class="syntax-part operator-part">?</div>
+                        <div class="syntax-part true-part">valueIfTrue</div>
+                        <div class="syntax-part operator-part">:</div>
+                        <div class="syntax-part false-part">valueIfFalse</div>
+                    </div>
+                    <div class="syntax-labels">
+                        <span>Condition</span>
+                        <span>If True</span>
+                        <span>If False</span>
+                    </div>
+                </div>
+
+                <div class="ternary-examples">
+                    <div class="example-comparison">
+                        <div class="before-after">
+                            <h4><i class="fas fa-times"></i> Before (If-Else)</h4>
+                            <div class="code-block">
+                                <pre><span class="keyword">int</span> age = <span class="number">20</span>;
+String status;
+<span class="keyword">if</span> (age >= <span class="number">18</span>) {
+    status = <span class="string">"Adult"</span>;
+} <span class="keyword">else</span> {
+    status = <span class="string">"Minor"</span>;
+}</pre>
+                            </div>
+                        </div>
+                        
+                        <div class="before-after">
+                            <h4><i class="fas fa-check"></i> After (Ternary)</h4>
+                            <div class="code-block">
+                                <pre><span class="keyword">int</span> age = <span class="number">20</span>;
+String status = (age >= <span class="number">18</span>) ? <span class="string">"Adult"</span> : <span class="string">"Minor"</span>;</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ternary-use-cases">
+                    <h4><i class="fas fa-lightbulb"></i> Common Use Cases</h4>
+                    <div class="use-case-grid">
+                        <div class="use-case">
+                            <h5>Variable Assignment</h5>
+                            <code>int max = (a > b) ? a : b;</code>
+                        </div>
+                        <div class="use-case">
+                            <h5>Method Parameters</h5>
+                            <code>println(score > 90 ? "Pass" : "Fail");</code>
+                        </div>
+                        <div class="use-case">
+                            <h5>Return Values</h5>
+                            <code>return (count == 0) ? "Empty" : "Has items";</code>
+                        </div>
+                        <div class="use-case">
+                            <h5>Null Safety</h5>
+                            <code>String name = (user != null) ? user.getName() : "Guest";</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nested-ternary">
+                    <h4><i class="fas fa-sitemap"></i> Nested Ternary (Use Sparingly)</h4>
+                    <div class="code-block">
+                        <pre><span class="comment">// Grade calculation using nested ternary</span>
+<span class="keyword">int</span> score = <span class="number">85</span>;
+String grade = (score >= <span class="number">90</span>) ? <span class="string">"A"</span> : 
+               (score >= <span class="number">80</span>) ? <span class="string">"B"</span> : 
+               (score >= <span class="number">70</span>) ? <span class="string">"C"</span> : <span class="string">"F"</span>;
+
+<span class="comment">// Better approach for complex conditions</span>
+String grade;
+<span class="keyword">if</span> (score >= <span class="number">90</span>) grade = <span class="string">"A"</span>;
+<span class="keyword">else if</span> (score >= <span class="number">80</span>) grade = <span class="string">"B"</span>;
+<span class="keyword">else if</span> (score >= <span class="number">70</span>) grade = <span class="string">"C"</span>;
+<span class="keyword">else</span> grade = <span class="string">"F"</span>;</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 5: Practical Examples -->
+        <div id="practical-examples" class="chapter">
+            <h2 class="chapter-title">5. Practical Examples</h2>
+            <div class="chapter-content">
+                
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h4><i class="fas fa-user-check"></i> User Authentication</h4>
+                        <div class="code-block">
+                            <pre>String username = <span class="string">"admin"</span>;
+String password = <span class="string">"123456"</span>;
+
+<span class="keyword">if</span> (username.equals(<span class="string">"admin"</span>) && password.equals(<span class="string">"123456"</span>)) {
+    System.out.println(<span class="string">"Login successful"</span>);
+} <span class="keyword">else</span> {
+    System.out.println(<span class="string">"Invalid credentials"</span>);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-calculator"></i> Calculator App</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">double</span> a = <span class="number">10</span>, b = <span class="number">5</span>;
+String operator = <span class="string">"+"</span>;
+<span class="keyword">double</span> result = <span class="keyword">switch</span> (operator) {
+    <span class="keyword">case</span> <span class="string">"+"</span> -> a + b;
+    <span class="keyword">case</span> <span class="string">"-"</span> -> a - b;
+    <span class="keyword">case</span> <span class="string">"*"</span> -> a * b;
+    <span class="keyword">case</span> <span class="string">"/"</span> -> (b != <span class="number">0</span>) ? a / b : <span class="number">0</span>;
+    <span class="keyword">default</span> -> <span class="number">0</span>;
+};</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-thermometer-half"></i> Temperature Converter</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">double</span> temp = <span class="number">25</span>;
+String unit = <span class="string">"C"</span>;
+
+<span class="keyword">if</span> (unit.equals(<span class="string">"C"</span>)) {
+    <span class="keyword">double</span> fahrenheit = (temp * <span class="number">9</span>/<span class="number">5</span>) + <span class="number">32</span>;
+    System.out.println(temp + <span class="string">"°C = "</span> + fahrenheit + <span class="string">"°F"</span>);
+} <span class="keyword">else if</span> (unit.equals(<span class="string">"F"</span>)) {
+    <span class="keyword">double</span> celsius = (temp - <span class="number">32</span>) * <span class="number">5</span>/<span class="number">9</span>;
+    System.out.println(temp + <span class="string">"°F = "</span> + celsius + <span class="string">"°C"</span>);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-calendar-check"></i> Age Category</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">int</span> age = <span class="number">25</span>;
+String category = (age < <span class="number">13</span>) ? <span class="string">"Child"</span> :
+                  (age < <span class="number">20</span>) ? <span class="string">"Teenager"</span> :
+                  (age < <span class="number">60</span>) ? <span class="string">"Adult"</span> : <span class="string">"Senior"</span>;
+
+System.out.println(<span class="string">"Age category: "</span> + category);</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-credit-card"></i> Payment Processing</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">double</span> amount = <span class="number">150.0</span>;
+<span class="keyword">double</span> balance = <span class="number">200.0</span>;
+<span class="keyword">boolean</span> isVip = <span class="keyword">true</span>;
+
+<span class="keyword">if</span> (amount <= balance) {
+    <span class="keyword">double</span> discount = isVip ? <span class="number">0.1</span> : <span class="number">0.05</span>;
+    <span class="keyword">double</span> finalAmount = amount * (<span class="number">1</span> - discount);
+    System.out.println(<span class="string">"Payment approved: $"</span> + finalAmount);
+} <span class="keyword">else</span> {
+    System.out.println(<span class="string">"Insufficient funds"</span>);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-card">
+                        <h4><i class="fas fa-dice"></i> Number Guessing Game</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">int</span> secretNumber = <span class="number">7</span>;
+<span class="keyword">int</span> guess = <span class="number">5</span>;
+
+<span class="keyword">if</span> (guess == secretNumber) {
+    System.out.println(<span class="string">"Congratulations! You won!"</span>);
+} <span class="keyword">else if</span> (guess < secretNumber) {
+    System.out.println(<span class="string">"Too low! Try again."</span>);
+} <span class="keyword">else</span> {
+    System.out.println(<span class="string">"Too high! Try again."</span>);
+}</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 6: Best Practices -->
+        <div id="best-practices" class="chapter">
+            <h2 class="chapter-title">6. Best Practices</h2>
+            <div class="chapter-content">
+                
+                <div class="best-practices-grid">
+                    <div class="practice-card good">
+                        <h4><i class="fas fa-check-circle"></i> Good Practices</h4>
+                        <ul>
+                            <li>Use meaningful boolean variable names</li>
+                            <li>Keep conditions simple and readable</li>
+                            <li>Always include default case in switch</li>
+                            <li>Use ternary for simple assignments</li>
+                            <li>Avoid deep nesting (max 2-3 levels)</li>
+                            <li>Use parentheses for complex conditions</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="practice-card bad">
+                        <h4><i class="fas fa-times-circle"></i> Avoid These</h4>
+                        <ul>
+                            <li>Complex nested ternary operators</li>
+                            <li>Missing break statements in switch</li>
+                            <li>Magic numbers in conditions</li>
+                            <li>Deep nesting (arrow anti-pattern)</li>
+                            <li>Comparing booleans with == true</li>
+                            <li>Long switch statements (consider polymorphism)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="comparison-examples">
+                    <div class="comparison-item">
+                        <h4><i class="fas fa-code"></i> Clean Code Examples</h4>
+                        <div class="before-after-grid">
+                            <div class="code-example">
+                                <h5>❌ Hard to Read</h5>
+                                <div class="code-block">
+                                    <pre><span class="keyword">if</span> (user.getAge() >= <span class="number">18</span> && user.getAge() <= <span class="number">65</span> && user.isActive() == <span class="keyword">true</span> && user.getBalance() > <span class="number">1000</span>) {
+    processPayment();
+}</pre>
+                                </div>
+                            </div>
+                            <div class="code-example">
+                                <h5>✅ Easy to Read</h5>
+                                <div class="code-block">
+                                    <pre><span class="keyword">boolean</span> isEligibleAge = user.getAge() >= <span class="number">18</span> && user.getAge() <= <span class="number">65</span>;
+<span class="keyword">boolean</span> hasValidAccount = user.isActive() && user.getBalance() > <span class="number">1000</span>;
+
+<span class="keyword">if</span> (isEligibleAge && hasValidAccount) {
+    processPayment();
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-tips">
+                    <h4><i class="fas fa-tachometer-alt"></i> Performance Tips</h4>
+                    <div class="tips-grid">
+                        <div class="tip-item">
+                            <h5><i class="fas fa-bolt"></i> Short-Circuit Evaluation</h5>
+                            <p>Place simpler conditions first in logical operators</p>
+                            <code>if (cheapCondition && expensiveCondition)</code>
+                        </div>
+                        <div class="tip-item">
+                            <h5><i class="fas fa-sort-amount-down"></i> Switch vs If-Else</h5>
+                            <p>Use switch for 3+ discrete values, if-else for ranges</p>
+                            <code>switch (status) // vs if (age >= 18)</code>
+                        </div>
+                        <div class="tip-item">
+                            <h5><i class="fas fa-compress-alt"></i> Early Return</h5>
+                            <p>Return early to reduce nesting levels</p>
+                            <code>if (!isValid) return; // continue with valid logic</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="final-checklist">
+                    <h4><i class="fas fa-clipboard-check"></i> Quick Checklist</h4>
+                    <div class="checklist-grid">
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Is the condition readable?</span>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Are all cases handled?</span>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Is nesting kept minimal?</span>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Are break statements present?</span>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Is the right conditional type used?</span>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Are magic numbers avoided?</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h4><i class="fas fa-rocket"></i> What's Next?</h4>
+                    <div class="next-topics">
+                        <div class="topic">
+                            <i class="fas fa-sync"></i>
+                            <span>Learn Loops (for, while, do-while)</span>
+                        </div>
+                        <div class="topic">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Master Arrays and Collections</span>
+                        </div>
+                        <div class="topic">
+                            <i class="fas fa-cube"></i>
+                            <span>Explore Object-Oriented Programming</span>
+                        </div>
+                        <div class="topic">
+                            <i class="fas fa-bug"></i>
+                            <span>Practice Exception Handling</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in table of contents
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.chapter');
+            const tocLinks = document.querySelectorAll('.toc a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Interactive flow diagram
+        document.querySelectorAll('.flow-step').forEach(step => {
+            step.addEventListener('mouseenter', () => {
+                step.style.transform = 'scale(1.05)';
+            });
+            step.addEventListener('mouseleave', () => {
+                step.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+
+</html>
