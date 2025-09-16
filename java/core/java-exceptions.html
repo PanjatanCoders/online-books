@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Exception Handling Guide - TechTok Cafe</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/java-exceptions.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="../../index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
+                    height="50px" alt="TechTok Cafe"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="../../index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
+                <li class="nav-item"><a href="#" class="nav-link"><i class="fab fa-java"></i>Java Guides</a></li>
+                <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i>All Tutorials</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="../../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="guide-container">
+        <!-- Header -->
+        <div class="guide-header">
+            <h1 class="guide-title">Java Exception Handling</h1>
+            <p class="guide-subtitle">Master error handling with try-catch, throws, and custom exceptions</p>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3><i class="fas fa-list"></i> Quick Navigation</h3>
+            <ul>
+                <li><a href="#overview">1. Exception Overview</a></li>
+                <li><a href="#exception-hierarchy">2. Exception Hierarchy</a></li>
+                <li><a href="#try-catch">3. Try-Catch Blocks</a></li>
+                <li><a href="#throws-throw">4. Throws & Throw</a></li>
+                <li><a href="#custom-exceptions">5. Custom Exceptions</a></li>
+                <li><a href="#best-practices">6. Best Practices</a></li>
+            </ul>
+        </div>
+
+        <!-- Chapter 1: Overview -->
+        <div id="overview" class="chapter">
+            <h2 class="chapter-title">1. Exception Overview</h2>
+            <div class="chapter-content">
+                <p>Exceptions are runtime events that disrupt normal program flow. Proper exception handling ensures robust, maintainable applications.</p>
+
+                <div class="exception-types">
+                    <div class="exception-card">
+                        <div class="exception-icon checked">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h4>Checked Exceptions</h4>
+                        <p>Must be handled at compile time</p>
+                        <div class="examples">IOException, SQLException</div>
+                    </div>
+                    
+                    <div class="exception-card">
+                        <div class="exception-icon unchecked">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h4>Unchecked Exceptions</h4>
+                        <p>Runtime exceptions, optional handling</p>
+                        <div class="examples">NullPointerException, ArrayIndexOutOfBoundsException</div>
+                    </div>
+                    
+                    <div class="exception-card">
+                        <div class="exception-icon error">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <h4>Errors</h4>
+                        <p>Serious problems, typically not recoverable</p>
+                        <div class="examples">OutOfMemoryError, StackOverflowError</div>
+                    </div>
+                </div>
+
+                <div class="exception-flow">
+                    <h4><i class="fas fa-route"></i> Exception Flow</h4>
+                    <div class="flow-sequence">
+                        <div class="flow-item">
+                            <div class="flow-number">1</div>
+                            <div class="flow-content">
+                                <h5>Exception Occurs</h5>
+                                <p>Runtime error in code execution</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item">
+                            <div class="flow-number">2</div>
+                            <div class="flow-content">
+                                <h5>Exception Object Created</h5>
+                                <p>JVM creates exception instance</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item">
+                            <div class="flow-number">3</div>
+                            <div class="flow-content">
+                                <h5>Handler Search</h5>
+                                <p>JVM looks for appropriate catch block</p>
+                            </div>
+                        </div>
+                        <div class="flow-arrow">→</div>
+                        <div class="flow-item">
+                            <div class="flow-number">4</div>
+                            <div class="flow-content">
+                                <h5>Handle or Terminate</h5>
+                                <p>Execute handler or terminate program</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="why-exceptions">
+                    <h4><i class="fas fa-lightbulb"></i> Why Exception Handling?</h4>
+                    <div class="benefits-grid">
+                        <div class="benefit">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Prevents program crashes</span>
+                        </div>
+                        <div class="benefit">
+                            <i class="fas fa-user-friendly"></i>
+                            <span>Provides user-friendly error messages</span>
+                        </div>
+                        <div class="benefit">
+                            <i class="fas fa-bug"></i>
+                            <span>Helps identify and fix bugs</span>
+                        </div>
+                        <div class="benefit">
+                            <i class="fas fa-code"></i>
+                            <span>Separates error handling from business logic</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 2: Exception Hierarchy -->
+        <div id="exception-hierarchy" class="chapter">
+            <h2 class="chapter-title">2. Exception Hierarchy</h2>
+            <div class="chapter-content">
+                <p>Java's exception hierarchy is built on the Throwable class, branching into Errors and Exceptions.</p>
+
+                <div class="hierarchy-tree">
+                    <div class="hierarchy-level">
+                        <div class="hierarchy-node root">
+                            <i class="fas fa-sitemap"></i>
+                            <span>Throwable</span>
+                        </div>
+                    </div>
+                    
+                    <div class="hierarchy-level">
+                        <div class="hierarchy-node error">
+                            <i class="fas fa-times-circle"></i>
+                            <span>Error</span>
+                        </div>
+                        <div class="hierarchy-node exception">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Exception</span>
+                        </div>
+                    </div>
+                    
+                    <div class="hierarchy-level">
+                        <div class="hierarchy-node checked">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Checked Exceptions</span>
+                        </div>
+                        <div class="hierarchy-node runtime">
+                            <i class="fas fa-bolt"></i>
+                            <span>RuntimeException</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exception-categories">
+                    <div class="category-section">
+                        <h4><i class="fas fa-check-circle"></i> Common Checked Exceptions</h4>
+                        <div class="exception-list">
+                            <div class="exception-item">
+                                <span class="exception-name">IOException</span>
+                                <span class="exception-desc">File operations, network I/O</span>
+                            </div>
+                            <div class="exception-item">
+                                <span class="exception-name">SQLException</span>
+                                <span class="exception-desc">Database operations</span>
+                            </div>
+                            <div class="exception-item">
+                                <span class="exception-name">ClassNotFoundException</span>
+                                <span class="exception-desc">Class loading issues</span>
+                            </div>
+                            <div class="exception-item">
+                                <span class="exception-name">InterruptedException</span>
+                                <span class="exception-desc">Thread interruption</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="category-section">
+                        <h4><i class="fas fa-bolt"></i> Common Unchecked Exceptions</h4>
+                        <div class="exception-list">
+                            <div class="exception-item">
+                                <span class="exception-name">NullPointerException</span>
+                                <span class="exception-desc">Null reference access</span>
+                            </div>
+                            <div class="exception-item">
+                                <span class="exception-name">ArrayIndexOutOfBoundsException</span>
+                                <span class="exception-desc">Invalid array index</span>
+                            </div>
+                            <div class="exception-item">
+                                <span class="exception-name">IllegalArgumentException</span>
+                                <span class="exception-desc">Invalid method arguments</span>
+                            </div>
+                            <div class="exception-item">
+                                <span class="exception-name">NumberFormatException</span>
+                                <span class="exception-desc">Invalid string to number conversion</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Exception Examples</div>
+                    <pre><span class="comment">// Checked Exception - Must handle</span>
+<span class="keyword">try</span> {
+    FileReader file = <span class="keyword">new</span> FileReader(<span class="string">"nonexistent.txt"</span>);
+} <span class="keyword">catch</span> (IOException e) {
+    System.out.println(<span class="string">"File not found: "</span> + e.getMessage());
+}
+
+<span class="comment">// Unchecked Exception - Optional handling</span>
+String str = <span class="keyword">null</span>;
+<span class="keyword">try</span> {
+    <span class="keyword">int</span> length = str.length(); <span class="comment">// NullPointerException</span>
+} <span class="keyword">catch</span> (NullPointerException e) {
+    System.out.println(<span class="string">"Null reference error"</span>);
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 3: Try-Catch -->
+        <div id="try-catch" class="chapter">
+            <h2 class="chapter-title">3. Try-Catch Blocks</h2>
+            <div class="chapter-content">
+                
+                <div class="try-catch-structure">
+                    <div class="structure-diagram">
+                        <div class="block-section try-block">
+                            <h4>try {}</h4>
+                            <p>Code that might throw exception</p>
+                        </div>
+                        <div class="block-section catch-block">
+                            <h4>catch (ExceptionType e) {}</h4>
+                            <p>Handle specific exception</p>
+                        </div>
+                        <div class="block-section finally-block">
+                            <h4>finally {}</h4>
+                            <p>Always executes (optional)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="try-catch-variants">
+                    <div class="variant-card">
+                        <h4><i class="fas fa-hand-paper"></i> Basic Try-Catch</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">try</span> {
+    <span class="keyword">int</span> result = <span class="number">10</span> / <span class="number">0</span>; <span class="comment">// ArithmeticException</span>
+} <span class="keyword">catch</span> (ArithmeticException e) {
+    System.out.println(<span class="string">"Cannot divide by zero!"</span>);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="variant-card">
+                        <h4><i class="fas fa-layer-group"></i> Multiple Catch Blocks</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">try</span> {
+    <span class="keyword">int</span>[] arr = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};
+    System.out.println(arr[<span class="number">5</span>]); <span class="comment">// ArrayIndexOutOfBoundsException</span>
+    <span class="keyword">int</span> result = <span class="number">10</span> / <span class="number">0</span>; <span class="comment">// ArithmeticException</span>
+} <span class="keyword">catch</span> (ArrayIndexOutOfBoundsException e) {
+    System.out.println(<span class="string">"Array index out of bounds"</span>);
+} <span class="keyword">catch</span> (ArithmeticException e) {
+    System.out.println(<span class="string">"Arithmetic error"</span>);
+} <span class="keyword">catch</span> (Exception e) {
+    System.out.println(<span class="string">"General exception: "</span> + e.getMessage());
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="variant-card">
+                        <h4><i class="fas fa-link"></i> Multi-Catch (Java 7+)</h4>
+                        <div class="code-block">
+                            <pre><span class="keyword">try</span> {
+    <span class="comment">// Some risky operations</span>
+    performOperations();
+} <span class="keyword">catch</span> (IOException | SQLException e) {
+    System.out.println(<span class="string">"IO or Database error: "</span> + e.getMessage());
+    logger.error(<span class="string">"Operation failed"</span>, e);
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="variant-card">
+                        <h4><i class="fas fa-check-circle"></i> Try-Catch-Finally</h4>
+                        <div class="code-block">
+                            <pre>FileReader file = <span class="keyword">null</span>;
+<span class="keyword">try</span> {
+    file = <span class="keyword">new</span> FileReader(<span class="string">"data.txt"</span>);
+    <span class="comment">// Process file</span>
+} <span class="keyword">catch</span> (IOException e) {
+    System.out.println(<span class="string">"File error: "</span> + e.getMessage());
+} <span class="keyword">finally</span> {
+    <span class="comment">// Always executes</span>
+    <span class="keyword">if</span> (file != <span class="keyword">null</span>) {
+        <span class="keyword">try</span> {
+            file.close();
+        } <span class="keyword">catch</span> (IOException e) {
+            System.out.println(<span class="string">"Error closing file"</span>);
+        }
+    }
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="variant-card">
+                        <h4><i class="fas fa-magic"></i> Try-With-Resources (Java 7+)</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Automatically closes resources</span>
+<span class="keyword">try</span> (FileReader file = <span class="keyword">new</span> FileReader(<span class="string">"data.txt"</span>);
+     BufferedReader buffer = <span class="keyword">new</span> BufferedReader(file)) {
+    
+    String line = buffer.readLine();
+    System.out.println(line);
+    
+} <span class="keyword">catch</span> (IOException e) {
+    System.out.println(<span class="string">"File processing error: "</span> + e.getMessage());
+}
+<span class="comment">// Resources automatically closed here</span></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="execution-order">
+                    <h4><i class="fas fa-sort-numeric-down"></i> Execution Order</h4>
+                    <div class="order-flow">
+                        <div class="order-step success">
+                            <div class="step-num">1</div>
+                            <div class="step-content">
+                                <h5>Try Block Executes</h5>
+                                <p>If no exception → Skip catch blocks</p>
+                            </div>
+                        </div>
+                        <div class="order-step exception">
+                            <div class="step-num">2</div>
+                            <div class="step-content">
+                                <h5>Exception Occurs</h5>
+                                <p>Jump to appropriate catch block</p>
+                            </div>
+                        </div>
+                        <div class="order-step finally">
+                            <div class="step-num">3</div>
+                            <div class="step-content">
+                                <h5>Finally Block</h5>
+                                <p>Always executes (if present)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 4: Throws & Throw -->
+        <div id="throws-throw" class="chapter">
+            <h2 class="chapter-title">4. Throws & Throw</h2>
+            <div class="chapter-content">
+                
+                <div class="throws-vs-throw">
+                    <div class="comparison-cards">
+                        <div class="comparison-card throws">
+                            <div class="card-header">
+                                <h4>throws</h4>
+                                <i class="fas fa-hand-point-up"></i>
+                            </div>
+                            <div class="card-content">
+                                <p><strong>Used in:</strong> Method signature</p>
+                                <p><strong>Purpose:</strong> Declares potential exceptions</p>
+                                <p><strong>Action:</strong> Passes responsibility to caller</p>
+                            </div>
+                        </div>
+                        
+                        <div class="comparison-card throw">
+                            <div class="card-header">
+                                <h4>throw</h4>
+                                <i class="fas fa-paper-plane"></i>
+                            </div>
+                            <div class="card-content">
+                                <p><strong>Used in:</strong> Method body</p>
+                                <p><strong>Purpose:</strong> Actually throws an exception</p>
+                                <p><strong>Action:</strong> Creates and throws exception object</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="throws-examples">
+                    <div class="example-section">
+                        <h4><i class="fas fa-hand-point-up"></i> Using 'throws' Keyword</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Method declares it might throw IOException</span>
+<span class="keyword">public void</span> readFile(String filename) <span class="keyword">throws</span> IOException {
+    FileReader file = <span class="keyword">new</span> FileReader(filename);
+    <span class="comment">// File operations...</span>
+}
+
+<span class="comment">// Method with multiple exceptions</span>
+<span class="keyword">public void</span> databaseOperation() <span class="keyword">throws</span> SQLException, ClassNotFoundException {
+    <span class="comment">// Database operations...</span>
+}
+
+<span class="comment">// Caller must handle the exception</span>
+<span class="keyword">public void</span> processData() {
+    <span class="keyword">try</span> {
+        readFile(<span class="string">"data.txt"</span>);
+    } <span class="keyword">catch</span> (IOException e) {
+        System.out.println(<span class="string">"Failed to read file: "</span> + e.getMessage());
+    }
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="example-section">
+                        <h4><i class="fas fa-paper-plane"></i> Using 'throw' Keyword</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Explicitly throwing an exception</span>
+<span class="keyword">public void</span> validateAge(<span class="keyword">int</span> age) {
+    <span class="keyword">if</span> (age < <span class="number">0</span>) {
+        <span class="keyword">throw new</span> IllegalArgumentException(<span class="string">"Age cannot be negative"</span>);
+    }
+    <span class="keyword">if</span> (age > <span class="number">150</span>) {
+        <span class="keyword">throw new</span> IllegalArgumentException(<span class="string">"Age seems unrealistic"</span>);
+    }
+}
+
+<span class="comment">// Re-throwing caught exception</span>
+<span class="keyword">public void</span> processFile(String filename) <span class="keyword">throws</span> IOException {
+    <span class="keyword">try</span> {
+        <span class="comment">// File operations</span>
+        Files.readAllLines(Paths.get(filename));
+    } <span class="keyword">catch</span> (IOException e) {
+        <span class="comment">// Log the error</span>
+        logger.error(<span class="string">"File processing failed"</span>, e);
+        <span class="keyword">throw</span> e; <span class="comment">// Re-throw to caller</span>
+    }
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exception-propagation">
+                    <h4><i class="fas fa-route"></i> Exception Propagation</h4>
+                    <div class="propagation-flow">
+                        <div class="method-level">
+                            <h5>Method C</h5>
+                            <code>throw new IOException()</code>
+                        </div>
+                        <div class="flow-up">↑ throws</div>
+                        <div class="method-level">
+                            <h5>Method B</h5>
+                            <code>calls Method C</code>
+                        </div>
+                        <div class="flow-up">↑ throws</div>
+                        <div class="method-level">
+                            <h5>Method A</h5>
+                            <code>try-catch handles exception</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="when-to-use">
+                    <h4><i class="fas fa-question-circle"></i> When to Use Each</h4>
+                    <div class="usage-scenarios">
+                        <div class="scenario">
+                            <h5><i class="fas fa-hand-point-up"></i> Use 'throws' when:</h5>
+                            <ul>
+                                <li>Method cannot handle the exception itself</li>
+                                <li>Caller is better positioned to handle the error</li>
+                                <li>Working with checked exceptions</li>
+                                <li>Following API contract design</li>
+                            </ul>
+                        </div>
+                        <div class="scenario">
+                            <h5><i class="fas fa-paper-plane"></i> Use 'throw' when:</h5>
+                            <ul>
+                                <li>Input validation fails</li>
+                                <li>Business logic violation detected</li>
+                                <li>Need to re-throw caught exception</li>
+                                <li>Creating custom error conditions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 5: Custom Exceptions -->
+        <div id="custom-exceptions" class="chapter">
+            <h2 class="chapter-title">5. Custom Exceptions</h2>
+            <div class="chapter-content">
+                <p>Custom exceptions provide specific error handling for your application domain, making code more readable and maintainable.</p>
+
+                <div class="custom-exception-types">
+                    <div class="custom-type-card">
+                        <h4><i class="fas fa-check-circle"></i> Custom Checked Exception</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Extends Exception for checked exception</span>
+<span class="keyword">public class</span> InsufficientFundsException <span class="keyword">extends</span> Exception {
+    <span class="keyword">private double</span> amount;
+    
+    <span class="keyword">public</span> InsufficientFundsException(<span class="keyword">double</span> amount) {
+        <span class="keyword">super</span>(<span class="string">"Insufficient funds: $"</span> + amount + <span class="string">" required"</span>);
+        <span class="keyword">this</span>.amount = amount;
+    }
+    
+    <span class="keyword">public double</span> getAmount() {
+        <span class="keyword">return</span> amount;
+    }
+}</pre>
+                        </div>
+                    </div>
+                    
+                    <div class="custom-type-card">
+                        <h4><i class="fas fa-bolt"></i> Custom Unchecked Exception</h4>
+                        <div class="code-block">
+                            <pre><span class="comment">// Extends RuntimeException for unchecked exception</span>
+<span class="keyword">public class</span> InvalidUserException <span class="keyword">extends</span> RuntimeException {
+    <span class="keyword">private String</span> userId;
+    
+    <span class="keyword">public</span> InvalidUserException(String userId, String message) {
+        <span class="keyword">super</span>(message);
+        <span class="keyword">this</span>.userId = userId;
+    }
+    
+    <span class="keyword">public String</span> getUserId() {
+        <span class="keyword">return</span> userId;
+    }
+}</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exception-design">
+                    <h4><i class="fas fa-drafting-compass"></i> Exception Design Guidelines</h4>
+                    <div class="design-principles">
+                        <div class="principle">
+                            <i class="fas fa-tag"></i>
+                            <div class="principle-content">
+                                <h5>Descriptive Names</h5>
+                                <p>Use clear, specific names that describe the error condition</p>
+                                <code>AccountLockedException vs GenericException</code>
+                            </div>
+                        </div>
+                        <div class="principle">
+                            <i class="fas fa-info-circle"></i>
+                            <div class="principle-content">
+                                <h5>Meaningful Messages</h5>
+                                <p>Provide context about what went wrong and how to fix it</p>
+                                <code>super("User 'john_doe' not found in database")</code>
+                            </div>
+                        </div>
+                        <div class="principle">
+                            <i class="fas fa-database"></i>
+                            <div class="principle-content">
+                                <h5>Additional Data</h5>
+                                <p>Include relevant information for error handling</p>
+                                <code>Store error codes, timestamps, affected resources</code>
+                            </div>
+                        </div>
+                        <div class="principle">
+                            <i class="fas fa-sitemap"></i>
+                            <div class="principle-content">
+                                <h5>Proper Hierarchy</h5>
+                                <p>Extend appropriate exception class</p>
+                                <code>BusinessException → Exception (checked)</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practical-example">
+                    <h4><i class="fas fa-code"></i> Complete Custom Exception Example</h4>
+                    <div class="code-block">
+                        <div class="code-title"><i class="fab fa-java"></i> Banking System Example</div>
+                        <pre><span class="comment">// Custom exception for banking operations</span>
+<span class="keyword">public class</span> BankingException <span class="keyword">extends</span> Exception {
+    <span class="keyword">private String</span> accountNumber;
+    <span class="keyword">private String</span> errorCode;
+    
+    <span class="keyword">public</span> BankingException(String accountNumber, String errorCode, String message) {
+        <span class="keyword">super</span>(message);
+        <span class="keyword">this</span>.accountNumber = accountNumber;
+        <span class="keyword">this</span>.errorCode = errorCode;
+    }
+    
+    <span class="comment">// Getters</span>
+    <span class="keyword">public String</span> getAccountNumber() { <span class="keyword">return</span> accountNumber; }
+    <span class="keyword">public String</span> getErrorCode() { <span class="keyword">return</span> errorCode; }
+}
+
+<span class="comment">// Usage in banking service</span>
+<span class="keyword">public class</span> BankAccount {
+    <span class="keyword">private double</span> balance;
+    <span class="keyword">private String</span> accountNumber;
+    
+    <span class="keyword">public void</span> withdraw(<span class="keyword">double</span> amount) <span class="keyword">throws</span> BankingException {
+        <span class="keyword">if</span> (amount <= <span class="number">0</span>) {
+            <span class="keyword">throw new</span> BankingException(accountNumber, <span class="string">"INVALID_AMOUNT"</span>, 
+                <span class="string">"Withdrawal amount must be positive"</span>);
+        }
+        
+        <span class="keyword">if</span> (amount > balance) {
+            <span class="keyword">throw new</span> BankingException(accountNumber, <span class="string">"INSUFFICIENT_FUNDS"</span>, 
+                <span class="string">"Insufficient balance. Available: $"</span> + balance + 
+                <span class="string">", Requested: $"</span> + amount);
+        }
+        
+        balance -= amount;
+    }
+}
+
+<span class="comment">// Exception handling</span>
+<span class="keyword">try</span> {
+    account.withdraw(<span class="number">1000</span>);
+} <span class="keyword">catch</span> (BankingException e) {
+    System.out.println(<span class="string">"Banking Error ["</span> + e.getErrorCode() + <span class="string">"]: "</span> + e.getMessage());
+    System.out.println(<span class="string">"Account: "</span> + e.getAccountNumber());
+}</pre>
+                    </div>
+                </div>
+
+                <div class="exception-hierarchy-custom">
+                    <h4><i class="fas fa-sitemap"></i> Custom Exception Hierarchy</h4>
+                    <div class="custom-hierarchy">
+                        <div class="hierarchy-example">
+                            <div class="code-block">
+                                <pre><span class="comment">// Base application exception</span>
+<span class="keyword">public class</span> ApplicationException <span class="keyword">extends</span> Exception {
+    <span class="keyword">protected String</span> errorCode;
+    <span class="keyword">protected long</span> timestamp;
+    
+    <span class="keyword">public</span> ApplicationException(String errorCode, String message) {
+        <span class="keyword">super</span>(message);
+        <span class="keyword">this</span>.errorCode = errorCode;
+        <span class="keyword">this</span>.timestamp = System.currentTimeMillis();
+    }
+}
+
+<span class="comment">// Specific business exceptions</span>
+<span class="keyword">public class</span> UserNotFoundException <span class="keyword">extends</span> ApplicationException {
+    <span class="keyword">public</span> UserNotFoundException(String userId) {
+        <span class="keyword">super</span>(<span class="string">"USER_NOT_FOUND"</span>, <span class="string">"User not found: "</span> + userId);
+    }
+}
+
+<span class="keyword">public class</span> ValidationException <span class="keyword">extends</span> ApplicationException {
+    <span class="keyword">public</span> ValidationException(String field, String message) {
+        <span class="keyword">super</span>(<span class="string">"VALIDATION_ERROR"</span>, <span class="string">"Invalid "</span> + field + <span class="string">": "</span> + message);
+    }
+}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 6: Best Practices -->
+        <div id="best-practices" class="chapter">
+            <h2 class="chapter-title">6. Best Practices</h2>
+            <div class="chapter-content">
+                
+                <div class="best-practices-grid">
+                    <div class="practice-category good">
+                        <h4><i class="fas fa-check-circle"></i> Best Practices</h4>
+                        <ul>
+                            <li>Catch specific exceptions, not general Exception</li>
+                            <li>Use try-with-resources for automatic resource management</li>
+                            <li>Log exceptions with appropriate detail level</li>
+                            <li>Provide meaningful error messages to users</li>
+                            <li>Clean up resources in finally blocks</li>
+                            <li>Re-throw exceptions after logging when appropriate</li>
+                            <li>Use checked exceptions for recoverable conditions</li>
+                            <li>Document exceptions in JavaDoc with @throws</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="practice-category bad">
+                        <h4><i class="fas fa-times-circle"></i> Avoid These Practices</h4>
+                        <ul>
+                            <li>Catching Exception or Throwable (too generic)</li>
+                            <li>Empty catch blocks (swallowing exceptions)</li>
+                            <li>Using exceptions for control flow</li>
+                            <li>Returning null instead of throwing exceptions</li>
+                            <li>Throwing generic RuntimeException</li>
+                            <li>Logging and re-throwing at every level</li>
+                            <li>Using printStackTrace() in production</li>
+                            <li>Creating exceptions in loops (performance impact)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="code-examples-comparison">
+                    <div class="comparison-section">
+                        <h4><i class="fas fa-code"></i> Good vs Bad Examples</h4>
+                        
+                        <div class="comparison-item">
+                            <div class="bad-practice">
+                                <h5>❌ Bad: Generic Exception Catching</h5>
+                                <div class="code-block">
+                                    <pre><span class="keyword">try</span> {
+    <span class="comment">// Some operations</span>
+    performDatabaseOperation();
+    processFile();
+} <span class="keyword">catch</span> (Exception e) {
+    <span class="comment">// Too generic!</span>
+    System.out.println(<span class="string">"Something went wrong"</span>);
+}</pre>
+                                </div>
+                            </div>
+                            
+                            <div class="good-practice">
+                                <h5>✅ Good: Specific Exception Handling</h5>
+                                <div class="code-block">
+                                    <pre><span class="keyword">try</span> {
+    performDatabaseOperation();
+    processFile();
+} <span class="keyword">catch</span> (SQLException e) {
+    logger.error(<span class="string">"Database operation failed"</span>, e);
+    <span class="comment">// Handle database-specific recovery</span>
+} <span class="keyword">catch</span> (IOException e) {
+    logger.error(<span class="string">"File processing failed"</span>, e);
+    <span class="comment">// Handle file-specific recovery</span>
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="comparison-item">
+                            <div class="bad-practice">
+                                <h5>❌ Bad: Empty Catch Block</h5>
+                                <div class="code-block">
+                                    <pre><span class="keyword">try</span> {
+    <span class="keyword">int</span> value = Integer.parseInt(userInput);
+} <span class="keyword">catch</span> (NumberFormatException e) {
+    <span class="comment">// Silent failure - very bad!</span>
+}</pre>
+                                </div>
+                            </div>
+                            
+                            <div class="good-practice">
+                                <h5>✅ Good: Proper Error Handling</h5>
+                                <div class="code-block">
+                                    <pre><span class="keyword">try</span> {
+    <span class="keyword">int</span> value = Integer.parseInt(userInput);
+} <span class="keyword">catch</span> (NumberFormatException e) {
+    logger.warn(<span class="string">"Invalid number format: "</span> + userInput, e);
+    showUserMessage(<span class="string">"Please enter a valid number"</span>);
+    <span class="keyword">return</span> getDefaultValue();
+}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exception-logging">
+                    <h4><i class="fas fa-file-alt"></i> Exception Logging Best Practices</h4>
+                    <div class="logging-levels">
+                        <div class="log-level error">
+                            <h5>ERROR Level</h5>
+                            <p>System errors, exceptions that affect functionality</p>
+                            <code>logger.error("Payment processing failed", exception)</code>
+                        </div>
+                        <div class="log-level warn">
+                            <h5>WARN Level</h5>
+                            <p>Recoverable issues, degraded functionality</p>
+                            <code>logger.warn("Cache miss, falling back to database", exception)</code>
+                        </div>
+                        <div class="log-level info">
+                            <h5>INFO Level</h5>
+                            <p>Expected exceptions, business logic flow</p>
+                            <code>logger.info("User authentication failed for: " + username)</code>
+                        </div>
+                        <div class="log-level debug">
+                            <h5>DEBUG Level</h5>
+                            <p>Detailed troubleshooting information</p>
+                            <code>logger.debug("Validation failed for field: " + fieldName, exception)</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-considerations">
+                    <h4><i class="fas fa-tachometer-alt"></i> Performance Considerations</h4>
+                    <div class="performance-tips">
+                        <div class="performance-tip">
+                            <i class="fas fa-bolt"></i>
+                            <div class="tip-content">
+                                <h5>Exception Creation Cost</h5>
+                                <p>Creating exceptions is expensive due to stack trace generation</p>
+                                <code>// Avoid in tight loops or frequent operations</code>
+                            </div>
+                        </div>
+                        <div class="performance-tip">
+                            <i class="fas fa-stack-overflow"></i>
+                            <div class="tip-content">
+                                <h5>Stack Trace Generation</h5>
+                                <p>Override fillInStackTrace() for performance-critical exceptions</p>
+                                <code>@Override public Throwable fillInStackTrace() { return this; }</code>
+                            </div>
+                        </div>
+                        <div class="performance-tip">
+                            <i class="fas fa-recycle"></i>
+                            <div class="tip-content">
+                                <h5>Exception Reuse</h5>
+                                <p>Consider reusing exception instances for very frequent errors</p>
+                                <code>private static final IllegalArgumentException INVALID_ID = new IllegalArgumentException("Invalid ID");</code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testing-exceptions">
+                    <h4><i class="fas fa-flask"></i> Testing Exception Handling</h4>
+                    <div class="code-block">
+                        <div class="code-title"><i class="fab fa-java"></i> JUnit Exception Testing</div>
+                        <pre><span class="comment">// JUnit 5 - Test expected exception</span>
+@Test
+<span class="keyword">void</span> testInvalidAge() {
+    IllegalArgumentException exception = assertThrows(
+        IllegalArgumentException.<span class="keyword">class</span>, 
+        () -> validateAge(-<span class="number">5</span>)
+    );
+    
+    assertEquals(<span class="string">"Age cannot be negative"</span>, exception.getMessage());
+}
+
+<span class="comment">// Test custom exception</span>
+@Test
+<span class="keyword">void</span> testInsufficientFunds() {
+    BankAccount account = <span class="keyword">new</span> BankAccount(<span class="number">100</span>);
+    
+    BankingException exception = assertThrows(
+        BankingException.<span class="keyword">class</span>,
+        () -> account.withdraw(<span class="number">200</span>)
+    );
+    
+    assertEquals(<span class="string">"INSUFFICIENT_FUNDS"</span>, exception.getErrorCode());
+}</pre>
+                    </div>
+                </div>
+
+                <div class="exception-documentation">
+                    <h4><i class="fas fa-book"></i> Documenting Exceptions</h4>
+                    <div class="code-block">
+                        <pre><span class="comment">/**
+ * Transfers money between accounts
+ * 
+ * @param fromAccount source account
+ * @param toAccount destination account  
+ * @param amount transfer amount
+ * @throws BankingException if insufficient funds or account issues
+ * @throws IllegalArgumentException if amount is negative or zero
+ * @throws AccountNotFoundException if either account doesn't exist
+ */</span>
+<span class="keyword">public void</span> transfer(String fromAccount, String toAccount, <span class="keyword">double</span> amount) 
+    <span class="keyword">throws</span> BankingException, IllegalArgumentException, AccountNotFoundException {
+    <span class="comment">// Implementation</span>
+}</pre>
+                    </div>
+                </div>
+
+                <div class="final-checklist">
+                    <h4><i class="fas fa-clipboard-check"></i> Exception Handling Checklist</h4>
+                    <div class="checklist-grid">
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Catch specific exceptions, not generic ones</span>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Always log exceptions with context</span>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Clean up resources properly</span>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Provide meaningful error messages</span>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Document exceptions in method signatures</span>
+                        </div>
+                        <div class="checklist-item">
+                            <i class="fas fa-check"></i>
+                            <span>Test exception scenarios</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="next-steps">
+                    <h4><i class="fas fa-rocket"></i> What's Next?</h4>
+                    <div class="next-topics">
+                        <div class="topic">
+                            <i class="fas fa-cube"></i>
+                            <span>Explore Object-Oriented Programming</span>
+                        </div>
+                        <div class="topic">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Learn Java Collections Framework</span>
+                        </div>
+                        <div class="topic">
+                            <i class="fas fa-stream"></i>
+                            <span>Master Java Streams API</span>
+                        </div>
+                        <div class="topic">
+                            <i class="fas fa-users"></i>
+                            <span>Understand Multithreading</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in table of contents
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.chapter');
+            const tocLinks = document.querySelectorAll('.toc a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Interactive exception cards
+        document.querySelectorAll('.exception-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Exception hierarchy animation
+        document.querySelectorAll('.hierarchy-node').forEach(node => {
+            node.addEventListener('mouseenter', () => {
+                node.style.transform = 'scale(1.1)';
+                node.style.transition = 'all 0.3s ease';
+            });
+            node.addEventListener('mouseleave', () => {
+                node.style.transform = 'scale(1)';
+            });
+        });
+
+        // Flow sequence hover effects
+        document.querySelectorAll('.flow-item').forEach((item, index) => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'scale(1.05)';
+                item.style.zIndex = '10';
+            });
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'scale(1)';
+                item.style.zIndex = '1';
+            });
+        });
+    </script>
+</body>
+
+</html>
