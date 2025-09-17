@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Strings Guide - Part 3: Regular Expressions - TechTok Cafe</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/array.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
+                    height="50px" alt="TechTok Cafe"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="/index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="guide-container">
+        <!-- Header -->
+        <div class="guide-header">
+            <h1 class="guide-title">Java Strings Guide - Part 3</h1>
+            <p class="guide-subtitle">Regular expressions, pattern matching, and text processing</p>
+        </div>
+
+        <!-- Series Navigation -->
+        <div class="toc">
+            <h3><i class="fas fa-book-open"></i> Complete Series Overview</h3>
+            <div class="highlight-box">
+                <p><strong>Part 1A:</strong> String Fundamentals & Creation<br>
+                   <strong>Part 1B:</strong> String Methods & Comparison<br>
+                   <strong>Part 1C:</strong> Common Pitfalls & Best Practices<br>
+                   <strong>Part 2:</strong> StringBuilder & StringBuffer<br>
+                   <strong>Part 3:</strong> Regular Expressions (Current)</p>
+            </div>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3><i class="fas fa-list"></i> Part 3 Contents</h3>
+            <ul>
+                <li><a href="#introduction">1. Introduction to Regular Expressions</a></li>
+                <li><a href="#basic-patterns">2. Basic Pattern Syntax</a></li>
+                <li><a href="#java-regex-api">3. Java Regex API</a></li>
+                <li><a href="#advanced-patterns">4. Advanced Patterns & Groups</a></li>
+                <li><a href="#practical-examples">5. Practical Applications</a></li>
+                <li><a href="#performance">6. Performance & Best Practices</a></li>
+            </ul>
+        </div>
+
+        <!-- Chapter 1: Introduction -->
+        <div id="introduction" class="chapter">
+            <h2 class="chapter-title">1. Introduction to Regular Expressions</h2>
+            <div class="chapter-content">
+                <p>Regular expressions (regex) provide powerful pattern matching capabilities for searching, validating, and manipulating text. They're essential for data validation, text processing, and string parsing.</p>
+
+                <div class="key-points">
+                    <h4><i class="fas fa-key"></i> What Regular Expressions Can Do</h4>
+                    <ul>
+                        <li><strong>Validation:</strong> Check if strings match specific patterns (emails, phone numbers)</li>
+                        <li><strong>Searching:</strong> Find text that matches complex criteria</li>
+                        <li><strong>Extraction:</strong> Pull specific data from formatted text</li>
+                        <li><strong>Replacement:</strong> Replace text based on pattern matching</li>
+                        <li><strong>Splitting:</strong> Break strings at pattern boundaries</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Simple Regex Example</div>
+                    <pre><span class="keyword">import</span> java.util.regex.Pattern;
+<span class="keyword">import</span> java.util.regex.Matcher;
+
+<span class="comment">// Basic pattern matching</span>
+<span class="keyword">String</span> text = <span class="string">"Contact us at support@company.com or sales@company.com"</span>;
+<span class="keyword">String</span> emailPattern = <span class="string">"\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\\b"</span>;
+
+<span class="comment">// Using String methods with regex</span>
+<span class="keyword">boolean</span> hasEmail = text.matches(<span class="string">".*"</span> + emailPattern + <span class="string">".*"</span>);
+<span class="keyword">String</span>[] emails = text.split(<span class="string">"\\s+"</span>); <span class="comment">// Split on whitespace</span>
+
+<span class="comment">// Using Pattern and Matcher for advanced operations</span>
+Pattern pattern = Pattern.compile(emailPattern);
+Matcher matcher = pattern.matcher(text);
+
+<span class="keyword">while</span> (matcher.find()) {
+    System.out.println(<span class="string">"Found email: "</span> + matcher.group());
+}</pre>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-lightbulb"></i> When to Use Regular Expressions</h4>
+                    <p><strong>Use regex for:</strong> Complex pattern matching, data validation, text parsing<br>
+                       <strong>Avoid regex for:</strong> Simple string operations, when performance is critical for simple tasks</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 2: Basic Patterns -->
+        <div id="basic-patterns" class="chapter">
+            <h2 class="chapter-title">2. Basic Pattern Syntax</h2>
+            <div class="chapter-content">
+                <p>Understanding regex metacharacters and basic patterns is essential for building effective regular expressions.</p>
+
+                <h4>Character Classes and Metacharacters</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-code"></i> Basic Regex Metacharacters</div>
+                    <pre><span class="comment">// Character classes</span>
+.         <span class="comment">// Matches any character except newline</span>
+\\d       <span class="comment">// Matches any digit [0-9]</span>
+\\D       <span class="comment">// Matches any non-digit</span>
+\\w       <span class="comment">// Matches any word character [a-zA-Z0-9_]</span>
+\\W       <span class="comment">// Matches any non-word character</span>
+\\s       <span class="comment">// Matches any whitespace [ \\t\\n\\r\\f]</span>
+\\S       <span class="comment">// Matches any non-whitespace</span>
+
+<span class="comment">// Custom character classes</span>
+[abc]     <span class="comment">// Matches a, b, or c</span>
+[a-z]     <span class="comment">// Matches any lowercase letter</span>
+[A-Z]     <span class="comment">// Matches any uppercase letter</span>
+[0-9]     <span class="comment">// Matches any digit</span>
+[^abc]    <span class="comment">// Matches anything except a, b, or c</span>
+
+<span class="comment">// Anchors</span>
+^         <span class="comment">// Start of string (or line in multiline mode)</span>
+$         <span class="comment">// End of string (or line in multiline mode)</span>
+\\b       <span class="comment">// Word boundary</span>
+\\B       <span class="comment">// Non-word boundary</span></pre>
+                </div>
+
+                <h4>Quantifiers</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-repeat"></i> Regex Quantifiers</div>
+                    <pre><span class="comment">// Basic quantifiers</span>
+*         <span class="comment">// 0 or more occurrences</span>
++         <span class="comment">// 1 or more occurrences</span>
+?         <span class="comment">// 0 or 1 occurrence (optional)</span>
+{n}       <span class="comment">// Exactly n occurrences</span>
+{n,}      <span class="comment">// n or more occurrences</span>
+{n,m}     <span class="comment">// Between n and m occurrences</span>
+
+<span class="comment">// Greedy vs lazy quantifiers</span>
+.*        <span class="comment">// Greedy: matches as much as possible</span>
+.*?       <span class="comment">// Lazy: matches as little as possible</span>
+.+?       <span class="comment">// Lazy: one or more, but minimal</span>
+
+<span class="comment">// Examples with Java code</span>
+<span class="keyword">String</span> text = <span class="string">"abc123def456ghi"</span>;
+
+<span class="comment">// Find one or more digits</span>
+Pattern digits = Pattern.compile(<span class="string">"\\d+"</span>);
+Matcher m = digits.matcher(text);
+<span class="keyword">while</span> (m.find()) {
+    System.out.println(<span class="string">"Found: "</span> + m.group()); <span class="comment">// "123", "456"</span>
+}
+
+<span class="comment">// Find exactly 3 digits</span>
+Pattern threeDigits = Pattern.compile(<span class="string">"\\d{3}"</span>);
+<span class="keyword">boolean</span> hasThreeDigits = threeDigits.matcher(<span class="string">"abc123"</span>).find(); <span class="comment">// true</span></pre>
+                </div>
+
+                <h4>Special Characters and Escaping</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Escaping Special Characters</div>
+                    <pre><span class="comment">// Special characters that need escaping</span>
+<span class="comment">// . ^ $ * + ? { } [ ] \ | ( )</span>
+
+<span class="comment">// Escaping in Java strings (double backslash)</span>
+<span class="keyword">String</span> dotPattern = <span class="string">"\\."</span>;          <span class="comment">// Matches literal dot</span>
+<span class="keyword">String</span> questionMark = <span class="string">"\\?"</span>;       <span class="comment">// Matches literal ?</span>
+<span class="keyword">String</span> backslash = <span class="string">"\\\\"</span>;         <span class="comment">// Matches literal \</span>
+
+<span class="comment">// Common examples</span>
+<span class="keyword">String</span> ipPattern = <span class="string">"\\d+\\.\\d+\\.\\d+\\.\\d+"</span>; <span class="comment">// IP address pattern</span>
+<span class="keyword">String</span> pricePattern = <span class="string">"\\$\\d+\\.\\d{2}"</span>;       <span class="comment">// Price like $19.99</span>
+
+<span class="comment">// Alternative: Use Pattern.quote() for literal strings</span>
+<span class="keyword">String</span> literal = <span class="string">"$19.99"</span>;
+<span class="keyword">String</span> quotedPattern = Pattern.quote(literal); <span class="comment">// Escapes all special chars</span>
+
+<span class="comment">// File extensions example</span>
+<span class="keyword">String</span> filename = <span class="string">"document.pdf"</span>;
+<span class="keyword">boolean</span> isPdf = filename.matches(<span class="string">".*\\.pdf$"</span>); <span class="comment">// true</span>
+<span class="keyword">boolean</span> isImage = filename.matches(<span class="string">".*\\.(jpg|png|gif)$"</span>); <span class="comment">// false</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 3: Java Regex API -->
+        <div id="java-regex-api" class="chapter">
+            <h2 class="chapter-title">3. Java Regex API</h2>
+            <div class="chapter-content">
+                <p>Java provides comprehensive regex support through the Pattern and Matcher classes, plus convenience methods in the String class.</p>
+
+                <h4>String Class Regex Methods</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> String Regex Methods</div>
+                    <pre><span class="keyword">String</span> text = <span class="string">"Java 8, Python 3.9, JavaScript ES6"</span>;
+
+<span class="comment">// matches() - checks if entire string matches pattern</span>
+<span class="keyword">boolean</span> isEmail = <span class="string">"user@domain.com"</span>.matches(<span class="string">"\\w+@\\w+\\.\\w+"</span>); <span class="comment">// true</span>
+
+<span class="comment">// replaceAll() - replace all matches</span>
+<span class="keyword">String</span> noDigits = text.replaceAll(<span class="string">"\\d+"</span>, <span class="string">"X"</span>); 
+<span class="comment">// "Java X, Python X.X, JavaScript ESX"</span>
+
+<span class="comment">// replaceFirst() - replace only first match</span>
+<span class="keyword">String</span> firstReplaced = text.replaceFirst(<span class="string">"\\d+"</span>, <span class="string">"X"</span>);
+<span class="comment">// "Java X, Python 3.9, JavaScript ES6"</span>
+
+<span class="comment">// split() - split string using regex</span>
+<span class="keyword">String</span> csv = <span class="string">"apple,banana;orange:grape"</span>;
+<span class="keyword">String</span>[] fruits = csv.split(<span class="string">"[,;:]"</span>); <span class="comment">// Split on multiple delimiters</span>
+<span class="comment">// ["apple", "banana", "orange", "grape"]</span>
+
+<span class="comment">// split() with limit</span>
+<span class="keyword">String</span> data = <span class="string">"name:John:Doe:Developer"</span>;
+<span class="keyword">String</span>[] parts = data.split(<span class="string">":"</span>, <span class="number">3</span>); <span class="comment">// Limit to 3 parts</span>
+<span class="comment">// ["name", "John", "Doe:Developer"]</span></pre>
+                </div>
+
+                <h4>Pattern and Matcher Classes</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Pattern and Matcher Usage</div>
+                    <pre><span class="keyword">import</span> java.util.regex.Pattern;
+<span class="keyword">import</span> java.util.regex.Matcher;
+
+<span class="comment">// Compile pattern once for reuse (performance optimization)</span>
+Pattern phonePattern = Pattern.compile(<span class="string">"\\(?\\d{3}\\)?[-.]?\\d{3}[-.]?\\d{4}"</span>);
+
+<span class="keyword">String</span> text = <span class="string">"Call us at (555) 123-4567 or 555.987.6543"</span>;
+Matcher matcher = phonePattern.matcher(text);
+
+<span class="comment">// Find all matches</span>
+<span class="keyword">while</span> (matcher.find()) {
+    System.out.println(<span class="string">"Phone: "</span> + matcher.group());
+    System.out.println(<span class="string">"Start: "</span> + matcher.start());
+    System.out.println(<span class="string">"End: "</span> + matcher.end());
+}
+
+<span class="comment">// Check if entire string matches</span>
+<span class="keyword">boolean</span> isPhoneNumber = phonePattern.matcher(<span class="string">"555-123-4567"</span>).matches();
+
+<span class="comment">// Find first match</span>
+<span class="keyword">boolean</span> hasPhone = phonePattern.matcher(text).find();
+
+<span class="comment">// Replace using Matcher</span>
+<span class="keyword">String</span> masked = phonePattern.matcher(text).replaceAll(<span class="string">"XXX-XXX-XXXX"</span>);</pre>
+                </div>
+
+                <h4>Pattern Flags</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-flag"></i> Pattern Compilation Flags</div>
+                    <pre><span class="comment">// Case-insensitive matching</span>
+Pattern caseInsensitive = Pattern.compile(<span class="string">"java"</span>, Pattern.CASE_INSENSITIVE);
+<span class="keyword">boolean</span> matches = caseInsensitive.matcher(<span class="string">"JAVA"</span>).matches(); <span class="comment">// true</span>
+
+<span class="comment">// Multiline mode (^ and $ match line boundaries)</span>
+<span class="keyword">String</span> multilineText = <span class="string">"line1\nline2\nline3"</span>;
+Pattern multiline = Pattern.compile(<span class="string">"^line\\d"</span>, Pattern.MULTILINE);
+Matcher m = multiline.matcher(multilineText);
+<span class="keyword">int</span> count = <span class="number">0</span>;
+<span class="keyword">while</span> (m.find()) count++; <span class="comment">// Finds 3 matches</span>
+
+<span class="comment">// Dot matches newlines</span>
+Pattern dotAll = Pattern.compile(<span class="string">"start.*end"</span>, Pattern.DOTALL);
+<span class="keyword">boolean</span> matchesAcrossLines = dotAll.matcher(<span class="string">"start\nend"</span>).matches(); <span class="comment">// true</span>
+
+<span class="comment">// Combining flags</span>
+Pattern combined = Pattern.compile(<span class="string">"pattern"</span>, 
+    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+
+<span class="comment">// Comments in regex (for complex patterns)</span>
+Pattern documented = Pattern.compile(<span class="string">
+    "(?x)" +           // Enable comments mode
+    "\\d{3}    # area code \n" +
+    "-          # separator \n" +
+    "\\d{3}    # exchange \n" +
+    "-          # separator \n" +
+    "\\d{4}    # number"
+</span>, Pattern.COMMENTS);</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 4: Advanced Patterns -->
+        <div id="advanced-patterns" class="chapter">
+            <h2 class="chapter-title">4. Advanced Patterns & Groups</h2>
+            <div class="chapter-content">
+                <p>Advanced regex features like capturing groups, lookarounds, and backreferences enable sophisticated pattern matching and text processing.</p>
+
+                <h4>Capturing Groups</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-layer-group"></i> Capturing Groups Example</div>
+                    <pre><span class="comment">// Capturing groups extract parts of matches</span>
+<span class="keyword">String</span> dateText = <span class="string">"Today is 2024-03-15 and tomorrow is 2024-03-16"</span>;
+<span class="keyword">String</span> datePattern = <span class="string">"(\\d{4})-(\\d{2})-(\\d{2})"</span>; <span class="comment">// 3 capturing groups</span>
+
+Pattern pattern = Pattern.compile(datePattern);
+Matcher matcher = pattern.matcher(dateText);
+
+<span class="keyword">while</span> (matcher.find()) {
+    System.out.println(<span class="string">"Full date: "</span> + matcher.group(<span class="number">0</span>));  <span class="comment">// Entire match</span>
+    System.out.println(<span class="string">"Year: "</span> + matcher.group(<span class="number">1</span>));      <span class="comment">// First group</span>
+    System.out.println(<span class="string">"Month: "</span> + matcher.group(<span class="number">2</span>));     <span class="comment">// Second group</span>
+    System.out.println(<span class="string">"Day: "</span> + matcher.group(<span class="number">3</span>));       <span class="comment">// Third group</span>
+}
+
+<span class="comment">// Named groups (Java 7+)</span>
+<span class="keyword">String</span> namedPattern = <span class="string">"(?&lt;year&gt;\\d{4})-(?&lt;month&gt;\\d{2})-(?&lt;day&gt;\\d{2})"</span>;
+Pattern namedGroup = Pattern.compile(namedPattern);
+Matcher namedMatcher = namedGroup.matcher(<span class="string">"2024-03-15"</span>);
+
+<span class="keyword">if</span> (namedMatcher.matches()) {
+    System.out.println(<span class="string">"Year: "</span> + namedMatcher.group(<span class="string">"year"</span>));
+    System.out.println(<span class="string">"Month: "</span> + namedMatcher.group(<span class="string">"month"</span>));
+    System.out.println(<span class="string">"Day: "</span> + namedMatcher.group(<span class="string">"day"</span>));
+}</pre>
+                </div>
+
+                <h4>Non-Capturing Groups and Alternation</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-code-branch"></i> Groups and Alternation</div>
+                    <pre><span class="comment">// Non-capturing groups (?:...) - for grouping without capturing</span>
+<span class="keyword">String</span> protocolPattern = <span class="string">"(?:https?|ftp)://([\\w.-]+)"</span>;
+Pattern urlPattern = Pattern.compile(protocolPattern);
+Matcher urlMatcher = urlPattern.matcher(<span class="string">"Visit https://example.com"</span>);
+
+<span class="keyword">if</span> (urlMatcher.find()) {
+    System.out.println(<span class="string">"Full URL: "</span> + urlMatcher.group(<span class="number">0</span>));
+    System.out.println(<span class="string">"Domain: "</span> + urlMatcher.group(<span class="number">1</span>)); <span class="comment">// Only domain captured</span>
+}
+
+<span class="comment">// Alternation - match one of several alternatives</span>
+<span class="keyword">String</span> filePattern = <span class="string">".*\\.(jpg|png|gif|bmp)"</span>;
+<span class="keyword">boolean</span> isImage = <span class="string">"photo.jpg"</span>.matches(filePattern); <span class="comment">// true</span>
+
+<span class="comment">// Complex alternation example</span>
+<span class="keyword">String</span> logLevelPattern = <span class="string">"\\[(DEBUG|INFO|WARN|ERROR)\\]"</span>;
+<span class="keyword">String</span> logText = <span class="string">"[ERROR] Database connection failed"</span>;
+Matcher logMatcher = Pattern.compile(logLevelPattern).matcher(logText);
+
+<span class="keyword">if</span> (logMatcher.find()) {
+    System.out.println(<span class="string">"Log level: "</span> + logMatcher.group(<span class="number">1</span>));
+}</pre>
+                </div>
+
+                <h4>Lookarounds (Lookahead and Lookbehind)</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-search"></i> Lookaround Assertions</div>
+                    <pre><span class="comment">// Positive lookahead (?=...) - match if followed by pattern</span>
+<span class="keyword">String</span> text = <span class="string">"Java8, Java11, Python3, JavaScript"</span>;
+<span class="keyword">String</span> javaVersions = text.replaceAll(<span class="string">"Java(?=\\d+)"</span>, <span class="string">"JDK"</span>);
+<span class="comment">// Result: "JDK8, JDK11, Python3, JavaScript"</span>
+
+<span class="comment">// Negative lookahead (?!...) - match if NOT followed by pattern</span>
+<span class="keyword">String</span> words = <span class="string">"cat dog cattle dogma"</span>;
+Pattern notCattle = Pattern.compile(<span class="string">"cat(?!tle)"</span>);
+Matcher m = notCattle.matcher(words);
+<span class="keyword">while</span> (m.find()) {
+    System.out.println(<span class="string">"Found 'cat' not in 'cattle': "</span> + m.start());
+}
+
+<span class="comment">// Positive lookbehind (?&lt;=...) - match if preceded by pattern</span>
+<span class="keyword">String</span> prices = <span class="string">"$100 €200 £50"</span>;
+<span class="keyword">String</span> dollarAmounts = prices.replaceAll(<span class="string">"(?&lt;=\\$)\\d+"</span>, <span class="string">"USD"</span>);
+<span class="comment">// Result: "$USD €200 £50"</span>
+
+<span class="comment">// Negative lookbehind (?&lt;!...) - match if NOT preceded by pattern</span>
+<span class="keyword">String</span> numbers = <span class="string">"123 abc456 def789"</span>;
+Pattern notAfterLetters = Pattern.compile(<span class="string">"(?&lt;![a-z])\\d+"</span>);
+Matcher numberMatcher = notAfterLetters.matcher(numbers);
+<span class="keyword">while</span> (numberMatcher.find()) {
+    System.out.println(<span class="string">"Number not after letters: "</span> + numberMatcher.group());
+}
+
+<span class="comment">// Password validation using lookarounds</span>
+<span class="keyword">String</span> passwordPattern = 
+    <span class="string">"^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"</span>;
+<span class="comment">// Must contain: lowercase, uppercase, digit, special char, min 8 chars</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 5: Practical Examples -->
+        <div id="practical-examples" class="chapter">
+            <h2 class="chapter-title">5. Practical Applications</h2>
+            <div class="chapter-content">
+                <p>Real-world examples demonstrating how to use regular expressions for common validation and text processing tasks.</p>
+
+                <h4>Data Validation</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-check-circle"></i> Validation Patterns</div>
+                    <pre><span class="keyword">public class</span> RegexValidator {
+    
+    <span class="comment">// Email validation (basic)</span>
+    <span class="keyword">private static final</span> Pattern EMAIL_PATTERN = Pattern.compile(
+        <span class="string">"^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$"</span>
+    );
+    
+    <span class="comment">// Phone number validation (US format)</span>
+    <span class="keyword">private static final</span> Pattern PHONE_PATTERN = Pattern.compile(
+        <span class="string">"^\\(?([0-9]{3})\\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$"</span>
+    );
+    
+    <span class="comment">// Credit card validation (basic format)</span>
+    <span class="keyword">private static final</span> Pattern CREDIT_CARD_PATTERN = Pattern.compile(
+        <span class="string">"^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|3[47][0-9]{13})$"</span>
+    );
+    
+    <span class="keyword">public static boolean</span> isValidEmail(<span class="keyword">String</span> email) {
+        <span class="keyword">return</span> email != <span class="keyword">null</span> && EMAIL_PATTERN.matcher(email).matches();
+    }
+    
+    <span class="keyword">public static boolean</span> isValidPhoneNumber(<span class="keyword">String</span> phone) {
+        <span class="keyword">if</span> (phone == <span class="keyword">null</span>) <span class="keyword">return false</span>;
+        <span class="comment">// Remove all non-digits and check</span>
+        <span class="keyword">String</span> digitsOnly = phone.replaceAll(<span class="string">"\\D"</span>, <span class="string">""</span>);
+        <span class="keyword">return</span> digitsOnly.length() == <span class="number">10</span> && PHONE_PATTERN.matcher(phone).matches();
+    }
+    
+    <span class="comment">// URL validation</span>
+    <span class="keyword">public static boolean</span> isValidUrl(<span class="keyword">String</span> url) {
+        <span class="keyword">String</span> urlPattern = 
+            <span class="string">"^https?://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]$"</span>;
+        <span class="keyword">return</span> url != <span class="keyword">null</span> && url.matches(urlPattern);
+    }
+    
+    <span class="comment">// Password strength validation</span>
+    <span class="keyword">public static boolean</span> isStrongPassword(<span class="keyword">String</span> password) {
+        <span class="keyword">if</span> (password == <span class="keyword">null</span> || password.length() &lt; <span class="number">8</span>) <span class="keyword">return false</span>;
+        
+        <span class="comment">// Check for required character types</span>
+        <span class="keyword">boolean</span> hasLower = password.matches(<span class="string">".*[a-z].*"</span>);
+        <span class="keyword">boolean</span> hasUpper = password.matches(<span class="string">".*[A-Z].*"</span>);
+        <span class="keyword">boolean</span> hasDigit = password.matches(<span class="string">".*\\d.*"</span>);
+        <span class="keyword">boolean</span> hasSpecial = password.matches(<span class="string">".*[!@#$%^&*].*"</span>);
+        
+        <span class="keyword">return</span> hasLower && hasUpper && hasDigit && hasSpecial;
+    }
+}</pre>
+                </div>
+
+                <h4>Text Processing and Extraction</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-text-width"></i> Text Processing Examples</div>
+                    <pre><span class="keyword">public class</span> TextProcessor {
+    
+    <span class="comment">// Extract all URLs from text</span>
+    <span class="keyword">public static</span> List&lt;<span class="keyword">String</span>&gt; extractUrls(<span class="keyword">String</span> text) {
+        <span class="keyword">String</span> urlPattern = 
+            <span class="string">"https?://[-\\w+&@#/%?=~_|!:,.;]*[-\\w+&@#/%=~_|]"</span>;
+        
+        Pattern pattern = Pattern.compile(urlPattern);
+        Matcher matcher = pattern.matcher(text);
+        List&lt;<span class="keyword">String</span>&gt; urls = <span class="keyword">new</span> ArrayList&lt;&gt;();
+        
+        <span class="keyword">while</span> (matcher.find()) {
+            urls.add(matcher.group());
+        }
+        <span class="keyword">return</span> urls;
+    }
+    
+    <span class="comment">// Parse log entries</span>
+    <span class="keyword">public static</span> LogEntry parseLogEntry(<span class="keyword">String</span> logLine) {
+        <span class="keyword">String</span> logPattern = 
+            <span class="string">"^(\\d{4}-\\d{2}-\\d{2})\\s+(\\d{2}:\\d{2}:\\d{2})\\s+\\[(\\w+)\\]\\s+(.+)$"</span>;
+        
+        Pattern pattern = Pattern.compile(logPattern);
+        Matcher matcher = pattern.matcher(logLine);
+        
+        <span class="keyword">if</span> (matcher.matches()) {
+            <span class="keyword">return new</span> LogEntry(
+                matcher.group(<span class="number">1</span>), <span class="comment">// date</span>
+                matcher.group(<span class="number">2</span>), <span class="comment">// time</span>
+                matcher.group(<span class="number">3</span>), <span class="comment">// level</span>
+                matcher.group(<span class="number">4</span>)  <span class="comment">// message</span>
+            );
+        }
+        <span class="keyword">return null</span>;
+    }
+    
+    <span class="comment">// Extract hashtags from social media text</span>
+    <span class="keyword">public static</span> Set&lt;<span class="keyword">String</span>&gt; extractHashtags(<span class="keyword">String</span> text) {
+        Pattern hashtagPattern = Pattern.compile(<span class="string">"#\\w+"</span>);
+        Matcher matcher = hashtagPattern.matcher(text);
+        Set&lt;<span class="keyword">String</span>&gt; hashtags = <span class="keyword">new</span> HashSet&lt;&gt;();
+        
+        <span class="keyword">while</span> (matcher.find()) {
+            hashtags.add(matcher.group().toLowerCase());
+        }
+        <span class="keyword">return</span> hashtags;
+    }
+    
+    <span class="comment">// Format and clean phone numbers</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> formatPhoneNumber(<span class="keyword">String</span> phone) {
+        <span class="keyword">if</span> (phone == <span class="keyword">null</span>) <span class="keyword">return null</span>;
+        
+        <span class="comment">// Extract digits only</span>
+        <span class="keyword">String</span> digits = phone.replaceAll(<span class="string">"\\D"</span>, <span class="string">""</span>);
+        
+        <span class="comment">// Format as (XXX) XXX-XXXX</span>
+        <span class="keyword">if</span> (digits.length() == <span class="number">10</span>) {
+            <span class="keyword">return</span> digits.replaceAll(<span class="string">"(\\d{3})(\\d{3})(\\d{4})"</span>, 
+                                    <span class="string">"($1) $2-$3"</span>);
+        }
+        <span class="keyword">return</span> phone; <span class="comment">// Return original if not 10 digits</span>
+    }
+}</pre>
+                </div>
+
+                <h4>Advanced Text Processing</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-cogs"></i> Complex Text Operations</div>
+                    <pre><span class="keyword">public class</span> AdvancedTextProcessor {
+    
+    <span class="comment">// Replace template variables like ${variable}</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> processTemplate(<span class="keyword">String</span> template, Map&lt;<span class="keyword">String</span>, <span class="keyword">String</span>&gt; variables) {
+        Pattern varPattern = Pattern.compile(<span class="string">"\\$\\{([^}]+)\\}"</span>);
+        Matcher matcher = varPattern.matcher(template);
+        
+        StringBuffer result = <span class="keyword">new</span> StringBuffer();
+        <span class="keyword">while</span> (matcher.find()) {
+            <span class="keyword">String</span> varName = matcher.group(<span class="number">1</span>);
+            <span class="keyword">String</span> replacement = variables.getOrDefault(varName, matcher.group(<span class="number">0</span>));
+            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
+        }
+        matcher.appendTail(result);
+        
+        <span class="keyword">return</span> result.toString();
+    }
+    
+    <span class="comment">// Convert camelCase to snake_case</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> camelToSnakeCase(<span class="keyword">String</span> camelCase) {
+        <span class="keyword">return</span> camelCase.replaceAll(<span class="string">"([a-z])([A-Z])"</span>, <span class="string">"$1_$2"</span>).toLowerCase();
+    }
+    
+    <span class="comment">// Parse CSV with quoted fields</span>
+    <span class="keyword">public static</span> List&lt;<span class="keyword">String</span>&gt; parseCsvLine(<span class="keyword">String</span> csvLine) {
+        List&lt;<span class="keyword">String</span>&gt; fields = <span class="keyword">new</span> ArrayList&lt;&gt;();
+        Pattern csvPattern = Pattern.compile(<span class="string">"\"([^\"]*)\"|([^,]*)"</span>);
+        Matcher matcher = csvPattern.matcher(csvLine);
+        
+        <span class="keyword">while</span> (matcher.find()) {
+            <span class="keyword">String</span> field = matcher.group(<span class="number">1</span>) != <span class="keyword">null</span> ? 
+                          matcher.group(<span class="number">1</span>) : matcher.group(<span class="number">2</span>);
+            fields.add(field.trim());
+        }
+        
+        <span class="keyword">return</span> fields;
+    }
+    
+    <span class="comment">// Highlight search terms in text</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> highlightSearchTerms(<span class="keyword">String</span> text, <span class="keyword">String</span> searchTerm) {
+        <span class="keyword">String</span> escapedTerm = Pattern.quote(searchTerm);
+        <span class="keyword">return</span> text.replaceAll(<span class="string">"(?i)"</span> + escapedTerm, 
+                            <span class="string">"&lt;mark&gt;$0&lt;/mark&gt;"</span>);
+    }
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 6: Performance -->
+        <div id="performance" class="chapter">
+            <h2 class="chapter-title">6. Performance & Best Practices</h2>
+            <div class="chapter-content">
+                <p>Regular expressions can be powerful but also performance-intensive. Understanding optimization techniques ensures efficient regex usage.</p>
+
+                <h4>Pattern Compilation and Reuse</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-rocket"></i> Performance Optimization</div>
+                    <pre><span class="comment">// BAD: Recompiling pattern every time</span>
+<span class="keyword">public static boolean</span> validateEmailSlow(<span class="keyword">String</span> email) {
+    <span class="keyword">return</span> email.matches(<span class="string">"^[\\w._%+-]+@[\\w.-]+\\.[A-Z|a-z]{2,}$"</span>);
+    <span class="comment">// Pattern is compiled on every call!</span>
+}
+
+<span class="comment">// GOOD: Compile once, reuse many times</span>
+<span class="keyword">public class</span> EmailValidator {
+    <span class="keyword">private static final</span> Pattern EMAIL_PATTERN = 
+        Pattern.compile(<span class="string">"^[\\w._%+-]+@[\\w.-]+\\.[A-Z|a-z]{2,}$"</span>);
+    
+    <span class="keyword">public static boolean</span> validateEmail(<span class="keyword">String</span> email) {
+        <span class="keyword">return</span> EMAIL_PATTERN.matcher(email).matches();
+    }
+}
+
+<span class="comment">// BETTER: Cache patterns in a registry</span>
+<span class="keyword">public class</span> PatternCache {
+    <span class="keyword">private static final</span> Map&lt;<span class="keyword">String</span>, Pattern&gt; cache = 
+        <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();
+    
+    <span class="keyword">public static</span> Pattern getPattern(<span class="keyword">String</span> regex) {
+        <span class="keyword">return</span> cache.computeIfAbsent(regex, Pattern::compile);
+    }
+    
+    <span class="keyword">public static boolean</span> matches(<span class="keyword">String</span> text, <span class="keyword">String</span> regex) {
+        <span class="keyword">return</span> getPattern(regex).matcher(text).matches();
+    }
+}</pre>
+                </div>
+
+                <h4>Performance Best Practices</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-tachometer-alt"></i> Optimization Techniques</div>
+                    <pre><span class="comment">// Use specific quantifiers instead of greedy ones</span>
+<span class="comment">// BAD: Greedy quantifier can cause backtracking</span>
+<span class="keyword">String</span> inefficient = <span class="string">"&lt;.*&gt;.*&lt;/.*&gt;"</span>; <span class="comment">// Can be very slow</span>
+
+<span class="comment">// BETTER: Non-greedy quantifier</span>
+<span class="keyword">String</span> better = <span class="string">"&lt;.*?&gt;.*?&lt;/.*?&gt;"</span>;
+
+<span class="comment">// BEST: Specific character classes</span>
+<span class="keyword">String</span> best = <span class="string">"&lt;[^&gt;]+&gt;.*?&lt;/[^&gt;]+&gt;"</span>;
+
+<span class="comment">// Anchoring patterns for better performance</span>
+<span class="comment">// If you know the pattern starts at beginning, use ^</span>
+Pattern emailStart = Pattern.compile(<span class="string">"^[\\w._%+-]+@"</span>); <span class="comment">// Faster</span>
+
+<span class="comment">// Use word boundaries instead of lookarounds when possible</span>
+<span class="comment">// SLOWER: Using lookaround</span>
+Pattern slowWord = Pattern.compile(<span class="string">"(?&lt;=\\s)word(?=\\s)"</span>);
+
+<span class="comment">// FASTER: Using word boundaries</span>
+Pattern fastWord = Pattern.compile(<span class="string">"\\bword\\b"</span>);
+
+<span class="comment">// Optimize for common cases first</span>
+<span class="keyword">public static boolean</span> isValidIpAddress(<span class="keyword">String</span> ip) {
+    <span class="comment">// Quick check before regex</span>
+    <span class="keyword">if</span> (ip == <span class="keyword">null</span> || ip.length() &lt; <span class="number">7</span> || ip.length() &gt; <span class="number">15</span>) {
+        <span class="keyword">return false</span>;
+    }
+    
+    <span class="comment">// Only use regex if basic checks pass</span>
+    Pattern ipPattern = Pattern.compile(
+        <span class="string">"^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$"</span>
+    );
+    <span class="keyword">return</span> ipPattern.matcher(ip).matches();
+}</pre>
+                </div>
+
+                <h4>Common Performance Pitfalls</h4>
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Performance Anti-Patterns</h4>
+                    <ul>
+                        <li><strong>Excessive backtracking:</strong> Avoid nested quantifiers like (a+)+ or (a*)* </li>
+                        <li><strong>Recompiling patterns:</strong> Always cache compiled Pattern objects</li>
+                        <li><strong>Overusing regex:</strong> For simple operations, String methods may be faster</li>
+                        <li><strong>Catastrophic backtracking:</strong> Test patterns with long inputs</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-chart-line"></i> Performance Benchmarking</div>
+                    <pre><span class="keyword">public class</span> RegexPerformanceTest {
+    
+    <span class="keyword">public static void</span> benchmarkPatternReuse() {
+        <span class="keyword">String</span>[] emails = generateTestEmails(<span class="number">10000</span>);
+        <span class="keyword">String</span> regex = <span class="string">"^[\\w._%+-]+@[\\w.-]+\\.[A-Z|a-z]{2,}$"</span>;
+        
+        <span class="comment">// Test 1: Recompile every time (SLOW)</span>
+        <span class="keyword">long</span> start = System.nanoTime();
+        <span class="keyword">for</span> (<span class="keyword">String</span> email : emails) {
+            email.matches(regex); <span class="comment">// Compiles pattern each time</span>
+        }
+        <span class="keyword">long</span> recompileTime = System.nanoTime() - start;
+        
+        <span class="comment">// Test 2: Compile once, reuse (FAST)</span>
+        Pattern pattern = Pattern.compile(regex);
+        start = System.nanoTime();
+        <span class="keyword">for</span> (<span class="keyword">String</span> email : emails) {
+            pattern.matcher(email).matches();
+        }
+        <span class="keyword">long</span> reuseTime = System.nanoTime() - start;
+        
+        System.out.printf(<span class="string">"Recompile: %d ms%n"</span>, recompileTime / <span class="number">1_000_000</span>);
+        System.out.printf(<span class="string">"Reuse: %d ms%n"</span>, reuseTime / <span class="number">1_000_000</span>);
+        System.out.printf(<span class="string">"Speedup: %.1fx%n"</span>, 
+                         (<span class="keyword">double</span>) recompileTime / reuseTime);
+    }
+    
+    <span class="comment">// Alternative approach: Use simple string operations when possible</span>
+    <span class="keyword">public static boolean</span> containsDigitFast(<span class="keyword">String</span> text) {
+        <span class="keyword">for</span> (<span class="keyword">char</span> c : text.toCharArray()) {
+            <span class="keyword">if</span> (Character.isDigit(c)) <span class="keyword">return true</span>;
+        }
+        <span class="keyword">return false</span>;
+    }
+    
+    <span class="keyword">public static boolean</span> containsDigitRegex(<span class="keyword">String</span> text) {
+        <span class="keyword">return</span> text.matches(<span class="string">".*\\d.*"</span>);
+    }
+}</pre>
+                </div>
+
+                <div class="key-points">
+                    <h4><i class="fas fa-check-circle"></i> Regex Best Practices Summary</h4>
+                    <ul>
+                        <li><strong>Compile once:</strong> Always cache Pattern objects for reuse</li>
+                        <li><strong>Be specific:</strong> Use precise character classes instead of broad ones</li>
+                        <li><strong>Anchor patterns:</strong> Use ^ and $ when you know position</li>
+                        <li><strong>Test performance:</strong> Benchmark with realistic data</li>
+                        <li><strong>Consider alternatives:</strong> Sometimes String methods are faster</li>
+                        <li><strong>Avoid backtracking:</strong> Be careful with nested quantifiers</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="chapter">
+            <h2 class="chapter-title">Part 3 Summary</h2>
+            <div class="chapter-content">
+                <p>Part 3 completed the comprehensive Java Strings series by covering regular expressions from basic patterns to advanced applications and performance optimization.</p>
+
+                <div class="key-points">
+                    <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
+                    <ul>
+                        <li><strong>Pattern Syntax:</strong> Master metacharacters, quantifiers, and character classes</li>
+                        <li><strong>Java API:</strong> Use Pattern and Matcher classes for complex operations</li>
+                        <li><strong>Capturing Groups:</strong> Extract data with numbered and named groups</li>
+                        <li><strong>Lookarounds:</strong> Use assertions for sophisticated pattern matching</li>
+                        <li><strong>Performance:</strong> Always compile patterns once and reuse for efficiency</li>
+                        <li><strong>Real-world Applications:</strong> Validation, extraction, and text processing</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-trophy"></i> Complete Java Strings Mastery</h4>
+                    <p>You've now completed the comprehensive Java Strings series:</p>
+                    <ul>
+                        <li><strong>Part 1A-C:</strong> String fundamentals, methods, and best practices</li>
+                        <li><strong>Part 2:</strong> StringBuilder and StringBuffer for efficient manipulation</li>
+                        <li><strong>Part 3:</strong> Regular expressions for powerful pattern matching</li>
+                    </ul>
+                    <p>This knowledge provides a solid foundation for text processing in Java applications.</p>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-code"></i> Final Mastery Challenge</h4>
+                    <p>Create a comprehensive text analysis tool that:</p>
+                    <ul>
+                        <li>Validates various data formats using regex patterns</li>
+                        <li>Extracts structured data from unstructured text</li>
+                        <li>Uses StringBuilder for efficient report generation</li>
+                        <li>Implements proper error handling and performance optimization</li>
+                        <li>Demonstrates all major concepts from the series</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-forward"></i> Continue Learning</h4>
+                    <p>Now that you've mastered Java strings, consider exploring:</p>
+                    <ul>
+                        <li><strong>Collections Framework:</strong> Lists, Sets, Maps, and algorithms</li>
+                        <li><strong>Stream API:</strong> Functional programming with Java 8+</li>
+                        <li><strong>I/O and NIO:</strong> File handling and network programming</li>
+                        <li><strong>Concurrency:</strong> Multi-threading and parallel processing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in table of contents
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.chapter');
+            const tocLinks = document.querySelectorAll('.toc a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Strings Guide - Part 1C: Pitfalls & Best Practices - TechTok Cafe</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/array.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
+                    height="50px" alt="TechTok Cafe"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="/index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="guide-container">
+        <!-- Header -->
+        <div class="guide-header">
+            <h1 class="guide-title">Java Strings Guide - Part 1C</h1>
+            <p class="guide-subtitle">Common pitfalls, best practices, and defensive programming</p>
+        </div>
+
+        <!-- Series Navigation -->
+        <div class="toc">
+            <h3><i class="fas fa-book-open"></i> Complete Series Overview</h3>
+            <div class="highlight-box">
+                <p><strong>Part 1A:</strong> String Fundamentals & Creation<br>
+                   <strong>Part 1B:</strong> String Methods & Comparison<br>
+                   <strong>Part 1C:</strong> Common Pitfalls & Best Practices (Current)<br>
+                   <strong>Part 2:</strong> StringBuilder & StringBuffer<br>
+                   <strong>Part 3:</strong> Regular Expressions</p>
+            </div>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3><i class="fas fa-list"></i> Part 1C Contents</h3>
+            <ul>
+                <li><a href="#common-pitfalls">1. Common String Pitfalls</a></li>
+                <li><a href="#performance-issues">2. Performance Considerations</a></li>
+                <li><a href="#defensive-programming">3. Defensive Programming</a></li>
+                <li><a href="#utility-methods">4. Utility Methods & Patterns</a></li>
+            </ul>
+        </div>
+
+        <!-- Chapter 1: Common Pitfalls -->
+        <div id="common-pitfalls" class="chapter">
+            <h2 class="chapter-title">1. Common String Pitfalls</h2>
+            <div class="chapter-content">
+                <p>Understanding and avoiding these common mistakes will make your string handling more robust and reliable.</p>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Top 5 String Mistakes</h4>
+                    <ul>
+                        <li><strong>Using == instead of equals():</strong> Compares references, not content</li>
+                        <li><strong>Ignoring null values:</strong> Leads to NullPointerException</li>
+                        <li><strong>Inefficient concatenation:</strong> Creating excessive temporary objects</li>
+                        <li><strong>Case sensitivity errors:</strong> Forgetting case-sensitive behavior</li>
+                        <li><strong>Index boundary violations:</strong> Not validating array bounds</li>
+                    </ul>
+                </div>
+
+                <h4>Mistake 1: Reference vs Content Comparison</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-bug"></i> Wrong vs Right Comparison</div>
+                    <pre><span class="comment">// WRONG: Using == for content comparison</span>
+<span class="keyword">String</span> userInput = getUserInput(); <span class="comment">// Returns new String("admin")</span>
+<span class="keyword">if</span> (userInput == <span class="string">"admin"</span>) {  <span class="comment">// FALSE! Different references</span>
+    grantAccess();
+}
+
+<span class="comment">// RIGHT: Using equals() for content comparison</span>
+<span class="keyword">if</span> (<span class="string">"admin"</span>.equals(userInput)) {  <span class="comment">// TRUE! Same content</span>
+    grantAccess();
+}
+
+<span class="comment">// DEMONSTRATION: Why == fails</span>
+<span class="keyword">String</span> str1 = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"test"</span>);
+<span class="keyword">String</span> str2 = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"test"</span>);
+
+System.out.println(str1 == str2);        <span class="comment">// false (different objects)</span>
+System.out.println(str1.equals(str2));   <span class="comment">// true (same content)</span>
+
+<span class="comment">// EXCEPTION: String literals in pool</span>
+<span class="keyword">String</span> literal1 = <span class="string">"test"</span>;
+<span class="keyword">String</span> literal2 = <span class="string">"test"</span>;
+System.out.println(literal1 == literal2); <span class="comment">// true (same pool reference)</span></pre>
+                </div>
+
+                <h4>Mistake 2: Null Pointer Exceptions</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-bug"></i> Null Handling Problems</div>
+                    <pre><span class="comment">// DANGEROUS: Direct method call on potentially null string</span>
+<span class="keyword">String</span> fileName = getFileName(); <span class="comment">// Might return null</span>
+<span class="keyword">if</span> (fileName.endsWith(<span class="string">".txt"</span>)) {  <span class="comment">// NullPointerException!</span>
+    processTextFile(fileName);
+}
+
+<span class="comment">// BETTER: Null check first</span>
+<span class="keyword">if</span> (fileName != <span class="keyword">null</span> && fileName.endsWith(<span class="string">".txt"</span>)) {
+    processTextFile(fileName);
+}
+
+<span class="comment">// BEST: Literal-first pattern (defensive)</span>
+<span class="keyword">if</span> (<span class="string">".txt"</span>.endsWith(getFileExtension(fileName))) {
+    processTextFile(fileName);
+}
+
+<span class="comment">// ELEGANT: Using Objects.equals() for null safety</span>
+<span class="keyword">import</span> java.util.Objects;
+<span class="keyword">if</span> (Objects.equals(<span class="string">"expected"</span>, userInput)) {
+    <span class="comment">// Safe even if userInput is null</span>
+}</pre>
+                </div>
+
+                <h4>Mistake 3: Inefficient String Building</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-bug"></i> Performance Killers</div>
+                    <pre><span class="comment">// TERRIBLE: String concatenation in loop</span>
+<span class="keyword">String</span> result = <span class="string">""</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) {
+    result += <span class="string">"Item "</span> + i + <span class="string">", "</span>;  <span class="comment">// Creates 3000+ temporary objects!</span>
+}
+
+<span class="comment">// BETTER: Collect and join</span>
+List&lt;<span class="keyword">String</span>&gt; items = <span class="keyword">new</span> ArrayList&lt;&gt;();
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) {
+    items.add(<span class="string">"Item "</span> + i);
+}
+<span class="keyword">String</span> result = <span class="keyword">String</span>.join(<span class="string">", "</span>, items);
+
+<span class="comment">// BEST: StringBuilder (covered in Part 2)</span>
+<span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) {
+    sb.append(<span class="string">"Item "</span>).append(i).append(<span class="string">", "</span>);
+}
+<span class="keyword">String</span> result = sb.toString();</pre>
+                </div>
+
+                <h4>Mistake 4: Case Sensitivity Issues</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-bug"></i> Case Handling Errors</div>
+                    <pre><span class="comment">// PROBLEM: Inconsistent case handling</span>
+<span class="keyword">String</span> command = getUserCommand(); <span class="comment">// User might type "EXIT", "exit", "Exit"</span>
+<span class="keyword">if</span> (command.equals(<span class="string">"exit"</span>)) {  <span class="comment">// Only matches lowercase</span>
+    System.exit(<span class="number">0</span>);
+}
+
+<span class="comment">// SOLUTION 1: Case-insensitive comparison</span>
+<span class="keyword">if</span> (command.equalsIgnoreCase(<span class="string">"exit"</span>)) {
+    System.exit(<span class="number">0</span>);
+}
+
+<span class="comment">// SOLUTION 2: Normalize input</span>
+<span class="keyword">String</span> normalizedCommand = command.toLowerCase().trim();
+<span class="keyword">if</span> (<span class="string">"exit"</span>.equals(normalizedCommand)) {
+    System.exit(<span class="number">0</span>);
+}
+
+<span class="comment">// REAL-WORLD EXAMPLE: File extension check</span>
+<span class="keyword">public static boolean</span> isImageFile(<span class="keyword">String</span> filename) {
+    <span class="keyword">if</span> (filename == <span class="keyword">null</span>) <span class="keyword">return false</span>;
+    
+    <span class="keyword">String</span> lower = filename.toLowerCase();
+    <span class="keyword">return</span> lower.endsWith(<span class="string">".jpg"</span>) || lower.endsWith(<span class="string">".jpeg"</span>) ||
+           lower.endsWith(<span class="string">".png"</span>) || lower.endsWith(<span class="string">".gif"</span>);
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 2: Performance Issues -->
+        <div id="performance-issues" class="chapter">
+            <h2 class="chapter-title">2. Performance Considerations</h2>
+            <div class="chapter-content">
+                <p>String operations can significantly impact application performance. Understanding the cost of different operations helps you make informed decisions.</p>
+
+                <h4>String Concatenation Performance</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-tachometer-alt"></i> Performance Comparison</div>
+                    <pre><span class="comment">// SCENARIO: Building a large string</span>
+<span class="keyword">int</span> iterations = <span class="number">10000</span>;
+
+<span class="comment">// SLOW: String concatenation (O(n²) complexity)</span>
+<span class="keyword">long</span> start = System.currentTimeMillis();
+<span class="keyword">String</span> slow = <span class="string">""</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; iterations; i++) {
+    slow += <span class="string">"x"</span>; <span class="comment">// Each operation copies entire string</span>
+}
+<span class="keyword">long</span> slowTime = System.currentTimeMillis() - start;
+
+<span class="comment">// FAST: StringBuilder (O(n) complexity)</span>
+start = System.currentTimeMillis();
+<span class="keyword">StringBuilder</span> fast = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; iterations; i++) {
+    fast.append(<span class="string">"x"</span>); <span class="comment">// Efficient append operation</span>
+}
+<span class="keyword">String</span> result = fast.toString();
+<span class="keyword">long</span> fastTime = System.currentTimeMillis() - start;
+
+System.out.println(<span class="string">"String concat: "</span> + slowTime + <span class="string">"ms"</span>);
+System.out.println(<span class="string">"StringBuilder: "</span> + fastTime + <span class="string">"ms"</span>);
+<span class="comment">// StringBuilder is typically 100x+ faster</span></pre>
+                </div>
+
+                <h4>Memory Usage Patterns</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-memory"></i> Memory Efficiency Tips</div>
+                    <pre><span class="comment">// MEMORY EFFICIENT: Use string pool</span>
+<span class="keyword">String</span> status1 = <span class="string">"ACTIVE"</span>;    <span class="comment">// Shared in pool</span>
+<span class="keyword">String</span> status2 = <span class="string">"ACTIVE"</span>;    <span class="comment">// Same reference</span>
+
+<span class="comment">// MEMORY WASTEFUL: Unnecessary objects</span>
+<span class="keyword">String</span> status3 = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"ACTIVE"</span>); <span class="comment">// Creates duplicate object</span>
+
+<span class="comment">// SMART: Reuse common strings</span>
+<span class="keyword">public class</span> StatusConstants {
+    <span class="keyword">public static final</span> <span class="keyword">String</span> ACTIVE = <span class="string">"ACTIVE"</span>;
+    <span class="keyword">public static final</span> <span class="keyword">String</span> INACTIVE = <span class="string">"INACTIVE"</span>;
+    <span class="keyword">public static final</span> <span class="keyword">String</span> PENDING = <span class="string">"PENDING"</span>;
+}
+
+<span class="comment">// EFFICIENT: Pre-size StringBuilder when length known</span>
+<span class="keyword">int</span> expectedLength = <span class="number">1000</span>;
+<span class="keyword">StringBuilder</span> sized = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(expectedLength);
+
+<span class="comment">// INEFFICIENT: Default capacity may require resizing</span>
+<span class="keyword">StringBuilder</span> unsized = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(); <span class="comment">// Default: 16 chars</span></pre>
+                </div>
+
+                <h4>Method Call Optimization</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-rocket"></i> Optimization Patterns</div>
+                    <pre><span class="comment">// AVOID: Repeated expensive operations</span>
+<span class="keyword">for</span> (<span class="keyword">String</span> item : items) {
+    <span class="keyword">if</span> (item.toLowerCase().contains(searchTerm.toLowerCase())) {
+        results.add(item); <span class="comment">// toLowerCase() called repeatedly</span>
+    }
+}
+
+<span class="comment">// BETTER: Cache expensive operations</span>
+<span class="keyword">String</span> lowerSearchTerm = searchTerm.toLowerCase();
+<span class="keyword">for</span> (<span class="keyword">String</span> item : items) {
+    <span class="keyword">if</span> (item.toLowerCase().contains(lowerSearchTerm)) {
+        results.add(item);
+    }
+}
+
+<span class="comment">// BEST: Pre-process data when possible</span>
+<span class="comment">// Store lowercase versions in a separate collection for searching</span>
+Map&lt;<span class="keyword">String</span>, <span class="keyword">String</span>&gt; itemsLowerCase = items.stream()
+    .collect(Collectors.toMap(
+        <span class="keyword">String</span>::toLowerCase, 
+        Function.identity()
+    ));
+
+<span class="comment">// SMART: Use appropriate data structures</span>
+Set&lt;<span class="keyword">String</span>&gt; validCodes = <span class="keyword">new</span> HashSet&lt;&gt;(Arrays.asList(
+    <span class="string">"US"</span>, <span class="string">"UK"</span>, <span class="string">"CA"</span>, <span class="string">"AU"</span>
+));
+<span class="keyword">boolean</span> isValid = validCodes.contains(countryCode); <span class="comment">// O(1) lookup</span></pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 3: Defensive Programming -->
+        <div id="defensive-programming" class="chapter">
+            <h2 class="chapter-title">3. Defensive Programming</h2>
+            <div class="chapter-content">
+                <p>Writing defensive code prevents failures and makes your applications more robust and maintainable.</p>
+
+                <h4>Input Validation</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-shield-alt"></i> Validating String Inputs</div>
+                    <pre><span class="comment">// COMPREHENSIVE INPUT VALIDATION</span>
+<span class="keyword">public class</span> StringValidator {
+    
+    <span class="keyword">public static boolean</span> isValidEmail(<span class="keyword">String</span> email) {
+        <span class="keyword">if</span> (email == <span class="keyword">null</span> || email.trim().isEmpty()) {
+            <span class="keyword">return false</span>;
+        }
+        
+        email = email.trim();
+        
+        <span class="comment">// Basic structure check</span>
+        <span class="keyword">int</span> atIndex = email.indexOf(<span class="string">'@'</span>);
+        <span class="keyword">int</span> lastDotIndex = email.lastIndexOf(<span class="string">'.'</span>);
+        
+        <span class="keyword">return</span> atIndex &gt; <span class="number">0</span> &&                          <span class="comment">// @ not at start</span>
+               lastDotIndex &gt; atIndex + <span class="number">1</span> &&            <span class="comment">// . after @</span>
+               lastDotIndex &lt; email.length() - <span class="number">1</span> &&    <span class="comment">// . not at end</span>
+               !email.contains(<span class="string">".."</span>) &&               <span class="comment">// No consecutive dots</span>
+               !email.startsWith(<span class="string">"."</span>) &&             <span class="comment">// Not starting with dot</span>
+               !email.endsWith(<span class="string">"."</span>);                 <span class="comment">// Not ending with dot</span>
+    }
+    
+    <span class="keyword">public static boolean</span> isValidUsername(<span class="keyword">String</span> username) {
+        <span class="keyword">if</span> (username == <span class="keyword">null</span>) <span class="keyword">return false</span>;
+        
+        username = username.trim();
+        
+        <span class="comment">// Length check</span>
+        <span class="keyword">if</span> (username.length() &lt; <span class="number">3</span> || username.length() &gt; <span class="number">20</span>) {
+            <span class="keyword">return false</span>;
+        }
+        
+        <span class="comment">// Character validation</span>
+        <span class="keyword">for</span> (<span class="keyword">char</span> c : username.toCharArray()) {
+            <span class="keyword">if</span> (!Character.isLetterOrDigit(c) && c != <span class="string">'_'</span> && c != <span class="string">'-'</span>) {
+                <span class="keyword">return false</span>;
+            }
+        }
+        
+        <span class="keyword">return true</span>;
+    }
+}</pre>
+                </div>
+
+                <h4>Safe String Operations</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-lock"></i> Null-Safe String Utilities</div>
+                    <pre><span class="keyword">public class</span> SafeStringUtils {
+    
+    <span class="comment">// Null-safe length check</span>
+    <span class="keyword">public static int</span> safeLength(<span class="keyword">String</span> str) {
+        <span class="keyword">return</span> str == <span class="keyword">null</span> ? <span class="number">0</span> : str.length();
+    }
+    
+    <span class="comment">// Null-safe substring</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> safeSubstring(<span class="keyword">String</span> str, <span class="keyword">int</span> start, <span class="keyword">int</span> end) {
+        <span class="keyword">if</span> (str == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="string">""</span>;
+        <span class="keyword">int</span> len = str.length();
+        <span class="keyword">if</span> (start &lt; <span class="number">0</span>) start = <span class="number">0</span>;
+        <span class="keyword">if</span> (end &gt; len) end = len;
+        <span class="keyword">if</span> (start &gt; end) <span class="keyword">return</span> <span class="string">""</span>;
+        <span class="keyword">return</span> str.substring(start, end);
+    }
+    
+    <span class="comment">// Null-safe contains check</span>
+    <span class="keyword">public static boolean</span> safeContains(<span class="keyword">String</span> source, <span class="keyword">String</span> target) {
+        <span class="keyword">if</span> (source == <span class="keyword">null</span> || target == <span class="keyword">null</span>) <span class="keyword">return false</span>;
+        <span class="keyword">return</span> source.contains(target);
+    }
+    
+    <span class="comment">// Null-safe case-insensitive contains</span>
+    <span class="keyword">public static boolean</span> containsIgnoreCase(<span class="keyword">String</span> source, <span class="keyword">String</span> target) {
+        <span class="keyword">if</span> (source == <span class="keyword">null</span> || target == <span class="keyword">null</span>) <span class="keyword">return false</span>;
+        <span class="keyword">return</span> source.toLowerCase().contains(target.toLowerCase());
+    }
+    
+    <span class="comment">// Check if string is null, empty, or only whitespace</span>
+    <span class="keyword">public static boolean</span> isBlank(<span class="keyword">String</span> str) {
+        <span class="keyword">return</span> str == <span class="keyword">null</span> || str.trim().isEmpty();
+    }
+    
+    <span class="comment">// Safe string comparison</span>
+    <span class="keyword">public static boolean</span> safeEquals(<span class="keyword">String</span> str1, <span class="keyword">String</span> str2) {
+        <span class="keyword">return</span> Objects.equals(str1, str2);
+    }
+}</pre>
+                </div>
+
+                <h4>Error Handling Patterns</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-exclamation-circle"></i> Graceful Error Handling</div>
+                    <pre><span class="comment">// PATTERN 1: Default values for invalid input</span>
+<span class="keyword">public static</span> <span class="keyword">String</span> sanitizeFileName(<span class="keyword">String</span> fileName) {
+    <span class="keyword">if</span> (fileName == <span class="keyword">null</span> || fileName.trim().isEmpty()) {
+        <span class="keyword">return</span> <span class="string">"untitled"</span>; <span class="comment">// Sensible default</span>
+    }
+    
+    <span class="comment">// Remove invalid characters</span>
+    <span class="keyword">return</span> fileName.replaceAll(<span class="string">"[<>:\"/\\|?*]"</span>, <span class="string">"_"</span>)
+                   .trim()
+                   .substring(<span class="number">0</span>, Math.min(fileName.length(), <span class="number">255</span>));
+}
+
+<span class="comment">// PATTERN 2: Optional return values</span>
+<span class="keyword">public static</span> Optional&lt;<span class="keyword">String</span>&gt; extractDomain(<span class="keyword">String</span> email) {
+    <span class="keyword">if</span> (email == <span class="keyword">null</span>) <span class="keyword">return</span> Optional.empty();
+    
+    <span class="keyword">int</span> atIndex = email.indexOf(<span class="string">'@'</span>);
+    <span class="keyword">if</span> (atIndex == -<span class="number">1</span> || atIndex == email.length() - <span class="number">1</span>) {
+        <span class="keyword">return</span> Optional.empty();
+    }
+    
+    <span class="keyword">return</span> Optional.of(email.substring(atIndex + <span class="number">1</span>));
+}
+
+<span class="comment">// PATTERN 3: Fail-fast validation</span>
+<span class="keyword">public static void</span> validateNotEmpty(<span class="keyword">String</span> value, <span class="keyword">String</span> fieldName) {
+    <span class="keyword">if</span> (value == <span class="keyword">null</span> || value.trim().isEmpty()) {
+        <span class="keyword">throw new</span> IllegalArgumentException(fieldName + <span class="string">" cannot be null or empty"</span>);
+    }
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 4: Utility Methods -->
+        <div id="utility-methods" class="chapter">
+            <h2 class="chapter-title">4. Utility Methods & Patterns</h2>
+            <div class="chapter-content">
+                <p>These utility methods demonstrate best practices and provide reusable solutions for common string operations.</p>
+
+                <h4>Text Processing Utilities</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-tools"></i> Practical String Utilities</div>
+                    <pre><span class="keyword">public class</span> TextUtils {
+    
+    <span class="comment">// Word count with proper delimiter handling</span>
+    <span class="keyword">public static int</span> countWords(<span class="keyword">String</span> text) {
+        <span class="keyword">if</span> (text == <span class="keyword">null</span> || text.trim().isEmpty()) {
+            <span class="keyword">return</span> <span class="number">0</span>;
+        }
+        
+        <span class="keyword">String</span>[] words = text.trim().split(<span class="string">"\\s+"</span>);
+        <span class="keyword">return</span> words.length;
+    }
+    
+    <span class="comment">// Truncate with ellipsis</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> truncate(<span class="keyword">String</span> text, <span class="keyword">int</span> maxLength) {
+        <span class="keyword">if</span> (text == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="string">""</span>;
+        <span class="keyword">if</span> (text.length() &lt;= maxLength) <span class="keyword">return</span> text;
+        
+        <span class="keyword">if</span> (maxLength &lt;= <span class="number">3</span>) <span class="keyword">return</span> <span class="string">"..."</span>;
+        <span class="keyword">return</span> text.substring(<span class="number">0</span>, maxLength - <span class="number">3</span>) + <span class="string">"..."</span>;
+    }
+    
+    <span class="comment">// Convert to title case</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> toTitleCase(<span class="keyword">String</span> text) {
+        <span class="keyword">if</span> (text == <span class="keyword">null</span> || text.isEmpty()) <span class="keyword">return</span> text;
+        
+        <span class="keyword">String</span>[] words = text.toLowerCase().split(<span class="string">"\\s+"</span>);
+        <span class="keyword">StringBuilder</span> result = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+        
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; words.length; i++) {
+            <span class="keyword">if</span> (i &gt; <span class="number">0</span>) result.append(<span class="string">" "</span>);
+            
+            <span class="keyword">String</span> word = words[i];
+            <span class="keyword">if</span> (!word.isEmpty()) {
+                result.append(Character.toUpperCase(word.charAt(<span class="number">0</span>)))
+                      .append(word.substring(<span class="number">1</span>));
+            }
+        }
+        
+        <span class="keyword">return</span> result.toString();
+    }
+    
+    <span class="comment">// Remove extra whitespace</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> normalizeWhitespace(<span class="keyword">String</span> text) {
+        <span class="keyword">if</span> (text == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="string">""</span>;
+        <span class="keyword">return</span> text.trim().replaceAll(<span class="string">"\\s+"</span>, <span class="string">" "</span>);
+    }
+}</pre>
+                </div>
+
+                <h4>File and Path Utilities</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-folder"></i> File Handling Utilities</div>
+                    <pre><span class="keyword">public class</span> FileStringUtils {
+    
+    <span class="comment">// Extract file extension safely</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> getFileExtension(<span class="keyword">String</span> fileName) {
+        <span class="keyword">if</span> (fileName == <span class="keyword">null</span> || fileName.isEmpty()) {
+            <span class="keyword">return</span> <span class="string">""</span>;
+        }
+        
+        <span class="keyword">int</span> lastDot = fileName.lastIndexOf(<span class="string">'.'</span>);
+        <span class="keyword">int</span> lastSeparator = Math.max(
+            fileName.lastIndexOf(<span class="string">'/'</span>), 
+            fileName.lastIndexOf(<span class="string">'\\'</span>)
+        );
+        
+        <span class="comment">// No extension or dot is part of directory name</span>
+        <span class="keyword">if</span> (lastDot == -<span class="number">1</span> || lastDot &lt; lastSeparator) {
+            <span class="keyword">return</span> <span class="string">""</span>;
+        }
+        
+        <span class="keyword">return</span> fileName.substring(lastDot + <span class="number">1</span>).toLowerCase();
+    }
+    
+    <span class="comment">// Get file name without extension</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> getBaseName(<span class="keyword">String</span> fileName) {
+        <span class="keyword">if</span> (fileName == <span class="keyword">null</span> || fileName.isEmpty()) {
+            <span class="keyword">return</span> <span class="string">""</span>;
+        }
+        
+        <span class="comment">// Remove path</span>
+        <span class="keyword">int</span> lastSeparator = Math.max(
+            fileName.lastIndexOf(<span class="string">'/'</span>), 
+            fileName.lastIndexOf(<span class="string">'\\'</span>)
+        );
+        <span class="keyword">String</span> nameOnly = fileName.substring(lastSeparator + <span class="number">1</span>);
+        
+        <span class="comment">// Remove extension</span>
+        <span class="keyword">int</span> lastDot = nameOnly.lastIndexOf(<span class="string">'.'</span>);
+        <span class="keyword">if</span> (lastDot &gt; <span class="number">0</span>) { <span class="comment">// Don't remove if starts with dot</span>
+            nameOnly = nameOnly.substring(<span class="number">0</span>, lastDot);
+        }
+        
+        <span class="keyword">return</span> nameOnly;
+    }
+    
+    <span class="comment">// Build path safely</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> buildPath(<span class="keyword">String</span>... parts) {
+        <span class="keyword">if</span> (parts == <span class="keyword">null</span> || parts.length == <span class="number">0</span>) {
+            <span class="keyword">return</span> <span class="string">""</span>;
+        }
+        
+        <span class="keyword">StringBuilder</span> path = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; parts.length; i++) {
+            <span class="keyword">String</span> part = parts[i];
+            <span class="keyword">if</span> (part == <span class="keyword">null</span> || part.isEmpty()) <span class="keyword">continue</span>;
+            
+            <span class="keyword">if</span> (i &gt; <span class="number">0</span> && !path.toString().endsWith(<span class="string">"/"</span>) && !part.startsWith(<span class="string">"/"</span>)) {
+                path.append(<span class="string">"/"</span>);
+            }
+            path.append(part);
+        }
+        
+        <span class="keyword">return</span> path.toString();
+    }
+}</pre>
+                </div>
+
+                <h4>Data Processing Patterns</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-database"></i> Data Parsing Utilities</div>
+                    <pre><span class="keyword">public class</span> DataStringUtils {
+    
+    <span class="comment">// Parse CSV line with proper escaping</span>
+    <span class="keyword">public static</span> List&lt;<span class="keyword">String</span>&gt; parseCsvLine(<span class="keyword">String</span> line) {
+        <span class="keyword">if</span> (line == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();
+        
+        List&lt;<span class="keyword">String</span>&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();
+        <span class="keyword">boolean</span> inQuotes = <span class="keyword">false</span>;
+        <span class="keyword">StringBuilder</span> current = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+        
+        <span class="keyword">for</span> (<span class="keyword">char</span> c : line.toCharArray()) {
+            <span class="keyword">if</span> (c == <span class="string">'"'</span>) {
+                inQuotes = !inQuotes;
+            } <span class="keyword">else if</span> (c == <span class="string">','</span> && !inQuotes) {
+                result.add(current.toString().trim());
+                current = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+            } <span class="keyword">else</span> {
+                current.append(c);
+            }
+        }
+        result.add(current.toString().trim());
+        
+        <span class="keyword">return</span> result;
+    }
+    
+    <span class="comment">// Extract key-value pairs</span>
+    <span class="keyword">public static</span> Map&lt;<span class="keyword">String</span>, <span class="keyword">String</span>&gt; parseKeyValuePairs(<span class="keyword">String</span> input, 
+                                                              <span class="keyword">String</span> pairSeparator, 
+                                                              <span class="keyword">String</span> keyValueSeparator) {
+        Map&lt;<span class="keyword">String</span>, <span class="keyword">String</span>&gt; result = <span class="keyword">new</span> HashMap&lt;&gt;();
+        
+        <span class="keyword">if</span> (input == <span class="keyword">null</span> || input.trim().isEmpty()) {
+            <span class="keyword">return</span> result;
+        }
+        
+        <span class="keyword">String</span>[] pairs = input.split(pairSeparator);
+        <span class="keyword">for</span> (<span class="keyword">String</span> pair : pairs) {
+            <span class="keyword">String</span>[] keyValue = pair.split(keyValueSeparator, <span class="number">2</span>);
+            <span class="keyword">if</span> (keyValue.length == <span class="number">2</span>) {
+                result.put(keyValue[<span class="number">0</span>].trim(), keyValue[<span class="number">1</span>].trim());
+            }
+        }
+        
+        <span class="keyword">return</span> result;
+    }
+    
+    <span class="comment">// Format number with thousand separators</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> formatNumber(<span class="keyword">long</span> number) {
+        <span class="keyword">return</span> <span class="keyword">String</span>.format(<span class="string">"%,d"</span>, number);
+    }
+    
+    <span class="comment">// Mask sensitive information</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> maskCreditCard(<span class="keyword">String</span> cardNumber) {
+        <span class="keyword">if</span> (cardNumber == <span class="keyword">null</span> || cardNumber.length() &lt; <span class="number">4</span>) {
+            <span class="keyword">return</span> <span class="string">"****"</span>;
+        }
+        
+        <span class="keyword">String</span> digits = cardNumber.replaceAll(<span class="string">"\\D"</span>, <span class="string">""</span>);
+        <span class="keyword">if</span> (digits.length() &lt; <span class="number">4</span>) <span class="keyword">return</span> <span class="string">"****"</span>;
+        
+        <span class="keyword">String</span> lastFour = digits.substring(digits.length() - <span class="number">4</span>);
+        <span class="keyword">return</span> <span class="string">"****-****-****-"</span> + lastFour;
+    }
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="chapter">
+            <h2 class="chapter-title">Part 1C Summary</h2>
+            <div class="chapter-content">
+                <p>Part 1C completed the string fundamentals by covering critical pitfalls, performance considerations, and defensive programming techniques.</p>
+
+                <div class="key-points">
+                    <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
+                    <ul>
+                        <li><strong>Avoid Common Pitfalls:</strong> Use equals() for content, handle nulls safely, avoid inefficient concatenation</li>
+                        <li><strong>Performance Awareness:</strong> Understand the cost of string operations, especially in loops</li>
+                        <li><strong>Defensive Programming:</strong> Validate inputs, use null-safe methods, provide meaningful defaults</li>
+                        <li><strong>Utility Patterns:</strong> Build reusable, well-tested utility methods for common operations</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-check-circle"></i> Fundamentals Complete!</h4>
+                    <p>You've now mastered the core string concepts:</p>
+                    <ul>
+                        <li><strong>Part 1A:</strong> String creation, immutability, and memory management</li>
+                        <li><strong>Part 1B:</strong> Essential methods and comparison techniques</li>
+                        <li><strong>Part 1C:</strong> Common pitfalls and defensive programming</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-forward"></i> Next in the Series</h4>
+                    <p><strong>Part 2: StringBuilder & StringBuffer</strong></p>
+                    <ul>
+                        <li>Mutable string classes for efficient building</li>
+                        <li>Performance comparisons and benchmarks</li>
+                        <li>Thread safety considerations</li>
+                        <li>Capacity management and optimization</li>
+                    </ul>
+                    <p><strong>Part 3: Regular Expressions</strong></p>
+                    <ul>
+                        <li>Pattern matching fundamentals</li>
+                        <li>Advanced regex features and groups</li>
+                        <li>Text validation and extraction</li>
+                        <li>Performance optimization for regex</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-code"></i> Final Practice Challenge</h4>
+                    <p>Create a comprehensive text processing utility that:</p>
+                    <ul>
+                        <li>Validates and normalizes user input safely</li>
+                        <li>Implements efficient text search and replacement</li>
+                        <li>Handles edge cases gracefully (null, empty, malformed input)</li>
+                        <li>Demonstrates proper error handling and defensive programming</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in table of contents
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.chapter');
+            const tocLinks = document.querySelectorAll('.toc a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Strings Guide - Part 2: StringBuilder & StringBuffer - TechTok Cafe</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/array.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
+                    height="50px" alt="TechTok Cafe"></a>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="/index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="guide-container">
+        <!-- Header -->
+        <div class="guide-header">
+            <h1 class="guide-title">Java Strings Guide - Part 2</h1>
+            <p class="guide-subtitle">StringBuilder, StringBuffer, and efficient string manipulation</p>
+        </div>
+
+        <!-- Series Navigation -->
+        <div class="toc">
+            <h3><i class="fas fa-book-open"></i> Complete Series Overview</h3>
+            <div class="highlight-box">
+                <p><strong>Part 1A:</strong> String Fundamentals & Creation<br>
+                   <strong>Part 1B:</strong> String Methods & Comparison<br>
+                   <strong>Part 1C:</strong> Common Pitfalls & Best Practices<br>
+                   <strong>Part 2:</strong> StringBuilder & StringBuffer (Current)<br>
+                   <strong>Part 3:</strong> Regular Expressions</p>
+            </div>
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3><i class="fas fa-list"></i> Part 2 Contents</h3>
+            <ul>
+                <li><a href="#introduction">1. Introduction to Mutable Strings</a></li>
+                <li><a href="#stringbuilder-basics">2. StringBuilder Fundamentals</a></li>
+                <li><a href="#stringbuffer">3. StringBuffer and Thread Safety</a></li>
+                <li><a href="#performance">4. Performance Analysis</a></li>
+                <li><a href="#advanced-usage">5. Advanced Usage Patterns</a></li>
+                <li><a href="#best-practices">6. Best Practices & Guidelines</a></li>
+            </ul>
+        </div>
+
+        <!-- Chapter 1: Introduction -->
+        <div id="introduction" class="chapter">
+            <h2 class="chapter-title">1. Introduction to Mutable Strings</h2>
+            <div class="chapter-content">
+                <p>While String objects are immutable, Java provides StringBuilder and StringBuffer for efficient string manipulation when you need to modify text content frequently.</p>
+
+                <div class="key-points">
+                    <h4><i class="fas fa-key"></i> Why Mutable String Classes?</h4>
+                    <ul>
+                        <li><strong>Performance:</strong> Avoid creating multiple temporary String objects</li>
+                        <li><strong>Memory Efficiency:</strong> Reduce garbage collection pressure</li>
+                        <li><strong>Flexibility:</strong> Enable efficient insertion, deletion, and modification</li>
+                        <li><strong>Scalability:</strong> Handle large text processing operations</li>
+                    </ul>
+                </div>
+
+                <div class="array-visual" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0;">
+                    <div class="array-cell" style="background: #FF6B6B;">
+                        <strong>String</strong><br>
+                        <small>Immutable<br>Thread-safe<br>Simple usage</small>
+                    </div>
+                    <div class="array-cell" style="background: #4ECDC4;">
+                        <strong>StringBuilder</strong><br>
+                        <small>Mutable<br>Not thread-safe<br>High performance</small>
+                    </div>
+                    <div class="array-cell" style="background: #45B7D1;">
+                        <strong>StringBuffer</strong><br>
+                        <small>Mutable<br>Thread-safe<br>Synchronized</small>
+                    </div>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Problem: Inefficient String Concatenation</div>
+                    <pre><span class="comment">// INEFFICIENT: Creates many temporary String objects</span>
+<span class="keyword">String</span> result = <span class="string">""</span>;
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) {
+    result += <span class="string">"Item "</span> + i + <span class="string">"; "</span>;  <span class="comment">// 3000+ objects created!</span>
+}
+
+<span class="comment">// EFFICIENT: StringBuilder approach</span>
+<span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) {
+    sb.append(<span class="string">"Item "</span>).append(i).append(<span class="string">"; "</span>);  <span class="comment">// Modifies same object</span>
+}
+<span class="keyword">String</span> result = sb.toString();</pre>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-lightbulb"></i> When to Use Each</h4>
+                    <p><strong>String:</strong> Simple, infrequent operations and immutable data<br>
+                       <strong>StringBuilder:</strong> Frequent modifications, single-threaded environments<br>
+                       <strong>StringBuffer:</strong> Frequent modifications in multi-threaded environments</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 2: StringBuilder Basics -->
+        <div id="stringbuilder-basics" class="chapter">
+            <h2 class="chapter-title">2. StringBuilder Fundamentals</h2>
+            <div class="chapter-content">
+                <p>StringBuilder provides a mutable sequence of characters with methods for efficient text manipulation.</p>
+
+                <h4>Creating StringBuilder Objects</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> StringBuilder Creation</div>
+                    <pre><span class="comment">// Default constructor (16 character capacity)</span>
+<span class="keyword">StringBuilder</span> sb1 = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+
+<span class="comment">// With initial capacity</span>
+<span class="keyword">StringBuilder</span> sb2 = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(<span class="number">100</span>);
+
+<span class="comment">// With initial content</span>
+<span class="keyword">StringBuilder</span> sb3 = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(<span class="string">"Initial content"</span>);
+
+<span class="comment">// From another sequence</span>
+<span class="keyword">StringBuilder</span> sb4 = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(sb3);
+
+<span class="comment">// Check properties</span>
+System.out.println(<span class="string">"Length: "</span> + sb3.length());     <span class="comment">// Current content length</span>
+System.out.println(<span class="string">"Capacity: "</span> + sb3.capacity()); <span class="comment">// Available space</span></pre>
+                </div>
+
+                <h4>Basic StringBuilder Operations</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Core StringBuilder Methods</div>
+                    <pre><span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+
+<span class="comment">// Appending content</span>
+sb.append(<span class="string">"Hello"</span>);              <span class="comment">// "Hello"</span>
+sb.append(<span class="string">' '</span>);                 <span class="comment">// "Hello "</span>
+sb.append(<span class="string">"World"</span>);             <span class="comment">// "Hello World"</span>
+sb.append(<span class="number">123</span>);                 <span class="comment">// "Hello World123"</span>
+sb.append(<span class="number">45.67</span>);               <span class="comment">// "Hello World12345.67"</span>
+
+<span class="comment">// Method chaining for fluent API</span>
+<span class="keyword">StringBuilder</span> chain = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>()
+    .append(<span class="string">"Java"</span>)
+    .append(<span class="string">" is"</span>)
+    .append(<span class="string">" awesome"</span>);
+
+<span class="comment">// Insertion at specific position</span>
+<span class="keyword">StringBuilder</span> text = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(<span class="string">"Hello World"</span>);
+text.insert(<span class="number">5</span>, <span class="string">","</span>);           <span class="comment">// "Hello, World"</span>
+text.insert(<span class="number">0</span>, <span class="string">"Hi! "</span>);        <span class="comment">// "Hi! Hello, World"</span>
+
+<span class="comment">// Getting the final string</span>
+<span class="keyword">String</span> result = text.toString(); <span class="comment">// Convert to immutable String</span></pre>
+                </div>
+
+                <h4>StringBuilder Modification Methods</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Modifying StringBuilder Content</div>
+                    <pre><span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(<span class="string">"Hello World Programming"</span>);
+
+<span class="comment">// Deletion operations</span>
+sb.delete(<span class="number">5</span>, <span class="number">11</span>);             <span class="comment">// "Hello Programming" (delete "World")</span>
+sb.deleteCharAt(<span class="number">5</span>);             <span class="comment">// "HelloProgramming" (delete space)</span>
+
+<span class="comment">// Replacement operations</span>
+<span class="keyword">StringBuilder</span> text = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(<span class="string">"Java Programming"</span>);
+text.replace(<span class="number">0</span>, <span class="number">4</span>, <span class="string">"Python"</span>);   <span class="comment">// "Python Programming"</span>
+
+<span class="comment">// Character manipulation</span>
+text.setCharAt(<span class="number">0</span>, <span class="string">'p'</span>);          <span class="comment">// "python Programming"</span>
+<span class="keyword">char</span> firstChar = text.charAt(<span class="number">0</span>);   <span class="comment">// 'p'</span>
+
+<span class="comment">// String reversal</span>
+<span class="keyword">StringBuilder</span> reversed = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(<span class="string">"Hello"</span>);
+reversed.reverse();                 <span class="comment">// "olleH"</span>
+
+<span class="comment">// Length manipulation</span>
+sb.setLength(<span class="number">5</span>);                 <span class="comment">// Truncate to 5 characters</span>
+sb.setLength(<span class="number">10</span>);                <span class="comment">// Extend with null characters</span></pre>
+                </div>
+
+                <h4>Capacity Management</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> Managing StringBuilder Capacity</div>
+                    <pre><span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(<span class="string">"Hello"</span>);
+
+<span class="comment">// Check current state</span>
+System.out.println(<span class="string">"Length: "</span> + sb.length());     <span class="comment">// 5</span>
+System.out.println(<span class="string">"Capacity: "</span> + sb.capacity()); <span class="comment">// 21 (16 + 5)</span>
+
+<span class="comment">// Ensure minimum capacity</span>
+sb.ensureCapacity(<span class="number">100</span>);          <span class="comment">// Ensure at least 100 chars</span>
+System.out.println(<span class="string">"New capacity: "</span> + sb.capacity());
+
+<span class="comment">// Trim to current size</span>
+sb.trimToSize();                   <span class="comment">// Reduce capacity to current length</span>
+
+<span class="comment">// Performance tip: Pre-size when you know approximate length</span>
+<span class="keyword">int</span> expectedSize = <span class="number">1000</span>;
+<span class="keyword">StringBuilder</span> optimized = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(expectedSize);
+
+<span class="comment">// Capacity grows automatically (typically doubles)</span>
+<span class="keyword">StringBuilder</span> growing = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(<span class="number">10</span>);
+<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">20</span>; i++) {
+    growing.append(<span class="string">"x"</span>);
+    System.out.println(<span class="string">"Length: "</span> + growing.length() + 
+                       <span class="string">", Capacity: "</span> + growing.capacity());
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 3: StringBuffer -->
+        <div id="stringbuffer" class="chapter">
+            <h2 class="chapter-title">3. StringBuffer and Thread Safety</h2>
+            <div class="chapter-content">
+                <p>StringBuffer provides the same functionality as StringBuilder but with synchronized methods for thread-safe operations.</p>
+
+                <div class="key-points">
+                    <h4><i class="fas fa-shield-alt"></i> StringBuffer Characteristics</h4>
+                    <ul>
+                        <li><strong>Thread-Safe:</strong> All methods are synchronized</li>
+                        <li><strong>Legacy Class:</strong> Predates StringBuilder (Java 1.0)</li>
+                        <li><strong>Performance Cost:</strong> Synchronization overhead in single-threaded scenarios</li>
+                        <li><strong>API Identical:</strong> Same methods as StringBuilder</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-title"><i class="fab fa-java"></i> StringBuffer Usage</div>
+                    <pre><span class="comment">// StringBuffer creation (same as StringBuilder)</span>
+<span class="keyword">StringBuffer</span> buffer = <span class="keyword">new</span> <span class="keyword">StringBuffer</span>();
+<span class="keyword">StringBuffer</span> buffer2 = <span class="keyword">new</span> <span class="keyword">StringBuffer</span>(<span class="number">50</span>);
+<span class="keyword">StringBuffer</span> buffer3 = <span class="keyword">new</span> <span class="keyword">StringBuffer</span>(<span class="string">"Initial"</span>);
+
+<span class="comment">// All methods are synchronized (thread-safe)</span>
+buffer.append(<span class="string">"Thread-safe"</span>);
+buffer.append(<span class="string">" operations"</span>);
+buffer.insert(<span class="number">0</span>, <span class="string">"Safe: "</span>);
+
+<span class="comment">// Thread-safe example</span>
+<span class="keyword">public class</span> ThreadSafeLogger {
+    <span class="keyword">private</span> <span class="keyword">StringBuffer</span> logBuffer = <span class="keyword">new</span> <span class="keyword">StringBuffer</span>();
+    
+    <span class="keyword">public</span> <span class="keyword">void</span> log(<span class="keyword">String</span> message) {
+        <span class="comment">// Safe for concurrent access</span>
+        logBuffer.append(<span class="keyword">new</span> Date())
+                 .append(<span class="string">": "</span>)
+                 .append(message)
+                 .append(<span class="string">"\n"</span>);
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">String</span> getLog() {
+        <span class="keyword">return</span> logBuffer.toString();
+    }
+}</pre>
+                </div>
+
+                <h4>StringBuilder vs StringBuffer Comparison</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-balance-scale"></i> When to Use Each</div>
+                    <pre><span class="comment">// StringBuilder - Single-threaded scenarios (recommended)</span>
+<span class="keyword">public</span> <span class="keyword">String</span> buildReport(List&lt;<span class="keyword">String</span>&gt; data) {
+    <span class="keyword">StringBuilder</span> report = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+    <span class="keyword">for</span> (<span class="keyword">String</span> item : data) {
+        report.append(item).append(<span class="string">"\n"</span>);
+    }
+    <span class="keyword">return</span> report.toString();
+}
+
+<span class="comment">// StringBuffer - Multi-threaded scenarios</span>
+<span class="keyword">public class</span> ConcurrentStringBuilder {
+    <span class="keyword">private</span> <span class="keyword">StringBuffer</span> buffer = <span class="keyword">new</span> <span class="keyword">StringBuffer</span>();
+    
+    <span class="keyword">public</span> <span class="keyword">void</span> appendSafely(<span class="keyword">String</span> text) {
+        buffer.append(text); <span class="comment">// Thread-safe operation</span>
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">String</span> getResult() {
+        <span class="keyword">return</span> buffer.toString();
+    }
+}
+
+<span class="comment">// Modern alternative: StringBuilder with external synchronization</span>
+<span class="keyword">public class</span> ModernConcurrentBuilder {
+    <span class="keyword">private final</span> <span class="keyword">StringBuilder</span> builder = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+    <span class="keyword">private final</span> Object lock = <span class="keyword">new</span> Object();
+    
+    <span class="keyword">public</span> <span class="keyword">void</span> append(<span class="keyword">String</span> text) {
+        <span class="keyword">synchronized</span> (lock) {
+            builder.append(text); <span class="comment">// Explicit synchronization</span>
+        }
+    }
+}</pre>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-info-circle"></i> Recommendation</h4>
+                    <p>Use <strong>StringBuilder</strong> for most scenarios. Only use StringBuffer when you specifically need built-in thread safety and cannot use external synchronization.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 4: Performance -->
+        <div id="performance" class="chapter">
+            <h2 class="chapter-title">4. Performance Analysis</h2>
+            <div class="chapter-content">
+                <p>Understanding the performance characteristics of different string building approaches helps you make informed decisions.</p>
+
+                <h4>Performance Comparison</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-stopwatch"></i> Benchmarking String Operations</div>
+                    <pre><span class="keyword">public class</span> StringPerformanceTest {
+    
+    <span class="keyword">public static void</span> main(<span class="keyword">String</span>[] args) {
+        <span class="keyword">int</span> iterations = <span class="number">10000</span>;
+        
+        <span class="comment">// Test 1: String concatenation (SLOW)</span>
+        <span class="keyword">long</span> start = System.nanoTime();
+        <span class="keyword">String</span> str = <span class="string">""</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; iterations; i++) {
+            str += <span class="string">"x"</span>; <span class="comment">// O(n²) complexity</span>
+        }
+        <span class="keyword">long</span> stringTime = System.nanoTime() - start;
+        
+        <span class="comment">// Test 2: StringBuilder (FAST)</span>
+        start = System.nanoTime();
+        <span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; iterations; i++) {
+            sb.append(<span class="string">"x"</span>); <span class="comment">// O(n) complexity</span>
+        }
+        <span class="keyword">String</span> sbResult = sb.toString();
+        <span class="keyword">long</span> sbTime = System.nanoTime() - start;
+        
+        <span class="comment">// Test 3: StringBuffer (SLOWER due to synchronization)</span>
+        start = System.nanoTime();
+        <span class="keyword">StringBuffer</span> buff = <span class="keyword">new</span> <span class="keyword">StringBuffer</span>();
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; iterations; i++) {
+            buff.append(<span class="string">"x"</span>); <span class="comment">// O(n) but synchronized</span>
+        }
+        <span class="keyword">String</span> buffResult = buff.toString();
+        <span class="keyword">long</span> buffTime = System.nanoTime() - start;
+        
+        System.out.printf(<span class="string">"String concat: %d ms%n"</span>, stringTime / <span class="number">1_000_000</span>);
+        System.out.printf(<span class="string">"StringBuilder: %d ms%n"</span>, sbTime / <span class="number">1_000_000</span>);
+        System.out.printf(<span class="string">"StringBuffer:  %d ms%n"</span>, buffTime / <span class="number">1_000_000</span>);
+    }
+}</pre>
+                </div>
+
+                <h4>Memory Usage Analysis</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-memory"></i> Memory Efficiency Patterns</div>
+                    <pre><span class="comment">// Memory-efficient: Pre-size StringBuilder</span>
+<span class="keyword">public static</span> <span class="keyword">String</span> efficientBuild(<span class="keyword">int</span> count) {
+    <span class="comment">// Estimate final size to avoid resizing</span>
+    <span class="keyword">int</span> estimatedSize = count * <span class="number">10</span>; <span class="comment">// Rough estimate</span>
+    <span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(estimatedSize);
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) {
+        sb.append(<span class="string">"Item "</span>).append(i).append(<span class="string">", "</span>);
+    }
+    
+    <span class="keyword">return</span> sb.toString();
+}
+
+<span class="comment">// Memory analysis example</span>
+<span class="keyword">public static void</span> demonstrateCapacityGrowth() {
+    <span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(<span class="number">5</span>);
+    
+    System.out.println(<span class="string">"Initial capacity: "</span> + sb.capacity()); <span class="comment">// 5</span>
+    
+    sb.append(<span class="string">"Hello World"</span>); <span class="comment">// Exceeds initial capacity</span>
+    System.out.println(<span class="string">"After append: "</span> + sb.capacity());   <span class="comment">// 12 (5*2+2)</span>
+    
+    sb.append(<span class="string">" - This is a longer text"</span>);
+    System.out.println(<span class="string">"After long append: "</span> + sb.capacity()); <span class="comment">// 26 (12*2+2)</span>
+}
+
+<span class="comment">// Best practice: Calculate expected size</span>
+<span class="keyword">public static</span> <span class="keyword">String</span> buildJsonArray(List&lt;<span class="keyword">String</span>&gt; items) {
+    <span class="comment">// Estimate: brackets + commas + items</span>
+    <span class="keyword">int</span> estimatedSize = <span class="number">2</span> + (items.size() - <span class="number">1</span>) * <span class="number">2</span> + 
+                         items.stream().mapToInt(<span class="keyword">String</span>::length).sum();
+    
+    <span class="keyword">StringBuilder</span> json = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(estimatedSize);
+    json.append(<span class="string">"["</span>);
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; items.size(); i++) {
+        <span class="keyword">if</span> (i &gt; <span class="number">0</span>) json.append(<span class="string">", "</span>);
+        json.append(<span class="string">"\""</span>).append(items.get(i)).append(<span class="string">"\""</span>);
+    }
+    
+    json.append(<span class="string">"]"</span>);
+    <span class="keyword">return</span> json.toString();
+}</pre>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Performance Guidelines</h4>
+                    <ul>
+                        <li><strong>Use StringBuilder for 3+ concatenations</strong></li>
+                        <li><strong>Pre-size when you know approximate length</strong></li>
+                        <li><strong>Avoid toString() in loops</strong></li>
+                        <li><strong>Consider String.join() for simple cases</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 5: Advanced Usage -->
+        <div id="advanced-usage" class="chapter">
+            <h2 class="chapter-title">5. Advanced Usage Patterns</h2>
+            <div class="chapter-content">
+                <p>Advanced techniques for leveraging StringBuilder and StringBuffer in complex scenarios.</p>
+
+                <h4>Builder Pattern Implementation</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-hammer"></i> Custom Builder with StringBuilder</div>
+                    <pre><span class="keyword">public class</span> SqlQueryBuilder {
+    <span class="keyword">private final</span> <span class="keyword">StringBuilder</span> query;
+    
+    <span class="keyword">public</span> SqlQueryBuilder() {
+        <span class="keyword">this</span>.query = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+    }
+    
+    <span class="keyword">public</span> SqlQueryBuilder select(<span class="keyword">String</span>... columns) {
+        query.append(<span class="string">"SELECT "</span>);
+        query.append(<span class="keyword">String</span>.join(<span class="string">", "</span>, columns));
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    }
+    
+    <span class="keyword">public</span> SqlQueryBuilder from(<span class="keyword">String</span> table) {
+        query.append(<span class="string">" FROM "</span>).append(table);
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    }
+    
+    <span class="keyword">public</span> SqlQueryBuilder where(<span class="keyword">String</span> condition) {
+        query.append(<span class="string">" WHERE "</span>).append(condition);
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    }
+    
+    <span class="keyword">public</span> SqlQueryBuilder and(<span class="keyword">String</span> condition) {
+        query.append(<span class="string">" AND "</span>).append(condition);
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    }
+    
+    <span class="keyword">public</span> SqlQueryBuilder orderBy(<span class="keyword">String</span> column, <span class="keyword">String</span> direction) {
+        query.append(<span class="string">" ORDER BY "</span>).append(column).append(<span class="string">" "</span>).append(direction);
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">String</span> build() {
+        <span class="keyword">return</span> query.toString();
+    }
+}
+
+<span class="comment">// Usage example</span>
+<span class="keyword">String</span> sql = <span class="keyword">new</span> SqlQueryBuilder()
+    .select(<span class="string">"id"</span>, <span class="string">"name"</span>, <span class="string">"email"</span>)
+    .from(<span class="string">"users"</span>)
+    .where(<span class="string">"active = 1"</span>)
+    .and(<span class="string">"age > 18"</span>)
+    .orderBy(<span class="string">"name"</span>, <span class="string">"ASC"</span>)
+    .build();</pre>
+                </div>
+
+                <h4>Template and Formatting Utilities</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-code"></i> Advanced String Building</div>
+                    <pre><span class="keyword">public class</span> TemplateBuilder {
+    <span class="keyword">private final</span> <span class="keyword">StringBuilder</span> template;
+    
+    <span class="keyword">public</span> TemplateBuilder() {
+        <span class="keyword">this</span>.template = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+    }
+    
+    <span class="comment">// HTML template building</span>
+    <span class="keyword">public</span> TemplateBuilder openTag(<span class="keyword">String</span> tag, <span class="keyword">String</span>... attributes) {
+        template.append(<span class="string">"&lt;"</span>).append(tag);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; attributes.length; i += <span class="number">2</span>) {
+            <span class="keyword">if</span> (i + <span class="number">1</span> &lt; attributes.length) {
+                template.append(<span class="string">" "</span>).append(attributes[i])
+                        .append(<span class="string">="</span>).append(attributes[i + <span class="number">1</span>]).append(<span class="string">""</span>);
+            }
+        }
+        template.append(<span class="string">"&gt;"</span>);
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    }
+    
+    <span class="keyword">public</span> TemplateBuilder closeTag(<span class="keyword">String</span> tag) {
+        template.append(<span class="string">"&lt;/"</span>).append(tag).append(<span class="string">"&gt;"</span>);
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    }
+    
+    <span class="keyword">public</span> TemplateBuilder content(<span class="keyword">String</span> text) {
+        template.append(escapeHtml(text));
+        <span class="keyword">return</span> <span class="keyword">this</span>;
+    }
+    
+    <span class="keyword">private</span> <span class="keyword">String</span> escapeHtml(<span class="keyword">String</span> text) {
+        <span class="keyword">return</span> text.replace(<span class="string">"&"</span>, <span class="string">"&amp;"</span>)
+                   .replace(<span class="string">"&lt;"</span>, <span class="string">"&amp;lt;"</span>)
+                   .replace(<span class="string">"&gt;"</span>, <span class="string">"&amp;gt;"</span>)
+                   .replace(<span class="string">"""</span>, <span class="string">"&amp;quot;"</span>);
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">String</span> build() {
+        <span class="keyword">return</span> template.toString();
+    }
+}
+
+<span class="comment">// Usage for HTML generation</span>
+<span class="keyword">String</span> html = <span class="keyword">new</span> TemplateBuilder()
+    .openTag(<span class="string">"div"</span>, <span class="string">"class"</span>, <span class="string">"container"</span>)
+    .openTag(<span class="string">"h1"</span>)
+    .content(<span class="string">"Welcome to Java"</span>)
+    .closeTag(<span class="string">"h1"</span>)
+    .openTag(<span class="string">"p"</span>)
+    .content(<span class="string">"Learning StringBuilder &amp; StringBuffer"</span>)
+    .closeTag(<span class="string">"p"</span>)
+    .closeTag(<span class="string">"div"</span>)
+    .build();</pre>
+                </div>
+
+                <h4>Stream Integration</h4>
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-stream"></i> StringBuilder with Java 8+ Streams</div>
+                    <pre><span class="keyword">import</span> java.util.stream.Collectors;
+
+<span class="keyword">public class</span> StreamStringBuilder {
+    
+    <span class="comment">// Using Collectors.joining() (often better than StringBuilder)</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> joinWithStreams(List&lt;<span class="keyword">String</span>&gt; items) {
+        <span class="keyword">return</span> items.stream()
+                   .filter(s -&gt; s != <span class="keyword">null</span> && !s.isEmpty())
+                   .map(<span class="keyword">String</span>::trim)
+                   .collect(Collectors.joining(<span class="string">", "</span>, <span class="string">"["</span>, <span class="string">"]"</span>));
+    }
+    
+    <span class="comment">// Custom collector using StringBuilder</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> customFormat(List&lt;Person&gt; people) {
+        <span class="keyword">return</span> people.stream()
+                     .collect(StringBuilder::<span class="keyword">new</span>,
+                             (sb, person) -&gt; sb.append(person.getName())
+                                             .append(<span class="string">" ("</span>)
+                                             .append(person.getAge())
+                                             .append(<span class="string">"), "</span>),
+                             StringBuilder::append)
+                     .toString();
+    }
+    
+    <span class="comment">// Parallel processing with StringBuilder</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> processLargeDataset(List&lt;<span class="keyword">String</span>&gt; data) {
+        <span class="comment">// Note: StringBuilder is not thread-safe for parallel streams</span>
+        <span class="keyword">return</span> data.parallelStream()
+                   .filter(s -&gt; s.length() &gt; <span class="number">5</span>)
+                   .map(<span class="keyword">String</span>::toUpperCase)
+                   .collect(Collectors.joining(<span class="string">"\n"</span>)); <span class="comment">// Thread-safe</span>
+    }
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chapter 6: Best Practices -->
+        <div id="best-practices" class="chapter">
+            <h2 class="chapter-title">6. Best Practices & Guidelines</h2>
+            <div class="chapter-content">
+                <p>Follow these guidelines to use StringBuilder and StringBuffer effectively in your applications.</p>
+
+                <div class="key-points">
+                    <h4><i class="fas fa-check-circle"></i> StringBuilder Best Practices</h4>
+                    <ul>
+                        <li><strong>Pre-size when possible:</strong> Estimate capacity to avoid resizing</li>
+                        <li><strong>Use for 3+ concatenations:</strong> More efficient than String concatenation</li>
+                        <li><strong>Prefer over StringBuffer:</strong> Unless you need thread safety</li>
+                        <li><strong>Consider String.join():</strong> For simple delimiter-based joining</li>
+                        <li><strong>Reuse instances:</strong> Clear and reuse for multiple operations</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-star"></i> Best Practice Examples</div>
+                    <pre><span class="comment">// GOOD: Pre-sized StringBuilder</span>
+<span class="keyword">public static</span> <span class="keyword">String</span> buildCsvRow(<span class="keyword">String</span>[] values) {
+    <span class="keyword">int</span> estimatedSize = values.length * <span class="number">20</span>; <span class="comment">// Rough estimate</span>
+    <span class="keyword">StringBuilder</span> csv = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(estimatedSize);
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; values.length; i++) {
+        <span class="keyword">if</span> (i &gt; <span class="number">0</span>) csv.append(<span class="string">","</span>);
+        csv.append(escapeCommas(values[i]));
+    }
+    
+    <span class="keyword">return</span> csv.toString();
+}
+
+<span class="comment">// GOOD: Reusable StringBuilder</span>
+<span class="keyword">public class</span> LogFormatter {
+    <span class="keyword">private final</span> <span class="keyword">StringBuilder</span> reusableBuilder = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(<span class="number">256</span>);
+    
+    <span class="keyword">public</span> <span class="keyword">String</span> formatLogEntry(<span class="keyword">String</span> level, <span class="keyword">String</span> message) {
+        reusableBuilder.setLength(<span class="number">0</span>); <span class="comment">// Clear previous content</span>
+        
+        reusableBuilder.append(<span class="string">"["</span>)
+                       .append(<span class="keyword">new</span> Date())
+                       .append(<span class="string">"] "</span>)
+                       .append(level)
+                       .append(<span class="string">": "</span>)
+                       .append(message);
+        
+        <span class="keyword">return</span> reusableBuilder.toString();
+    }
+}
+
+<span class="comment">// DECISION: When to use StringBuilder vs alternatives</span>
+<span class="keyword">public class</span> StringBuildingDecisions {
+    
+    <span class="comment">// Use String.join() for simple cases</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> simpleJoin(List&lt;<span class="keyword">String</span>&gt; items) {
+        <span class="keyword">return</span> <span class="keyword">String</span>.join(<span class="string">", "</span>, items); <span class="comment">// Simpler than StringBuilder</span>
+    }
+    
+    <span class="comment">// Use StringBuilder for complex formatting</span>
+    <span class="keyword">public static</span> <span class="keyword">String</span> complexFormat(List&lt;Person&gt; people) {
+        <span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+        
+        sb.append(<span class="string">"People Report:\n"</span>);
+        sb.append(<span class="string">"="</span>.repeat(<span class="number">50</span>)).append(<span class="string">"\n"</span>);
+        
+        <span class="keyword">for</span> (Person person : people) {
+            sb.append(<span class="keyword">String</span>.format(<span class="string">"%-20s | Age: %2d | City: %s%n"</span>,
+                                   person.getName(), 
+                                   person.getAge(), 
+                                   person.getCity()));
+        }
+        
+        <span class="keyword">return</span> sb.toString();
+    }
+}</pre>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-exclamation-triangle"></i> Common Mistakes to Avoid</h4>
+                    <ul>
+                        <li><strong>toString() in loops:</strong> Don't call toString() repeatedly</li>
+                        <li><strong>Excessive capacity:</strong> Don't over-allocate memory unnecessarily</li>
+                        <li><strong>Thread safety assumptions:</strong> StringBuilder is NOT thread-safe</li>
+                        <li><strong>Ignoring alternatives:</strong> Sometimes String.join() or String.format() is better</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+                    <div class="code-title"><i class="fas fa-bug"></i> Mistakes to Avoid</div>
+                    <pre><span class="comment">// MISTAKE: Calling toString() repeatedly</span>
+<span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+<span class="keyword">for</span> (<span class="keyword">String</span> item : items) {
+    sb.append(item);
+    System.out.println(sb.toString()); <span class="comment">// BAD: Creates string each time</span>
+}
+
+<span class="comment">// BETTER: Build once, convert once</span>
+<span class="keyword">StringBuilder</span> sb = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>();
+<span class="keyword">for</span> (<span class="keyword">String</span> item : items) {
+    sb.append(item).append(<span class="string">"\n"</span>);
+}
+System.out.println(sb.toString()); <span class="comment">// GOOD: Single conversion</span>
+
+<span class="comment">// MISTAKE: Thread safety assumption</span>
+<span class="keyword">StringBuilder</span> shared = <span class="keyword">new</span> <span class="keyword">StringBuilder</span>(); <span class="comment">// NOT thread-safe!</span>
+parallelStream.forEach(item -&gt; shared.append(item)); <span class="comment">// DANGEROUS</span>
+
+<span class="comment">// CORRECT: Use thread-safe alternatives</span>
+<span class="keyword">String</span> result = parallelStream
+    .collect(Collectors.joining()); <span class="comment">// Thread-safe</span></pre>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-lightbulb"></i> Performance Tips</h4>
+                    <ul>
+                        <li><strong>Measure before optimizing:</strong> Profile your specific use case</li>
+                        <li><strong>Consider memory vs speed:</strong> Pre-sizing reduces allocations but uses more memory</li>
+                        <li><strong>Use appropriate tools:</strong> StringBuilder for building, String.join() for simple joining</li>
+                        <li><strong>Profile garbage collection:</strong> StringBuilder reduces GC pressure significantly</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="chapter">
+            <h2 class="chapter-title">Part 2 Summary</h2>
+            <div class="chapter-content">
+                <p>Part 2 covered the essential mutable string classes that enable efficient string manipulation in Java applications.</p>
+
+                <div class="key-points">
+                    <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
+                    <ul>
+                        <li><strong>StringBuilder:</strong> Use for efficient string building in single-threaded scenarios</li>
+                        <li><strong>StringBuffer:</strong> Use only when you need built-in thread safety</li>
+                        <li><strong>Performance:</strong> StringBuilder is 100x+ faster than String concatenation in loops</li>
+                        <li><strong>Capacity Management:</strong> Pre-size when possible to avoid resizing overhead</li>
+                        <li><strong>Modern Alternatives:</strong> Consider String.join() and Collectors.joining() for simple cases</li>
+                    </ul>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-chart-line"></i> Performance Summary</h4>
+                    <p><strong>String Concatenation:</strong> O(n²) complexity, many temporary objects<br>
+                       <strong>StringBuilder:</strong> O(n) complexity, single mutable object<br>
+                       <strong>StringBuffer:</strong> O(n) complexity with synchronization overhead</p>
+                </div>
+
+                <div class="highlight-box">
+                    <h4><i class="fas fa-forward"></i> Coming Next: Part 3</h4>
+                    <p><strong>Part 3: Regular Expressions</strong></p>
+                    <ul>
+                        <li>Pattern matching fundamentals and syntax</li>
+                        <li>Advanced regex features (groups, lookarounds, quantifiers)</li>
+                        <li>Text validation and data extraction</li>
+                        <li>Performance optimization and pattern compilation</li>
+                        <li>Real-world regex applications and examples</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="fas fa-code"></i> Practice Challenge</h4>
+                    <p>Create a text report generator that:</p>
+                    <ul>
+                        <li>Uses StringBuilder for efficient text building</li>
+                        <li>Handles large datasets with proper capacity management</li>
+                        <li>Implements a fluent API for easy usage</li>
+                        <li>Includes performance benchmarking against String concatenation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in table of contents
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.chapter');
+            const tocLinks = document.querySelectorAll('.toc a');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 150;
+                if (scrollY >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -125,6 +125,51 @@ body {
     margin-right: 10px;
 }
 
+/* ===== Dropdown Submenu ===== */
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu > .dropdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Submenu panel */
+.dropdown-subcontent {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 8px;
+    min-width: 220px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+    z-index: 1002;
+}
+
+/* Show submenu on hover */
+.dropdown-submenu:hover > .dropdown-subcontent {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+/* Chevron animation */
+.dropdown-submenu .fa-chevron-right {
+    transition: transform 0.3s ease;
+}
+.dropdown-submenu:hover .fa-chevron-right {
+    transform: rotate(90deg);
+}
+
+
 /* ===== Hero Section ===== */
 .hero {
     min-height: 100vh;
