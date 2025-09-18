@@ -446,5 +446,192 @@ body {
     }
 }
 
+        /* Enhanced dropdown styling for sections */
+        .dropdown-content {
+            min-width: 320px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .dropdown-section {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 0;
+        }
+
+        .dropdown-section:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #667eea;
+            padding: 0.5rem 1.5rem;
+            margin: 0;
+            background: rgba(102, 126, 234, 0.1);
+            border-left: 3px solid #667eea;
+        }
+
+        /* Special styling for submenu trigger headers */
+        .dropdown-header.submenu-trigger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-header.submenu-trigger:hover {
+            background: rgba(102, 126, 234, 0.2);
+            color: #5a6fd8;
+        }
+
+        .dropdown-section .dropdown-item {
+            padding-left: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .dropdown-section .dropdown-item:hover {
+            background: var(--primary-gradient);
+            color: white;
+        }
+
+        /* Submenu Styles */
+        .submenu-item {
+            position: relative;
+        }
+
+        .submenu-trigger {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .submenu-arrow {
+            font-size: 0.7rem;
+            transition: transform 0.3s ease;
+        }
+
+        .submenu-content {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background: white;
+            min-width: 280px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+            z-index: 1002;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .submenu-item:hover .submenu-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .submenu-item:hover .submenu-arrow {
+            transform: rotate(90deg);
+        }
+
+        .submenu-link {
+            display: block;
+            padding: 0.8rem 1.5rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .submenu-link:last-child {
+            border-bottom: none;
+        }
+
+        .submenu-link:hover {
+            background: var(--primary-gradient);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .submenu-link i {
+            font-size: 0.6rem;
+            color: #667eea;
+            transition: color 0.3s ease;
+        }
+
+        .submenu-link:hover i {
+            color: white;
+        }
+
+        /* Ensure submenu trigger doesn't navigate */
+        .submenu-trigger[href="#"] {
+            pointer-events: none;
+        }
+
+        .submenu-trigger[href="#"]:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        /* Mobile responsiveness for enhanced dropdown */
+        @media (max-width: 768px) {
+            .dropdown-content {
+                position: static;
+                max-height: none;
+                overflow-y: visible;
+            }
+            
+            .dropdown-section {
+                margin: 0.5rem 0;
+            }
+            
+            .dropdown-header {
+                background: rgba(102, 126, 234, 0.2);
+            }
+
+            /* Mobile submenu behavior */
+            .submenu-dropdown {
+                position: static;
+                background: rgba(102, 126, 234, 0.08);
+                border-radius: 0;
+                margin-left: 0.5rem;
+                border-left: 2px solid #667eea;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+
+            .submenu-item:hover .submenu-dropdown,
+            .submenu-item.active .submenu-dropdown {
+                max-height: 300px;
+                padding: 0.5rem 0;
+            }
+
+            .submenu-arrow {
+                font-size: 0.6rem;
+            }
+
+            .submenu-link {
+                padding: 0.6rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            /* Touch-friendly mobile interactions */
+            .submenu-trigger {
+                -webkit-tap-highlight-color: transparent;
+            }
+        }
+   
 /* ===== Other Styles (for book pages, code blocks, etc.) ===== */
 /* You can keep your previous .chapter, .toc, .code-block, etc. styles here if needed */
