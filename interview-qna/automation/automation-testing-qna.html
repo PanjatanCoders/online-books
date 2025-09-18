@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/css/interview/interview-styles.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 
 <body>
@@ -876,38 +877,17 @@ public void fillFormEfficiently(Map<String, String> formData) {
         </div>
 
         <!-- Footer Section -->
-        <div class="footer-section">
-            <div class="preparation-tips">
-                <h3><i class="fas fa-graduation-cap"></i> Interview Preparation Tips</h3>
-                <div class="tips-grid">
-                    <div class="tip-card">
-                        <h4>📚 Study Strategy</h4>
-                        <p>Review each question thoroughly, practice code examples hands-on, and create your own
-                            variations.</p>
-                    </div>
-                    <div class="tip-card">
-                        <h4>💻 Practical Experience</h4>
-                        <p>Build a sample framework incorporating all concepts. GitHub portfolio with real projects is
-                            crucial.</p>
-                    </div>
-                    <div class="tip-card">
-                        <h4>🎯 Focus Areas</h4>
-                        <p>Framework design, parallel execution, CI/CD integration, and handling dynamic elements are
-                            key topics.</p>
-                    </div>
-                    <div class="tip-card">
-                        <h4>⏰ Time Management</h4>
-                        <p>Practice explaining concepts in 2-3 minutes. Be ready for live coding challenges.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-note">
-                <p>Created for Selenium Automation Engineers (5-10 Years Experience)</p>
-                <p>© 2024 TechTok Cafe. All rights reserved.</p>
-            </div>
-        </div>
-    </div>
+        <footer class="footer">
+        <div id="footer-placeholder"></div>
+    </footer>
+    <script>
+        fetch("/footer.html")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("footer-placeholder").innerHTML = data;
+            });
+    </script>
+    <script src="/js/footer.js"></script>
 
     <!-- JavaScript -->
     <script>

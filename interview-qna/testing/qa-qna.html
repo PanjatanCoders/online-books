@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,12 +9,13 @@
     <link rel="stylesheet" href="interview.css">
     <link rel="stylesheet" href="/css/footer.css">
 </head>
+
 <body>
     <!-- Progress Bar -->
     <div class="progress-container">
         <div class="progress-bar" id="progressBar"></div>
     </div>
-        <!-- Back Navigation -->
+    <!-- Back Navigation -->
     <div class="back-nav">
         <a href="/index.html" class="back-btn">
             <i class="fas fa-arrow-left"></i>
@@ -49,20 +51,23 @@
                 <div class="question-content">
                     <div class="answer-section">
                         <h4>Definition</h4>
-                        <p>Software testing is the process of evaluating and verifying that a software application functions correctly, meets specified requirements, and is free of defects.</p>
-                        
+                        <p>Software testing is the process of evaluating and verifying that a software application
+                            functions correctly, meets specified requirements, and is free of defects.</p>
+
                         <div class="key-points">
                             <h4>Key Points:</h4>
                             <ul>
                                 <li><strong>Purpose:</strong> Find bugs, ensure quality, validate requirements</li>
-                                <li><strong>Types:</strong> Manual testing (human execution) vs Automated testing (tool-based)</li>
+                                <li><strong>Types:</strong> Manual testing (human execution) vs Automated testing
+                                    (tool-based)</li>
                                 <li><strong>Goal:</strong> Deliver reliable, high-quality software to end users</li>
                             </ul>
                         </div>
 
                         <div class="tip-box">
                             <h5>Interview Tip</h5>
-                            <p>Always emphasize that testing is not just about finding bugs - it's about ensuring the software meets user expectations and business requirements.</p>
+                            <p>Always emphasize that testing is not just about finding bugs - it's about ensuring the
+                                software meets user expectations and business requirements.</p>
                         </div>
                     </div>
                 </div>
@@ -97,20 +102,20 @@
                             <li>Usually done by developers</li>
                             <li>Fastest and cheapest to fix defects</li>
                         </ul>
-                        
+
                         <h4>2. Integration Testing</h4>
                         <ul>
                             <li>Test interaction between integrated modules</li>
                             <li>Types: Big Bang, Top-down, Bottom-up, Sandwich</li>
                         </ul>
-                        
+
                         <h4>3. System Testing</h4>
                         <ul>
                             <li>Test complete integrated system</li>
                             <li>Verify system meets specified requirements</li>
                             <li>End-to-end functionality testing</li>
                         </ul>
-                        
+
                         <h4>4. Acceptance Testing</h4>
                         <ul>
                             <li>Final testing before release</li>
@@ -217,9 +222,12 @@
                     <div class="key-points">
                         <h4>Phase Details:</h4>
                         <ul>
-                            <li><strong>Requirement Analysis:</strong> Understand and analyze requirements, identify testable requirements</li>
-                            <li><strong>Test Planning:</strong> Create test strategy and plan, estimate effort and resources</li>
-                            <li><strong>Test Case Development:</strong> Write detailed test cases, prepare test data</li>
+                            <li><strong>Requirement Analysis:</strong> Understand and analyze requirements, identify
+                                testable requirements</li>
+                            <li><strong>Test Planning:</strong> Create test strategy and plan, estimate effort and
+                                resources</li>
+                            <li><strong>Test Case Development:</strong> Write detailed test cases, prepare test data
+                            </li>
                             <li><strong>Environment Setup:</strong> Configure test environment, set up test data</li>
                             <li><strong>Test Execution:</strong> Execute test cases, log defects</li>
                             <li><strong>Test Closure:</strong> Test completion report, lessons learned</li>
@@ -248,7 +256,8 @@
                                 <td>One-liner description</td>
                             </tr>
                             <tr>
-                                <td>Example: "Enter username 'admin', password '123', click login, verify dashboard appears"</td>
+                                <td>Example: "Enter username 'admin', password '123', click login, verify dashboard
+                                    appears"</td>
                                 <td>Example: "Verify user login functionality"</td>
                             </tr>
                         </tbody>
@@ -273,8 +282,9 @@
                 <div class="question-content">
                     <div class="answer-section">
                         <h4>Definition</h4>
-                        <p>Testing existing functionality after changes to ensure new code doesn't break working features.</p>
-                        
+                        <p>Testing existing functionality after changes to ensure new code doesn't break working
+                            features.</p>
+
                         <div class="key-points">
                             <h4>When to perform:</h4>
                             <ul>
@@ -340,7 +350,8 @@
                     <div class="example-box">
                         <h5>Banking App Example:</h5>
                         <p><strong>Smoke:</strong> Login works, main menu loads, basic navigation functional</p>
-                        <p><strong>Sanity:</strong> After fixing transfer bug, verify transfer functionality works correctly</p>
+                        <p><strong>Sanity:</strong> After fixing transfer bug, verify transfer functionality works
+                            correctly</p>
                     </div>
                 </div>
             </div>
@@ -351,7 +362,7 @@
                     <div class="answer-section">
                         <h4>Definition</h4>
                         <p>Simultaneous learning, test design, and test execution without predetermined test cases.</p>
-                        
+
                         <div class="key-points">
                             <h4>Characteristics:</h4>
                             <ul>
@@ -360,7 +371,7 @@
                                 <li>Unscripted testing</li>
                                 <li>Focus on discovery and learning</li>
                             </ul>
-                            
+
                             <h4>Benefits:</h4>
                             <ul>
                                 <li>Finds unexpected issues</li>
@@ -372,7 +383,8 @@
 
                         <div class="note-box">
                             <h5>When to Use Exploratory Testing</h5>
-                            <p>Best used when requirements are unclear, time is limited, or when looking for usability issues that scripted tests might miss.</p>
+                            <p>Best used when requirements are unclear, time is limited, or when looking for usability
+                                issues that scripted tests might miss.</p>
                         </div>
                     </div>
                 </div>
@@ -398,18 +410,18 @@
                     </div>
 
                     <div class="code-block">
-Test Case ID: TC_001
-Test Scenario: User Login
-Pre-conditions: User account exists
-Test Steps:
-1. Navigate to login page
-2. Enter valid username
-3. Enter valid password
-4. Click login button
-Expected Result: User redirected to dashboard
-Post-conditions: User logged in successfully
-Priority: High
-Test Data: Username: testuser@email.com, Password: Test123!
+                        Test Case ID: TC_001
+                        Test Scenario: User Login
+                        Pre-conditions: User account exists
+                        Test Steps:
+                        1. Navigate to login page
+                        2. Enter valid username
+                        3. Enter valid password
+                        4. Click login button
+                        Expected Result: User redirected to dashboard
+                        Post-conditions: User logged in successfully
+                        Priority: High
+                        Test Data: Username: testuser@email.com, Password: Test123!
                     </div>
 
                     <div class="tip-box">
@@ -470,7 +482,7 @@ Test Data: Username: testuser@email.com, Password: Test123!
                     <div class="answer-section">
                         <h4>Use Case Definition</h4>
                         <p>Description of how users interact with system to achieve specific goals.</p>
-                        
+
                         <div class="key-points">
                             <h4>Testing Approach:</h4>
                             <ol>
@@ -484,8 +496,10 @@ Test Data: Username: testuser@email.com, Password: Test123!
                         <div class="example-box">
                             <h5>Example: Online Purchase</h5>
                             <p><strong>Actor:</strong> Customer</p>
-                            <p><strong>Normal Flow:</strong> Browse → Select → Add to Cart → Checkout → Payment → Confirmation</p>
-                            <p><strong>Test:</strong> Verify each step works correctly and user can complete purchase</p>
+                            <p><strong>Normal Flow:</strong> Browse → Select → Add to Cart → Checkout → Payment →
+                                Confirmation</p>
+                            <p><strong>Test:</strong> Verify each step works correctly and user can complete purchase
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -519,14 +533,14 @@ Test Data: Username: testuser@email.com, Password: Test123!
                             <li>Map test cases to requirements</li>
                             <li>Ensure all requirements tested</li>
                         </ul>
-                        
+
                         <h4>2. Test Coverage Techniques</h4>
                         <ul>
                             <li>Boundary Value Analysis</li>
                             <li>Equivalence Partitioning</li>
                             <li>Decision Table Testing</li>
                         </ul>
-                        
+
                         <h4>3. Review and Analysis</h4>
                         <ul>
                             <li>Peer reviews of test cases</li>
@@ -615,21 +629,21 @@ Test Data: Username: testuser@email.com, Password: Test123!
                 <div class="question-header">Q18. What do you include when raising a bug?</div>
                 <div class="question-content">
                     <div class="code-block">
-Bug ID: BUG_001
-Summary: Login fails with valid credentials
-Description: User cannot login with correct username/password
-Severity: High | Priority: High
-Environment: Windows 10, Chrome 96.0
-Steps to Reproduce:
-1. Navigate to login page
-2. Enter username: test@email.com
-3. Enter password: Test123!
-4. Click Login button
-Expected Result: User should be logged in
-Actual Result: Error message "Invalid credentials"
-Screenshots: [attachment]
-Reporter: John Doe
-Date: 2024-01-15
+                        Bug ID: BUG_001
+                        Summary: Login fails with valid credentials
+                        Description: User cannot login with correct username/password
+                        Severity: High | Priority: High
+                        Environment: Windows 10, Chrome 96.0
+                        Steps to Reproduce:
+                        1. Navigate to login page
+                        2. Enter username: test@email.com
+                        3. Enter password: Test123!
+                        4. Click Login button
+                        Expected Result: User should be logged in
+                        Actual Result: Error message "Invalid credentials"
+                        Screenshots: [attachment]
+                        Reporter: John Doe
+                        Date: 2024-01-15
                     </div>
 
                     <div class="key-points">
@@ -690,7 +704,8 @@ Date: 2024-01-15
             </div>
 
             <div class="question-block">
-                <div class="question-header">Q20. How do you handle a situation where a developer disagrees with your bug?</div>
+                <div class="question-header">Q20. How do you handle a situation where a developer disagrees with your
+                    bug?</div>
                 <div class="question-content">
                     <div class="process-flow">
                         <div class="process-step">
@@ -725,7 +740,8 @@ Date: 2024-01-15
 
                     <div class="tip-box">
                         <h5>Remember</h5>
-                        <p>The goal is to deliver quality software, not to be "right". Stay objective and collaborative.</p>
+                        <p>The goal is to deliver quality software, not to be "right". Stay objective and collaborative.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -765,7 +781,7 @@ Date: 2024-01-15
                             <li>Understand acceptance criteria</li>
                             <li>Plan testing approach</li>
                         </ul>
-                        
+
                         <h4>During Sprint:</h4>
                         <ul>
                             <li>Write test cases early</li>
@@ -773,7 +789,7 @@ Date: 2024-01-15
                             <li>Perform continuous testing</li>
                             <li>Attend daily standups</li>
                         </ul>
-                        
+
                         <h4>Sprint Review/Retrospective:</h4>
                         <ul>
                             <li>Demo tested features</li>
@@ -793,10 +809,10 @@ Date: 2024-01-15
                     </div>
 
                     <div class="code-block">
-Example:
-As a bank customer,
-I want to check my account balance online
-So that I can monitor my finances without visiting the branch
+                        Example:
+                        As a bank customer,
+                        I want to check my account balance online
+                        So that I can monitor my finances without visiting the branch
                     </div>
 
                     <div class="key-points">
@@ -810,7 +826,8 @@ So that I can monitor my finances without visiting the branch
 
                     <div class="note-box">
                         <h5>Testing Perspective</h5>
-                        <p>User stories help testers understand the user's perspective and create more meaningful test scenarios.</p>
+                        <p>User stories help testers understand the user's perspective and create more meaningful test
+                            scenarios.</p>
                     </div>
                 </div>
             </div>
@@ -824,18 +841,19 @@ So that I can monitor my finances without visiting the branch
                     </div>
 
                     <div class="code-block">
-User Story: Account balance check
-Acceptance Criteria:
-✓ User must be logged in
-✓ Balance displays current amount
-✓ Balance updates reflect recent transactions
-✓ Error message for network issues
-✓ Response time under 3 seconds
+                        User Story: Account balance check
+                        Acceptance Criteria:
+                        ✓ User must be logged in
+                        ✓ Balance displays current amount
+                        ✓ Balance updates reflect recent transactions
+                        ✓ Error message for network issues
+                        ✓ Response time under 3 seconds
                     </div>
 
                     <div class="tip-box">
                         <h5>Testing Value</h5>
-                        <p>Acceptance criteria directly translate to test cases and help define "Definition of Done".</p>
+                        <p>Acceptance criteria directly translate to test cases and help define "Definition of Done".
+                        </p>
                     </div>
                 </div>
             </div>
@@ -910,7 +928,8 @@ Acceptance Criteria:
             </div>
 
             <div class="question-block">
-                <div class="question-header">Q26. What challenges have you faced in testing finance-related modules?</div>
+                <div class="question-header">Q26. What challenges have you faced in testing finance-related modules?
+                </div>
                 <div class="question-content">
                     <div class="key-points">
                         <h4>Common Challenges:</h4>
@@ -927,7 +946,9 @@ Acceptance Criteria:
 
                     <div class="warning-box">
                         <h5>Critical Considerations</h5>
-                        <p>Financial applications require extra attention to data accuracy, security vulnerabilities, and regulatory compliance. Any bug in production can have serious financial and legal consequences.</p>
+                        <p>Financial applications require extra attention to data accuracy, security vulnerabilities,
+                            and regulatory compliance. Any bug in production can have serious financial and legal
+                            consequences.</p>
                     </div>
                 </div>
             </div>
@@ -968,7 +989,8 @@ Acceptance Criteria:
             </div>
 
             <div class="question-block">
-                <div class="question-header">Q28. What are the most critical areas to test in a banking web application?</div>
+                <div class="question-header">Q28. What are the most critical areas to test in a banking web application?
+                </div>
                 <div class="question-content">
                     <div class="process-flow">
                         <div class="process-step">
@@ -997,7 +1019,7 @@ Acceptance Criteria:
                             <li>Account lockout after failed attempts</li>
                             <li>Multi-factor authentication</li>
                         </ul>
-                        
+
                         <h4>2. Transaction Processing</h4>
                         <ul>
                             <li>Money transfers between accounts</li>
@@ -1005,14 +1027,14 @@ Acceptance Criteria:
                             <li>Transaction limits and validations</li>
                             <li>Balance calculations and updates</li>
                         </ul>
-                        
+
                         <h4>3. Data Security</h4>
                         <ul>
                             <li>Sensitive data encryption</li>
                             <li>Secure HTTPS communication</li>
                             <li>Audit logs and transaction trails</li>
                         </ul>
-                        
+
                         <h4>4. Compliance</h4>
                         <ul>
                             <li>Regulatory reporting</li>
@@ -1065,7 +1087,8 @@ Acceptance Criteria:
 
                     <div class="tip-box">
                         <h5>Pro Tip</h5>
-                        <p>Never assume! It's better to ask questions and look thorough than to test the wrong functionality.</p>
+                        <p>Never assume! It's better to ask questions and look thorough than to test the wrong
+                            functionality.</p>
                     </div>
                 </div>
             </div>
@@ -1134,7 +1157,8 @@ Acceptance Criteria:
 
                     <div class="warning-box">
                         <h5>Production Bug Response</h5>
-                        <p>Speed and accuracy are crucial. Document everything, communicate clearly, and focus on resolution first, analysis second.</p>
+                        <p>Speed and accuracy are crucial. Document everything, communicate clearly, and focus on
+                            resolution first, analysis second.</p>
                     </div>
                 </div>
             </div>
@@ -1153,7 +1177,7 @@ Acceptance Criteria:
                             <li>Remember me functionality</li>
                             <li>Forgot password link</li>
                         </ul>
-                        
+
                         <h4>Non-Functional Testing:</h4>
                         <ul>
                             <li><strong>Security:</strong> SQL injection, XSS attempts</li>
@@ -1164,23 +1188,23 @@ Acceptance Criteria:
                     </div>
 
                     <div class="code-block">
-Test Cases Example:
+                        Test Cases Example:
 
-TC_001: Valid login
-Steps: Enter valid username/password, click login
-Expected: Redirect to dashboard
+                        TC_001: Valid login
+                        Steps: Enter valid username/password, click login
+                        Expected: Redirect to dashboard
 
-TC_002: Invalid password
-Steps: Enter valid username, invalid password, click login
-Expected: Error message "Invalid password"
+                        TC_002: Invalid password
+                        Steps: Enter valid username, invalid password, click login
+                        Expected: Error message "Invalid password"
 
-TC_003: Account lockout
-Steps: Enter wrong password 3 times
-Expected: Account locked for security
+                        TC_003: Account lockout
+                        Steps: Enter wrong password 3 times
+                        Expected: Account locked for security
 
-TC_004: SQL Injection attempt
-Steps: Enter "admin'; DROP TABLE users;--" as username
-Expected: Input sanitized, login fails safely
+                        TC_004: SQL Injection attempt
+                        Steps: Enter "admin'; DROP TABLE users;--" as username
+                        Expected: Input sanitized, login fails safely
                     </div>
                 </div>
             </div>
@@ -1216,20 +1240,30 @@ Expected: Input sanitized, login fails safely
             <p><strong>Situation:</strong> "During testing of payment module in banking app..."</p>
             <p><strong>Task:</strong> "I needed to verify transaction processing worked correctly..."</p>
             <p><strong>Action:</strong> "I created comprehensive test cases covering edge cases..."</p>
-            <p><strong>Result:</strong> "Found critical bug where concurrent transactions caused data inconsistency..."</p>
+            <p><strong>Result:</strong> "Found critical bug where concurrent transactions caused data inconsistency..."
+            </p>
         </div>
 
-        <div class="key-points" style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">
-            <h4 style="color: white; border-bottom: 2px solid white; margin-bottom: 15px;">🎓 Final Interview Preparation Checklist</h4>
+        <div class="key-points"
+            style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">
+            <h4 style="color: white; border-bottom: 2px solid white; margin-bottom: 15px;">🎓 Final Interview
+                Preparation Checklist</h4>
             <ul style="margin-left: 0; list-style: none;">
-                <li style="margin-bottom: 10px;">✅ <strong>Review testing fundamentals</strong> - STLC, test levels, types</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Practice test case writing</strong> - Clear, concise, traceable</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Understand defect lifecycle</strong> - States, severity vs priority</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Know Agile methodology</strong> - User stories, acceptance criteria</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Prepare domain examples</strong> - Banking, e-commerce, healthcare</li>
+                <li style="margin-bottom: 10px;">✅ <strong>Review testing fundamentals</strong> - STLC, test levels,
+                    types</li>
+                <li style="margin-bottom: 10px;">✅ <strong>Practice test case writing</strong> - Clear, concise,
+                    traceable</li>
+                <li style="margin-bottom: 10px;">✅ <strong>Understand defect lifecycle</strong> - States, severity vs
+                    priority</li>
+                <li style="margin-bottom: 10px;">✅ <strong>Know Agile methodology</strong> - User stories, acceptance
+                    criteria</li>
+                <li style="margin-bottom: 10px;">✅ <strong>Prepare domain examples</strong> - Banking, e-commerce,
+                    healthcare</li>
                 <li style="margin-bottom: 10px;">✅ <strong>Practice scenario-based answers</strong> - STAR method</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Review testing tools</strong> - Bug tracking, test management</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Prepare questions to ask</strong> - About their processes, tools, challenges</li>
+                <li style="margin-bottom: 10px;">✅ <strong>Review testing tools</strong> - Bug tracking, test management
+                </li>
+                <li style="margin-bottom: 10px;">✅ <strong>Prepare questions to ask</strong> - About their processes,
+                    tools, challenges</li>
             </ul>
         </div>
 
@@ -1237,7 +1271,8 @@ Expected: Input sanitized, login fails safely
             <h5>⚡ Common Interview Mistakes to Avoid</h5>
             <ul>
                 <li><strong>Not asking clarifying questions</strong> - Always seek to understand the question fully</li>
-                <li><strong>Being too technical or too basic</strong> - Match your answer to the interviewer's level</li>
+                <li><strong>Being too technical or too basic</strong> - Match your answer to the interviewer's level
+                </li>
                 <li><strong>Not providing real examples</strong> - Always back up your knowledge with experience</li>
                 <li><strong>Speaking negatively about past employers</strong> - Focus on positive learnings</li>
                 <li><strong>Not preparing questions</strong> - Show genuine interest in their testing practices</li>
@@ -1281,18 +1316,20 @@ Expected: Input sanitized, login fails safely
         </div>
 
         <!-- Footer -->
-    <footer class="footer">
-        <div id="footer-placeholder"></div>
-    </footer>
-    <script>
-        fetch("../../footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
+        <footer class="footer">
+            <div id="footer-placeholder"></div>
+        </footer>
+        <script>
+            fetch("/footer.html")
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById("footer-placeholder").innerHTML = data;
+                });
+        </script>
     </div>
     <!-- Link the JavaScript file -->
-    <script src="interview.js"></script>
+    <script src="/js/interview.js"></script>
+    <script src="/js/footer.js"></script>
 </body>
+
 </html>
