@@ -9,23 +9,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/java-basics.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="../../index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
+            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
                     height="50px" alt="TechTok Cafe"></a>
             <ul class="nav-menu">
-                <li class="nav-item"><a href="../../index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
+                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
             </ul>
         </div>
     </nav>
 
     <!-- Back Navigation -->
     <div class="back-nav">
-        <a href="../../index.html" class="back-btn">
+        <a href="/index.html" class="back-btn">
             <i class="fas fa-arrow-left"></i>
             Back to Home
         </a>
@@ -400,17 +401,18 @@ System.out.println(<span class="string">"Hello "</span> + name);</pre>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-            </div>
-        </div>
+    <!-- Footer Section -->
+        <footer class="footer">
+        <div id="footer-placeholder"></div>
     </footer>
+    <script>
+        fetch("/footer.html")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("footer-placeholder").innerHTML = data;
+            });
+    </script>
+    <script src="/js/footer.js"></script>
 
     <script>
         // Smooth scrolling for internal links

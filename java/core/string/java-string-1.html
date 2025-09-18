@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/array.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 
 <body>
@@ -321,17 +322,18 @@ System.out.println(countries2[<span class="number">0</span>] == countries2[<span
 
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-            </div>
-        </div>
+    <!-- Footer Section -->
+        <footer class="footer">
+        <div id="footer-placeholder"></div>
     </footer>
+    <script>
+        fetch("/footer.html")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("footer-placeholder").innerHTML = data;
+            });
+    </script>
+    <script src="/js/footer.js"></script>
 
     <script>
         // Smooth scrolling for internal links

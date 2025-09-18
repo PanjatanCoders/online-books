@@ -8,16 +8,15 @@
     <link rel="stylesheet" href="../../../css/java-methods.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
     <nav class="navbar">
         <div class="nav-container">
-            <a href="../../index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
+            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
                     height="50px" alt="TechTok Cafe"></a>
             <ul class="nav-menu">
-                <li class="nav-item"><a href="../../index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
-                <li class="nav-item"><a href="#" class="nav-link"><i class="fab fa-java"></i>Java Guides</a></li>
-                <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa-book"></i>All Tutorials</a></li>
+                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
             </ul>
         </div>
     </nav>
@@ -729,34 +728,18 @@
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3><i class="fas fa-coffee"></i> TechTok Cafe</h3>
-                <p>Your destination for concise, practical programming tutorials.</p>
-            </div>
-            <div class="footer-section">
-                <h4>Java Guides</h4>
-                <ul>
-                    <li><a href="/java/core/java-basics.html">Java Basics</a></li>
-                    <li><a href="/java/core/java-conditionals.html">Conditionals</a></li>
-                    <li><a href="/java/core/java-loops.html">Loops</a></li>
-                    <li><a href="/java/core/java-methods.html">Methods</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Follow Us</h4>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
-        </div>
+     <!-- Footer Section -->
+        <footer class="footer">
+        <div id="footer-placeholder"></div>
     </footer>
+    <script>
+        fetch("/footer.html")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("footer-placeholder").innerHTML = data;
+            });
+    </script>
+    <script src="/js/footer.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
