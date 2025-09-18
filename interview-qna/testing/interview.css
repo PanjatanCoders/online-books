@@ -633,3 +633,33 @@ body {
         break-inside: avoid;
     }
 }
+
+/* Navigation */
+.back-nav {
+    position: fixed;
+    top: 100px;
+    left: 2rem;
+    z-index: 100;
+}
+.back-btn {
+    background: white;
+    color: #667eea;
+    padding: 0.8rem 1.2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: var(--card-shadow);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+
+.back-btn:hover {
+    transform: translateY(-3px);
+    background: #667eea;
+    color: white;
+    box-shadow: var(--hover-shadow);
+}
