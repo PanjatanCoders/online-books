@@ -1,11 +1,3 @@
-// Progress Bar
-function updateProgressBar() {
-    const progressBar = document.getElementById('progressBar');
-    const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const progress = (window.pageYOffset / totalHeight) * 100;
-    progressBar.style.width = progress + '%';
-}
-
 // Smooth Scrolling for Navigation Links
 function initSmoothScrolling() {
     const navLinks = document.querySelectorAll('.nav-menu a, .toc a');
@@ -492,7 +484,6 @@ function initKeyboardNavigation() {
 
 // Initialize all functionality when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    updateProgressBar();
     initSmoothScrolling();
     initMobileMenu();
     initClickOutside();
@@ -507,7 +498,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Update progress bar and active navigation on scroll
     const debouncedScroll = debounce(function() {
-        updateProgressBar();
         updateActiveNavigation();
     }, 10);
     
