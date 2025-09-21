@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Generics - Type Safety, Wildcards & Bounded Parameters</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="/css/oops/generics.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css//misc/generics.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">
+                <a href="/">TechTok Cafe</a>
+            </h1>
+            <button class="mobile-toggle" id="mobileToggle" title="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#type-safety">Type Safety</a></li>
+                <li><a href="#wildcards">Wildcards</a></li>
+                <li><a href="#bounded-parameters">Bounded Parameters</a></li>
+                <li><a href="#advanced-topics">Advanced Topics</a></li>
+                <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#summary">Summary</a></li>
+                <li><a href="#interview-questions">Interview Questions</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="hero">
+            <h1>Java Generics</h1>
+            <p>Master type safety, wildcards, and bounded parameters for robust code</p>
+        </header>
+
+        <section class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#introduction">1. Introduction to Generics</a></li>
+                <li><a href="#type-safety">2. Type Safety & Benefits</a></li>
+                <li><a href="#wildcards">3. Wildcards</a></li>
+                <li><a href="#bounded-parameters">4. Bounded Parameters</a></li>
+                <li><a href="#advanced-topics">5. Advanced Topics</a></li>
+                <li><a href="#best-practices">6. Best Practices</a></li>
+                <li><a href="#summary">7. Summary</a></li>
+                <li><a href="#interview-questions">8. Interview Questions</a></li>
+            </ul>
+        </section>
+
+        <section id="introduction" class="section">
+            <h2>1. Introduction to Generics</h2>
+
+            <div class="concept-box">
+                <h3>What are Generics?</h3>
+                <p>Generics enable types (classes and interfaces) to be parameters when defining classes, interfaces, and methods. They provide stronger type checking at compile time.</p>
+            </div>
+
+            <div class="code-example">
+                <h4>Before Generics (Raw Types)</h4>
+                <pre><code>// Without generics - requires casting and runtime checks
+List list = new ArrayList();
+list.add("Hello");
+list.add(123); // Different types mixed!
+
+String str = (String) list.get(0); // Casting required
+Integer num = (Integer) list.get(1); // Runtime error possible</code></pre>
+            </div>
+
+            <div class="code-example">
+                <h4>With Generics (Type Safe)</h4>
+                <pre><code>// With generics - compile-time type safety
+List&lt;String&gt; stringList = new ArrayList&lt;&gt;();
+stringList.add("Hello");
+// stringList.add(123); // Compile-time error!
+
+String str = stringList.get(0); // No casting needed
+// Type safety guaranteed at compile time</code></pre>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>Benefits of Generics</h4>
+                    <ul>
+                        <li>Compile-time type checking</li>
+                        <li>Elimination of casts</li>
+                        <li>Generic algorithms</li>
+                        <li>Code reusability</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>Generic Syntax</h4>
+                    <ul>
+                        <li>&lt;T&gt; - Type parameter</li>
+                        <li>&lt;E&gt; - Element type</li>
+                        <li>&lt;K,V&gt; - Key, Value types</li>
+                        <li>&lt;?&gt; - Wildcard</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="type-safety" class="section">
+            <h2>2. Type Safety & Benefits</h2>
+
+            <div class="concept-box">
+                <h3>Generic Classes and Methods</h3>
+                <p>Generics provide type safety by enabling you to detect errors at compile time rather than runtime.</p>
+            </div>
+
+            <div class="code-example">
+                <h4>Generic Class Example</h4>
+                <pre><code>// Generic class with type parameter T
+public class Box&lt;T&gt; {
+    private T content;
+    
+    public void set(T content) {
+        this.content = content;
+    }
+    
+    public T get() {
+        return content;
+    }
+    
+    public boolean isEmpty() {
+        return content == null;
+    }
+}
+
+// Usage
+Box&lt;String&gt; stringBox = new Box&lt;&gt;();
+stringBox.set("Hello World");
+String value = stringBox.get(); // No casting needed
+
+Box&lt;Integer&gt; intBox = new Box&lt;&gt;();
+intBox.set(42);
+Integer number = intBox.get();</code></pre>
+            </div>
+
+            <div class="code-example">
+                <h4>Generic Methods</h4>
+                <pre><code>public class Utility {
+    // Generic method with type parameter
+    public static &lt;T&gt; void swap(T[] array, int i, int j) {
+        T temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+    
+    // Generic method with return type
+    public static &lt;T&gt; T getMiddleElement(T[] array) {
+        return array[array.length / 2];
+    }
+    
+    // Multiple type parameters
+    public static &lt;K, V&gt; void printKeyValue(K key, V value) {
+        System.out.println(key + " = " + value);
+    }
+}
+
+// Usage
+String[] names = {"Alice", "Bob", "Charlie"};
+Utility.swap(names, 0, 2); // Alice and Charlie swapped
+
+Integer[] numbers = {1, 2, 3, 4, 5};
+Integer middle = Utility.getMiddleElement(numbers); // Returns 3</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Type Erasure:</strong> Generic type information is removed at runtime for backward compatibility.
+            </div>
+        </section>
+
+        <section id="wildcards" class="section">
+            <h2>3. Wildcards</h2>
+
+            <div class="concept-box">
+                <h3>Understanding Wildcards</h3>
+                <p>Wildcards (?) represent unknown types in generic code, providing flexibility when exact types are not known.</p>
+            </div>
+
+            <div class="code-example">
+                <h4>Unbounded Wildcards</h4>
+                <pre><code>// Unbounded wildcard - accepts any type
+public static void printList(List&lt;?&gt; list) {
+    for (Object item : list) {
+        System.out.println(item);
+    }
+}
+
+// Can accept any parameterized List
+List&lt;String&gt; stringList = Arrays.asList("A", "B", "C");
+List&lt;Integer&gt; intList = Arrays.asList(1, 2, 3);
+List&lt;Double&gt; doubleList = Arrays.asList(1.1, 2.2, 3.3);
+
+printList(stringList);  // Works
+printList(intList);     // Works
+printList(doubleList);  // Works</code></pre>
+            </div>
+
+            <div class="code-example">
+                <h4>Upper Bounded Wildcards (extends)</h4>
+                <pre><code>// Upper bounded wildcard - accepts Number and its subtypes
+public static double sumNumbers(List&lt;? extends Number&gt; numbers) {
+    double sum = 0.0;
+    for (Number num : numbers) {
+        sum += num.doubleValue();
+    }
+    return sum;
+}
+
+// Usage with different Number subtypes
+List&lt;Integer&gt; integers = Arrays.asList(1, 2, 3);
+List&lt;Double&gt; doubles = Arrays.asList(1.5, 2.5, 3.5);
+List&lt;Float&gt; floats = Arrays.asList(1.0f, 2.0f, 3.0f);
+
+double sum1 = sumNumbers(integers); // Works
+double sum2 = sumNumbers(doubles);  // Works
+double sum3 = sumNumbers(floats);   // Works</code></pre>
+            </div>
+
+            <div class="code-example">
+                <h4>Lower Bounded Wildcards (super)</h4>
+                <pre><code>// Lower bounded wildcard - accepts Integer and its supertypes
+public static void addNumbers(List&lt;? super Integer&gt; list) {
+    list.add(1);
+    list.add(2);
+    list.add(3);
+}
+
+// Usage
+List&lt;Integer&gt; intList = new ArrayList&lt;&gt;();
+List&lt;Number&gt; numberList = new ArrayList&lt;&gt;();
+List&lt;Object&gt; objectList = new ArrayList&lt;&gt;();
+
+addNumbers(intList);    // Works
+addNumbers(numberList); // Works  
+addNumbers(objectList); // Works</code></pre>
+            </div>
+
+            <div class="tip-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>PECS Rule:</strong> Producer Extends, Consumer Super - Use extends for reading, super for writing.
+            </div>
+        </section>
+
+        <section id="bounded-parameters" class="section">
+            <h2>4. Bounded Parameters</h2>
+
+            <div class="concept-box">
+                <h3>Type Parameter Bounds</h3>
+                <p>Bounded type parameters restrict the types that can be used as type arguments, enabling access to methods of the bound type.</p>
+            </div>
+
+            <div class="code-example">
+                <h4>Single Bound</h4>
+                <pre><code>// Bounded type parameter - must extend Number
+public class NumberBox&lt;T extends Number&gt; {
+    private T value;
+    
+    public NumberBox(T value) {
+        this.value = value;
+    }
+    
+    // Can call Number methods because T extends Number
+    public double getDoubleValue() {
+        return value.doubleValue();
+    }
+    
+    public int getIntValue() {
+        return value.intValue();
+    }
+    
+    // Compare numeric values
+    public boolean isGreaterThan(NumberBox&lt;? extends Number&gt; other) {
+        return this.getDoubleValue() > other.getDoubleValue();
+    }
+}
+
+// Usage
+NumberBox&lt;Integer&gt; intBox = new NumberBox&lt;&gt;(42);
+NumberBox&lt;Double&gt; doubleBox = new NumberBox&lt;&gt;(3.14);
+NumberBox&lt;Float&gt; floatBox = new NumberBox&lt;&gt;(2.5f);
+
+boolean result = intBox.isGreaterThan(doubleBox);</code></pre>
+            </div>
+
+            <div class="code-example">
+                <h4>Multiple Bounds</h4>
+                <pre><code>// Interface for comparison
+interface Drawable {
+    void draw();
+}
+
+// Class with multiple bounds
+public class GraphicElement&lt;T extends Shape & Drawable & Comparable&lt;T&gt;&gt; {
+    private T element;
+    
+    public GraphicElement(T element) {
+        this.element = element;
+    }
+    
+    public void render() {
+        element.draw();        // From Drawable
+        System.out.println("Area: " + element.calculateArea()); // From Shape
+    }
+    
+    public int compare(GraphicElement&lt;T&gt; other) {
+        return element.compareTo(other.element); // From Comparable
+    }
+}
+
+// Implementation example
+class Circle extends Shape implements Drawable, Comparable&lt;Circle&gt; {
+    private double radius;
+    
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+    
+    @Override
+    public double calculateArea() {
+        return Math.PI * radius * radius;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing circle with radius: " + radius);
+    }
+    
+    @Override
+    public int compareTo(Circle other) {
+        return Double.compare(this.radius, other.radius);
+    }
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Order Matters:</strong> Class must come first, then interfaces: &lt;T extends Class & Interface1 & Interface2&gt;
+            </div>
+        </section>
+
+        <section id="advanced-topics" class="section">
+            <h2>5. Advanced Topics</h2>
+
+            <div class="concept-box">
+                <h3>Advanced Generic Concepts</h3>
+                <p>Explore complex scenarios including generic inheritance, recursive bounds, and type token patterns.</p>
+            </div>
+
+            <div class="code-example">
+                <h4>Recursive Type Bounds</h4>
+                <pre><code>// Recursive bound - T must be comparable to itself
+public class SortedList&lt;T extends Comparable&lt;T&gt;&gt; {
+    private List&lt;T&gt; items = new ArrayList&lt;&gt;();
+    
+    public void add(T item) {
+        items.add(item);
+        Collections.sort(items); // Safe because T implements Comparable&lt;T&gt;
+    }
+    
+    public T get(int index) {
+        return items.get(index);
+    }
+    
+    public List&lt;T&gt; getItems() {
+        return new ArrayList&lt;&gt;(items);
+    }
+}
+
+// Usage
+SortedList&lt;String&gt; stringList = new SortedList&lt;&gt;();
+stringList.add("Charlie");
+stringList.add("Alice");
+stringList.add("Bob");
+// Items are automatically sorted: Alice, Bob, Charlie</code></pre>
+            </div>
+
+            <div class="code-example">
+                <h4>Generic Builder Pattern</h4>
+                <pre><code>// Generic builder with fluent interface
+public class ApiResponse&lt;T&gt; {
+    private final T data;
+    private final String message;
+    private final int statusCode;
+    
+    private ApiResponse(Builder&lt;T&gt; builder) {
+        this.data = builder.data;
+        this.message = builder.message;
+        this.statusCode = builder.statusCode;
+    }
+    
+    public static &lt;T&gt; Builder&lt;T&gt; builder() {
+        return new Builder&lt;&gt;();
+    }
+    
+    public static class Builder&lt;T&gt; {
+        private T data;
+        private String message = "Success";
+        private int statusCode = 200;
+        
+        public Builder&lt;T&gt; data(T data) {
+            this.data = data;
+            return this;
+        }
+        
+        public Builder&lt;T&gt; message(String message) {
+            this.message = message;
+            return this;
+        }
+        
+        public Builder&lt;T&gt; statusCode(int statusCode) {
+            this.statusCode = statusCode;
+            return this;
+        }
+        
+        public ApiResponse&lt;T&gt; build() {
+            return new ApiResponse&lt;&gt;(this);
+        }
+    }
+}
+
+// Usage
+ApiResponse&lt;List&lt;User&gt;&gt; userResponse = ApiResponse.&lt;List&lt;User&gt;&gt;builder()
+    .data(userList)
+    .message("Users retrieved successfully")
+    .statusCode(200)
+    .build();</code></pre>
+            </div>
+
+            <div class="code-example">
+                <h4>Type Token Pattern</h4>
+                <pre><code>// Type token for preserving generic type information
+public class GenericDAO&lt;T&gt; {
+    private final Class&lt;T&gt; entityClass;
+    
+    public GenericDAO(Class&lt;T&gt; entityClass) {
+        this.entityClass = entityClass;
+    }
+    
+    public T findById(Long id) {
+        // Database query logic using entityClass
+        return createInstance();
+    }
+    
+    public List&lt;T&gt; findAll() {
+        // Return list of entities
+        return new ArrayList&lt;&gt;();
+    }
+    
+    private T createInstance() {
+        try {
+            return entityClass.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot create instance", e);
+        }
+    }
+}
+
+// Usage
+GenericDAO&lt;User&gt; userDAO = new GenericDAO&lt;&gt;(User.class);
+User user = userDAO.findById(1L);</code></pre>
+            </div>
+        </section>
+
+        <section id="best-practices" class="section">
+            <h2>6. Best Practices</h2>
+
+            <div class="best-practices-grid">
+                <div class="practice-card">
+                    <h4>Naming Conventions</h4>
+                    <ul>
+                        <li>Use single uppercase letters</li>
+                        <li>T for Type, E for Element</li>
+                        <li>K for Key, V for Value</li>
+                        <li>Meaningful names for complex bounds</li>
+                    </ul>
+                </div>
+                <div class="practice-card">
+                    <h4>Design Guidelines</h4>
+                    <ul>
+                        <li>Favor generics over raw types</li>
+                        <li>Use bounded wildcards for flexibility</li>
+                        <li>Apply PECS principle correctly</li>
+                        <li>Avoid complex nested generics</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="code-example">
+                <h4>Good Practices Example</h4>
+                <pre><code>// Good: Clear generic interface
+public interface Repository&lt;T, ID&gt; {
+    Optional&lt;T&gt; findById(ID id);
+    List&lt;T&gt; findAll();
+    T save(T entity);
+    void deleteById(ID id);
+    
+    // Using bounded wildcards for flexibility
+    List&lt;T&gt; findByExample(T example);
+    void saveAll(Collection&lt;? extends T&gt; entities);
+}
+
+// Good: Proper use of bounds
+public class NumberProcessor&lt;T extends Number & Comparable&lt;T&gt;&gt; {
+    public T max(Collection&lt;? extends T&gt; numbers) {
+        return numbers.stream()
+            .max(T::compareTo)
+            .orElse(null);
+    }
+}
+
+// Avoid: Raw types
+List rawList = new ArrayList(); // Don't do this
+
+// Prefer: Parameterized types
+List&lt;String&gt; stringList = new ArrayList&lt;&gt;(); // Better</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Avoid:</strong> Using raw types, suppressing unchecked warnings unnecessarily, or creating arrays of parameterized types.
+            </div>
+        </section>
+
+        <section id="summary" class="section">
+            <h2>7. Summary - What We've Learned</h2>
+
+            <div class="summary-box">
+                <h3>Key Takeaways</h3>
+                <p>We've mastered Java Generics, from basic type safety to advanced patterns like wildcards and bounded parameters.</p>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h4><i class="fas fa-shield-alt"></i> Type Safety</h4>
+                    <ul>
+                        <li>Compile-time error detection</li>
+                        <li>Elimination of casting</li>
+                        <li>Generic classes and methods</li>
+                        <li>Type parameter constraints</li>
+                        <li>Runtime type erasure</li>
+                    </ul>
+                </div>
+                <div class="summary-card">
+                    <h4><i class="fas fa-question"></i> Wildcards</h4>
+                    <ul>
+                        <li>Unbounded wildcards (?)</li>
+                        <li>Upper bounds (? extends T)</li>
+                        <li>Lower bounds (? super T)</li>
+                        <li>PECS principle application</li>
+                        <li>Flexible API design</li>
+                    </ul>
+                </div>
+                <div class="summary-card">
+                    <h4><i class="fas fa-link"></i> Bounded Parameters</h4>
+                    <ul>
+                        <li>Single and multiple bounds</li>
+                        <li>Method access on bounded types</li>
+                        <li>Recursive type bounds</li>
+                        <li>Interface and class constraints</li>
+                        <li>Enhanced type safety</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="key-concepts">
+                <h4>Core Concepts Mastered:</h4>
+                <div class="concepts-list">
+                    <span class="concept-tag">Type Safety</span>
+                    <span class="concept-tag">Wildcards</span>
+                    <span class="concept-tag">Bounded Parameters</span>
+                    <span class="concept-tag">Type Erasure</span>
+                    <span class="concept-tag">PECS Principle</span>
+                    <span class="concept-tag">Generic Methods</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="interview-questions" class="section">
+            <h2>8. Common Interview Questions</h2>
+
+            <div class="interview-intro">
+                <p>Test your Java Generics knowledge with these frequently asked interview questions.</p>
+            </div>
+
+            <div class="questions-container">
+                <div class="question-card">
+                    <h4><i class="fas fa-question-circle"></i> Conceptual Questions</h4>
+                    <div class="question-list">
+                        <div class="question-item">
+                            <strong>Q1:</strong> What are Generics in Java and why were they introduced?
+                            <div class="answer-hint">Hint: Think about type safety and compile-time checking</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q2:</strong> Explain type erasure in Java Generics.
+                            <div class="answer-hint">Hint: Backward compatibility and runtime behavior</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q3:</strong> What is the difference between ? extends T and ? super T?
+                            <div class="answer-hint">Hint: Producer Extends, Consumer Super (PECS)</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q4:</strong> Can you create an array of generic types? Why or why not?
+                            <div class="answer-hint">Hint: Type erasure and array covariance issues</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <h4><i class="fas fa-code"></i> Coding Questions</h4>
+                    <div class="question-list">
+                        <div class="question-item">
+                            <strong>Q5:</strong> Write a generic method to swap two elements in an array.
+                            <div class="answer-hint">Hint: Use type parameter &lt;T&gt; and array indexing</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q6:</strong> Create a generic class Pair&lt;T, U&gt; to hold two values of different types.
+                            <div class="answer-hint">Hint: Include getters, setters, and useful methods</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q7:</strong> Implement a method that finds the maximum element in a list using bounded parameters.
+                            <div class="answer-hint">Hint: Use &lt;T extends Comparable&lt;T&gt;&gt;</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <h4><i class="fas fa-brain"></i> Advanced Questions</h4>
+                    <div class="question-list">
+                        <div class="question-item">
+                            <strong>Q8:</strong> What happens when you have conflicting bounds in generics?
+                            <div class="answer-hint">Hint: Consider class and interface hierarchy</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q9:</strong> Explain recursive type bounds with an example.
+                            <div class="answer-hint">Hint: Enum pattern or Comparable implementations</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q10:</strong> How do you handle generic types with reflection?
+                            <div class="answer-hint">Hint: Type tokens and ParameterizedType</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q11:</strong> What are the limitations of Java Generics compared to C# generics?
+                            <div class="answer-hint">Hint: Type erasure vs reified generics</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interview-tips">
+                <h4><i class="fas fa-star"></i> Interview Tips</h4>
+                <div class="tips-grid">
+                    <div class="tip-item">
+                        <strong>Understand PECS:</strong> Know when to use extends vs super
+                    </div>
+                    <div class="tip-item">
+                        <strong>Explain Benefits:</strong> Type safety, no casting, compile-time checks
+                    </div>
+                    <div class="tip-item">
+                        <strong>Code Examples:</strong> Be ready to write generic methods
+                    </div>
+                    <div class="tip-item">
+                        <strong>Know Limitations:</strong> Type erasure, array restrictions
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div id="footer-placeholder"></div>
+    </footer>
+    <script>
+        fetch("/footer.html")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("footer-placeholder").innerHTML = data;
+            });
+    </script>
+
+    <script src="/js/generics.js"></script>
+    <script src="/js/reading-progress.js"></script>
+</body>
+
+</html>
