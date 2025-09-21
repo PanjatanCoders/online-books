@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Abstract Classes & Interfaces</title>
+    <link rel="stylesheet" href="/css/oops/abstract.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1 class="logo">
+                <a href="/">TechTok Cafe</a>
+            </h1>
+            <button class="mobile-toggle" id="mobileToggle" title="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#abstract-classes">Abstract Classes</a></li>
+                <li><a href="#interfaces">Interfaces</a></li>
+                <li><a href="#comparison">Comparison</a></li>
+                <li><a href="#best-practices">Best Practices</a></li>
+                <li><a href="#summary">Summary</a></li>
+                <li><a href="#interview-questions">Interview Questions</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="hero">
+            <h1>Java Abstract Classes & Interfaces</h1>
+            <p>Master abstraction and polymorphism with practical examples</p>
+        </header>
+
+        <section class="toc">
+            <h3>Table of Contents</h3>
+            <ul>
+                <li><a href="#introduction">1. Introduction to Abstraction</a></li>
+                <li><a href="#abstract-classes">2. Abstract Classes</a></li>
+                <li><a href="#interfaces">3. Interfaces</a></li>
+                <li><a href="#comparison">4. Abstract Classes vs Interfaces</a></li>
+                <li><a href="#best-practices">5. Best Practices</a></li>
+                <li><a href="#summary">6. Summary</a></li>
+                <li><a href="#interview-questions">7. Interview Questions</a></li>
+            </ul>
+        </section>
+
+        <section id="introduction" class="section">
+            <h2>1. Introduction to Abstraction</h2>
+
+            <div class="concept-box">
+                <h3>What is Abstraction?</h3>
+                <p>Abstraction hides implementation details while exposing only essential features.</p>
+            </div>
+
+            <div class="code-example">
+                <h4>Basic Example</h4>
+                <pre><code>// Abstract class
+public abstract class Animal {
+    protected String name;
+    
+    public Animal(String name) {
+        this.name = name;
+    }
+    
+    // Concrete method
+    public void sleep() {
+        System.out.println(name + " is sleeping");
+    }
+    
+    // Abstract method
+    public abstract void makeSound();
+}
+
+class Dog extends Animal {
+    public Dog(String name) {
+        super(name);
+    }
+    
+    @Override
+    public void makeSound() {
+        System.out.println(name + " barks!");
+    }
+}</code></pre>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>Benefits</h4>
+                    <ul>
+                        <li>Reduces complexity</li>
+                        <li>Increases code reusability</li>
+                        <li>Supports polymorphism</li>
+                        <li>Enhances maintainability</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h4>Types of Abstraction</h4>
+                    <ul>
+                        <li>Abstract Classes (0-100%)</li>
+                        <li>Interfaces (100%)</li>
+                        <li>Concrete Classes (0%)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="abstract-classes" class="section">
+            <h2>2. Abstract Classes</h2>
+
+            <div class="concept-box">
+                <h3>Key Characteristics</h3>
+                <ul>
+                    <li>Cannot be instantiated directly</li>
+                    <li>Can contain both abstract and concrete methods</li>
+                    <li>Can have constructors and instance variables</li>
+                    <li>Subclasses must implement abstract methods</li>
+                </ul>
+            </div>
+
+            <div class="code-example">
+                <h4>Shape Example</h4>
+                <pre><code>public abstract class Shape {
+    protected String color;
+    
+    public Shape(String color) {
+        this.color = color;
+    }
+    
+    // Concrete method
+    public String getColor() {
+        return color;
+    }
+    
+    // Abstract methods
+    public abstract double calculateArea();
+    public abstract void draw();
+}
+
+class Circle extends Shape {
+    private double radius;
+    
+    public Circle(String color, double radius) {
+        super(color);
+        this.radius = radius;
+    }
+    
+    @Override
+    public double calculateArea() {
+        return Math.PI * radius * radius;
+    }
+    
+    @Override
+    public void draw() {
+        System.out.println("Drawing " + color + " circle");
+    }
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Remember:</strong> Abstract methods cannot be private, static, or final.
+            </div>
+        </section>
+
+        <section id="interfaces" class="section">
+            <h2>3. Interfaces</h2>
+
+            <div class="concept-box">
+                <h3>Interface Characteristics</h3>
+                <ul>
+                    <li>All methods are public and abstract by default</li>
+                    <li>All variables are public, static, and final</li>
+                    <li>Can have default and static methods (Java 8+)</li>
+                    <li>Supports multiple inheritance</li>
+                </ul>
+            </div>
+
+            <div class="code-example">
+                <h4>Payment Interface Example</h4>
+                <pre><code>public interface PaymentProcessor {
+    // Constants
+    double MIN_AMOUNT = 0.01;
+    
+    // Abstract methods
+    boolean processPayment(double amount);
+    boolean refund(String transactionId);
+    
+    // Default method (Java 8+)
+    default boolean validateAmount(double amount) {
+        return amount >= MIN_AMOUNT;
+    }
+    
+    // Static method (Java 8+)
+    static String formatCurrency(double amount) {
+        return String.format("$%.2f", amount);
+    }
+}
+
+class CreditCardProcessor implements PaymentProcessor {
+    @Override
+    public boolean processPayment(double amount) {
+        if (!validateAmount(amount)) {
+            return false;
+        }
+        System.out.println("Processing credit card payment: " + 
+                         PaymentProcessor.formatCurrency(amount));
+        return true;
+    }
+    
+    @Override
+    public boolean refund(String transactionId) {
+        System.out.println("Refunding: " + transactionId);
+        return true;
+    }
+}</code></pre>
+            </div>
+
+            <div class="tip-box">
+                <i class="fas fa-lightbulb"></i>
+                <strong>Tip:</strong> Use interfaces for contracts and capabilities (CAN-DO relationships).
+            </div>
+        </section>
+
+        <section id="comparison" class="section">
+            <h2>4. Abstract Classes vs Interfaces</h2>
+
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Abstract Class</th>
+                            <th>Interface</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Keyword</td>
+                            <td>abstract class</td>
+                            <td>interface</td>
+                        </tr>
+                        <tr>
+                            <td>Methods</td>
+                            <td>Abstract + Concrete</td>
+                            <td>Abstract + Default/Static</td>
+                        </tr>
+                        <tr>
+                            <td>Variables</td>
+                            <td>Instance variables</td>
+                            <td>Constants only</td>
+                        </tr>
+                        <tr>
+                            <td>Constructor</td>
+                            <td>Yes</td>
+                            <td>No</td>
+                        </tr>
+                        <tr>
+                            <td>Inheritance</td>
+                            <td>Single (extends)</td>
+                            <td>Multiple (implements)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="decision-guide">
+                <div class="guide-card">
+                    <h4>Use Abstract Classes When:</h4>
+                    <ul>
+                        <li>Sharing common code</li>
+                        <li>IS-A relationship</li>
+                        <li>Need constructors</li>
+                        <li>Protected/private members</li>
+                    </ul>
+                </div>
+                <div class="guide-card">
+                    <h4>Use Interfaces When:</h4>
+                    <ul>
+                        <li>Defining contracts</li>
+                        <li>CAN-DO relationship</li>
+                        <li>Multiple inheritance needed</li>
+                        <li>Maximum flexibility</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="best-practices" class="section">
+            <h2>5. Best Practices</h2>
+
+            <div class="best-practices-grid">
+                <div class="practice-card">
+                    <h4>Interface Design</h4>
+                    <ul>
+                        <li>Keep interfaces small and focused</li>
+                        <li>Use meaningful names</li>
+                        <li>Provide default implementations when helpful</li>
+                        <li>Document contracts clearly</li>
+                    </ul>
+                </div>
+                <div class="practice-card">
+                    <h4>Abstract Classes</h4>
+                    <ul>
+                        <li>Use for template method pattern</li>
+                        <li>Provide common implementation</li>
+                        <li>Use protected for subclass access</li>
+                        <li>Consider final methods for invariants</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="code-example">
+                <h4>Good Practice Example</h4>
+                <pre><code>// Good: Segregated interfaces
+interface Worker {
+    void work();
+}
+
+interface Programmer extends Worker {
+    void code();
+    
+    default void debug() {
+        System.out.println("Debugging...");
+    }
+}
+
+interface Designer extends Worker {
+    void design();
+}
+
+// Implementation can choose specific capabilities
+class FullStackDeveloper implements Programmer, Designer {
+    @Override
+    public void work() {
+        code();
+        design();
+    }
+    
+    @Override
+    public void code() {
+        System.out.println("Writing code");
+    }
+    
+    @Override
+    public void design() {
+        System.out.println("Creating designs");
+    }
+}</code></pre>
+            </div>
+
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Avoid:</strong> Fat interfaces with too many methods (violates Interface Segregation Principle).
+            </div>
+        </section>
+        <section id="summary" class="section">
+            <h2>6. Summary - What We've Learned</h2>
+
+            <div class="summary-box">
+                <h3>Key Takeaways</h3>
+                <p>Throughout this guide, we've explored the fundamental concepts of abstraction in Java through
+                    abstract classes and interfaces.</p>
+            </div>
+
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <h4><i class="fas fa-cube"></i> Abstract Classes</h4>
+                    <ul>
+                        <li>Provide partial abstraction (0-100%)</li>
+                        <li>Can contain both abstract and concrete methods</li>
+                        <li>Support constructors and instance variables</li>
+                        <li>Enable IS-A relationships with shared code</li>
+                        <li>Perfect for template method pattern</li>
+                    </ul>
+                </div>
+                <div class="summary-card">
+                    <h4><i class="fas fa-sitemap"></i> Interfaces</h4>
+                    <ul>
+                        <li>Provide complete abstraction (100%)</li>
+                        <li>Support multiple inheritance</li>
+                        <li>Define contracts and capabilities</li>
+                        <li>Enable CAN-DO relationships</li>
+                        <li>Support default and static methods (Java 8+)</li>
+                    </ul>
+                </div>
+                <div class="summary-card">
+                    <h4><i class="fas fa-lightbulb"></i> Design Principles</h4>
+                    <ul>
+                        <li>Follow SOLID principles</li>
+                        <li>Keep interfaces small and focused</li>
+                        <li>Use meaningful names and documentation</li>
+                        <li>Choose based on relationship type</li>
+                        <li>Prioritize composition over inheritance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="key-concepts">
+                <h4>Core Concepts Mastered:</h4>
+                <div class="concepts-list">
+                    <span class="concept-tag">Abstraction</span>
+                    <span class="concept-tag">Polymorphism</span>
+                    <span class="concept-tag">Inheritance</span>
+                    <span class="concept-tag">Interface Segregation</span>
+                    <span class="concept-tag">Template Method</span>
+                    <span class="concept-tag">Multiple Inheritance</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="interview-questions" class="section">
+            <h2>7. Common Interview Questions</h2>
+
+            <div class="interview-intro">
+                <p>Test your understanding with these frequently asked interview questions about abstract classes and
+                    interfaces.</p>
+            </div>
+
+            <div class="questions-container">
+                <div class="question-card">
+                    <h4><i class="fas fa-question-circle"></i> Conceptual Questions</h4>
+                    <div class="question-list">
+                        <div class="question-item">
+                            <strong>Q1:</strong> What is the difference between abstract class and interface?
+                            <div class="answer-hint">Hint: Think about inheritance, method types, and variables</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q2:</strong> Can we instantiate an abstract class? Why or why not?
+                            <div class="answer-hint">Hint: Consider the purpose of abstraction</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q3:</strong> What are default methods in interfaces? When were they introduced?
+                            <div class="answer-hint">Hint: Java 8 feature for interface evolution</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q4:</strong> Can an interface extend another interface? Can it extend multiple
+                            interfaces?
+                            <div class="answer-hint">Hint: Interface inheritance vs class inheritance</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <h4><i class="fas fa-code"></i> Coding Questions</h4>
+                    <div class="question-list">
+                        <div class="question-item">
+                            <strong>Q5:</strong> Write an abstract class Vehicle with concrete and abstract methods.
+                            Create two subclasses Car and Bike.
+                            <div class="answer-hint">Hint: Include common properties and vehicle-specific behaviors
+                            </div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q6:</strong> Create an interface Drawable with a draw() method. Implement it in
+                            Circle and Rectangle classes.
+                            <div class="answer-hint">Hint: Use method overriding in implementations</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q7:</strong> Demonstrate multiple interface implementation with a class that
+                            implements both Flyable and Swimmable interfaces.
+                            <div class="answer-hint">Hint: Think of animals that can do both</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <h4><i class="fas fa-brain"></i> Advanced Questions</h4>
+                    <div class="question-list">
+                        <div class="question-item">
+                            <strong>Q8:</strong> What happens if a class implements two interfaces with the same default
+                            method signature?
+                            <div class="answer-hint">Hint: Diamond problem resolution</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q9:</strong> Can we have private methods in interfaces? Which Java version
+                            introduced this?
+                            <div class="answer-hint">Hint: Java 9 feature for code reuse in default methods</div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q10:</strong> Explain the Template Method pattern using abstract classes.
+                            <div class="answer-hint">Hint: Define algorithm structure, let subclasses implement steps
+                            </div>
+                        </div>
+                        <div class="question-item">
+                            <strong>Q11:</strong> When would you choose composition over inheritance while working with
+                            abstractions?
+                            <div class="answer-hint">Hint: Favor composition for flexibility and loose coupling</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interview-tips">
+                <h4><i class="fas fa-star"></i> Interview Tips</h4>
+                <div class="tips-grid">
+                    <div class="tip-item">
+                        <strong>Be Clear:</strong> Explain concepts with real-world examples
+                    </div>
+                    <div class="tip-item">
+                        <strong>Show Code:</strong> Be ready to write code snippets
+                    </div>
+                    <div class="tip-item">
+                        <strong>Discuss Trade-offs:</strong> Mention pros and cons of each approach
+                    </div>
+                    <div class="tip-item">
+                        <strong>Think SOLID:</strong> Reference design principles when relevant
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div id="footer-placeholder"></div>
+    </footer>
+    <script>
+        fetch("/footer.html")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("footer-placeholder").innerHTML = data;
+            });
+    </script>
+
+    <script src="abstract.js"></script>
+</body>
+
+</html>
