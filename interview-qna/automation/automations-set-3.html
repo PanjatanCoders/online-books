@@ -1,0 +1,1513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java, Selenium & Framework Interview Guide | 5-10 Years Experience</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/interview/interview-style-2.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="/index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-code"></i> Java, Selenium & Framework Guide</h1>
+                <p class="subtitle">Comprehensive Interview Questions for Experienced Professionals</p>
+                <p class="author">By Mohammad S Hossain</p>
+                <div class="experience-badge">
+                    <i class="fas fa-medal"></i> 5-10 Years Experience
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-question-circle"></i></div>
+                <div class="stat-number">30</div>
+                <div class="stat-label">Interview Questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-code"></i></div>
+                <div class="stat-number">40+</div>
+                <div class="stat-label">Code Snippets</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-lightbulb"></i></div>
+                <div class="stat-number">60+</div>
+                <div class="stat-label">Pro Tips</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <div class="stat-number">4-5</div>
+                <div class="stat-label">Hours Study Time</div>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <input type="text" class="search-box" id="searchBox"
+                placeholder="🔍 Search questions... (e.g., 'HashMap', 'WebDriver', 'TestNG')">
+        </div>
+
+        <!-- Questions Section -->
+        <div class="questions-section">
+            
+            <!-- JAVA-ORIENTED SECTION -->
+            <h2 class="section-title">Java-Oriented Questions</h2>
+
+            <!-- Question 1 -->
+            <div class="question-card" data-keywords="java equals double equals comparison operator">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">1</div>
+                        <div class="question-text">Difference between == and .equals() in Java. Give examples.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-balance-scale"></i> Key Differences</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li><strong>== operator:</strong> Compares reference (memory address) for objects, values for primitives</li>
+                                    <li><strong>.equals() method:</strong> Compares content/value of objects</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Examples</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Primitives - == compares values
+int a = 10, b = 10;
+System.out.println(a == b); // true
+
+// Strings
+String s1 = "Hello";
+String s2 = "Hello";
+String s3 = new String("Hello");
+
+System.out.println(s1 == s2);        // true (same reference in String pool)
+System.out.println(s1 == s3);        // false (different objects)
+System.out.println(s1.equals(s3));   // true (same content)</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Best Practice:</strong> Always use .equals() for object comparison. Override equals() in custom classes for proper comparison.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-keywords="hashmap hashtable concurrenthashmap collections">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">2</div>
+                        <div class="question-text">Explain HashMap vs Hashtable vs ConcurrentHashMap.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-table"></i> Comparison</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Comparison Table</span>
+                                </div>
+                                <pre><code>Feature              | HashMap         | Hashtable       | ConcurrentHashMap
+─────────────────────┼─────────────────┼─────────────────┼──────────────────
+Thread Safety        | No              | Yes             | Yes
+Null Keys/Values     | Allowed         | Not allowed     | Not allowed
+Performance          | Fast            | Slow            | Fast
+Synchronization      | Not synchronized| Synchronized    | Segment locking
+Legacy               | No              | Yes             | No</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Usage Examples</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// HashMap - Not thread-safe
+Map<String, Integer> hashMap = new HashMap<>();
+hashMap.put("A", 1);
+hashMap.put(null, 2); // Allows null
+
+// Hashtable - Thread-safe but slow
+Map<String, Integer> hashtable = new Hashtable<>();
+hashtable.put("A", 1);
+// hashtable.put(null, 2); // Throws NullPointerException
+
+// ConcurrentHashMap - Thread-safe and fast
+Map<String, Integer> concurrentMap = new ConcurrentHashMap<>();
+concurrentMap.put("A", 1);
+// concurrentMap.put(null, 2); // Throws NullPointerException</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>When to Use:</strong> HashMap for single-threaded, ConcurrentHashMap for multi-threaded applications. Avoid Hashtable (legacy).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-keywords="arraylist linkedlist list collection">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">3</div>
+                        <div class="question-text">What is the difference between ArrayList and LinkedList? When would you use which?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-list"></i> Key Differences</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li><strong>ArrayList:</strong> Dynamic array, fast random access O(1), slow insertion/deletion O(n)</li>
+                                    <li><strong>LinkedList:</strong> Doubly-linked list, slow random access O(n), fast insertion/deletion O(1)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Usage</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// ArrayList - Use for frequent access
+List<String> arrayList = new ArrayList<>();
+arrayList.add("A");
+String element = arrayList.get(0); // O(1)
+
+// LinkedList - Use for frequent add/remove
+List<String> linkedList = new LinkedList<>();
+linkedList.add(0, "A"); // O(1) at beginning
+linkedList.remove(0);   // O(1) at beginning</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <strong>Use ArrayList:</strong> When you need frequent access by index. Use LinkedList: When you need frequent insertions/deletions at beginning/middle.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-keywords="final finally finalize java keywords">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">4</div>
+                        <div class="question-text">Explain final, finally, and finalize() with examples.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-info-circle"></i> Definitions</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li><strong>final:</strong> Keyword to make variables constant, methods non-overridable, classes non-inheritable</li>
+                                    <li><strong>finally:</strong> Block that always executes after try-catch (used for cleanup)</li>
+                                    <li><strong>finalize():</strong> Method called by garbage collector before object destruction (deprecated)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Examples</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// final keyword
+final int MAX_VALUE = 100;
+// MAX_VALUE = 200; // Compilation error
+
+final class FinalClass { } // Cannot be extended
+
+// finally block
+try {
+    // risky code
+} catch (Exception e) {
+    // handle exception
+} finally {
+    // Always executes - cleanup code
+    System.out.println("Cleanup");
+}
+
+// finalize() - deprecated
+@Override
+protected void finalize() throws Throwable {
+    // Called before GC (don't rely on this)
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-keywords="palindrome string java program">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">5</div>
+                        <div class="question-text">Write a Java program to check if a string is a palindrome.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Implementation</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>public class PalindromeChecker {
+    
+    // Method 1: Using two pointers
+    public static boolean isPalindrome(String str) {
+        str = str.toLowerCase().replaceAll("[^a-z0-9]", "");
+        int left = 0, right = str.length() - 1;
+        
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+    
+    // Method 2: Using StringBuilder
+    public static boolean isPalindromeReverse(String str) {
+        String cleaned = str.toLowerCase().replaceAll("[^a-z0-9]", "");
+        String reversed = new StringBuilder(cleaned).reverse().toString();
+        return cleaned.equals(reversed);
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <strong>Complexity:</strong> O(n) time, O(1) space for method 1. Method 2 uses O(n) extra space.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-keywords="string pool java memory intern">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">6</div>
+                        <div class="question-text">Explain the concept of String Pool in Java.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-database"></i> String Pool Concept</h4>
+                            <p>String Pool is a special memory region in heap where Java stores string literals to optimize memory by reusing immutable strings.</p>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// String literals go to pool
+String s1 = "Hello";
+String s2 = "Hello";
+System.out.println(s1 == s2); // true (same reference)
+
+// new String() creates object in heap
+String s3 = new String("Hello");
+System.out.println(s1 == s3); // false (different reference)
+
+// intern() moves to pool
+String s4 = s3.intern();
+System.out.println(s1 == s4); // true (same reference)</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Key Point:</strong> String pool saves memory by reusing string literals. Use intern() to move strings to pool.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-keywords="checked unchecked exceptions java error">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">7</div>
+                        <div class="question-text">What are checked and unchecked exceptions? Give examples.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Exception Types</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li><strong>Checked Exceptions:</strong> Compile-time exceptions, must be handled or declared (IOException, SQLException)</li>
+                                    <li><strong>Unchecked Exceptions:</strong> Runtime exceptions, optional to handle (NullPointerException, ArrayIndexOutOfBoundsException)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Examples</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Checked Exception - Must handle
+public void readFile() throws IOException {
+    FileReader file = new FileReader("test.txt");
+}
+
+// Or use try-catch
+try {
+    FileReader file = new FileReader("test.txt");
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
+// Unchecked Exception - Optional to handle
+int[] arr = {1, 2, 3};
+System.out.println(arr[5]); // ArrayIndexOutOfBoundsException
+
+String str = null;
+System.out.println(str.length()); // NullPointerException</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-keywords="static keyword java variable method">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">8</div>
+                        <div class="question-text">Explain static keyword with different use cases.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-info-circle"></i> Static Keyword Uses</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>public class StaticExample {
+    
+    // 1. Static variable - shared across all instances
+    static int count = 0;
+    
+    // 2. Static method - can be called without object
+    public static void displayCount() {
+        System.out.println("Count: " + count);
+    }
+    
+    // 3. Static block - executes once when class loads
+    static {
+        System.out.println("Static block executed");
+        count = 10;
+    }
+    
+    // 4. Static nested class
+    static class NestedClass {
+        void display() {
+            System.out.println("Static nested class");
+        }
+    }
+}
+
+// Usage
+StaticExample.displayCount(); // No object needed
+StaticExample.count = 5;</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Key Point:</strong> Static members belong to class, not instances. Useful for utility methods, constants, and counters.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-keywords="throw throws exception java">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">9</div>
+                        <div class="question-text">Difference between throw and throws.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-balance-scale"></i> Key Differences</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li><strong>throw:</strong> Used to explicitly throw an exception from code</li>
+                                    <li><strong>throws:</strong> Used in method signature to declare exceptions method might throw</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Examples</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// throw - explicitly throw exception
+public void validateAge(int age) {
+    if (age < 18) {
+        throw new IllegalArgumentException("Age must be 18+");
+    }
+}
+
+// throws - declare exception in signature
+public void readFile(String path) throws IOException {
+    FileReader file = new FileReader(path);
+}
+
+// Can declare multiple exceptions
+public void process() throws IOException, SQLException {
+    // method body
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-keywords="remove duplicates array java">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">10</div>
+                        <div class="question-text">Write a Java program to remove duplicates from an array.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Implementation</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Method 1: Using HashSet
+public static int[] removeDuplicates(int[] arr) {
+    Set<Integer> set = new LinkedHashSet<>();
+    for (int num : arr) {
+        set.add(num);
+    }
+    return set.stream().mapToInt(Integer::intValue).toArray();
+}
+
+// Method 2: Using Stream API
+public static int[] removeDuplicatesStream(int[] arr) {
+    return Arrays.stream(arr).distinct().toArray();
+}
+
+// Usage
+int[] arr = {1, 2, 2, 3, 4, 4, 5};
+int[] result = removeDuplicates(arr);
+// Output: {1, 2, 3, 4, 5}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SELENIUM-ORIENTED SECTION -->
+            <h2 class="section-title">Selenium-Oriented Questions</h2>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-keywords="findelement findelements selenium webdriver">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">11</div>
+                        <div class="question-text">Difference between findElement() and findElements().</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-balance-scale"></i> Key Differences</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li><strong>findElement():</strong> Returns single WebElement, throws NoSuchElementException if not found</li>
+                                    <li><strong>findElements():</strong> Returns List&lt;WebElement&gt;, returns empty list if none found</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Examples</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// findElement() - Returns single element
+WebElement element = driver.findElement(By.id("username"));
+element.sendKeys("test");
+
+// findElements() - Returns list
+List<WebElement> elements = driver.findElements(By.className("menu-item"));
+System.out.println("Total elements: " + elements.size());
+
+// Check if element exists
+if (driver.findElements(By.id("optional")).size() > 0) {
+    // Element exists
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-keywords="dynamic web elements selenium waits">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">12</div>
+                        <div class="question-text">How do you handle dynamic web elements in Selenium?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-sync-alt"></i> Strategies</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li>Use Explicit Waits with Expected Conditions</li>
+                                    <li>Use dynamic XPath/CSS with contains(), starts-with()</li>
+                                    <li>Use relative locators</li>
+                                    <li>Handle stale element exceptions with retry logic</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Implementation</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Wait for element to be clickable
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+WebElement element = wait.until(
+    ExpectedConditions.elementToBeClickable(By.id("dynamic-btn")));
+
+// Dynamic XPath
+String xpath = "//button[contains(@id, 'submit')]";
+driver.findElement(By.xpath(xpath)).click();
+
+// Handle stale element
+for (int i = 0; i < 3; i++) {
+    try {
+        driver.findElement(By.id("element")).click();
+        break;
+    } catch (StaleElementReferenceException e) {
+        // Retry
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-keywords="waits implicit explicit fluent selenium">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">13</div>
+                        <div class="question-text">Explain different types of waits in Selenium (implicit, explicit, fluent).</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-clock"></i> Wait Types</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// 1. Implicit Wait - Global setting
+driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+// 2. Explicit Wait - Specific conditions
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+WebElement element = wait.until(
+    ExpectedConditions.elementToBeClickable(By.id("submit")));
+
+// 3. Fluent Wait - Custom polling and exceptions
+FluentWait<WebDriver> fluentWait = new FluentWait<>(driver.withTimeout(Duration.ofSeconds(30))
+                    .pollingEvery(Duration.ofSeconds(2))
+                    .ignoring(NoSuchElementException.class);
+
+WebElement el = fluentWait.until(driver -> 
+    driver.findElement(By.id("dynamic-element")));</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="important-box">
+                            <strong>Important:</strong> Never mix implicit and explicit waits. Prefer explicit waits for better control.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-keywords="dropdown select selenium">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">14</div>
+                        <div class="question-text">Write a code snippet to select a value from a dropdown using Selenium.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Implementation</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Using Select class
+Select dropdown = new Select(driver.findElement(By.id("country")));
+
+// Select by visible text
+dropdown.selectByVisibleText("India");
+
+// Select by value
+dropdown.selectByValue("IN");
+
+// Select by index
+dropdown.selectByIndex(2);
+
+// Get selected option
+WebElement selected = dropdown.getFirstSelectedOption();
+System.out.println(selected.getText());</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-keywords="file upload download selenium">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">15</div>
+                        <div class="question-text">How do you handle file uploads and downloads in Selenium?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-upload"></i> File Upload</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// File Upload - sendKeys to input element
+WebElement uploadElement = driver.findElement(By.id("fileUpload"));
+uploadElement.sendKeys("C:/path/to/file.txt");</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-download"></i> File Download</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Set download directory in Chrome
+ChromeOptions options = new ChromeOptions();
+Map<String, Object> prefs = new HashMap<>();
+prefs.put("download.default_directory", "C:/downloads");
+options.setExperimentalOption("prefs", prefs);
+
+WebDriver driver = new ChromeDriver(options);
+
+// Verify file downloaded
+File file = new File("C:/downloads/report.pdf");
+Assert.assertTrue(file.exists());</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 16 -->
+            <div class="question-card" data-keywords="alerts popup selenium">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">16</div>
+                        <div class="question-text">Explain how to handle alerts, confirmation, and prompt pop-ups in Selenium.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-bell"></i> Alert Handling</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Simple Alert
+Alert alert = driver.switchTo().alert();
+System.out.println(alert.getText());
+alert.accept(); // Click OK
+
+// Confirmation Alert
+alert.dismiss(); // Click Cancel
+
+// Prompt Alert
+alert.sendKeys("Text input");
+alert.accept();
+
+// Wait for alert
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+wait.until(ExpectedConditions.alertIsPresent());
+driver.switchTo().alert().accept();</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 17 -->
+            <div class="question-card" data-keywords="xpath table row approved">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">17</div>
+                        <div class="question-text">Write XPath to select the 3rd row of a table where column value = "Approved".</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-table"></i> XPath Solution</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">XPath</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Select 3rd row where any column contains "Approved"
+//table//tr[td[text()='Approved']][3]
+
+// Select 3rd row where specific column (e.g., 4th column) = "Approved"
+//table//tr[td[4][text()='Approved']][3]
+
+// More robust with contains
+//table//tr[td[contains(text(), 'Approved')]][3]
+
+// Java implementation
+WebElement thirdRow = driver.findElement(
+    By.xpath("//table//tr[td[text()='Approved']][3]"));</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 18 -->
+            <div class="question-card" data-keywords="relative absolute xpath">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">18</div>
+                        <div class="question-text">Difference between relative and absolute XPath. Which one do you prefer?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-balance-scale"></i> Key Differences</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li><strong>Absolute XPath:</strong> Starts from root (/) - Fragile, breaks with DOM changes</li>
+                                    <li><strong>Relative XPath:</strong> Starts from anywhere (//) - Flexible, more maintainable</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Examples</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">XPath</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Absolute XPath - Avoid
+/html/body/div[1]/div[2]/form/input[1]
+
+// Relative XPath - Preferred
+//input[@id='username']
+//form[@id='loginForm']//input[@name='username']</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Recommendation:</strong> Always use relative XPath for better maintainability and resilience to DOM changes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 19 -->
+            <div class="question-card" data-keywords="multiple windows tabs selenium">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">19</div>
+                        <div class="question-text">How do you handle multiple browser windows/tabs in Selenium?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-window-restore"></i> Window Handling</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Get current window handle
+String mainWindow = driver.getWindowHandle();
+
+// Get all window handles
+Set<String> allWindows = driver.getWindowHandles();
+
+// Switch to new window
+for (String window : allWindows) {
+    if (!window.equals(mainWindow)) {
+        driver.switchTo().window(window);
+        // Perform actions in new window
+        driver.close();
+    }
+}
+
+// Switch back to main window
+driver.switchTo().window(mainWindow);</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 20 -->
+            <div class="question-card" data-keywords="screenshot test failure selenium">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">20</div>
+                        <div class="question-text">How do you capture a screenshot on test failure?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-camera"></i> Screenshot Capture</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Method to capture screenshot
+public String captureScreenshot(String testName) {
+    TakesScreenshot ts = (TakesScreenshot) driver;
+    File source = ts.getScreenshotAs(OutputType.FILE);
+    String dest = "screenshots/" + testName + ".png";
+    FileUtils.copyFile(source, new File(dest));
+    return dest;
+}
+
+// In TestNG
+@AfterMethod
+public void tearDown(ITestResult result) {
+    if (result.getStatus() == ITestResult.FAILURE) {
+        captureScreenshot(result.getName());
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FRAMEWORK & AUTOMATION SECTION -->
+            <h2 class="section-title">Framework & Automation Questions</h2>
+
+            <!-- Question 21 -->
+            <div class="question-card" data-keywords="data driven keyword hybrid framework">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">21</div>
+                        <div class="question-text">Difference between Data-Driven, Keyword-Driven, and Hybrid frameworks.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-layer-group"></i> Framework Types</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li><strong>Data-Driven:</strong> Same test with different data sets from Excel/CSV/Database</li>
+                                    <li><strong>Keyword-Driven:</strong> Actions defined as keywords, tests are keyword sequences</li>
+                                    <li><strong>Hybrid:</strong> Combination of data-driven and keyword-driven approaches</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Examples</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Concepts</span>
+                                </div>
+                                <pre><code>// Data-Driven: Test data in Excel
+@Test(dataProvider = "loginData")
+public void testLogin(String user, String pass) {
+    loginPage.login(user, pass);
+}
+
+// Keyword-Driven: Excel with keywords
+// KEYWORD    | LOCATOR      | VALUE
+// navigate   | url          | https://example.com
+// click      | id=login     | 
+// sendKeys   | id=username  | admin
+
+// Hybrid: Combines both approaches</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 22 -->
+            <div class="question-card" data-keywords="test data management framework">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">22</div>
+                        <div class="question-text">How do you manage test data in your automation framework?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-database"></i> Test Data Management</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li>Excel/CSV files for structured data</li>
+                                    <li>Properties files for configuration</li>
+                                    <li>JSON files for complex data structures</li>
+                                    <li>Database for large datasets</li>
+                                    <li>TestNG DataProviders for parameterization</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Implementation</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Excel utility
+public class ExcelUtils {
+    public static Object[][] getTestData(String sheetName) {
+        // Read Excel and return 2D array
+    }
+}
+
+// Usage with DataProvider
+@DataProvider(name = "testData")
+public Object[][] getData() {
+    return ExcelUtils.getTestData("LoginData");
+}
+
+@Test(dataProvider = "testData")
+public void test(String username, String password) {
+    // Test implementation
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 23 -->
+            <div class="question-card" data-keywords="logging log4j slf4j framework">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">23</div>
+                        <div class="question-text">How do you implement logging in Selenium framework? Which library do you prefer (Log4j / SLF4J)?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-file-alt"></i> Logging Implementation</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java (Log4j2)</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Using Log4j2
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+public class BaseTest {
+    private static Logger logger = LogManager.getLogger(BaseTest.class);
+    
+    @Test
+    public void testLogin() {
+        logger.info("Starting login test");
+        logger.debug("Entering credentials");
+        logger.error("Login failed");
+        logger.warn("Slow response time");
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Preference:</strong> Log4j2 is preferred for performance. SLF4J is good as a facade over different logging frameworks.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 24 -->
+            <div class="question-card" data-keywords="parameterize testng dataprovider">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">24</div>
+                        <div class="question-text">How do you parameterize test cases in TestNG?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Parameterization Methods</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Method 1: Using @Parameters from XML
+@Test
+@Parameters({"username", "password"})
+public void testLogin(String user, String pass) {
+    // Test logic
+}
+
+// Method 2: Using @DataProvider
+@DataProvider(name = "credentials")
+public Object[][] getCredentials() {
+    return new Object[][] {
+        {"user1", "pass1"},
+        {"user2", "pass2"}
+    };
+}
+
+@Test(dataProvider = "credentials")
+public void testLogin(String user, String pass) {
+    // Test logic
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 25 -->
+            <div class="question-card" data-keywords="parallel execution testng junit">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">25</div>
+                        <div class="question-text">How do you implement parallel execution in TestNG or JUnit?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-tasks"></i> Parallel Execution</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">XML (testng.xml)</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>&lt;suite name="ParallelSuite" parallel="methods" thread-count="3"&gt;
+    &lt;test name="Tests"&gt;
+        &lt;classes&gt;
+            &lt;class name="com.tests.LoginTest"/&gt;
+        &lt;/classes&gt;
+    &lt;/test&gt;
+&lt;/suite&gt;
+
+&lt;!-- parallel options: methods, tests, classes --&gt;</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="important-box">
+                            <strong>Important:</strong> Use ThreadLocal for WebDriver to ensure thread safety in parallel execution.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 26 -->
+            <div class="question-card" data-keywords="cross browser testing framework">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">26</div>
+                        <div class="question-text">How do you design a framework to handle cross-browser testing?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-browser"></i> Cross-Browser Strategy</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// DriverFactory
+public class DriverFactory {
+    public static WebDriver createDriver(String browser) {
+        switch(browser.toLowerCase()) {
+            case "chrome":
+                return new ChromeDriver();
+            case "firefox":
+                return new FirefoxDriver();
+            case "edge":
+                return new EdgeDriver();
+            default:
+                return new ChromeDriver();
+        }
+    }
+}
+
+// TestNG XML with parameters
+@BeforeMethod
+@Parameters("browser")
+public void setup(String browser) {
+    driver = DriverFactory.createDriver(browser);
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 27 -->
+            <div class="question-card" data-keywords="custom reports extent allure">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">27</div>
+                        <div class="question-text">How do you generate custom reports in your framework?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-chart-bar"></i> Reporting Solutions</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li>Extent Reports - Rich HTML reports with screenshots</li>
+                                    <li>Allure Reports - Interactive reports with timeline</li>
+                                    <li>TestNG Reports - Built-in HTML reports</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Extent Reports Setup</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>public class ExtentManager {
+    private static ExtentReports extent;
+    
+    public static ExtentReports getInstance() {
+        if (extent == null) {
+            extent = new ExtentReports();
+            ExtentSparkReporter spark = 
+                new ExtentSparkReporter("reports/report.html");
+            extent.attachReporter(spark);
+        }
+        return extent;
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 28 -->
+            <div class="question-card" data-keywords="retry failed tests testng">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">28</div>
+                        <div class="question-text">Explain how you handle retries for failed test cases.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-redo"></i> Retry Logic</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Retry Analyzer
+public class RetryAnalyzer implements IRetryAnalyzer {
+    private int count = 0;
+    private int maxRetry = 2;
+    
+    @Override
+    public boolean retry(ITestResult result) {
+        if (count < maxRetry) {
+            count++;
+            return true;
+        }
+        return false;
+    }
+}
+
+// Use in test
+@Test(retryAnalyzer = RetryAnalyzer.class)
+public void testMethod() {
+    // Test logic
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 29 -->
+            <div class="question-card" data-keywords="jenkins cicd integration framework">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">29</div>
+                        <div class="question-text">Explain how you integrated your framework with CI tools like Jenkins.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code-branch"></i> Jenkins Integration</h4>
+                            <div class="key-points">
+                                <ul>
+                                    <li>Configure Maven/Gradle build in Jenkins</li>
+                                    <li>Set up SCM (Git) polling or webhooks</li>
+                                    <li>Execute testng.xml via Maven commands</li>
+                                    <li>Publish test results and reports</li>
+                                    <li>Send email notifications on failure</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Maven Command</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Shell</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>mvn clean test -Dsuite=testng.xml -Dbrowser=chrome</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 30 -->
+            <div class="question-card" data-keywords="maintainability scalability framework">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">30</div>
+                        <div class="question-text">How do you ensure maintainability and scalability of your framework?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-cogs"></i> Best Practices</h4>
+                            <div class="key-points">
+                                <strong>Maintainability:</strong>
+                                <ul>
+                                    <li><strong>Page Object Model:</strong> Separate page logic from tests</li>
+                                    <li><strong>Modular Design:</strong> Small, reusable methods</li>
+                                    <li><strong>Clear Naming:</strong> Self-documenting code</li>
+                                    <li><strong>Comments & Documentation:</strong> Explain complex logic</li>
+                                    <li><strong>Version Control:</strong> Git with proper branching</li>
+                                </ul>
+                            </div>
+
+                            <div class="key-points">
+                                <strong>Scalability:</strong>
+                                <ul>
+                                    <li><strong>Configuration Files:</strong> Externalize test data and settings</li>
+                                    <li><strong>Parallel Execution:</strong> Run tests concurrently</li>
+                                    <li><strong>Test Independence:</strong> No dependencies between tests</li>
+                                    <li><strong>Selenium Grid:</strong> Distribute tests across machines</li>
+                                    <li><strong>CI/CD Integration:</strong> Automated pipeline execution</li>
+                                    <li><strong>Cloud Platforms:</strong> BrowserStack, Sauce Labs for scale</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Framework Structure</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Framework Architecture</span>
+                                </div>
+                                <pre><code>Key Design Principles:
+
+1. Separation of Concerns
+   - Tests separate from page objects
+   - Utils separate from business logic
+   
+2. DRY (Don't Repeat Yourself)
+   - Reusable methods in base classes
+   - Common utilities centralized
+
+3. Configuration Management
+   - Properties files for environments
+   - Easy switching between DEV/QA/PROD
+
+4. Robust Error Handling
+   - Try-catch blocks with meaningful messages
+   - Retry logic for flaky tests
+   
+5. Comprehensive Reporting
+   - Detailed logs and screenshots
+   - Executive summary reports</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Golden Rule:</strong> If you need to change the same code in multiple places, it needs refactoring. Design for change from day one.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <div id="footer-placeholder"></div>
+        </footer>
+    </div>
+
+    <script src="/js/interview-2.js"></script>
+    <script>
+        fetch("/footer.html")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("footer-placeholder").innerHTML = data;
+            });
+    </script>
+    <script src="/js/footer.js"></script>
+</body>
+
+</html>
