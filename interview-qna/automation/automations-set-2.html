@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprehensive Interview Guide | 5-10 Years Experience</title>
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/interview/interview-style-2.css">
+    <link rel="stylesheet" href="/css/footer.css">
+</head>
+
+<body>
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Back Navigation -->
+    <div class="back-nav">
+        <a href="/index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i>
+            Back to Home
+        </a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-graduation-cap"></i> Comprehensive Interview Guide</h1>
+                <p class="subtitle">Java, Git, CI/CD, API Testing & Automation</p>
+                <p class="author">By Mohammad S Hossain</p>
+                <div class="experience-badge">
+                    <i class="fas fa-medal"></i> 5-10 Years Experience
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-question-circle"></i></div>
+                <div class="stat-number">15</div>
+                <div class="stat-label">Interview Questions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-code"></i></div>
+                <div class="stat-number">25+</div>
+                <div class="stat-label">Code Examples</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-lightbulb"></i></div>
+                <div class="stat-number">50+</div>
+                <div class="stat-label">Pro Tips</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                <div class="stat-number">3-4</div>
+                <div class="stat-label">Hours Study Time</div>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <input type="text" class="search-box" id="searchBox"
+                placeholder="🔍 Search questions... (e.g., 'Java', 'Git', 'API', 'Jenkins')">
+        </div>
+
+        <!-- Questions Section -->
+        <div class="questions-section">
+            <h2 class="section-title">Comprehensive Interview Questions</h2>
+
+            <!-- Question 1 -->
+            <div class="question-card" data-keywords="bug handling critical release production">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">1</div>
+                        <div class="question-text">How would you handle a critical bug discovered just before release?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Critical Bug Response Strategy</h4>
+                            <p>Handling critical bugs before release requires immediate assessment, stakeholder communication, and structured decision-making.</p>
+
+                            <div class="key-points">
+                                <strong>Immediate Actions:</strong>
+                                <ul>
+                                    <li><strong>Assess Severity:</strong> Determine impact on core functionality and user experience</li>
+                                    <li><strong>Document Evidence:</strong> Screenshots, logs, steps to reproduce</li>
+                                    <li><strong>Notify Stakeholders:</strong> Product manager, development lead, release manager</li>
+                                    <li><strong>Risk Analysis:</strong> Evaluate potential production impact vs. release delay</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-route"></i> Decision Framework</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Decision Matrix</span>
+                                </div>
+                                <pre><code>Critical Bug Assessment:
+├── Severity Level
+│   ├── Blocker: Prevents core functionality
+│   ├── Critical: Major feature broken
+│   └── High: Minor feature affected
+│
+├── Risk Assessment
+│   ├── Production Impact: Customer-facing issues
+│   ├── Business Impact: Revenue/reputation loss
+│   └── Technical Debt: Future maintenance cost
+│
+└── Available Options
+    ├── Hotfix: Quick targeted fix
+    ├── Rollback: Revert problematic changes
+    ├── Feature Toggle: Disable affected functionality
+    └── Release Postponement: Full delay</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Pro Tip:</strong> Always maintain a "Go/No-Go" checklist with predefined criteria for release decisions.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" data-keywords="java uppercase lowercase conversion">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">2</div>
+                        <div class="question-text">Write a Java program to convert uppercase letters to lowercase.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Implementation Approaches</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>public class CaseConverter {
+    
+    // Method 1: Using built-in toLowerCase()
+    public static String convertToLowercase(String input) {
+        if (input == null) return null;
+        return input.toLowerCase();
+    }
+    
+    // Method 2: Manual conversion using ASCII
+    public static String manualToLowercase(String input) {
+        if (input == null || input.isEmpty()) return input;
+        
+        StringBuilder result = new StringBuilder();
+        for (char c : input.toCharArray()) {
+            if (c >= 'A' && c <= 'Z') {
+                result.append((char) (c + 32));
+            } else {
+                result.append(c);
+            }
+        }
+        return result.toString();
+    }
+    
+    public static void main(String[] args) {
+        String test = "HELLO World 123!";
+        System.out.println("Original: " + test);
+        System.out.println("Lowercase: " + convertToLowercase(test));
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <strong>Complexity:</strong> O(n) time where n is string length. Built-in method is optimized and recommended for production.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" data-keywords="java array second largest number">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">3</div>
+                        <div class="question-text">Find the second largest number in an array using Java.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-search"></i> Efficient Algorithm</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>public class SecondLargestFinder {
+    
+    // Single pass approach - Most Efficient
+    public static Integer findSecondLargest(int[] array) {
+        if (array == null || array.length < 2) {
+            return null;
+        }
+        
+        int largest = Integer.MIN_VALUE;
+        int secondLargest = Integer.MIN_VALUE;
+        
+        for (int num : array) {
+            if (num > largest) {
+                secondLargest = largest;
+                largest = num;
+            } else if (num > secondLargest && num != largest) {
+                secondLargest = num;
+            }
+        }
+        
+        return secondLargest == Integer.MIN_VALUE ? null : secondLargest;
+    }
+    
+    public static void main(String[] args) {
+        int[] array = {3, 1, 4, 1, 5, 9, 2, 6};
+        System.out.println("Second Largest: " + findSecondLargest(array));
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="key-points">
+                            <strong>Complexity:</strong>
+                            <ul>
+                                <li>Time: O(n) - Single pass through array</li>
+                                <li>Space: O(1) - Constant extra space</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-card" data-keywords="oop concepts inheritance encapsulation polymorphism abstraction">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">4</div>
+                        <div class="question-text">Explain OOPs concepts with real-world examples.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-cube"></i> Four Pillars of OOP</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// 1. ENCAPSULATION - Data Hiding
+public class BankAccount {
+    private double balance;
+    
+    public BankAccount(double initialBalance) {
+        this.balance = initialBalance;
+    }
+    
+    public boolean withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance -= amount;
+            return true;
+        }
+        return false;
+    }
+    
+    public double getBalance() { return balance; }
+}
+
+// 2. INHERITANCE - IS-A Relationship
+abstract class Vehicle {
+    protected String brand;
+    public abstract void start();
+}
+
+class Car extends Vehicle {
+    @Override
+    public void start() {
+        System.out.println("Car engine started");
+    }
+}
+
+// 3. POLYMORPHISM - Same Interface, Different Implementation
+interface Payment {
+    boolean process(double amount);
+}
+
+class CreditCard implements Payment {
+    public boolean process(double amount) {
+        System.out.println("Processing via Credit Card");
+        return true;
+    }
+}
+
+class PayPal implements Payment {
+    public boolean process(double amount) {
+        System.out.println("Processing via PayPal");
+        return true;
+    }
+}
+
+// 4. ABSTRACTION - Hiding Complexity
+abstract class Database {
+    public abstract void connect();
+    public abstract void disconnect();
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="key-points">
+                            <strong>Real-World Examples:</strong>
+                            <ul>
+                                <li><strong>Encapsulation:</strong> ATM - withdraw money without knowing internal mechanisms</li>
+                                <li><strong>Inheritance:</strong> All employees share common properties but have specific roles</li>
+                                <li><strong>Polymorphism:</strong> Different vehicles can start(), each with its own way</li>
+                                <li><strong>Abstraction:</strong> Driving a car - use controls without knowing engine details</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-card" data-keywords="test automation framework components architecture">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">5</div>
+                        <div class="question-text">Describe your test automation framework and its components.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-sitemap"></i> Framework Architecture</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Framework Structure</span>
+                                </div>
+                                <pre><code>Hybrid Test Automation Framework
+═══════════════════════════════════
+
+project-root/
+├── src/main/java/
+│   ├── base/
+│   │   ├── BaseTest.java
+│   │   └── BasePage.java
+│   ├── pages/
+│   │   ├── LoginPage.java
+│   │   └── HomePage.java
+│   ├── utils/
+│   │   ├── DriverFactory.java
+│   │   ├── ConfigReader.java
+│   │   ├── ExcelUtils.java
+│   │   └── APIUtils.java
+│   └── constants/
+│       └── FrameworkConstants.java
+├── src/test/java/
+│   └── tests/
+│       ├── smoke/
+│       └── regression/
+├── src/test/resources/
+│   ├── config.properties
+│   ├── testdata.xlsx
+│   └── testng.xml
+└── reports/</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="key-points">
+                            <strong>Key Components:</strong>
+                            <ul>
+                                <li><strong>Page Object Model:</strong> Separates page elements from test logic</li>
+                                <li><strong>Data-Driven:</strong> Excel/CSV for parameterized testing</li>
+                                <li><strong>Configuration Management:</strong> Properties files for settings</li>
+                                <li><strong>Reporting:</strong> Extent Reports with screenshots</li>
+                                <li><strong>CI/CD Integration:</strong> Jenkins pipeline support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-card" data-keywords="api payload validation testing restassured">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">6</div>
+                        <div class="question-text">Validate a given API payload and explain your approach.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-check-circle"></i> API Validation Strategy</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java (RestAssured)</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>import io.restassured.RestAssured;
+import static org.hamcrest.Matchers.*;
+
+public class APIValidator {
+    
+    public void validateUserAPI() {
+        RestAssured
+            .given()
+                .baseUri("https://api.example.com")
+                .header("Content-Type", "application/json")
+            .when()
+                .get("/users/1")
+            .then()
+                .statusCode(200)
+                .body("id", notNullValue())
+                .body("name", notNullValue())
+                .body("email", matchesPattern("^[A-Za-z0-9+_.-]+@(.+)$"))
+                .body("age", greaterThan(0))
+                .body("status", oneOf("active", "inactive"));
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="key-points">
+                            <strong>Validation Checklist:</strong>
+                            <ul>
+                                <li><strong>Status Code:</strong> Verify HTTP response codes</li>
+                                <li><strong>Schema:</strong> Match against JSON schema</li>
+                                <li><strong>Data Types:</strong> Ensure correct field types</li>
+                                <li><strong>Mandatory Fields:</strong> Check required fields</li>
+                                <li><strong>Response Time:</strong> Performance validation</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-card" data-keywords="git commands branching strategy workflow">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">7</div>
+                        <div class="question-text">Explain commonly used Git commands and branching strategies.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-terminal"></i> Essential Git Commands</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Git Commands</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code># Repository Setup
+git init
+git clone &lt;url&gt;
+git remote add origin &lt;url&gt;
+
+# Basic Workflow
+git status
+git add .
+git commit -m "message"
+git push origin &lt;branch&gt;
+git pull origin &lt;branch&gt;
+
+# Branching
+git branch
+git checkout -b &lt;branch&gt;
+git merge &lt;branch&gt;
+git branch -d &lt;branch&gt;
+
+# Advanced
+git stash
+git stash pop
+git rebase &lt;branch&gt;
+git cherry-pick &lt;commit&gt;
+git reset --hard &lt;commit&gt;</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code-branch"></i> Branching Strategy</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Git Flow</span>
+                                </div>
+                                <pre><code>main (production)
+├── develop (integration)
+│   ├── feature/user-auth
+│   ├── feature/payment
+│   └── feature/dashboard
+├── release/v2.0.0
+└── hotfix/security-patch</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Pro Tip:</strong> Always pull latest changes before creating a new branch
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-card" data-keywords="java case toggle uppercase lowercase hexaware">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">8</div>
+                        <div class="question-text">Write a Java program to convert uppercase to lowercase and vice versa (Example: HexAwarE → hEXaWARe).</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-exchange-alt"></i> Toggle Case Implementation</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>public class CaseToggler {
+    
+    public static String toggleCase(String input) {
+        if (input == null || input.isEmpty()) {
+            return input;
+        }
+        
+        StringBuilder result = new StringBuilder();
+        
+        for (char c : input.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                result.append(Character.toLowerCase(c));
+            } else if (Character.isLowerCase(c)) {
+                result.append(Character.toUpperCase(c));
+            } else {
+                result.append(c); // Keep non-alphabetic
+            }
+        }
+        
+        return result.toString();
+    }
+    
+    public static void main(String[] args) {
+        String input = "HexAwarE";
+        String output = toggleCase(input);
+        
+        System.out.println("Input:  " + input);
+        System.out.println("Output: " + output);
+        // Output: hEXaWARe
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <strong>Approach:</strong> Iterate through each character, check if uppercase/lowercase, and toggle accordingly. Non-alphabetic characters remain unchanged.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-card" data-keywords="jenkins cicd pipeline integration deployment">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">9</div>
+                        <div class="question-text">Explain how Jenkins is integrated into a CI/CD pipeline.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code-branch"></i> Jenkins CI/CD Pipeline</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Jenkinsfile</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>pipeline {
+    agent any
+    
+    tools {
+        maven 'Maven-3.8'
+        jdk 'JDK-11'
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', 
+                    url: 'https://github.com/repo/tests.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'mvn clean compile'
+            }
+        }
+        
+        stage('Run Tests') {
+            steps {
+                sh 'mvn test -Dbrowser=chrome'
+            }
+        }
+        
+        stage('Generate Reports') {
+            steps {
+                publishHTML([
+                    reportDir: 'target/reports',
+                    reportFiles: 'index.html',
+                    reportName: 'Test Report'
+                ])
+            }
+        }
+    }
+    
+    post {
+        always {
+            junit 'target/surefire-reports/*.xml'
+        }
+        failure {
+            emailext (
+                subject: "Build Failed",
+                body: "Check Jenkins console",
+                to: 'team@company.com'
+            )
+        }
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="key-points">
+                            <strong>Integration Steps:</strong>
+                            <ul>
+                                <li><strong>Source Control:</strong> Git integration for code checkout</li>
+                                <li><strong>Build Automation:</strong> Maven/Gradle for compilation</li>
+                                <li><strong>Test Execution:</strong> Automated test runs</li>
+                                <li><strong>Reporting:</strong> Test results and artifacts</li>
+                                <li><strong>Notifications:</strong> Email/Slack alerts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-card" data-keywords="xpath locators selenium menu navigation">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">10</div>
+                        <div class="question-text">Write an XPath to locate specific menu elements on a webpage.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-map-marked-alt"></i> XPath for Menu Elements</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">XPath Examples</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Menu by text
+//nav//a[text()='Home']
+//ul[@id='menu']//li[contains(text(), 'Products')]
+
+// Submenu elements
+//li[@class='menu-item']//ul[@class='submenu']
+//nav//li[text()='Services']//following-sibling::ul
+
+// Dynamic menu
+//nav[@id='main-nav']//ul[@class='level-1']//li[@class='level-2']
+
+// Menu with icons
+//li[@class='menu-item']//i[@class='fa-home']/parent::a
+
+// Menu by position
+//ul[@id='menu']//li[3]
+
+// Active menu
+//nav//a[contains(@class, 'active') and text()='Dashboard']</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Java Implementation</h4>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>public void clickMenuItem(String menuText) {
+    String xpath = String.format(
+        "//nav//a[normalize-space()='%s']", menuText);
+    driver.findElement(By.xpath(xpath)).click();
+}
+
+public void navigateToSubmenu(String menu, String submenu) {
+    Actions actions = new Actions(driver);
+    WebElement mainMenu = driver.findElement(
+        By.xpath("//nav//li[text()='" + menu + "']"));
+    actions.moveToElement(mainMenu).perform();
+    
+    driver.findElement(By.xpath(
+        "//ul[@class='submenu']//a[text()='" + submenu + "']")).click();
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Best Practice:</strong> Use relative XPath and prefer text() or contains() for stability
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-card" data-keywords="iframe frame switching selenium scenario">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">11</div>
+                        <div class="question-text">Describe how to switch between frames in Selenium with a practical scenario.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-window-restore"></i> Frame Switching Methods</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>public class FrameSwitcher {
+    
+    // Switch by index
+    public void switchByIndex(int index) {
+        driver.switchTo().frame(index);
+    }
+    
+    // Switch by name or ID
+    public void switchByNameOrId(String nameOrId) {
+        driver.switchTo().frame(nameOrId);
+    }
+    
+    // Switch by WebElement
+    public void switchByElement(By locator) {
+        WebElement frameElement = driver.findElement(locator);
+        driver.switchTo().frame(frameElement);
+    }
+    
+    // Switch back to main content
+    public void switchToDefault() {
+        driver.switchTo().defaultContent();
+    }
+    
+    // Practical Scenario: Payment Gateway
+    public void processPayment(String cardNumber, String cvv) {
+        // Main page - click pay button
+        driver.findElement(By.id("proceedToPay")).click();
+        
+        // Switch to payment iframe
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(
+            By.xpath("//iframe[@id='payment-frame']")));
+        
+        // Fill payment details in iframe
+        driver.findElement(By.id("card-number")).sendKeys(cardNumber);
+        driver.findElement(By.id("cvv")).sendKeys(cvv);
+        driver.findElement(By.id("submit-payment")).click();
+        
+        // Switch back to main content
+        driver.switchTo().defaultContent();
+        
+        // Verify confirmation
+        WebElement confirmation = wait.until(
+            ExpectedConditions.presenceOfElementLocated(
+                By.id("payment-confirmation")));
+        System.out.println("Status: " + confirmation.getText());
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="key-points">
+                            <strong>Switching Methods:</strong>
+                            <ul>
+                                <li><strong>By Index:</strong> driver.switchTo().frame(0) - Not recommended</li>
+                                <li><strong>By Name/ID:</strong> driver.switchTo().frame("frameName")</li>
+                                <li><strong>By WebElement:</strong> Most reliable approach</li>
+                                <li><strong>Default Content:</strong> Returns to main page</li>
+                            </ul>
+                        </div>
+
+                        <div class="important-box">
+                            <strong>Important:</strong> Always switch back to default content before switching to another frame
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-card" data-keywords="css selector xpath difference comparison">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">12</div>
+                        <div class="question-text">What is the difference between CSS Selectors and XPath?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-balance-scale"></i> CSS vs XPath Comparison</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Comparison Table</span>
+                                </div>
+                                <pre><code>Feature          | CSS Selector        | XPath
+─────────────────┼─────────────────────┼──────────────────────
+Performance      | Faster              | Slower
+Syntax           | Simpler             | More complex
+Traversal        | Forward only        | Bidirectional
+Text search      | Not supported       | Fully supported
+Parent access    | Not possible        | Possible
+Browser support  | All browsers        | All browsers
+Learning curve   | Easy                | Moderate</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Side-by-Side Examples</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Locator Examples</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// By ID
+CSS:   #username
+XPath: //input[@id='username']
+
+// By Class
+CSS:   .error-message
+XPath: //div[@class='error-message']
+
+// By Attribute
+CSS:   input[type='email']
+XPath: //input[@type='email']
+
+// Starts With
+CSS:   a[href^='https']
+XPath: //a[starts-with(@href, 'https')]
+
+// Contains
+CSS:   div[class*='container']
+XPath: //div[contains(@class, 'container')]
+
+// By Text (CSS - NOT POSSIBLE)
+CSS:   N/A
+XPath: //button[text()='Submit']
+
+// Parent Element (CSS - NOT POSSIBLE)
+CSS:   N/A
+XPath: //input[@id='username']/parent::div
+
+// nth Element
+CSS:   li:nth-child(3)
+XPath: //li[3]</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="key-points">
+                            <strong>When to Use:</strong>
+                            <ul>
+                                <li><strong>CSS:</strong> Better performance, simple forward traversal</li>
+                                <li><strong>XPath:</strong> Parent navigation, text-based searches, complex conditions</li>
+                            </ul>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Best Practice:</strong> Prefer CSS for better performance. Use XPath when CSS cannot achieve the desired selection.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-card" data-keywords="team structure qa testers work distribution">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">13</div>
+                        <div class="question-text">How many testers are in your team, and how is work distributed?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-users"></i> Team Structure Example</h4>
+                            <p>Provide a response based on your actual experience. Here's a sample structure:</p>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Team Organization</span>
+                                </div>
+                                <pre><code>QA Team Structure (Example):
+═════════════════════════════
+
+Team Size: 6 QA Engineers
+
+Roles:
+├── QA Lead (1)
+│   ├── Sprint planning
+│   ├── Test strategy
+│   └── Stakeholder communication
+│
+├── Senior QA (2)
+│   ├── Framework development
+│   ├── Complex feature testing
+│   └── Code reviews
+│
+└── QA Engineers (3)
+    ├── Feature testing
+    ├── Test execution
+    └── Bug reporting</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-tasks"></i> Work Distribution</h4>
+
+                            <div class="key-points">
+                                <strong>Distribution Strategy:</strong>
+                                <ul>
+                                    <li><strong>Feature-Based:</strong> Each QA owns 2-3 specific modules</li>
+                                    <li><strong>Sprint-Based:</strong> Stories assigned during sprint planning</li>
+                                    <li><strong>Skill-Based:</strong> API testing, UI automation, performance specialists</li>
+                                    <li><strong>Rotation:</strong> Quarterly knowledge sharing through module rotation</li>
+                                </ul>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Sprint Workflow</span>
+                                </div>
+                                <pre><code>Sprint Timeline:
+
+Day 1: Sprint Planning
+- Story estimation
+- Task assignment
+- Automation planning
+
+Days 2-8: Development & Testing
+- Test case creation
+- Automation scripts
+- Exploratory testing
+
+Days 9-10: Regression & Release
+- Full regression suite
+- Smoke testing
+- Release validation</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="note-box">
+                            <strong>Sample Response:</strong> "Our team has 6 QA engineers including 1 lead. We follow feature-based distribution where each QA owns 2-3 modules. Stories are assigned based on module ownership and workload during sprint planning."
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-card" data-keywords="page factory selenium annotations findby">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">14</div>
+                        <div class="question-text">Explain Page Factory in Selenium and its annotations.</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-industry"></i> Page Factory Overview</h4>
+                            <p>Page Factory is a built-in Page Object Model implementation in Selenium that provides annotation-based element initialization.</p>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.CacheLookup;
+import org.openqa.selenium.support.How;
+
+public class LoginPage {
+    
+    private WebDriver driver;
+    
+    // @FindBy - Basic annotation
+    @FindBy(id = "username")
+    private WebElement usernameField;
+    
+    @FindBy(name = "password")
+    private WebElement passwordField;
+    
+    // Different locator strategies
+    @FindBy(xpath = "//button[@type='submit']")
+    private WebElement loginButton;
+    
+    @FindBy(css = ".error-message")
+    private WebElement errorMessage;
+    
+    // Using How enum
+    @FindBy(how = How.LINK_TEXT, using = "Forgot Password?")
+    private WebElement forgotPasswordLink;
+    
+    // @CacheLookup - Cache element reference
+    @FindBy(id = "logo")
+    @CacheLookup
+    private WebElement logo;
+    
+    // List of elements
+    @FindBy(className = "menu-item")
+    private List<WebElement> menuItems;
+    
+    // @FindBys - AND condition (all must match)
+    @FindBys({
+        @FindBy(className = "form-input"),
+        @FindBy(name = "email")
+    })
+    private WebElement emailInput;
+    
+    // @FindAll - OR condition (any can match)
+    @FindAll({
+        @FindBy(id = "submit"),
+        @FindBy(name = "submit"),
+        @FindBy(xpath = "//button[@type='submit']")
+    })
+    private WebElement submitButton;
+    
+    // Constructor
+    public LoginPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
+    
+    // Methods
+    public void login(String username, String password) {
+        usernameField.sendKeys(username);
+        passwordField.sendKeys(password);
+        loginButton.click();
+    }
+    
+    public String getErrorMessage() {
+        return errorMessage.getText();
+    }
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-tags"></i> Key Annotations</h4>
+
+                            <div class="key-points">
+                                <strong>Available Annotations:</strong>
+                                <ul>
+                                    <li><strong>@FindBy:</strong> Locates element using id, name, xpath, css, etc.</li>
+                                    <li><strong>@FindBys:</strong> AND condition - all locators must match</li>
+                                    <li><strong>@FindAll:</strong> OR condition - any locator can match</li>
+                                    <li><strong>@CacheLookup:</strong> Caches element (use for static elements only)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="tip-box">
+                            <strong>Best Practice:</strong> Avoid @CacheLookup for dynamic elements. Elements are initialized lazily only when accessed.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-card" data-keywords="constructor page factory purpose initialization">
+                <div class="question-header" onclick="toggleQuestion(this)">
+                    <div style="display: flex; align-items: center;">
+                        <div class="question-number">15</div>
+                        <div class="question-text">What is the purpose of a constructor in Page Factory?</div>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="answer-content">
+                    <div class="answer-inner">
+                        <div class="answer-section">
+                            <h4><i class="fas fa-cog"></i> Constructor Purpose</h4>
+                            <p>The constructor in Page Factory serves multiple critical purposes for proper page object initialization.</p>
+
+                            <div class="key-points">
+                                <strong>Main Functions:</strong>
+                                <ul>
+                                    <li><strong>WebDriver Initialization:</strong> Receives and stores the driver instance</li>
+                                    <li><strong>Element Initialization:</strong> Calls PageFactory.initElements() to initialize @FindBy elements</li>
+                                    <li><strong>Lazy Initialization:</strong> Elements are located only when accessed (proxy pattern)</li>
+                                    <li><strong>Setup Actions:</strong> Can include wait initialization, base URL setup</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-code"></i> Constructor Examples</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Java</span>
+                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
+                                </div>
+                                <pre><code>// Basic Constructor
+public class LoginPage {
+    private WebDriver driver;
+    
+    @FindBy(id = "username")
+    private WebElement username;
+    
+    // Constructor
+    public LoginPage(WebDriver driver) {
+        this.driver = driver;
+        // Initialize all @FindBy elements
+        PageFactory.initElements(driver, this);
+    }
+}
+
+// Advanced Constructor with Wait
+public class BasePage {
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+    
+    public BasePage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        PageFactory.initElements(driver, this);
+    }
+}
+
+// Constructor with Custom Field Decorator
+public class EnhancedPage {
+    private WebDriver driver;
+    
+    public EnhancedPage(WebDriver driver) {
+        this.driver = driver;
+        // Custom timeout for element location
+        PageFactory.initElements(
+            new AjaxElementLocatorFactory(driver, 15), 
+            this
+        );
+    }
+}
+
+// Usage in Tests
+@Test
+public void testLogin() {
+    WebDriver driver = new ChromeDriver();
+    driver.get("https://example.com");
+    
+    // Constructor is called here
+    LoginPage loginPage = new LoginPage(driver);
+    loginPage.login("user@test.com", "password");
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="answer-section">
+                            <h4><i class="fas fa-lightbulb"></i> How It Works</h4>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span class="code-language">Concept</span>
+                                </div>
+                                <pre><code>Initialization Flow:
+
+1. Test creates page object
+   LoginPage page = new LoginPage(driver);
+
+2. Constructor receives driver
+   public LoginPage(WebDriver driver) {
+       this.driver = driver;
+
+3. PageFactory.initElements() called
+       PageFactory.initElements(driver, this);
+   }
+
+4. Elements are wrapped in proxies
+   - @FindBy elements become proxy objects
+   - Actual element location happens on first access
+
+5. Element usage triggers location
+   page.usernameField.sendKeys("test");
+   // Element located NOW, not during initialization</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="important-box">
+                            <strong>Key Concept:</strong> PageFactory.initElements() must be called in the constructor. Without it, @FindBy annotations won't work and you'll get NullPointerException.
+                        </div>
+
+                        <div class="note-box">
+                            <strong>Lazy Initialization Benefit:</strong> Elements are not located during page object creation. They're located only when accessed, improving performance and handling dynamic pages better.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="footer">
+            <div id="footer-placeholder"></div>
+        </footer>
+    </div>
+
+    <script src="/js/interview-2.js"></script>
+    <script>
+        fetch("/footer.html")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("footer-placeholder").innerHTML = data;
+            });
+    </script>
+    <script src="/js/footer.js"></script>
+</body>
+
+</html>
