@@ -1017,3 +1017,176 @@
         font-size: var(--text-xl);
     }
 }
+
+/* ===== Array Visualization ===== */
+.array-visual {
+    display: flex;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-lg);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+    justify-content: center;
+}
+
+.array-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 60px;
+    height: 60px;
+    background: var(--accent-gradient);
+    color: white;
+    font-weight: 600;
+    font-size: var(--text-lg);
+    border-radius: var(--radius-md);
+    position: relative;
+    transition: all var(--transition-base);
+}
+
+.array-cell:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+}
+
+.array-cell::after {
+    content: attr(data-index);
+    position: absolute;
+    bottom: -24px;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Matrix/2D Array Visual */
+.matrix-visual {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-lg) 0;
+    padding: var(--spacing-lg);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    align-items: center;
+}
+
+.matrix-row {
+    display: flex;
+    gap: var(--spacing-sm);
+}
+
+.matrix-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: var(--text-base);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-base);
+}
+
+.matrix-cell:hover {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+/* Tips Section */
+.tips-section {
+    margin: var(--spacing-xl) 0;
+    padding: var(--spacing-xl);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-color);
+}
+
+.tips-section h4 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.tips-section h4 i {
+    color: var(--accent-primary);
+}
+
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.tip-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    transition: all var(--transition-base);
+}
+
+.tip-item:hover {
+    background: var(--bg-card);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.tip-item i {
+    color: var(--accent-primary);
+    font-size: var(--text-base);
+}
+
+/* ===== Operator List ===== */
+.operator-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-sm);
+}
+
+.operator-item {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--accent-primary);
+    transition: all var(--transition-base);
+}
+
+.operator-item:hover {
+    background: var(--accent-primary);
+    color: white;
+    border-color: var(--accent-primary);
+}
+
+/* Syntax Preview */
+code.syntax-preview {
+    display: block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    margin-top: var(--spacing-sm);
+}

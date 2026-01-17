@@ -1,110 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master arrays in Java with practical examples and best practices. Learn declaration, initialization, iteration, and common operations.">
     <title>Java Arrays Guide - TechTok Cafe</title>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/array.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
-                    height="50px" alt="TechTok Cafe"></a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Back Navigation -->
-    <div class="back-nav">
-        <a href="/index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-    </div>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
 
     <!-- Main Content -->
-    <div class="guide-container">
-        <!-- Header -->
-        <div class="guide-header">
-            <h1 class="guide-title">Java Arrays Guide</h1>
-            <p class="guide-subtitle">Master arrays in Java with practical examples and best practices</p>
-        </div>
+    <main class="page-content" id="main-content">
+        <!-- Reading Progress -->
+        <div class="reading-progress" id="reading-progress"></div>
 
-        <!-- Table of Contents -->
-        <div class="toc">
-            <h3><i class="fas fa-list"></i> Table of Contents</h3>
-            <ul>
-                <li><a href="#introduction">1. Introduction to Arrays</a></li>
-                <li><a href="#declaration">2. Array Declaration & Initialization</a></li>
-                <li><a href="#access">3. Accessing Array Elements</a></li>
-                <li><a href="#iteration">4. Array Iteration</a></li>
-                <li><a href="#multidimensional">5. Multidimensional Arrays</a></li>
-                <li><a href="#common-operations">6. Common Array Operations</a></li>
-                <li><a href="#best-practices">7. Best Practices</a></li>
-            </ul>
-        </div>
+        <div class="content-wrapper">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" id="breadcrumb"></nav>
 
-        <!-- Chapter 1: Introduction -->
-        <div id="introduction" class="chapter">
-            <h2 class="chapter-title">1. Introduction to Arrays</h2>
-            <div class="chapter-content">
-                <p>Arrays are fundamental data structures in Java that store multiple elements of the same type in a
-                    contiguous memory location. They provide efficient access to elements using an index and are
-                    essential for many programming tasks.</p>
+            <!-- Article Container -->
+            <article class="article-container">
+                <!-- Article Header -->
+                <header class="article-header">
+                    <h1 class="article-title">Java Arrays Guide</h1>
+                    <p class="article-subtitle">Master arrays in Java with practical examples and best practices</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 20 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                    </div>
+                </header>
 
-                <div class="key-points">
-                    <h4><i class="fas fa-key"></i> Key Characteristics</h4>
-                    <ul>
-                        <li><strong>Fixed Size:</strong> Array size is determined at creation time</li>
-                        <li><strong>Homogeneous:</strong> All elements must be of the same data type</li>
-                        <li><strong>Zero-indexed:</strong> Array indices start from 0</li>
-                        <li><strong>Reference Type:</strong> Arrays are objects in Java</li>
-                    </ul>
-                </div>
+                <!-- Table of Contents -->
+                <nav class="toc" id="toc"></nav>
 
-                <div class="array-visual">
-                    <div class="array-cell" data-index="0">10</div>
-                    <div class="array-cell" data-index="1">20</div>
-                    <div class="array-cell" data-index="2">30</div>
-                    <div class="array-cell" data-index="3">40</div>
-                    <div class="array-cell" data-index="4">50</div>
-                </div>
-            </div>
-        </div>
+                <!-- Article Body -->
+                <div class="article-body">
+                    <!-- Chapter 1: Introduction -->
+                    <section id="introduction" class="chapter">
+                        <h2 class="chapter-title">1. Introduction to Arrays</h2>
+                        <div class="chapter-content">
+                            <p>Arrays are fundamental data structures in Java that store multiple elements of the same type in a
+                                contiguous memory location. They provide efficient access to elements using an index and are
+                                essential for many programming tasks.</p>
 
-        <!-- Chapter 2: Declaration & Initialization -->
-        <div id="declaration" class="chapter">
-            <h2 class="chapter-title">2. Array Declaration & Initialization</h2>
-            <div class="chapter-content">
-                <p>There are multiple ways to declare and initialize arrays in Java. Let's explore the different
-                    approaches:</p>
+                            <div class="key-points">
+                                <h4><i class="fas fa-key"></i> Key Characteristics</h4>
+                                <ul>
+                                    <li><strong>Fixed Size:</strong> Array size is determined at creation time</li>
+                                    <li><strong>Homogeneous:</strong> All elements must be of the same data type</li>
+                                    <li><strong>Zero-indexed:</strong> Array indices start from 0</li>
+                                    <li><strong>Reference Type:</strong> Arrays are objects in Java</li>
+                                </ul>
+                            </div>
 
-                <h4>Array Declaration</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Array Declaration Syntax</div>
-                    <pre><span class="comment">// Method 1: Square brackets after type</span>
+                            <div class="array-visual">
+                                <div class="array-cell" data-index="0">10</div>
+                                <div class="array-cell" data-index="1">20</div>
+                                <div class="array-cell" data-index="2">30</div>
+                                <div class="array-cell" data-index="3">40</div>
+                                <div class="array-cell" data-index="4">50</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2: Declaration & Initialization -->
+                    <section id="declaration" class="chapter">
+                        <h2 class="chapter-title">2. Array Declaration & Initialization</h2>
+                        <div class="chapter-content">
+                            <p>There are multiple ways to declare and initialize arrays in Java. Let's explore the different
+                                approaches:</p>
+
+                            <h4>Array Declaration</h4>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Array Declaration Syntax</div>
+                                <pre><span class="comment">// Method 1: Square brackets after type</span>
 <span class="keyword">int</span>[] numbers;
 <span class="keyword">String</span>[] names;
 
 <span class="comment">// Method 2: Square brackets after variable name</span>
 <span class="keyword">int</span> numbers[];
 <span class="keyword">String</span> names[];</pre>
-                </div>
+                            </div>
 
-                <h4>Array Initialization</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Array Initialization Examples</div>
-                    <pre><span class="comment">// Creating array with specific size</span>
+                            <h4>Array Initialization</h4>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Array Initialization Examples</div>
+                                <pre><span class="comment">// Creating array with specific size</span>
 <span class="keyword">int</span>[] numbers = <span class="keyword">new int</span>[<span class="number">5</span>]; <span class="comment">// Array of 5 integers (all 0)</span>
 
 <span class="comment">// Initialize with values</span>
@@ -116,26 +123,26 @@
 <span class="comment">// Dynamic size initialization</span>
 <span class="keyword">int</span> size = <span class="number">10</span>;
 <span class="keyword">double</span>[] values = <span class="keyword">new double</span>[size];</pre>
-                </div>
+                            </div>
 
-                <div class="highlight-box">
-                    <h4><i class="fas fa-lightbulb"></i> Important Note</h4>
-                    <p>When you create an array without explicit values, Java initializes it with default values: 0 for
-                        numeric types, false for boolean, and null for reference types.</p>
-                </div>
-            </div>
-        </div>
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Important Note</h4>
+                                <p>When you create an array without explicit values, Java initializes it with default values: 0 for
+                                    numeric types, false for boolean, and null for reference types.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 3: Accessing Elements -->
-        <div id="access" class="chapter">
-            <h2 class="chapter-title">3. Accessing Array Elements</h2>
-            <div class="chapter-content">
-                <p>Array elements are accessed using square bracket notation with the index position. Remember that
-                    array indices start from 0.</p>
+                    <!-- Chapter 3: Accessing Elements -->
+                    <section id="access" class="chapter">
+                        <h2 class="chapter-title">3. Accessing Array Elements</h2>
+                        <div class="chapter-content">
+                            <p>Array elements are accessed using square bracket notation with the index position. Remember that
+                                array indices start from 0.</p>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Accessing Array Elements</div>
-                    <pre><span class="keyword">int</span>[] scores = {<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>, <span class="number">96</span>, <span class="number">88</span>};
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Accessing Array Elements</div>
+                                <pre><span class="keyword">int</span>[] scores = {<span class="number">85</span>, <span class="number">92</span>, <span class="number">78</span>, <span class="number">96</span>, <span class="number">88</span>};
 
 <span class="comment">// Reading elements</span>
 <span class="keyword">int</span> firstScore = scores[<span class="number">0</span>];    <span class="comment">// 85</span>
@@ -149,28 +156,27 @@ scores[<span class="number">2</span>] = <span class="number">95</span>;  <span c
 
 <span class="comment">// Access last element dynamically</span>
 <span class="keyword">int</span> lastElement = scores[scores.length - <span class="number">1</span>];</pre>
-                </div>
+                            </div>
 
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> ArrayIndexOutOfBoundsException</h4>
-                    <p>Accessing an array with an invalid index (negative or >= array.length) throws an
-                        ArrayIndexOutOfBoundsException at runtime. Always validate indices before accessing elements.
-                    </p>
-                </div>
-            </div>
-        </div>
+                            <div class="warning-box">
+                                <h4><i class="fas fa-exclamation-triangle"></i> ArrayIndexOutOfBoundsException</h4>
+                                <p>Accessing an array with an invalid index (negative or >= array.length) throws an
+                                    ArrayIndexOutOfBoundsException at runtime. Always validate indices before accessing elements.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 4: Array Iteration -->
-        <div id="iteration" class="chapter">
-            <h2 class="chapter-title">4. Array Iteration</h2>
-            <div class="chapter-content">
-                <p>There are several ways to iterate through arrays in Java. Each method has its own advantages
-                    depending on the use case.</p>
+                    <!-- Chapter 4: Array Iteration -->
+                    <section id="iteration" class="chapter">
+                        <h2 class="chapter-title">4. Array Iteration</h2>
+                        <div class="chapter-content">
+                            <p>There are several ways to iterate through arrays in Java. Each method has its own advantages
+                                depending on the use case.</p>
 
-                <h4>Traditional For Loop</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Traditional For Loop</div>
-                    <pre><span class="keyword">int</span>[] numbers = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
+                            <h4>Traditional For Loop</h4>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Traditional For Loop</div>
+                                <pre><span class="keyword">int</span>[] numbers = {<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>, <span class="number">50</span>};
 
 <span class="comment">// Forward iteration</span>
 <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numbers.length; i++) {
@@ -181,12 +187,12 @@ scores[<span class="number">2</span>] = <span class="number">95</span>;  <span c
 <span class="keyword">for</span> (<span class="keyword">int</span> i = numbers.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
     System.out.println(numbers[i]);
 }</pre>
-                </div>
+                            </div>
 
-                <h4>Enhanced For Loop (For-Each)</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Enhanced For Loop</div>
-                    <pre><span class="keyword">String</span>[] fruits = {<span class="string">"Apple"</span>, <span class="string">"Banana"</span>, <span class="string">"Orange"</span>, <span class="string">"Mango"</span>};
+                            <h4>Enhanced For Loop (For-Each)</h4>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Enhanced For Loop</div>
+                                <pre><span class="keyword">String</span>[] fruits = {<span class="string">"Apple"</span>, <span class="string">"Banana"</span>, <span class="string">"Orange"</span>, <span class="string">"Mango"</span>};
 
 <span class="comment">// For-each loop (read-only access)</span>
 <span class="keyword">for</span> (<span class="keyword">String</span> fruit : fruits) {
@@ -200,28 +206,27 @@ scores[<span class="number">2</span>] = <span class="number">95</span>;  <span c
     sum += value;
 }
 System.out.println(<span class="string">"Sum: "</span> + sum); <span class="comment">// Output: 15</span></pre>
-                </div>
+                            </div>
 
-                <div class="highlight-box">
-                    <h4><i class="fas fa-info-circle"></i> When to Use Each Loop</h4>
-                    <p><strong>Traditional for loop:</strong> When you need the index or want to modify array
-                        elements.<br>
-                        <strong>Enhanced for loop:</strong> When you only need to read values and don't need the index.
-                    </p>
-                </div>
-            </div>
-        </div>
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-info-circle"></i> When to Use Each Loop</h4>
+                                <p><strong>Traditional for loop:</strong> When you need the index or want to modify array
+                                    elements.<br>
+                                    <strong>Enhanced for loop:</strong> When you only need to read values and don't need the index.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 5: Multidimensional Arrays -->
-        <div id="multidimensional" class="chapter">
-            <h2 class="chapter-title">5. Multidimensional Arrays</h2>
-            <div class="chapter-content">
-                <p>Java supports multidimensional arrays, which are essentially arrays of arrays. The most common type
-                    is the 2D array, often used to represent matrices or tables.</p>
+                    <!-- Chapter 5: Multidimensional Arrays -->
+                    <section id="multidimensional" class="chapter">
+                        <h2 class="chapter-title">5. Multidimensional Arrays</h2>
+                        <div class="chapter-content">
+                            <p>Java supports multidimensional arrays, which are essentially arrays of arrays. The most common type
+                                is the 2D array, often used to represent matrices or tables.</p>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> 2D Array Declaration and Initialization</div>
-                    <pre><span class="comment">// Creating a 3x3 matrix</span>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> 2D Array Declaration and Initialization</div>
+                                <pre><span class="comment">// Creating a 3x3 matrix</span>
 <span class="keyword">int</span>[][] matrix = <span class="keyword">new int</span>[<span class="number">3</span>][<span class="number">3</span>];
 
 <span class="comment">// Initialize with values</span>
@@ -237,12 +242,12 @@ System.out.println(<span class="string">"Sum: "</span> + sum); <span class="comm
     {<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>},
     {<span class="number">6</span>}
 };</pre>
-                </div>
+                            </div>
 
-                <h4>Accessing 2D Array Elements</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> 2D Array Access and Iteration</div>
-                    <pre><span class="keyword">int</span>[][] matrix = {{<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>}, {<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>}, {<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>}};
+                            <h4>Accessing 2D Array Elements</h4>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> 2D Array Access and Iteration</div>
+                                <pre><span class="keyword">int</span>[][] matrix = {{<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>}, {<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>}, {<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>}};
 
 <span class="comment">// Access specific element</span>
 <span class="keyword">int</span> element = matrix[<span class="number">1</span>][<span class="number">2</span>]; <span class="comment">// Gets 6 (row 1, column 2)</span>
@@ -262,22 +267,22 @@ System.out.println(<span class="string">"Sum: "</span> + sum); <span class="comm
     }
     System.out.println();
 }</pre>
-                </div>
-            </div>
-        </div>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 6: Common Array Operations -->
-        <div id="common-operations" class="chapter">
-            <h2 class="chapter-title">6. Common Array Operations</h2>
-            <div class="chapter-content">
-                <p>Here are some frequently used array operations that every Java developer should know:</p>
+                    <!-- Chapter 6: Common Array Operations -->
+                    <section id="common-operations" class="chapter">
+                        <h2 class="chapter-title">6. Common Array Operations</h2>
+                        <div class="chapter-content">
+                            <p>Here are some frequently used array operations that every Java developer should know:</p>
 
-                <h4>Finding Maximum and Minimum</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Find Max and Min Values</div>
-                    <pre><span class="keyword">public static int</span> findMax(<span class="keyword">int</span>[] array) {
+                            <h4>Finding Maximum and Minimum</h4>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Find Max and Min Values</div>
+                                <pre><span class="keyword">public static int</span> findMax(<span class="keyword">int</span>[] array) {
     <span class="keyword">if</span> (array.length == <span class="number">0</span>) <span class="keyword">return</span> Integer.MIN_VALUE;
-    
+
     <span class="keyword">int</span> max = array[<span class="number">0</span>];
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; array.length; i++) {
         <span class="keyword">if</span> (array[i] &gt; max) {
@@ -289,7 +294,7 @@ System.out.println(<span class="string">"Sum: "</span> + sum); <span class="comm
 
 <span class="keyword">public static int</span> findMin(<span class="keyword">int</span>[] array) {
     <span class="keyword">if</span> (array.length == <span class="number">0</span>) <span class="keyword">return</span> Integer.MAX_VALUE;
-    
+
     <span class="keyword">int</span> min = array[<span class="number">0</span>];
     <span class="keyword">for</span> (<span class="keyword">int</span> value : array) {
         <span class="keyword">if</span> (value &lt; min) {
@@ -298,12 +303,12 @@ System.out.println(<span class="string">"Sum: "</span> + sum); <span class="comm
     }
     <span class="keyword">return</span> min;
 }</pre>
-                </div>
+                            </div>
 
-                <h4>Array Copying</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Array Copying Methods</div>
-                    <pre><span class="keyword">int</span>[] original = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};
+                            <h4>Array Copying</h4>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Array Copying Methods</div>
+                                <pre><span class="keyword">int</span>[] original = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};
 
 <span class="comment">// Method 1: Manual copying</span>
 <span class="keyword">int</span>[] copy1 = <span class="keyword">new int</span>[original.length];
@@ -320,12 +325,12 @@ System.arraycopy(original, <span class="number">0</span>, copy2, <span class="nu
 
 <span class="comment">// Method 4: clone() method</span>
 <span class="keyword">int</span>[] copy4 = original.clone();</pre>
-                </div>
+                            </div>
 
-                <h4>Searching in Arrays</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Linear Search Implementation</div>
-                    <pre><span class="keyword">public static int</span> linearSearch(<span class="keyword">int</span>[] array, <span class="keyword">int</span> target) {
+                            <h4>Searching in Arrays</h4>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Linear Search Implementation</div>
+                                <pre><span class="keyword">public static int</span> linearSearch(<span class="keyword">int</span>[] array, <span class="keyword">int</span> target) {
     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) {
         <span class="keyword">if</span> (array[i] == target) {
             <span class="keyword">return</span> i; <span class="comment">// Return index if found</span>
@@ -338,21 +343,21 @@ System.arraycopy(original, <span class="number">0</span>, copy2, <span class="nu
 <span class="keyword">int</span>[] numbers = {<span class="number">10</span>, <span class="number">25</span>, <span class="number">30</span>, <span class="number">45</span>, <span class="number">50</span>};
 <span class="keyword">int</span> index = linearSearch(numbers, <span class="number">30</span>);
 System.out.println(<span class="string">"Found at index: "</span> + index); <span class="comment">// Output: 2</span></pre>
-                </div>
+                            </div>
 
-                <h4>Array Reversal</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Reverse Array In-Place</div>
-                    <pre><span class="keyword">public static void</span> reverseArray(<span class="keyword">int</span>[] array) {
+                            <h4>Array Reversal</h4>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Reverse Array In-Place</div>
+                                <pre><span class="keyword">public static void</span> reverseArray(<span class="keyword">int</span>[] array) {
     <span class="keyword">int</span> start = <span class="number">0</span>;
     <span class="keyword">int</span> end = array.length - <span class="number">1</span>;
-    
+
     <span class="keyword">while</span> (start &lt; end) {
         <span class="comment">// Swap elements</span>
         <span class="keyword">int</span> temp = array[start];
         array[start] = array[end];
         array[end] = temp;
-        
+
         start++;
         end--;
     }
@@ -362,34 +367,33 @@ System.out.println(<span class="string">"Found at index: "</span> + index); <spa
 <span class="keyword">int</span>[] arr = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};
 reverseArray(arr);
 <span class="comment">// arr is now {5, 4, 3, 2, 1}</span></pre>
-                </div>
-            </div>
-        </div>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 7: Best Practices -->
-        <div id="best-practices" class="chapter">
-            <h2 class="chapter-title">7. Best Practices</h2>
-            <div class="chapter-content">
-                <p>Following these best practices will help you write more efficient and maintainable code when working
-                    with arrays:</p>
+                    <!-- Chapter 7: Best Practices -->
+                    <section id="best-practices" class="chapter">
+                        <h2 class="chapter-title">7. Best Practices</h2>
+                        <div class="chapter-content">
+                            <p>Following these best practices will help you write more efficient and maintainable code when working
+                                with arrays:</p>
 
-                <div class="key-points">
-                    <h4><i class="fas fa-check-circle"></i> Performance Best Practices</h4>
-                    <ul>
-                        <li><strong>Initialize with known size:</strong> When you know the array size, specify it during
-                            creation</li>
-                        <li><strong>Use enhanced for-loops:</strong> When you don't need indices, for-each loops are
-                            cleaner</li>
-                        <li><strong>Avoid repeated length calls:</strong> Cache array.length in a variable for long
-                            loops</li>
-                        <li><strong>Consider ArrayList:</strong> For dynamic sizing, use ArrayList instead of arrays
-                        </li>
-                    </ul>
-                </div>
+                            <div class="key-points">
+                                <h4><i class="fas fa-check-circle"></i> Performance Best Practices</h4>
+                                <ul>
+                                    <li><strong>Initialize with known size:</strong> When you know the array size, specify it during
+                                        creation</li>
+                                    <li><strong>Use enhanced for-loops:</strong> When you don't need indices, for-each loops are
+                                        cleaner</li>
+                                    <li><strong>Avoid repeated length calls:</strong> Cache array.length in a variable for long
+                                        loops</li>
+                                    <li><strong>Consider ArrayList:</strong> For dynamic sizing, use ArrayList instead of arrays</li>
+                                </ul>
+                            </div>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Good Practices Example</div>
-                    <pre><span class="comment">// Good: Cache array length</span>
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Good Practices Example</div>
+                                <pre><span class="comment">// Good: Cache array length</span>
 <span class="keyword">int</span>[] data = getData();
 <span class="keyword">int</span> length = data.length;
 <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) {
@@ -401,7 +405,7 @@ reverseArray(arr);
     <span class="keyword">if</span> (array == <span class="keyword">null</span> || array.length == <span class="number">0</span>) {
         <span class="keyword">return</span> <span class="number">0</span>;
     }
-    
+
     <span class="keyword">int</span> sum = <span class="number">0</span>;
     <span class="keyword">for</span> (<span class="keyword">int</span> value : array) {
         sum += value;
@@ -412,21 +416,21 @@ reverseArray(arr);
 <span class="comment">// Good: Use meaningful variable names</span>
 <span class="keyword">String</span>[] studentNames = <span class="keyword">new String</span>[<span class="number">30</span>];
 <span class="keyword">int</span>[] testScores = <span class="keyword">new int</span>[studentNames.length];</pre>
-                </div>
+                            </div>
 
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Common Pitfalls to Avoid</h4>
-                    <ul>
-                        <li><strong>Index out of bounds:</strong> Always validate array indices</li>
-                        <li><strong>Null pointer exceptions:</strong> Check for null arrays before operations</li>
-                        <li><strong>Memory leaks:</strong> Set array elements to null when no longer needed</li>
-                        <li><strong>Comparing arrays with ==:</strong> Use Arrays.equals() for content comparison</li>
-                    </ul>
-                </div>
+                            <div class="warning-box">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Common Pitfalls to Avoid</h4>
+                                <ul>
+                                    <li><strong>Index out of bounds:</strong> Always validate array indices</li>
+                                    <li><strong>Null pointer exceptions:</strong> Check for null arrays before operations</li>
+                                    <li><strong>Memory leaks:</strong> Set array elements to null when no longer needed</li>
+                                    <li><strong>Comparing arrays with ==:</strong> Use Arrays.equals() for content comparison</li>
+                                </ul>
+                            </div>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Array Comparison and Utility Methods</div>
-                    <pre><span class="keyword">import</span> java.util.Arrays;
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Array Comparison and Utility Methods</div>
+                                <pre><span class="keyword">import</span> java.util.Arrays;
 
 <span class="comment">// Comparing arrays</span>
 <span class="keyword">int</span>[] arr1 = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};
@@ -443,94 +447,63 @@ Arrays.sort(arr1);                    <span class="comment">// Sort array</span>
 <span class="keyword">String</span> str = Arrays.toString(arr1);     <span class="comment">// Convert to string</span>
 <span class="keyword">int</span> index = Arrays.binarySearch(arr1, <span class="number">2</span>); <span class="comment">// Binary search</span>
 Arrays.fill(arr1, <span class="number">0</span>);                  <span class="comment">// Fill with value</span></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
+                                <ul>
+                                    <li>Arrays are fixed-size, zero-indexed collections of elements</li>
+                                    <li>Always validate array bounds to prevent exceptions</li>
+                                    <li>Use enhanced for-loops when you don't need indices</li>
+                                    <li>Consider ArrayList for dynamic collections</li>
+                                    <li>Leverage Arrays utility class for common operations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Summary Section -->
+                    <section id="summary" class="chapter">
+                        <h2 class="chapter-title">Summary</h2>
+                        <div class="chapter-content">
+                            <p>Arrays are fundamental to Java programming and understanding them thoroughly is crucial for any
+                                developer. From basic declaration and initialization to advanced operations like searching and
+                                sorting, arrays provide the foundation for many data structures and algorithms.</p>
+
+                            <p>Remember to always validate your inputs, handle edge cases, and choose the right iteration method for
+                                your specific use case. With practice, working with arrays will become second nature, and you'll be
+                                able to leverage their power effectively in your Java applications.</p>
+
+                            <div class="key-points">
+                                <h4><i class="fas fa-rocket"></i> Next Steps</h4>
+                                <ul>
+                                    <li>Practice implementing common array algorithms</li>
+                                    <li>Explore the Java Collections Framework</li>
+                                    <li>Learn about ArrayList and other dynamic collections</li>
+                                    <li>Study sorting and searching algorithms</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
                 </div>
 
-                <div class="highlight-box">
-                    <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
-                    <ul>
-                        <li>Arrays are fixed-size, zero-indexed collections of elements</li>
-                        <li>Always validate array bounds to prevent exceptions</li>
-                        <li>Use enhanced for-loops when you don't need indices</li>
-                        <li>Consider ArrayList for dynamic collections</li>
-                        <li>Leverage Arrays utility class for common operations</li>
-                    </ul>
-                </div>
-            </div>
+                <!-- Article Navigation -->
+                <footer class="article-nav"></footer>
+            </article>
         </div>
-
-        <!-- Summary Section -->
-        <div class="chapter">
-            <h2 class="chapter-title">Summary</h2>
-            <div class="chapter-content">
-                <p>Arrays are fundamental to Java programming and understanding them thoroughly is crucial for any
-                    developer. From basic declaration and initialization to advanced operations like searching and
-                    sorting, arrays provide the foundation for many data structures and algorithms.</p>
-
-                <p>Remember to always validate your inputs, handle edge cases, and choose the right iteration method for
-                    your specific use case. With practice, working with arrays will become second nature, and you'll be
-                    able to leverage their power effectively in your Java applications.</p>
-
-                <div class="key-points">
-                    <h4><i class="fas fa-rocket"></i> Next Steps</h4>
-                    <ul>
-                        <li>Practice implementing common array algorithms</li>
-                        <li>Explore the Java Collections Framework</li>
-                        <li>Learn about ArrayList and other dynamic collections</li>
-                        <li>Study sorting and searching algorithms</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 TechTok Cafe. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-            </div>
-        </div>
-    </footer>
+    <footer class="site-footer" id="site-footer"></footer>
 
-    <script>
-        // Smooth scrolling for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+    <!-- Back to Top -->
+    <button type="button" class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-        // Highlight current section in table of contents
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.chapter');
-            const tocLinks = document.querySelectorAll('.toc a');
-
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            tocLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+    <!-- Scripts -->
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
 
 </html>
