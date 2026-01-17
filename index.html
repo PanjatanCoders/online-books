@@ -1,328 +1,428 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TechTok Cafe - Technical Portfolio</title>
-    <!-- favicon -->
-    <link rel="icon" type="image/png" href="assets/images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/footer.css">
+    <meta name="description" content="TechTok Cafe - Technical Portfolio and Learning Hub. Master Java, Python, Web Development through comprehensive tutorials and guides.">
+    <title>TechTok Cafe - Technical Portfolio & Learning Hub</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
 
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="logo"><img src="assets/images/logo.png" class="logo" width="50px" height="50px"
-                    alt=""></a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="#home" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
+<body class="homepage">
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-                <!-- Java Dropdown -->
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link"><i class="fab fa-java"></i>Java <i class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-content">
-                        <!-- Core Java Fundamentals -->
-                        <div class="dropdown-section">
-                            <h4 class="dropdown-header">Core Java Fundamentals</h4>
-                            <a href="/java/core/java-basic.html" class="dropdown-item">
-                                <i class="fas fa-play-circle"></i>Java Basics
-                            </a>
-                            <a href="/java/core/conditional-statement.html" class="dropdown-item">
-                                <i class="fas fa-code-branch"></i>Conditional Statements
-                            </a>
-                            <a href="/java/core/java-loops.html" class="dropdown-item">
-                                <i class="fas fa-sync"></i>Java Loops
-                            </a>
-                            <a href="/java/core/array.html" class="dropdown-item">
-                                <i class="fas fa-th-list"></i>Arrays Guide
-                            </a>
-                            <a href="/java/core/java-methods.html" class="dropdown-item">
-                                <i class="fas fa-code"></i>Methods & Functions
-                            </a>
-                            <a href="/java/core/java-exceptions.html" class="dropdown-item">
-                                <i class="fas fa-exclamation-triangle"></i>Exception Handling
-                            </a>
-                        </div>
-                        
-                        <div class="dropdown-divider"></div>
-                        
-                        <!-- Object-Oriented Programming -->
-                        <div class="dropdown-section">
-                            <h4 class="dropdown-header">Object-Oriented Programming</h4>
-                            <a href="/java/core/java-oops.html" class="dropdown-item">
-                                <i class="fas fa-cubes"></i>OOP Concepts
-                            </a>
-                            <a href="/java/core/oops/abstract-interface.html" class="dropdown-item">
-                                <i class="fas fa-sitemap"></i>Abstract Classes & Interfaces
-                            </a>
-                            <a href="/java/core/oops/inheritance-polymorphism.html" class="dropdown-item">
-                                <i class="fas fa-project-diagram"></i>Inheritance & Polymorphism
-                            </a>
-                            <a href="/java/core/oops/generics.html" class="dropdown-item">
-                                <i class="fas fa-layer-group"></i>Generics
-                            </a>
-                        </div>
-                        
-                        <div class="dropdown-divider"></div>
-                        
-                        <!-- String Handling Section with Dropdown Submenu -->
-                        <div class="dropdown-section">
-                            <div class="submenu-item">
-                                <h4 class="dropdown-header submenu-trigger">
-                                    String Handling <i class="fas fa-chevron-down submenu-arrow"></i>
-                                </h4>
-                                <div class="submenu-dropdown">
-                                    <a href="/java/core/string/java-string-1.html" class="submenu-link">
-                                        <i class="fas fa-circle-dot"></i>Part 1A - Fundamentals & Creation
-                                    </a>
-                                    <a href="/java/core/string/java-string-2.html" class="submenu-link">
-                                        <i class="fas fa-circle-dot"></i>Part 1B - Methods & Comparison
-                                    </a>
-                                    <a href="/java/core/string/java-string-3.html" class="submenu-link">
-                                        <i class="fas fa-circle-dot"></i>Part 1C - Best Practices & Pitfalls
-                                    </a>
-                                    <a href="/java/core/string/java-string-4.html" class="submenu-link">
-                                        <i class="fas fa-circle-dot"></i>Part 2 - StringBuilder & StringBuffer
-                                    </a>
-                                    <a href="/java/core/string/java-regular-expresions.html" class="submenu-link">
-                                        <i class="fas fa-circle-dot"></i>Part 3 - Regular Expressions
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="dropdown-divider"></div>
-                        
-                        <!-- Advanced Java Concepts -->
-                        <div class="dropdown-section">
-                            <h4 class="dropdown-header">Advanced Java Concepts</h4>
-                            <a href="/java/advanced/java_collections_book.html" class="dropdown-item">
-                                <i class="fas fa-database"></i>Collections Framework
-                            </a>
-                            <a href="/java/advanced/thread.html" class="dropdown-item">
-                                <i class="fas fa-cogs"></i>Multithreading
-                            </a>
-                            <a href="/java/core/file/file-io.html" class="dropdown-item">
-                                <i class="fas fa-file-alt"></i>File I/O Part 1
-                            </a>
-                            <a href="/java/core/file/file-io-2.html" class="dropdown-item">
-                                <i class="fas fa-file-code"></i>File I/O Part 2
-                            </a>
-                        </div>
-                    </div>
-                </li>
-
-                <!-- Python Dropdown -->
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link"><i class="fab fa-python"></i>Python <i
-                            class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-robot"></i>Machine Learning Projects
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-chart-line"></i>Data Analysis Tutorials
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-globe"></i>Django Web Development
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-cloud"></i>Python Automation Scripts
-                        </a>
-                    </div>
-                </li>
-
-                <!-- Web Development Dropdown -->
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link"><i class="fas fa-code"></i>Web Dev <i
-                            class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-content">
-                        <a href="#" class="dropdown-item">
-                            <i class="fab fa-js"></i>JavaScript Projects
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <i class="fab fa-react"></i>React Applications
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <i class="fab fa-node-js"></i>Node.js Backend
-                        </a>
-                        <a href="#" class="dropdown-item">
-                            <i class="fas fa-mobile-alt"></i>Flutter Mobile Apps
-                        </a>
-                    </div>
-                </li>
-
-                <!-- Interview QnA Dropdown -->
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link"><i class="fas fa-book"></i>Interview QnA <i
-                            class="fas fa-chevron-down"></i></a>
-                    <div class="dropdown-content">
-                        <h4 class="dropdown-header">Testing & Automation</h4>
-                        <a href="/interview-qna/automation/automations-set-1.html" class="dropdown-item">
-                            <i class="fas fa-robot"></i>Automation - QnA Set 1
-                        </a>
-                        <a href="/interview-qna/automation/automations-set-2.html" class="dropdown-item">
-                            <i class="fas fa-robot"></i>Automation - QnA Set 2
-                        </a>
-                        <a href="/interview-qna/automation/automations-set-3.html" class="dropdown-item">
-                            <i class="fas fa-robot"></i>Automation - QnA Set 3
-                        </a>
-                        <a href="/interview-qna/testing/qa-qna.html" class="dropdown-item">
-                            <i class="fas fa-cogs"></i>Testing QnA
-                        </a>
-                        <!-- Add more QnA links here if needed -->
-                    </div>
-                </li>
-
-                <li class="nav-item"><a href="#about" class="nav-link"><i class="fas fa-user"></i>About</a></li>
-                <li class="nav-item"><a href="#contact" class="nav-link"><i class="fas fa-envelope"></i>Contact</a></li>
+    <!-- Homepage Navigation -->
+    <nav class="homepage-nav" id="homepage-nav">
+        <div class="homepage-nav-container">
+            <a href="/index.html" class="homepage-nav-brand">
+                <img src="/assets/images/logo.png" alt="TechTok Cafe" class="homepage-nav-logo">
+                <span class="homepage-nav-title">TechTok Cafe</span>
+            </a>
+            <ul class="homepage-nav-menu">
+                <li><a href="#home" class="homepage-nav-link">Home</a></li>
+                <li><a href="/java/index.html" class="homepage-nav-link">Java</a></li>
+                <li><a href="/interview-qna/index.html" class="homepage-nav-link">Interview Q&A</a></li>
+                <li><a href="#" class="homepage-nav-link disabled" title="Coming Soon">Python</a></li>
+                <li><a href="#" class="homepage-nav-link disabled" title="Coming Soon">Web Dev</a></li>
+                <li><a href="#featured" class="homepage-nav-link">Projects</a></li>
+                <li><a href="#about" class="homepage-nav-link">About</a></li>
             </ul>
-            <div class="mobile-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div class="top-nav-right">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-sun"></i>
+                </button>
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </nav>
 
+    <!-- Mobile Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="/index.html" class="sidebar-brand">
+                <img src="/assets/images/logo.png" alt="TechTok Cafe" class="sidebar-brand-logo">
+                <span class="sidebar-brand-text">TechTok Cafe</span>
+            </a>
+            <button class="sidebar-toggle" id="sidebar-close" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <nav class="sidebar-nav">
+            <div class="sidebar-category">
+                <div class="sidebar-category-title">Navigate</div>
+                <a href="#home" class="sidebar-nav-item">
+                    <i class="sidebar-nav-icon fas fa-home"></i>
+                    <span class="sidebar-nav-text">Home</span>
+                </a>
+                <a href="#featured" class="sidebar-nav-item">
+                    <i class="sidebar-nav-icon fas fa-star"></i>
+                    <span class="sidebar-nav-text">Featured</span>
+                </a>
+                <a href="#about" class="sidebar-nav-item">
+                    <i class="sidebar-nav-icon fas fa-user"></i>
+                    <span class="sidebar-nav-text">About</span>
+                </a>
+            </div>
+            <div class="sidebar-category">
+                <div class="sidebar-category-title">Tutorials</div>
+                <a href="/java/index.html" class="sidebar-nav-item">
+                    <i class="sidebar-nav-icon fab fa-java"></i>
+                    <span class="sidebar-nav-text">Java</span>
+                </a>
+                <a href="/interview-qna/index.html" class="sidebar-nav-item">
+                    <i class="sidebar-nav-icon fas fa-book"></i>
+                    <span class="sidebar-nav-text">Interview Q&A</span>
+                </a>
+                <a href="#" class="sidebar-nav-item disabled">
+                    <i class="sidebar-nav-icon fab fa-python"></i>
+                    <span class="sidebar-nav-text">Python</span>
+                    <span class="sidebar-nav-badge coming-soon">Soon</span>
+                </a>
+                <a href="#" class="sidebar-nav-item disabled">
+                    <i class="sidebar-nav-icon fas fa-code"></i>
+                    <span class="sidebar-nav-text">Web Dev</span>
+                    <span class="sidebar-nav-badge coming-soon">Soon</span>
+                </a>
+                <a href="#" class="sidebar-nav-item disabled">
+                    <i class="sidebar-nav-icon fas fa-chart-bar"></i>
+                    <span class="sidebar-nav-text">Data Science</span>
+                    <span class="sidebar-nav-badge coming-soon">Soon</span>
+                </a>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1>Full-Stack Developer & Technical Writer</h1>
-            <p>Passionate about creating efficient solutions with Java, Python, JavaScript, and modern frameworks.
-                Sharing knowledge through comprehensive technical guides and tutorials.</p>
-            <a href="#featured" class="cta-button">Explore My Work</a>
+            <h1 class="hero-title">Full-Stack Developer & Technical Writer</h1>
+            <p class="hero-subtitle">
+                Passionate about creating efficient solutions with Java, Python, JavaScript, and modern frameworks.
+                Sharing knowledge through comprehensive technical guides and tutorials.
+            </p>
+            <a href="#featured" class="hero-cta">
+                <i class="fas fa-rocket"></i> Explore My Work
+            </a>
         </div>
     </section>
 
-    <!-- Featured Section -->
-    <section id="featured" class="featured">
-        <h2 class="section-title">Featured Projects & Guides</h2>
-        <div class="featured-grid">
-            <div class="featured-card">
-                <div class="card-icon">
-                    <i class="fas fa-text-height"></i>
-                </div>
-                <h3 class="card-title">Java Strings Mastery Series</h3>
-                <p class="card-description">
-                    A comprehensive 5-part series covering Java strings from fundamentals to advanced regex patterns.
-                    Includes StringBuilder optimization, performance tips, and real-world examples.
-                </p>
-                <a href="/java/strings/java-strings-part1a.html" class="card-link">
-                    Start the Series <i class="fas fa-arrow-right"></i>
-                </a>
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Featured Section -->
+        <section id="featured" class="featured-section">
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects & Guides</h2>
+                <p class="section-subtitle">Explore comprehensive tutorials and real-world projects</p>
             </div>
 
-            <div class="featured-card">
-                <div class="card-icon">
-                    <i class="fas fa-book-open"></i>
-                </div>
-                <h3 class="card-title">Java Collections Framework Guide</h3>
-                <p class="card-description">
-                    A comprehensive guide covering Java Collections from basic to advanced concepts.
-                    Features detailed examples, performance comparisons, and best practices with beautiful formatting.
-                </p>
-                <a href="java-collections-book.html" class="card-link">
-                    Read the Guide <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
+            <div class="featured-grid">
+                <article class="tutorial-card">
+                    <div class="tutorial-card-icon">
+                        <i class="fas fa-text-height"></i>
+                    </div>
+                    <h3 class="tutorial-card-title">Java Strings Mastery Series</h3>
+                    <p class="tutorial-card-description">
+                        A comprehensive 5-part series covering Java strings from fundamentals to advanced regex patterns.
+                        Includes StringBuilder optimization, performance tips, and real-world examples.
+                    </p>
+                    <div class="tutorial-card-meta">
+                        <span><i class="fas fa-clock"></i> 75 min read</span>
+                        <span><i class="fas fa-file-alt"></i> 5 Parts</span>
+                    </div>
+                    <a href="/java/core/string/java-string-1.html" class="tutorial-card-link">
+                        Start the Series <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
 
-            <div class="featured-card">
-                <div class="card-icon">
-                    <i class="fas fa-laptop-code"></i>
-                </div>
-                <h3 class="card-title">Full-Stack Applications</h3>
-                <p class="card-description">
-                    Modern web applications built with React, Node.js, Spring Boot, and Python.
-                    Featuring responsive design, RESTful APIs, and cloud deployment.
-                </p>
-                <a href="#" class="card-link">
-                    View Projects <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
+                <article class="tutorial-card">
+                    <div class="tutorial-card-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="tutorial-card-title">Java Collections Framework Guide</h3>
+                    <p class="tutorial-card-description">
+                        A comprehensive guide covering Java Collections from basic to advanced concepts.
+                        Features detailed examples, performance comparisons, and best practices.
+                    </p>
+                    <div class="tutorial-card-meta">
+                        <span><i class="fas fa-clock"></i> 30 min read</span>
+                        <span><i class="fas fa-signal"></i> Advanced</span>
+                    </div>
+                    <a href="/java/advanced/java_collections_book.html" class="tutorial-card-link">
+                        Read the Guide <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
 
-            <div class="featured-card">
-                <div class="card-icon">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <h3 class="card-title">Flutter Mobile Apps</h3>
-                <p class="card-description">
-                    Cross-platform mobile applications with beautiful UI/UX, state management,
-                    and backend integration. Available on both iOS and Android.
-                </p>
-                <a href="#" class="card-link">
-                    Explore Apps <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+                <article class="tutorial-card">
+                    <div class="tutorial-card-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="tutorial-card-title">Multithreading in Java</h3>
+                    <p class="tutorial-card-description">
+                        Master Java concurrency with threads, synchronization, executors, and parallel processing.
+                        Learn to write efficient concurrent applications.
+                    </p>
+                    <div class="tutorial-card-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Advanced</span>
+                    </div>
+                    <a href="/java/advanced/thread.html" class="tutorial-card-link">
+                        Learn Threading <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
 
-    <!-- Skills Section -->
-    <section class="skills">
-        <div class="skills-container">
-            <h2 class="section-title">Technical Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fab fa-java"></i></div>
-                    <div class="skill-name">Java</div>
+                <article class="tutorial-card">
+                    <div class="tutorial-card-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="tutorial-card-title">Test Automation Interview Q&A</h3>
+                    <p class="tutorial-card-description">
+                        Prepare for automation testing interviews with curated questions and detailed answers.
+                        Covering Selenium, frameworks, and testing concepts.
+                    </p>
+                    <div class="tutorial-card-meta">
+                        <span><i class="fas fa-clock"></i> 80 min read</span>
+                        <span><i class="fas fa-question-circle"></i> 3 Sets</span>
+                    </div>
+                    <a href="/interview-qna/automation/automations-set-1.html" class="tutorial-card-link">
+                        Start Prep <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="about" class="skills-section">
+            <div class="skills-container">
+                <div class="section-header">
+                    <h2 class="section-title">Technical Expertise</h2>
+                    <p class="section-subtitle">Technologies and tools I work with</p>
                 </div>
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fab fa-python"></i></div>
-                    <div class="skill-name">Python</div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fab fa-js"></i></div>
-                    <div class="skill-name">JavaScript</div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fab fa-react"></i></div>
-                    <div class="skill-name">React</div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fab fa-node-js"></i></div>
-                    <div class="skill-name">Node.js</div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fas fa-leaf"></i></div>
-                    <div class="skill-name">Spring Boot</div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fas fa-mobile-alt"></i></div>
-                    <div class="skill-name">Flutter</div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fas fa-database"></i></div>
-                    <div class="skill-name">Databases</div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fab fa-aws"></i></div>
-                    <div class="skill-name">Cloud Services</div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon"><i class="fab fa-git-alt"></i></div>
-                    <div class="skill-name">Git & DevOps</div>
+
+                <div class="skills-grid">
+                    <div class="skill-badge">
+                        <i class="skill-badge-icon fab fa-java"></i>
+                        <span class="skill-badge-name">Java</span>
+                    </div>
+                    <div class="skill-badge">
+                        <i class="skill-badge-icon fab fa-python"></i>
+                        <span class="skill-badge-name">Python</span>
+                    </div>
+                    <div class="skill-badge">
+                        <i class="skill-badge-icon fab fa-js"></i>
+                        <span class="skill-badge-name">JavaScript</span>
+                    </div>
+                    <div class="skill-badge">
+                        <i class="skill-badge-icon fab fa-react"></i>
+                        <span class="skill-badge-name">React</span>
+                    </div>
+                    <div class="skill-badge">
+                        <i class="skill-badge-icon fab fa-node-js"></i>
+                        <span class="skill-badge-name">Node.js</span>
+                    </div>
+                    <div class="skill-badge">
+                        <i class="skill-badge-icon fas fa-leaf"></i>
+                        <span class="skill-badge-name">Spring Boot</span>
+                    </div>
+                    <div class="skill-badge">
+                        <i class="skill-badge-icon fas fa-mobile-alt"></i>
+                        <span class="skill-badge-name">Flutter</span>
+                    </div>
+                    <div class="skill-badge">
+                        <i class="skill-badge-icon fas fa-database"></i>
+                        <span class="skill-badge-name">Databases</span>
+                    </div>
+                    <div class="skill-badge">
+                        <i class="skill-badge-icon fab fa-aws"></i>
+                        <span class="skill-badge-name">AWS</span>
+                    </div>
+                    <div class="skill-badge">
+                        <i class="skill-badge-icon fab fa-git-alt"></i>
+                        <span class="skill-badge-name">Git & DevOps</span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div id="footer-placeholder"></div>
+    <footer class="site-footer no-sidebar">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-brand-title">TechTok Cafe</div>
+                    <p class="footer-brand-description">Technical Portfolio & Learning Hub - Sharing knowledge through comprehensive tutorials and guides.</p>
+                    <div class="footer-social">
+                        <a href="https://www.youtube.com/@techtok_cafe" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://medium.com/@ajaykumar-4" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Medium">
+                            <i class="fab fa-medium"></i>
+                        </a>
+                        <a href="https://github.com/AjayKumarGogineni777" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://ajay-me.vercel.app/" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Portfolio">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Tutorials</h4>
+                    <ul class="footer-links">
+                        <li><a href="/java/index.html"><i class="fab fa-java"></i> Java</a></li>
+                        <li><a href="/interview-qna/index.html"><i class="fas fa-book"></i> Interview Q&A</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="/index.html"><i class="fas fa-home"></i> Home</a></li>
+                        <li><a href="#about"><i class="fas fa-user"></i> About</a></li>
+                        <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Connect</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.youtube.com/@techtok_cafe" target="_blank"><i class="fab fa-youtube"></i> YouTube</a></li>
+                        <li><a href="https://medium.com/@ajaykumar-4" target="_blank"><i class="fab fa-medium"></i> Medium</a></li>
+                        <li><a href="https://github.com/AjayKumarGogineni777" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    &copy; 2024 TechTok Cafe. All rights reserved.
+                </p>
+                <p class="footer-made-with">
+                    Made with love and lots of coffee <i class="fas fa-heart"></i>
+                </p>
+            </div>
+        </div>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="/js/navigation-data.js"></script>
     <script>
-        fetch("footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
+        // Homepage specific functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme Toggle
+            const STORAGE_KEY = 'techtok-theme';
+            const themeToggle = document.getElementById('theme-toggle');
+            const savedTheme = localStorage.getItem(STORAGE_KEY);
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const theme = savedTheme || (prefersDark ? 'dark' : 'light');
+
+            document.documentElement.setAttribute('data-theme', theme);
+            updateThemeIcon(theme);
+
+            themeToggle.addEventListener('click', () => {
+                const current = document.documentElement.getAttribute('data-theme');
+                const newTheme = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem(STORAGE_KEY, newTheme);
+                updateThemeIcon(newTheme);
             });
+
+            function updateThemeIcon(theme) {
+                const icon = themeToggle.querySelector('i');
+                icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            }
+
+            // Mobile Menu
+            const mobileToggle = document.getElementById('mobile-menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarClose = document.getElementById('sidebar-close');
+            const overlay = document.getElementById('sidebar-overlay');
+
+            function openSidebar() {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeSidebar() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            mobileToggle.addEventListener('click', openSidebar);
+            sidebarClose.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+
+            // Close sidebar on link click
+            sidebar.querySelectorAll('.sidebar-nav-item:not(.disabled)').forEach(link => {
+                link.addEventListener('click', closeSidebar);
+            });
+
+            // Navbar scroll effect
+            const nav = document.getElementById('homepage-nav');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+
+            // Back to Top
+            const backToTop = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
+            });
+
+            backToTop.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+
+                    e.preventDefault();
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
     </script>
-    <script src="/js/main.js"></script>
-    <script src="/js/footer.js"></script>
 </body>
 
 </html>

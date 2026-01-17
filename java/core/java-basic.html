@@ -1,128 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Essential Java fundamentals for quick learning and reference. Learn variables, data types, operators, and your first Java program.">
     <title>Java Basics Guide - TechTok Cafe</title>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/java-basics.css">
-    <link rel="stylesheet" href="/css/footer.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
-                    height="50px" alt="TechTok Cafe"></a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Back Navigation -->
-    <div class="back-nav">
-        <a href="/index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-    </div>
+    <!-- Top Navigation -->
+    <header class="top-nav" id="top-nav"></header>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
 
     <!-- Main Content -->
-    <div class="guide-container">
-        <!-- Header -->
-        <div class="guide-header">
-            <h1 class="guide-title">Java Basics Guide</h1>
-            <p class="guide-subtitle">Essential Java fundamentals for quick learning and reference</p>
-        </div>
+    <main class="page-content" id="main-content">
+        <!-- Reading Progress -->
+        <div class="reading-progress" id="reading-progress"></div>
 
-        <!-- Table of Contents -->
-        <div class="toc">
-            <h3><i class="fas fa-list"></i> Quick Reference</h3>
-            <ul>
-                <li><a href="#introduction">1. Introduction & Features</a></li>
-                <li><a href="#installation">2. Installation & Setup</a></li>
-                <li><a href="#first-program">3. Your First Java Program</a></li>
-                <li><a href="#variables">4. Variables & Data Types</a></li>
-                <li><a href="#operators">5. Operators</a></li>
-                <li><a href="#quick-examples">6. Quick Examples</a></li>
-            </ul>
-        </div>
+        <div class="content-wrapper">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" id="breadcrumb"></nav>
 
-        <!-- Chapter 1: Introduction -->
-        <div id="introduction" class="chapter">
-            <h2 class="chapter-title">1. Introduction & Features</h2>
-            <div class="chapter-content">
-                <p>Java is a platform-independent, object-oriented programming language. Write once, run anywhere.</p>
+            <!-- Article Container -->
+            <article class="article-container">
+                <!-- Article Header -->
+                <header class="article-header">
+                    <h1 class="article-title">Java Basics Guide</h1>
+                    <p class="article-subtitle">Essential Java fundamentals for quick learning and reference</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 15 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                    </div>
+                </header>
 
-                <div class="feature-grid">
-                    <div class="feature-card">
-                        <i class="fas fa-globe"></i>
-                        <h4>Platform Independent</h4>
-                        <p>Runs on any OS with JVM</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-cube"></i>
-                        <h4>Object-Oriented</h4>
-                        <p>Classes, objects, inheritance</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-shield-alt"></i>
-                        <h4>Secure</h4>
-                        <p>Built-in security features</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-memory"></i>
-                        <h4>Memory Management</h4>
-                        <p>Automatic garbage collection</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <!-- Table of Contents -->
+                <nav class="toc" id="toc">
+                    <h3 class="toc-title"><i class="fas fa-list"></i> Quick Reference</h3>
+                    <ul class="toc-list">
+                        <li class="toc-item"><a href="#introduction" class="toc-link">1. Introduction & Features</a></li>
+                        <li class="toc-item"><a href="#installation" class="toc-link">2. Installation & Setup</a></li>
+                        <li class="toc-item"><a href="#first-program" class="toc-link">3. Your First Java Program</a></li>
+                        <li class="toc-item"><a href="#variables" class="toc-link">4. Variables & Data Types</a></li>
+                        <li class="toc-item"><a href="#operators" class="toc-link">5. Operators</a></li>
+                        <li class="toc-item"><a href="#quick-examples" class="toc-link">6. Quick Examples</a></li>
+                    </ul>
+                </nav>
 
-        <!-- Chapter 2: Installation -->
-        <div id="installation" class="chapter">
-            <h2 class="chapter-title">2. Installation & Setup</h2>
-            <div class="chapter-content">
-                
-                <div class="setup-steps">
-                    <div class="step">
-                        <div class="step-number">1</div>
-                        <div class="step-content">
-                            <h4>Download JDK</h4>
-                            <p>Get the latest JDK from Oracle or OpenJDK</p>
+                <!-- Article Body -->
+                <div class="article-body">
+                    <!-- Chapter 1: Introduction -->
+                    <section id="introduction" class="chapter">
+                        <h2 class="chapter-title">1. Introduction & Features</h2>
+                        <div class="chapter-content">
+                            <p>Java is a platform-independent, object-oriented programming language. Write once, run anywhere.</p>
+
+                            <div class="feature-grid">
+                                <div class="feature-card">
+                                    <i class="fas fa-globe"></i>
+                                    <h4 class="feature-card-title">Platform Independent</h4>
+                                    <p class="feature-card-description">Runs on any OS with JVM</p>
+                                </div>
+                                <div class="feature-card">
+                                    <i class="fas fa-cube"></i>
+                                    <h4 class="feature-card-title">Object-Oriented</h4>
+                                    <p class="feature-card-description">Classes, objects, inheritance</p>
+                                </div>
+                                <div class="feature-card">
+                                    <i class="fas fa-shield-alt"></i>
+                                    <h4 class="feature-card-title">Secure</h4>
+                                    <p class="feature-card-description">Built-in security features</p>
+                                </div>
+                                <div class="feature-card">
+                                    <i class="fas fa-memory"></i>
+                                    <h4 class="feature-card-title">Memory Management</h4>
+                                    <p class="feature-card-description">Automatic garbage collection</p>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">2</div>
-                        <div class="step-content">
-                            <h4>Set JAVA_HOME</h4>
-                            <p>Point to JDK installation directory</p>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">3</div>
-                        <div class="step-content">
-                            <h4>Update PATH</h4>
-                            <p>Add JDK/bin to system PATH</p>
-                        </div>
-                    </div>
-                    <div class="step">
-                        <div class="step-number">4</div>
-                        <div class="step-content">
-                            <h4>Verify Installation</h4>
-                            <p>Run: java -version</p>
-                        </div>
-                    </div>
-                </div>
+                    </section>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fas fa-terminal"></i> Verification Commands</div>
-                    <pre><span class="comment"># Check Java version</span>
+                    <!-- Chapter 2: Installation -->
+                    <section id="installation" class="chapter">
+                        <h2 class="chapter-title">2. Installation & Setup</h2>
+                        <div class="chapter-content">
+                            <div class="steps">
+                                <div class="step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h4>Download JDK</h4>
+                                        <p>Get the latest JDK from Oracle or OpenJDK</p>
+                                    </div>
+                                </div>
+                                <div class="step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h4>Set JAVA_HOME</h4>
+                                        <p>Point to JDK installation directory</p>
+                                    </div>
+                                </div>
+                                <div class="step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h4>Update PATH</h4>
+                                        <p>Add JDK/bin to system PATH</p>
+                                    </div>
+                                </div>
+                                <div class="step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <h4>Verify Installation</h4>
+                                        <p>Run: java -version</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-title"><i class="fas fa-terminal"></i> Verification Commands</div>
+                                <pre><span class="comment"># Check Java version</span>
 java -version
 
 <span class="comment"># Check compiler version</span>
@@ -131,103 +151,98 @@ javac -version
 <span class="comment"># Expected output:</span>
 java version "17.0.2" 2022-01-18
 Java(TM) SE Runtime Environment...</pre>
-                </div>
-            </div>
-        </div>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 3: First Program -->
-        <div id="first-program" class="chapter">
-            <h2 class="chapter-title">3. Your First Java Program</h2>
-            <div class="chapter-content">
-                
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> HelloWorld.java</div>
-                    <pre><span class="keyword">public class</span> HelloWorld {
+                    <!-- Chapter 3: First Program -->
+                    <section id="first-program" class="chapter">
+                        <h2 class="chapter-title">3. Your First Java Program</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> HelloWorld.java</div>
+                                <pre><span class="keyword">public class</span> HelloWorld {
     <span class="keyword">public static void</span> main(String[] args) {
         System.out.println(<span class="string">"Hello, World!"</span>);
     }
 }</pre>
-                </div>
+                            </div>
 
-                <div class="compile-run">
-                    <div class="step-item">
-                        <h4><i class="fas fa-hammer"></i> Compile</h4>
-                        <code>javac HelloWorld.java</code>
-                    </div>
-                    <div class="step-item">
-                        <h4><i class="fas fa-play"></i> Run</h4>
-                        <code>java HelloWorld</code>
-                    </div>
-                </div>
+                            <div class="feature-grid">
+                                <div class="feature-card">
+                                    <i class="fas fa-hammer"></i>
+                                    <h4 class="feature-card-title">Compile</h4>
+                                    <p class="feature-card-description"><code>javac HelloWorld.java</code></p>
+                                </div>
+                                <div class="feature-card">
+                                    <i class="fas fa-play"></i>
+                                    <h4 class="feature-card-title">Run</h4>
+                                    <p class="feature-card-description"><code>java HelloWorld</code></p>
+                                </div>
+                            </div>
 
-                <div class="key-points">
-                    <h4><i class="fas fa-key"></i> Key Points</h4>
-                    <ul>
-                        <li>Class name must match filename</li>
-                        <li>main() method is the entry point</li>
-                        <li>Java is case-sensitive</li>
-                        <li>Statements end with semicolon</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- Chapter 4: Variables & Data Types -->
-        <div id="variables" class="chapter">
-            <h2 class="chapter-title">4. Variables & Data Types</h2>
-            <div class="chapter-content">
-                
-                <div class="data-types-grid">
-                    <div class="type-category">
-                        <h4>Primitive Types</h4>
-                        <div class="type-list">
-                            <div class="type-item">
-                                <span class="type-name">byte</span>
-                                <span class="type-size">8-bit</span>
-                                <span class="type-range">-128 to 127</span>
-                            </div>
-                            <div class="type-item">
-                                <span class="type-name">short</span>
-                                <span class="type-size">16-bit</span>
-                                <span class="type-range">-32,768 to 32,767</span>
-                            </div>
-                            <div class="type-item">
-                                <span class="type-name">int</span>
-                                <span class="type-size">32-bit</span>
-                                <span class="type-range">-2³¹ to 2³¹-1</span>
-                            </div>
-                            <div class="type-item">
-                                <span class="type-name">long</span>
-                                <span class="type-size">64-bit</span>
-                                <span class="type-range">-2⁶³ to 2⁶³-1</span>
-                            </div>
-                            <div class="type-item">
-                                <span class="type-name">float</span>
-                                <span class="type-size">32-bit</span>
-                                <span class="type-range">IEEE 754</span>
-                            </div>
-                            <div class="type-item">
-                                <span class="type-name">double</span>
-                                <span class="type-size">64-bit</span>
-                                <span class="type-range">IEEE 754</span>
-                            </div>
-                            <div class="type-item">
-                                <span class="type-name">char</span>
-                                <span class="type-size">16-bit</span>
-                                <span class="type-range">Unicode</span>
-                            </div>
-                            <div class="type-item">
-                                <span class="type-name">boolean</span>
-                                <span class="type-size">1-bit</span>
-                                <span class="type-range">true/false</span>
+                            <div class="key-points">
+                                <h4><i class="fas fa-key"></i> Key Points</h4>
+                                <ul>
+                                    <li>Class name must match filename</li>
+                                    <li>main() method is the entry point</li>
+                                    <li>Java is case-sensitive</li>
+                                    <li>Statements end with semicolon</li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </section>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Variable Declarations</div>
-                    <pre><span class="comment">// Integer types</span>
+                    <!-- Chapter 4: Variables & Data Types -->
+                    <section id="variables" class="chapter">
+                        <h2 class="chapter-title">4. Variables & Data Types</h2>
+                        <div class="chapter-content">
+                            <div class="data-grid">
+                                <div class="data-item">
+                                    <span class="data-name">byte</span>
+                                    <span class="data-size">8-bit</span>
+                                    <span class="data-range">-128 to 127</span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="data-name">short</span>
+                                    <span class="data-size">16-bit</span>
+                                    <span class="data-range">-32,768 to 32,767</span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="data-name">int</span>
+                                    <span class="data-size">32-bit</span>
+                                    <span class="data-range">-2^31 to 2^31-1</span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="data-name">long</span>
+                                    <span class="data-size">64-bit</span>
+                                    <span class="data-range">-2^63 to 2^63-1</span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="data-name">float</span>
+                                    <span class="data-size">32-bit</span>
+                                    <span class="data-range">IEEE 754</span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="data-name">double</span>
+                                    <span class="data-size">64-bit</span>
+                                    <span class="data-range">IEEE 754</span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="data-name">char</span>
+                                    <span class="data-size">16-bit</span>
+                                    <span class="data-range">Unicode</span>
+                                </div>
+                                <div class="data-item">
+                                    <span class="data-name">boolean</span>
+                                    <span class="data-size">1-bit</span>
+                                    <span class="data-range">true/false</span>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Variable Declarations</div>
+                                <pre><span class="comment">// Integer types</span>
 <span class="keyword">int</span> age = <span class="number">25</span>;
 <span class="keyword">long</span> population = <span class="number">8000000000L</span>;
 
@@ -241,216 +256,181 @@ Java(TM) SE Runtime Environment...</pre>
 
 <span class="comment">// String (reference type)</span>
 String name = <span class="string">"Java"</span>;</pre>
-                </div>
+                            </div>
 
-                <div class="highlight-box">
-                    <h4><i class="fas fa-lightbulb"></i> Variable Rules</h4>
-                    <p>Names must start with letter, $, or _. Cannot use Java keywords. Use camelCase convention.</p>
-                </div>
-            </div>
-        </div>
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Variable Rules</h4>
+                                <p>Names must start with letter, $, or _. Cannot use Java keywords. Use camelCase convention.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 5: Operators -->
-        <div id="operators" class="chapter">
-            <h2 class="chapter-title">5. Operators</h2>
-            <div class="chapter-content">
-                
-                <div class="operators-grid">
-                    <div class="operator-category">
-                        <h4><i class="fas fa-plus"></i> Arithmetic</h4>
-                        <div class="operator-list">
-                            <span>+ (addition)</span>
-                            <span>- (subtraction)</span>
-                            <span>* (multiplication)</span>
-                            <span>/ (division)</span>
-                            <span>% (modulus)</span>
-                            <span>++ (increment)</span>
-                            <span>-- (decrement)</span>
-                        </div>
-                    </div>
-                    
-                    <div class="operator-category">
-                        <h4><i class="fas fa-equals"></i> Comparison</h4>
-                        <div class="operator-list">
-                            <span>== (equal)</span>
-                            <span>!= (not equal)</span>
-                            <span>> (greater than)</span>
-                            <span>< (less than)</span>
-                            <span>>= (greater equal)</span>
-                            <span><= (less equal)</span>
-                        </div>
-                    </div>
-                    
-                    <div class="operator-category">
-                        <h4><i class="fas fa-link"></i> Logical</h4>
-                        <div class="operator-list">
-                            <span>&& (AND)</span>
-                            <span>|| (OR)</span>
-                            <span>! (NOT)</span>
-                        </div>
-                    </div>
-                    
-                    <div class="operator-category">
-                        <h4><i class="fas fa-arrow-right"></i> Assignment</h4>
-                        <div class="operator-list">
-                            <span>= (assign)</span>
-                            <span>+= (add assign)</span>
-                            <span>-= (subtract assign)</span>
-                            <span>*= (multiply assign)</span>
-                            <span>/= (divide assign)</span>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Chapter 5: Operators -->
+                    <section id="operators" class="chapter">
+                        <h2 class="chapter-title">5. Operators</h2>
+                        <div class="chapter-content">
+                            <div class="operators-grid">
+                                <div class="operator-category">
+                                    <h4><i class="fas fa-plus"></i> Arithmetic</h4>
+                                    <div class="operator-list">
+                                        <span class="operator-item">+ (add)</span>
+                                        <span class="operator-item">- (sub)</span>
+                                        <span class="operator-item">* (mul)</span>
+                                        <span class="operator-item">/ (div)</span>
+                                        <span class="operator-item">% (mod)</span>
+                                        <span class="operator-item">++</span>
+                                        <span class="operator-item">--</span>
+                                    </div>
+                                </div>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Operator Examples</div>
-                    <pre><span class="keyword">int</span> a = <span class="number">10</span>, b = <span class="number">5</span>;
+                                <div class="operator-category">
+                                    <h4><i class="fas fa-equals"></i> Comparison</h4>
+                                    <div class="operator-list">
+                                        <span class="operator-item">==</span>
+                                        <span class="operator-item">!=</span>
+                                        <span class="operator-item">&gt;</span>
+                                        <span class="operator-item">&lt;</span>
+                                        <span class="operator-item">&gt;=</span>
+                                        <span class="operator-item">&lt;=</span>
+                                    </div>
+                                </div>
+
+                                <div class="operator-category">
+                                    <h4><i class="fas fa-link"></i> Logical</h4>
+                                    <div class="operator-list">
+                                        <span class="operator-item">&amp;&amp; (AND)</span>
+                                        <span class="operator-item">|| (OR)</span>
+                                        <span class="operator-item">! (NOT)</span>
+                                    </div>
+                                </div>
+
+                                <div class="operator-category">
+                                    <h4><i class="fas fa-arrow-right"></i> Assignment</h4>
+                                    <div class="operator-list">
+                                        <span class="operator-item">=</span>
+                                        <span class="operator-item">+=</span>
+                                        <span class="operator-item">-=</span>
+                                        <span class="operator-item">*=</span>
+                                        <span class="operator-item">/=</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-title"><i class="fab fa-java"></i> Operator Examples</div>
+                                <pre><span class="keyword">int</span> a = <span class="number">10</span>, b = <span class="number">5</span>;
 
 <span class="comment">// Arithmetic</span>
 <span class="keyword">int</span> sum = a + b;        <span class="comment">// 15</span>
 <span class="keyword">int</span> remainder = a % b;  <span class="comment">// 0</span>
 
 <span class="comment">// Comparison</span>
-<span class="keyword">boolean</span> isGreater = a > b;  <span class="comment">// true</span>
+<span class="keyword">boolean</span> isGreater = a &gt; b;  <span class="comment">// true</span>
 
 <span class="comment">// Logical</span>
-<span class="keyword">boolean</span> result = (a > <span class="number">5</span>) && (b < <span class="number">10</span>);  <span class="comment">// true</span>
+<span class="keyword">boolean</span> result = (a &gt; <span class="number">5</span>) &amp;&amp; (b &lt; <span class="number">10</span>);  <span class="comment">// true</span>
 
 <span class="comment">// Assignment</span>
 a += <span class="number">5</span>;  <span class="comment">// a = a + 5, now a = 15</span></pre>
-                </div>
-            </div>
-        </div>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 6: Quick Examples -->
-        <div id="quick-examples" class="chapter">
-            <h2 class="chapter-title">6. Quick Examples</h2>
-            <div class="chapter-content">
-                
-                <div class="example-grid">
-                    <div class="example-card">
-                        <h4><i class="fas fa-calculator"></i> Calculator</h4>
-                        <div class="code-block">
-                            <pre><span class="keyword">int</span> num1 = <span class="number">15</span>, num2 = <span class="number">4</span>;
+                    <!-- Chapter 6: Quick Examples -->
+                    <section id="quick-examples" class="chapter">
+                        <h2 class="chapter-title">6. Quick Examples</h2>
+                        <div class="chapter-content">
+                            <div class="example-grid">
+                                <div class="card">
+                                    <h4 class="card-title"><i class="fas fa-calculator"></i> Calculator</h4>
+                                    <div class="code-block">
+                                        <pre><span class="keyword">int</span> num1 = <span class="number">15</span>, num2 = <span class="number">4</span>;
 System.out.println(num1 + num2);  <span class="comment">// 19</span>
 System.out.println(num1 - num2);  <span class="comment">// 11</span>
 System.out.println(num1 * num2);  <span class="comment">// 60</span>
 System.out.println(num1 / num2);  <span class="comment">// 3</span></pre>
-                        </div>
-                    </div>
-                    
-                    <div class="example-card">
-                        <h4><i class="fas fa-text-width"></i> String Operations</h4>
-                        <div class="code-block">
-                            <pre>String firstName = <span class="string">"John"</span>;
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <h4 class="card-title"><i class="fas fa-text-width"></i> String Operations</h4>
+                                    <div class="code-block">
+                                        <pre>String firstName = <span class="string">"John"</span>;
 String lastName = <span class="string">"Doe"</span>;
 String fullName = firstName + <span class="string">" "</span> + lastName;
 System.out.println(fullName);  <span class="comment">// John Doe</span>
 System.out.println(fullName.length());  <span class="comment">// 8</span></pre>
-                        </div>
-                    </div>
-                    
-                    <div class="example-card">
-                        <h4><i class="fas fa-exchange-alt"></i> Type Conversion</h4>
-                        <div class="code-block">
-                            <pre><span class="comment">// Implicit (widening)</span>
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <h4 class="card-title"><i class="fas fa-exchange-alt"></i> Type Conversion</h4>
+                                    <div class="code-block">
+                                        <pre><span class="comment">// Implicit (widening)</span>
 <span class="keyword">int</span> i = <span class="number">100</span>;
 <span class="keyword">double</span> d = i;  <span class="comment">// 100.0</span>
 
 <span class="comment">// Explicit (narrowing)</span>
 <span class="keyword">double</span> price = <span class="number">99.99</span>;
 <span class="keyword">int</span> rounded = (<span class="keyword">int</span>) price;  <span class="comment">// 99</span></pre>
-                        </div>
-                    </div>
-                    
-                    <div class="example-card">
-                        <h4><i class="fas fa-user-input"></i> User Input</h4>
-                        <div class="code-block">
-                            <pre><span class="keyword">import</span> java.util.Scanner;
+                                    </div>
+                                </div>
+
+                                <div class="card">
+                                    <h4 class="card-title"><i class="fas fa-keyboard"></i> User Input</h4>
+                                    <div class="code-block">
+                                        <pre><span class="keyword">import</span> java.util.Scanner;
 
 Scanner input = <span class="keyword">new</span> Scanner(System.in);
 System.out.print(<span class="string">"Enter name: "</span>);
 String name = input.nextLine();
 System.out.println(<span class="string">"Hello "</span> + name);</pre>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tips-section">
+                                <h4><i class="fas fa-rocket"></i> Next Steps</h4>
+                                <div class="tips-grid">
+                                    <div class="tip-item">
+                                        <i class="fas fa-code-branch"></i>
+                                        <span>Learn Control Structures (if, loops)</span>
+                                    </div>
+                                    <div class="tip-item">
+                                        <i class="fas fa-layer-group"></i>
+                                        <span>Understand Arrays & Collections</span>
+                                    </div>
+                                    <div class="tip-item">
+                                        <i class="fas fa-cube"></i>
+                                        <span>Master Object-Oriented Programming</span>
+                                    </div>
+                                    <div class="tip-item">
+                                        <i class="fas fa-bug"></i>
+                                        <span>Practice Error Handling</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
 
-                <div class="final-tips">
-                    <h4><i class="fas fa-rocket"></i> Next Steps</h4>
-                    <div class="tips-grid">
-                        <div class="tip">
-                            <i class="fas fa-code-branch"></i>
-                            <span>Learn Control Structures (if, loops)</span>
-                        </div>
-                        <div class="tip">
-                            <i class="fas fa-layer-group"></i>
-                            <span>Understand Arrays & Collections</span>
-                        </div>
-                        <div class="tip">
-                            <i class="fas fa-cube"></i>
-                            <span>Master Object-Oriented Programming</span>
-                        </div>
-                        <div class="tip">
-                            <i class="fas fa-bug"></i>
-                            <span>Practice Error Handling</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <!-- Article Navigation -->
+                <footer class="article-nav"></footer>
+            </article>
         </div>
-    </div>
+    </main>
 
-    <!-- Footer Section -->
-        <footer class="footer">
-        <div id="footer-placeholder"></div>
-    </footer>
-    <script>
-        fetch("/footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
-    <script src="/js/footer.js"></script>
-    <script src="/js/reading-progress.js"></script>
+    <!-- Footer -->
+    <footer class="site-footer" id="site-footer"></footer>
 
-    <script>
-        // Smooth scrolling for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+    <!-- Back to Top -->
+    <button type="button" class="back-to-top" id="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
-        // Highlight current section in table of contents
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.chapter');
-            const tocLinks = document.querySelectorAll('.toc a');
-
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            tocLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+    <!-- Scripts -->
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
 
 </html>
