@@ -1,545 +1,542 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master Java inheritance and polymorphism concepts with practical examples. Learn method overriding, overloading, and OOP best practices.">
     <title>Java Inheritance & Polymorphism - TechTok Cafe</title>
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/oops-inheritance.css">
-    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
-
 <body>
-    <!-- Reading Progress Bar -->
-    <div class="reading-progress" id="reading-progress"></div>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
-                    height="50px" alt="TechTok Cafe"></a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
-            </ul>
-        </div>
-    </nav>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
 
-    <!-- Back Navigation -->
-    <div class="back-nav">
-        <a href="/index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-    </div>
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Header -->
-        <div class="guide-header">
-            <h1 class="guide-title">Java Inheritance & Polymorphism</h1>
-            <p class="guide-subtitle">Master OOP concepts with practical examples</p>
-        </div>
-
-        <!-- Table of Contents -->
-        <div class="toc">
-            <h3><i class="fas fa-list"></i> Quick Navigation</h3>
-            <ul>
-                <li><a href="#inheritance">1. Inheritance Fundamentals</a></li>
-                <li><a href="#types-inheritance">2. Types of Inheritance</a></li>
-                <li><a href="#polymorphism">3. Polymorphism Concepts</a></li>
-                <li><a href="#method-overriding">4. Method Overriding</a></li>
-                <li><a href="#method-overloading">5. Method Overloading</a></li>
-                <li><a href="#best-practices">6. Best Practices</a></li>
-            </ul>
-        </div>
-
-        <!-- Chapter 1: Inheritance Fundamentals -->
-        <div id="inheritance" class="chapter">
-            <h2 class="chapter-title">1. Inheritance Fundamentals</h2>
-            <div class="chapter-content">
-                <p>Inheritance allows a class to inherit properties and methods from another class, promoting code reusability and establishing "is-a" relationships.</p>
-
-                <div class="concept-grid">
-                    <div class="concept-card">
-                        <i class="fas fa-sitemap"></i>
-                        <h4>Parent Class</h4>
-                        <p>Base class that provides common features</p>
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Java Inheritance & Polymorphism</h1>
+                    <p class="article-subtitle">Master OOP concepts with practical examples</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
                     </div>
-                    <div class="concept-card">
-                        <i class="fas fa-code-branch"></i>
-                        <h4>Child Class</h4>
-                        <p>Derived class that inherits and extends</p>
-                    </div>
-                    <div class="concept-card">
-                        <i class="fas fa-link"></i>
-                        <h4>extends Keyword</h4>
-                        <p>Establishes inheritance relationship</p>
-                    </div>
-                </div>
+                </header>
 
-                <h3 class="section-title">Basic Inheritance Example</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Animal - Vehicle Example</div>
-                    <pre><code><span class="comment">// Parent Class</span>
-<span class="keyword">class</span> <span class="type">Animal</span> {
-    <span class="keyword">protected</span> <span class="type">String</span> name;
+                <nav class="toc" id="toc"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: Inheritance Fundamentals -->
+                    <section id="inheritance" class="chapter">
+                        <h2 class="chapter-title">Inheritance Fundamentals</h2>
+                        <div class="chapter-content">
+                            <p>Inheritance allows a class to inherit properties and methods from another class, promoting code reusability and establishing "is-a" relationships.</p>
+
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <i class="fas fa-sitemap"></i>
+                                    <h4>Parent Class</h4>
+                                    <p>Base class that provides common features</p>
+                                </div>
+                                <div class="card">
+                                    <i class="fas fa-code-branch"></i>
+                                    <h4>Child Class</h4>
+                                    <p>Derived class that inherits and extends</p>
+                                </div>
+                                <div class="card">
+                                    <i class="fas fa-link"></i>
+                                    <h4>extends Keyword</h4>
+                                    <p>Establishes inheritance relationship</p>
+                                </div>
+                            </div>
+
+                            <h3>Basic Inheritance Example</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Animal - Dog Example</span>
+                                </div>
+                                <pre><code><span class="comment">// Parent Class</span>
+<span class="keyword">class</span> Animal {
+    <span class="keyword">protected</span> String name;
     <span class="keyword">protected</span> <span class="keyword">int</span> age;
-    
-    <span class="keyword">public</span> <span class="type">Animal</span>(<span class="type">String</span> name, <span class="keyword">int</span> age) {
+
+    <span class="keyword">public</span> Animal(String name, <span class="keyword">int</span> age) {
         <span class="keyword">this</span>.name = name;
         <span class="keyword">this</span>.age = age;
     }
-    
-    <span class="keyword">public void</span> eat() {
-        <span class="type">System</span>.out.println(name + <span class="string">" is eating"</span>);
+
+    <span class="keyword">public</span> <span class="keyword">void</span> eat() {
+        System.out.println(name + <span class="string">" is eating"</span>);
     }
-    
-    <span class="keyword">public void</span> sleep() {
-        <span class="type">System</span>.out.println(name + <span class="string">" is sleeping"</span>);
+
+    <span class="keyword">public</span> <span class="keyword">void</span> sleep() {
+        System.out.println(name + <span class="string">" is sleeping"</span>);
     }
 }
 
 <span class="comment">// Child Class</span>
-<span class="keyword">class</span> <span class="type">Dog</span> <span class="keyword">extends</span> <span class="type">Animal</span> {
-    <span class="keyword">private</span> <span class="type">String</span> breed;
-    
-    <span class="keyword">public</span> <span class="type">Dog</span>(<span class="type">String</span> name, <span class="keyword">int</span> age, <span class="type">String</span> breed) {
+<span class="keyword">class</span> Dog <span class="keyword">extends</span> Animal {
+    <span class="keyword">private</span> String breed;
+
+    <span class="keyword">public</span> Dog(String name, <span class="keyword">int</span> age, String breed) {
         <span class="keyword">super</span>(name, age); <span class="comment">// Call parent constructor</span>
         <span class="keyword">this</span>.breed = breed;
     }
-    
-    <span class="keyword">public void</span> bark() {
-        <span class="type">System</span>.out.println(name + <span class="string">" is barking"</span>);
+
+    <span class="keyword">public</span> <span class="keyword">void</span> bark() {
+        System.out.println(name + <span class="string">" is barking"</span>);
     }
 }</code></pre>
-                </div>
+                            </div>
 
-                <div class="info-box">
-                    <h4><i class="fas fa-key"></i> Key Points</h4>
-                    <ul>
-                        <li><strong>super():</strong> Calls parent class constructor</li>
-                        <li><strong>protected:</strong> Accessible to child classes</li>
-                        <li><strong>Code Reuse:</strong> Child inherits all parent methods</li>
-                        <li><strong>Single Inheritance:</strong> Java supports only single class inheritance</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+                            <div class="info-box">
+                                <h4><i class="fas fa-key"></i> Key Points</h4>
+                                <ul>
+                                    <li><strong>super():</strong> Calls parent class constructor</li>
+                                    <li><strong>protected:</strong> Accessible to child classes</li>
+                                    <li><strong>Code Reuse:</strong> Child inherits all parent methods</li>
+                                    <li><strong>Single Inheritance:</strong> Java supports only single class inheritance</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 2: Types of Inheritance -->
-        <div id="types-inheritance" class="chapter">
-            <h2 class="chapter-title">2. Types of Inheritance</h2>
-            <div class="chapter-content">
+                    <!-- Chapter 2: Types of Inheritance -->
+                    <section id="types-inheritance" class="chapter">
+                        <h2 class="chapter-title">Types of Inheritance</h2>
+                        <div class="chapter-content">
 
-                <div class="inheritance-types">
-                    <div class="type-card">
-                        <h4><i class="fas fa-arrow-down"></i> Single Inheritance</h4>
-                        <p>One child class inherits from one parent class</p>
-                        <div class="hierarchy-visual">
-                            <pre>    Animal
-        ↓
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <h4><i class="fas fa-arrow-down"></i> Single Inheritance</h4>
+                                    <p>One child class inherits from one parent class</p>
+                                    <pre>    Animal
+        |
       Dog</pre>
-                        </div>
-                    </div>
-                    
-                    <div class="type-card">
-                        <h4><i class="fas fa-sitemap"></i> Multilevel Inheritance</h4>
-                        <p>Chain of inheritance across multiple levels</p>
-                        <div class="hierarchy-visual">
-                            <pre>    Animal
-        ↓
+                                </div>
+
+                                <div class="card">
+                                    <h4><i class="fas fa-sitemap"></i> Multilevel Inheritance</h4>
+                                    <p>Chain of inheritance across multiple levels</p>
+                                    <pre>    Animal
+        |
       Dog
-        ↓
+        |
     Bulldog</pre>
-                        </div>
-                    </div>
-                    
-                    <div class="type-card">
-                        <h4><i class="fas fa-code-branch"></i> Hierarchical Inheritance</h4>
-                        <p>Multiple child classes inherit from one parent</p>
-                        <div class="hierarchy-visual">
-                            <pre>    Animal
-      ↙   ↘
+                                </div>
+
+                                <div class="card">
+                                    <h4><i class="fas fa-code-branch"></i> Hierarchical Inheritance</h4>
+                                    <p>Multiple child classes inherit from one parent</p>
+                                    <pre>    Animal
+      /   \
     Dog   Cat</pre>
-                        </div>
-                    </div>
-                </div>
+                                </div>
+                            </div>
 
-                <h3 class="section-title">Multilevel Inheritance Example</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Three-Level Hierarchy</div>
-                    <pre><code><span class="keyword">class</span> <span class="type">Vehicle</span> {
-    <span class="keyword">protected</span> <span class="type">String</span> brand;
-    
-    <span class="keyword">public void</span> start() {
-        <span class="type">System</span>.out.println(<span class="string">"Vehicle started"</span>);
+                            <h3>Multilevel Inheritance Example</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Three-Level Hierarchy</span>
+                                </div>
+                                <pre><code><span class="keyword">class</span> Vehicle {
+    <span class="keyword">protected</span> String brand;
+
+    <span class="keyword">public</span> <span class="keyword">void</span> start() {
+        System.out.println(<span class="string">"Vehicle started"</span>);
     }
 }
 
-<span class="keyword">class</span> <span class="type">Car</span> <span class="keyword">extends</span> <span class="type">Vehicle</span> {
+<span class="keyword">class</span> Car <span class="keyword">extends</span> Vehicle {
     <span class="keyword">protected</span> <span class="keyword">int</span> doors;
-    
-    <span class="keyword">public void</span> drive() {
-        <span class="type">System</span>.out.println(<span class="string">"Car is driving"</span>);
+
+    <span class="keyword">public</span> <span class="keyword">void</span> drive() {
+        System.out.println(<span class="string">"Car is driving"</span>);
     }
 }
 
-<span class="keyword">class</span> <span class="type">SportsCar</span> <span class="keyword">extends</span> <span class="type">Car</span> {
+<span class="keyword">class</span> SportsCar <span class="keyword">extends</span> Car {
     <span class="keyword">private</span> <span class="keyword">boolean</span> turbo;
-    
-    <span class="keyword">public void</span> activateTurbo() {
-        <span class="type">System</span>.out.println(<span class="string">"Turbo activated!"</span>);
+
+    <span class="keyword">public</span> <span class="keyword">void</span> activateTurbo() {
+        System.out.println(<span class="string">"Turbo activated!"</span>);
     }
 }</code></pre>
-                </div>
+                            </div>
 
-                <div class="note-box">
-                    <h4><i class="fas fa-exclamation-circle"></i> Important Note</h4>
-                    <p><strong>Multiple Inheritance:</strong> Java doesn't support multiple class inheritance but supports multiple interface inheritance.</p>
-                </div>
-            </div>
-        </div>
+                            <div class="highlight-box warning">
+                                <h4><i class="fas fa-exclamation-circle"></i> Important Note</h4>
+                                <p><strong>Multiple Inheritance:</strong> Java doesn't support multiple class inheritance but supports multiple interface inheritance.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 3: Polymorphism -->
-        <div id="polymorphism" class="chapter">
-            <h2 class="chapter-title">3. Polymorphism Concepts</h2>
-            <div class="chapter-content">
-                <p>Polymorphism allows objects of different types to be treated as objects of a common base type. "One interface, multiple implementations."</p>
+                    <!-- Chapter 3: Polymorphism -->
+                    <section id="polymorphism" class="chapter">
+                        <h2 class="chapter-title">Polymorphism Concepts</h2>
+                        <div class="chapter-content">
+                            <p>Polymorphism allows objects of different types to be treated as objects of a common base type. "One interface, multiple implementations."</p>
 
-                <div class="polymorphism-types">
-                    <div class="poly-card">
-                        <h4><i class="fas fa-clock"></i> Compile-time Polymorphism</h4>
-                        <p><strong>Method Overloading</strong></p>
-                        <p>Same method name, different parameters</p>
-                    </div>
-                    <div class="poly-card">
-                        <h4><i class="fas fa-play"></i> Runtime Polymorphism</h4>
-                        <p><strong>Method Overriding</strong></p>
-                        <p>Child class provides specific implementation</p>
-                    </div>
-                </div>
+                            <div class="two-column-grid">
+                                <div class="card">
+                                    <h4><i class="fas fa-clock"></i> Compile-time Polymorphism</h4>
+                                    <p><strong>Method Overloading</strong></p>
+                                    <p>Same method name, different parameters</p>
+                                </div>
+                                <div class="card">
+                                    <h4><i class="fas fa-play"></i> Runtime Polymorphism</h4>
+                                    <p><strong>Method Overriding</strong></p>
+                                    <p>Child class provides specific implementation</p>
+                                </div>
+                            </div>
 
-                <h3 class="section-title">Runtime Polymorphism Example</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Dynamic Method Dispatch</div>
-                    <pre><code><span class="keyword">class</span> <span class="type">Shape</span> {
-    <span class="keyword">public void</span> draw() {
-        <span class="type">System</span>.out.println(<span class="string">"Drawing a shape"</span>);
+                            <h3>Runtime Polymorphism Example</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Dynamic Method Dispatch</span>
+                                </div>
+                                <pre><code><span class="keyword">class</span> Shape {
+    <span class="keyword">public</span> <span class="keyword">void</span> draw() {
+        System.out.println(<span class="string">"Drawing a shape"</span>);
     }
-    
-    <span class="keyword">public double</span> area() {
+
+    <span class="keyword">public</span> <span class="keyword">double</span> area() {
         <span class="keyword">return</span> <span class="number">0</span>;
     }
 }
 
-<span class="keyword">class</span> <span class="type">Circle</span> <span class="keyword">extends</span> <span class="type">Shape</span> {
-    <span class="keyword">private double</span> radius;
-    
-    <span class="keyword">public</span> <span class="type">Circle</span>(<span class="keyword">double</span> radius) {
+<span class="keyword">class</span> Circle <span class="keyword">extends</span> Shape {
+    <span class="keyword">private</span> <span class="keyword">double</span> radius;
+
+    <span class="keyword">public</span> Circle(<span class="keyword">double</span> radius) {
         <span class="keyword">this</span>.radius = radius;
     }
-    
-    <span class="annotation">@Override</span>
-    <span class="keyword">public void</span> draw() {
-        <span class="type">System</span>.out.println(<span class="string">"Drawing a circle"</span>);
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> draw() {
+        System.out.println(<span class="string">"Drawing a circle"</span>);
     }
-    
-    <span class="annotation">@Override</span>
-    <span class="keyword">public double</span> area() {
-        <span class="keyword">return</span> <span class="type">Math</span>.PI * radius * radius;
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">double</span> area() {
+        <span class="keyword">return</span> Math.PI * radius * radius;
     }
 }
 
-<span class="keyword">class</span> <span class="type">Rectangle</span> <span class="keyword">extends</span> <span class="type">Shape</span> {
-    <span class="keyword">private double</span> length, width;
-    
-    <span class="keyword">public</span> <span class="type">Rectangle</span>(<span class="keyword">double</span> length, <span class="keyword">double</span> width) {
+<span class="keyword">class</span> Rectangle <span class="keyword">extends</span> Shape {
+    <span class="keyword">private</span> <span class="keyword">double</span> length, width;
+
+    <span class="keyword">public</span> Rectangle(<span class="keyword">double</span> length, <span class="keyword">double</span> width) {
         <span class="keyword">this</span>.length = length;
         <span class="keyword">this</span>.width = width;
     }
-    
-    <span class="annotation">@Override</span>
-    <span class="keyword">public void</span> draw() {
-        <span class="type">System</span>.out.println(<span class="string">"Drawing a rectangle"</span>);
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> draw() {
+        System.out.println(<span class="string">"Drawing a rectangle"</span>);
     }
-    
-    <span class="annotation">@Override</span>
-    <span class="keyword">public double</span> area() {
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">double</span> area() {
         <span class="keyword">return</span> length * width;
     }
 }
 
 <span class="comment">// Usage</span>
-<span class="keyword">public class</span> <span class="type">Main</span> {
-    <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
-        <span class="type">Shape</span>[] shapes = {
-            <span class="keyword">new</span> <span class="type">Circle</span>(<span class="number">5</span>),
-            <span class="keyword">new</span> <span class="type">Rectangle</span>(<span class="number">4</span>, <span class="number">6</span>)
+<span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        Shape[] shapes = {
+            <span class="keyword">new</span> Circle(<span class="number">5</span>),
+            <span class="keyword">new</span> Rectangle(<span class="number">4</span>, <span class="number">6</span>)
         };
-        
-        <span class="keyword">for</span> (<span class="type">Shape</span> shape : shapes) {
+
+        <span class="keyword">for</span> (Shape shape : shapes) {
             shape.draw();        <span class="comment">// Calls appropriate method</span>
-            <span class="type">System</span>.out.println(<span class="string">"Area: "</span> + shape.area());
+            System.out.println(<span class="string">"Area: "</span> + shape.area());
         }
     }
 }</code></pre>
-                </div>
+                            </div>
 
-                <div class="highlight-box">
-                    <h4><i class="fas fa-magic"></i> Polymorphism Benefits</h4>
-                    <ul>
-                        <li><strong>Flexibility:</strong> Add new types without changing existing code</li>
-                        <li><strong>Maintainability:</strong> Single interface for multiple implementations</li>
-                        <li><strong>Extensibility:</strong> Easy to extend functionality</li>
-                        <li><strong>Abstraction:</strong> Hide implementation details</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+                            <div class="highlight-box tip">
+                                <h4><i class="fas fa-magic"></i> Polymorphism Benefits</h4>
+                                <ul>
+                                    <li><strong>Flexibility:</strong> Add new types without changing existing code</li>
+                                    <li><strong>Maintainability:</strong> Single interface for multiple implementations</li>
+                                    <li><strong>Extensibility:</strong> Easy to extend functionality</li>
+                                    <li><strong>Abstraction:</strong> Hide implementation details</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 4: Method Overriding -->
-        <div id="method-overriding" class="chapter">
-            <h2 class="chapter-title">4. Method Overriding</h2>
-            <div class="chapter-content">
-                <p>Method overriding allows a child class to provide a specific implementation of a method already defined in its parent class.</p>
+                    <!-- Chapter 4: Method Overriding -->
+                    <section id="method-overriding" class="chapter">
+                        <h2 class="chapter-title">Method Overriding</h2>
+                        <div class="chapter-content">
+                            <p>Method overriding allows a child class to provide a specific implementation of a method already defined in its parent class.</p>
 
-                <h3 class="section-title">Overriding Rules & Example</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Complete Override Example</div>
-                    <pre><code><span class="keyword">class</span> <span class="type">Employee</span> {
-    <span class="keyword">protected</span> <span class="type">String</span> name;
-    <span class="keyword">protected double</span> baseSalary;
-    
-    <span class="keyword">public</span> <span class="type">Employee</span>(<span class="type">String</span> name, <span class="keyword">double</span> baseSalary) {
+                            <h3>Overriding Rules & Example</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Complete Override Example</span>
+                                </div>
+                                <pre><code><span class="keyword">class</span> Employee {
+    <span class="keyword">protected</span> String name;
+    <span class="keyword">protected</span> <span class="keyword">double</span> baseSalary;
+
+    <span class="keyword">public</span> Employee(String name, <span class="keyword">double</span> baseSalary) {
         <span class="keyword">this</span>.name = name;
         <span class="keyword">this</span>.baseSalary = baseSalary;
     }
-    
-    <span class="keyword">public double</span> calculateSalary() {
+
+    <span class="keyword">public</span> <span class="keyword">double</span> calculateSalary() {
         <span class="keyword">return</span> baseSalary;
     }
-    
-    <span class="keyword">public void</span> displayInfo() {
-        <span class="type">System</span>.out.println(<span class="string">"Employee: "</span> + name);
+
+    <span class="keyword">public</span> <span class="keyword">void</span> displayInfo() {
+        System.out.println(<span class="string">"Employee: "</span> + name);
     }
 }
 
-<span class="keyword">class</span> <span class="type">Manager</span> <span class="keyword">extends</span> <span class="type">Employee</span> {
-    <span class="keyword">private double</span> bonus;
-    
-    <span class="keyword">public</span> <span class="type">Manager</span>(<span class="type">String</span> name, <span class="keyword">double</span> baseSalary, <span class="keyword">double</span> bonus) {
+<span class="keyword">class</span> Manager <span class="keyword">extends</span> Employee {
+    <span class="keyword">private</span> <span class="keyword">double</span> bonus;
+
+    <span class="keyword">public</span> Manager(String name, <span class="keyword">double</span> baseSalary, <span class="keyword">double</span> bonus) {
         <span class="keyword">super</span>(name, baseSalary);
         <span class="keyword">this</span>.bonus = bonus;
     }
-    
-    <span class="annotation">@Override</span>
-    <span class="keyword">public double</span> calculateSalary() {
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">double</span> calculateSalary() {
         <span class="keyword">return</span> baseSalary + bonus; <span class="comment">// Enhanced calculation</span>
     }
-    
-    <span class="annotation">@Override</span>
-    <span class="keyword">public void</span> displayInfo() {
+
+    <span class="keyword">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> displayInfo() {
         <span class="keyword">super</span>.displayInfo(); <span class="comment">// Call parent method</span>
-        <span class="type">System</span>.out.println(<span class="string">"Role: Manager"</span>);
+        System.out.println(<span class="string">"Role: Manager"</span>);
     }
 }</code></pre>
-                </div>
+                            </div>
 
-                <div class="rules-table">
-                    <h4><i class="fas fa-gavel"></i> Method Overriding Rules</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Rule</th>
-                                <th>Description</th>
-                                <th>Example</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Same Method Signature</td>
-                                <td>Name, parameters must match exactly</td>
-                                <td><code>public void draw()</code></td>
-                            </tr>
-                            <tr>
-                                <td>Access Modifier</td>
-                                <td>Can't reduce visibility</td>
-                                <td>protected → public ✅</td>
-                            </tr>
-                            <tr>
-                                <td>Return Type</td>
-                                <td>Same or covariant return type</td>
-                                <td>Object → String ✅</td>
-                            </tr>
-                            <tr>
-                                <td>@Override Annotation</td>
-                                <td>Optional but recommended</td>
-                                <td>Compile-time checking</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                            <div class="table-responsive">
+                                <table class="styled-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Rule</th>
+                                            <th>Description</th>
+                                            <th>Example</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Same Method Signature</td>
+                                            <td>Name, parameters must match exactly</td>
+                                            <td><code>public void draw()</code></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Access Modifier</td>
+                                            <td>Can't reduce visibility</td>
+                                            <td>protected -> public (OK)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Return Type</td>
+                                            <td>Same or covariant return type</td>
+                                            <td>Object -> String (OK)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>@Override Annotation</td>
+                                            <td>Optional but recommended</td>
+                                            <td>Compile-time checking</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 5: Method Overloading -->
-        <div id="method-overloading" class="chapter">
-            <h2 class="chapter-title">5. Method Overloading</h2>
-            <div class="chapter-content">
-                <p>Method overloading allows multiple methods with the same name but different parameters in the same class.</p>
+                    <!-- Chapter 5: Method Overloading -->
+                    <section id="method-overloading" class="chapter">
+                        <h2 class="chapter-title">Method Overloading</h2>
+                        <div class="chapter-content">
+                            <p>Method overloading allows multiple methods with the same name but different parameters in the same class.</p>
 
-                <h3 class="section-title">Overloading Examples</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Calculator with Overloaded Methods</div>
-                    <pre><code><span class="keyword">class</span> <span class="type">Calculator</span> {
-    
+                            <h3>Overloading Examples</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Calculator with Overloaded Methods</span>
+                                </div>
+                                <pre><code><span class="keyword">class</span> Calculator {
+
     <span class="comment">// Different number of parameters</span>
-    <span class="keyword">public int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+    <span class="keyword">public</span> <span class="keyword">int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
         <span class="keyword">return</span> a + b;
     }
-    
-    <span class="keyword">public int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c) {
+
+    <span class="keyword">public</span> <span class="keyword">int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c) {
         <span class="keyword">return</span> a + b + c;
     }
-    
+
     <span class="comment">// Different parameter types</span>
-    <span class="keyword">public double</span> add(<span class="keyword">double</span> a, <span class="keyword">double</span> b) {
+    <span class="keyword">public</span> <span class="keyword">double</span> add(<span class="keyword">double</span> a, <span class="keyword">double</span> b) {
         <span class="keyword">return</span> a + b;
     }
-    
+
     <span class="comment">// Different parameter order</span>
-    <span class="keyword">public</span> <span class="type">String</span> add(<span class="type">String</span> str, <span class="keyword">int</span> num) {
+    <span class="keyword">public</span> String add(String str, <span class="keyword">int</span> num) {
         <span class="keyword">return</span> str + num;
     }
-    
-    <span class="keyword">public</span> <span class="type">String</span> add(<span class="keyword">int</span> num, <span class="type">String</span> str) {
+
+    <span class="keyword">public</span> String add(<span class="keyword">int</span> num, String str) {
         <span class="keyword">return</span> num + str;
     }
 }
 
 <span class="comment">// Usage</span>
-<span class="type">Calculator</span> calc = <span class="keyword">new</span> <span class="type">Calculator</span>();
-<span class="type">System</span>.out.println(calc.add(<span class="number">5</span>, <span class="number">3</span>));           <span class="comment">// 8</span>
-<span class="type">System</span>.out.println(calc.add(<span class="number">5</span>, <span class="number">3</span>, <span class="number">2</span>));        <span class="comment">// 10</span>
-<span class="type">System</span>.out.println(calc.add(<span class="number">5.5</span>, <span class="number">3.2</span>));       <span class="comment">// 8.7</span>
-<span class="type">System</span>.out.println(calc.add(<span class="string">"Result: "</span>, <span class="number">42</span>)); <span class="comment">// Result: 42</span></code></pre>
+Calculator calc = <span class="keyword">new</span> Calculator();
+System.out.println(calc.add(<span class="number">5</span>, <span class="number">3</span>));           <span class="comment">// 8</span>
+System.out.println(calc.add(<span class="number">5</span>, <span class="number">3</span>, <span class="number">2</span>));        <span class="comment">// 10</span>
+System.out.println(calc.add(<span class="number">5.5</span>, <span class="number">3.2</span>));       <span class="comment">// 8.7</span>
+System.out.println(calc.add(<span class="string">"Result: "</span>, <span class="number">42</span>)); <span class="comment">// Result: 42</span></code></pre>
+                            </div>
+
+                            <div class="comparison-grid">
+                                <div class="comparison-card">
+                                    <h4><i class="fas fa-layer-group"></i> Method Overloading</h4>
+                                    <ul>
+                                        <li>Same class</li>
+                                        <li>Same method name</li>
+                                        <li>Different parameters</li>
+                                        <li>Compile-time polymorphism</li>
+                                        <li>Static binding</li>
+                                    </ul>
+                                </div>
+                                <div class="comparison-card">
+                                    <h4><i class="fas fa-sync-alt"></i> Method Overriding</h4>
+                                    <ul>
+                                        <li>Parent-child classes</li>
+                                        <li>Same method signature</li>
+                                        <li>Different implementation</li>
+                                        <li>Runtime polymorphism</li>
+                                        <li>Dynamic binding</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 6: Best Practices -->
+                    <section id="best-practices" class="chapter">
+                        <h2 class="chapter-title">Best Practices</h2>
+                        <div class="chapter-content">
+
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <h4><i class="fas fa-shield-alt"></i> Access Modifiers</h4>
+                                    <ul>
+                                        <li>Use <code>protected</code> for inheritance</li>
+                                        <li>Keep fields <code>private</code> when possible</li>
+                                        <li>Provide <code>public</code> methods for access</li>
+                                    </ul>
+                                </div>
+
+                                <div class="card">
+                                    <h4><i class="fas fa-code"></i> Method Design</h4>
+                                    <ul>
+                                        <li>Always use <code>@Override</code> annotation</li>
+                                        <li>Call <code>super()</code> in constructors</li>
+                                        <li>Keep method names descriptive</li>
+                                    </ul>
+                                </div>
+
+                                <div class="card">
+                                    <h4><i class="fas fa-sitemap"></i> Class Design</h4>
+                                    <ul>
+                                        <li>Follow "is-a" relationship rule</li>
+                                        <li>Prefer composition over inheritance</li>
+                                        <li>Keep inheritance hierarchies shallow</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h3>Common Pitfalls to Avoid</h3>
+                            <div class="highlight-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Watch Out For</h4>
+                                <ul>
+                                    <li><strong>Deep Inheritance:</strong> Avoid more than 3-4 levels</li>
+                                    <li><strong>Overriding private methods:</strong> Not possible, creates new method</li>
+                                    <li><strong>Constructor chaining:</strong> Always call super() explicitly</li>
+                                    <li><strong>Method hiding:</strong> Static methods are hidden, not overridden</li>
+                                </ul>
+                            </div>
+
+                            <h3>Quick Reference</h3>
+                            <div class="two-column-grid">
+                                <div class="card">
+                                    <h4>Inheritance Keywords</h4>
+                                    <ul>
+                                        <li><code>extends</code> - Inherit from class</li>
+                                        <li><code>super</code> - Access parent members</li>
+                                        <li><code>this</code> - Current object reference</li>
+                                        <li><code>@Override</code> - Override annotation</li>
+                                    </ul>
+                                </div>
+
+                                <div class="card">
+                                    <h4>Access Levels</h4>
+                                    <ul>
+                                        <li><code>private</code> - Same class only</li>
+                                        <li><code>protected</code> - Package + subclasses</li>
+                                        <li><code>public</code> - Everywhere</li>
+                                        <li><code>default</code> - Package only</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box tip">
+                                <h3><i class="fas fa-lightbulb"></i> Remember</h3>
+                                <p><strong>Inheritance models "is-a" relationships</strong> - A Dog IS-A Animal</p>
+                                <p><strong>Polymorphism provides flexibility</strong> - One interface, many implementations</p>
+                            </div>
+                        </div>
+                    </section>
+
                 </div>
 
-                <div class="comparison-grid">
-                    <div class="comparison-card">
-                        <h4><i class="fas fa-layer-group"></i> Method Overloading</h4>
-                        <ul>
-                            <li>Same class</li>
-                            <li>Same method name</li>
-                            <li>Different parameters</li>
-                            <li>Compile-time polymorphism</li>
-                            <li>Static binding</li>
-                        </ul>
-                    </div>
-                    <div class="comparison-card">
-                        <h4><i class="fas fa-sync-alt"></i> Method Overriding</h4>
-                        <ul>
-                            <li>Parent-child classes</li>
-                            <li>Same method signature</li>
-                            <li>Different implementation</li>
-                            <li>Runtime polymorphism</li>
-                            <li>Dynamic binding</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                <footer class="article-nav">
+                    <a href="/java/core/java-basics.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Java Basics</span>
+                    </a>
+                    <a href="/java/core/oops/abstract-interface.html" class="nav-next">
+                        <span>Abstract Classes & Interfaces</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
         </div>
+    </main>
 
-        <!-- Chapter 6: Best Practices -->
-        <div id="best-practices" class="chapter">
-            <h2 class="chapter-title">6. Best Practices</h2>
-            <div class="chapter-content">
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
-                <div class="practices-grid">
-                    <div class="practice-card">
-                        <h4><i class="fas fa-shield-alt"></i> Access Modifiers</h4>
-                        <ul>
-                            <li>Use <code>protected</code> for inheritance</li>
-                            <li>Keep fields <code>private</code> when possible</li>
-                            <li>Provide <code>public</code> methods for access</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="practice-card">
-                        <h4><i class="fas fa-code"></i> Method Design</h4>
-                        <ul>
-                            <li>Always use <code>@Override</code> annotation</li>
-                            <li>Call <code>super()</code> in constructors</li>
-                            <li>Keep method names descriptive</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="practice-card">
-                        <h4><i class="fas fa-sitemap"></i> Class Design</h4>
-                        <ul>
-                            <li>Follow "is-a" relationship rule</li>
-                            <li>Prefer composition over inheritance</li>
-                            <li>Keep inheritance hierarchies shallow</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <h3 class="section-title">Common Pitfalls to Avoid</h3>
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Watch Out For</h4>
-                    <ul>
-                        <li><strong>Deep Inheritance:</strong> Avoid more than 3-4 levels</li>
-                        <li><strong>Overriding private methods:</strong> Not possible, creates new method</li>
-                        <li><strong>Constructor chaining:</strong> Always call super() explicitly</li>
-                        <li><strong>Method hiding:</strong> Static methods are hidden, not overridden</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">Quick Reference</h3>
-                <div class="quick-ref">
-                    <div class="ref-section">
-                        <h4>Inheritance Keywords</h4>
-                        <ul>
-                            <li><code>extends</code> - Inherit from class</li>
-                            <li><code>super</code> - Access parent members</li>
-                            <li><code>this</code> - Current object reference</li>
-                            <li><code>@Override</code> - Override annotation</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="ref-section">
-                        <h4>Access Levels</h4>
-                        <ul>
-                            <li><code>private</code> - Same class only</li>
-                            <li><code>protected</code> - Package + subclasses</li>
-                            <li><code>public</code> - Everywhere</li>
-                            <li><code>default</code> - Package only</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="final-tip">
-                    <h3><i class="fas fa-lightbulb"></i> Remember</h3>
-                    <p><strong>Inheritance models "is-a" relationships</strong> - A Dog IS-A Animal</p>
-                    <p><strong>Polymorphism provides flexibility</strong> - One interface, many implementations</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer Section -->
-        <footer class="footer">
-        <div id="footer-placeholder"></div>
-    </footer>
-    <script>
-        fetch("/footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
-    <script src="/js/reading-progress.js"></script>
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
 </html>
