@@ -1,833 +1,715 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master the building blocks of modular programming with Java methods and functions. Learn parameters, return types, overloading, and recursion.">
     <title>Java Methods & Functions - TechTok Cafe</title>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
-    <link rel="stylesheet" href="../../../css/java-methods.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
-    <link rel="stylesheet" href="/css/footer.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
+
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
-                    height="50px" alt="TechTok Cafe"></a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <div class="container">
-        <header class="page-header">
-            <div class="header-content">
-                <div class="breadcrumb">
-                    <a href="/">Home</a> > <a href="/java">Java</a> > <span>Methods & Functions</span>
-                </div>
-                <h1><i class="fas fa-function"></i> Java Methods & Functions</h1>
-                <p class="subtitle">Master the building blocks of modular programming</p>
-            </div>
-        </header>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar"></aside>
 
-        <div class="content-grid">
-            <!-- Method Basics -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-cogs"></i> Method Basics</h2>
-                </div>
-                <div class="card-content">
-                    <div class="syntax-diagram">
-                        <div class="diagram-title">Method Structure</div>
-                        <div class="method-parts">
-                            <div class="part access-modifier">Access Modifier</div>
-                            <div class="part static-keyword">static</div>
-                            <div class="part return-type">Return Type</div>
-                            <div class="part method-name">methodName</div>
-                            <div class="part parameters">(parameters)</div>
-                            <div class="part method-body">{ method body }</div>
-                        </div>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- Main Content -->
+    <main class="page-content" id="main-content">
+        <!-- Reading Progress -->
+        <div class="reading-progress" id="reading-progress"></div>
+
+        <div class="content-wrapper">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+
+            <!-- Article Container -->
+            <article class="article-container">
+                <!-- Article Header -->
+                <header class="article-header">
+                    <h1 class="article-title">Java Methods & Functions</h1>
+                    <p class="article-subtitle">Master the building blocks of modular programming</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 35 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
                     </div>
-                    
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Basic Method Syntax</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">public class Calculator {
-    // Method with return value
-    public static int add(int a, int b) {
-        return a + b;
+                </header>
+
+                <!-- Table of Contents -->
+                <nav class="toc" id="toc"></nav>
+
+                <!-- Article Body -->
+                <div class="article-body">
+                    <!-- Chapter 1: Method Basics -->
+                    <section id="method-basics" class="chapter">
+                        <h2 class="chapter-title">1. Method Basics</h2>
+                        <div class="chapter-content">
+                            <p>Methods are reusable blocks of code that perform specific tasks. They help organize code, reduce repetition, and make programs easier to understand and maintain.</p>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-cogs"></i> Method Structure</h4>
+                                <div class="operator-list">
+                                    <span class="operator-item">Access Modifier</span>
+                                    <span class="operator-item">static</span>
+                                    <span class="operator-item">Return Type</span>
+                                    <span class="operator-item">methodName</span>
+                                    <span class="operator-item">(parameters)</span>
+                                    <span class="operator-item">{ method body }</span>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Basic Method Syntax</span>
+                                </div>
+                                <pre><code><span class="keyword">public class</span> Calculator {
+    <span class="comment">// Method with return value</span>
+    <span class="keyword">public static int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+        <span class="keyword">return</span> a + b;
     }
-    
-    // Method without return value
-    public static void printResult(int result) {
-        System.out.println("Result: " + result);
+
+    <span class="comment">// Method without return value</span>
+    <span class="keyword">public static void</span> printResult(<span class="keyword">int</span> result) {
+        System.out.println(<span class="string">"Result: "</span> + result);
     }
-    
-    // Method without parameters
-    public static void welcome() {
-        System.out.println("Welcome to Calculator!");
+
+    <span class="comment">// Method without parameters</span>
+    <span class="keyword">public static void</span> welcome() {
+        System.out.println(<span class="string">"Welcome to Calculator!"</span>);
     }
 }</code></pre>
-                    </div>
-                </div>
-            </section>
+                            </div>
 
-            <!-- Parameters and Arguments -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-exchange-alt"></i> Parameters & Arguments</h2>
-                </div>
-                <div class="card-content">
-                    <div class="parameter-flow">
-                        <div class="flow-step">
-                            <div class="step-icon"><i class="fas fa-play"></i></div>
-                            <div class="step-content">
-                                <h4>Method Call</h4>
-                                <code>add(5, 3)</code>
-                            </div>
-                        </div>
-                        <div class="flow-arrow">→</div>
-                        <div class="flow-step">
-                            <div class="step-icon"><i class="fas fa-download"></i></div>
-                            <div class="step-content">
-                                <h4>Parameters</h4>
-                                <code>int a = 5, int b = 3</code>
-                            </div>
-                        </div>
-                        <div class="flow-arrow">→</div>
-                        <div class="flow-step">
-                            <div class="step-icon"><i class="fas fa-cog"></i></div>
-                            <div class="step-content">
-                                <h4>Processing</h4>
-                                <code>return a + b</code>
-                            </div>
-                        </div>
-                        <div class="flow-arrow">→</div>
-                        <div class="flow-step">
-                            <div class="step-icon"><i class="fas fa-upload"></i></div>
-                            <div class="step-content">
-                                <h4>Return</h4>
-                                <code>8</code>
-                            </div>
-                        </div>
-                    </div>
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-lock"></i></div>
+                                    <h4>Access Modifiers</h4>
+                                    <p>Control visibility: public, private, protected</p>
+                                </div>
 
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Parameter Types</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-reply"></i></div>
+                                    <h4>Return Type</h4>
+                                    <p>Data type returned: int, String, void</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-tag"></i></div>
+                                    <h4>Method Name</h4>
+                                    <p>Descriptive identifier following camelCase</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-list"></i></div>
+                                    <h4>Parameters</h4>
+                                    <p>Input values passed to the method</p>
+                                </div>
+                            </div>
                         </div>
-                        <pre><code class="language-java">public class ParameterExamples {
-    // Primitive parameters (pass by value)
-    public static void modifyPrimitive(int x) {
-        x = 100; // Original value unchanged
+                    </section>
+
+                    <!-- Chapter 2: Parameters & Arguments -->
+                    <section id="parameters-arguments" class="chapter">
+                        <h2 class="chapter-title">2. Parameters & Arguments</h2>
+                        <div class="chapter-content">
+                            <p>Parameters are variables defined in a method signature, while arguments are the actual values passed when calling the method.</p>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-exchange-alt"></i> Parameter Flow</h4>
+                                <div class="flow-sequence">
+                                    <div class="flow-item">
+                                        <span class="flow-number">1</span>
+                                        <strong>Method Call</strong>
+                                        <p><code>add(5, 3)</code></p>
+                                    </div>
+                                    <div class="flow-item">
+                                        <span class="flow-number">2</span>
+                                        <strong>Parameters</strong>
+                                        <p><code>int a = 5, int b = 3</code></p>
+                                    </div>
+                                    <div class="flow-item">
+                                        <span class="flow-number">3</span>
+                                        <strong>Processing</strong>
+                                        <p><code>return a + b</code></p>
+                                    </div>
+                                    <div class="flow-item">
+                                        <span class="flow-number">4</span>
+                                        <strong>Return</strong>
+                                        <p><code>8</code></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Parameter Types</span>
+                                </div>
+                                <pre><code><span class="keyword">public class</span> ParameterExamples {
+    <span class="comment">// Primitive parameters (pass by value)</span>
+    <span class="keyword">public static void</span> modifyPrimitive(<span class="keyword">int</span> x) {
+        x = <span class="number">100</span>; <span class="comment">// Original value unchanged</span>
     }
-    
-    // Object parameters (pass by reference)
-    public static void modifyArray(int[] arr) {
-        arr[0] = 999; // Original array modified
+
+    <span class="comment">// Object parameters (pass by reference)</span>
+    <span class="keyword">public static void</span> modifyArray(<span class="keyword">int</span>[] arr) {
+        arr[<span class="number">0</span>] = <span class="number">999</span>; <span class="comment">// Original array modified</span>
     }
-    
-    // Variable arguments (varargs)
-    public static int sum(int... numbers) {
-        int total = 0;
-        for (int num : numbers) {
+
+    <span class="comment">// Variable arguments (varargs)</span>
+    <span class="keyword">public static int</span> sum(<span class="keyword">int</span>... numbers) {
+        <span class="keyword">int</span> total = <span class="number">0</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> num : numbers) {
             total += num;
         }
-        return total;
+        <span class="keyword">return</span> total;
     }
-    
-    public static void main(String[] args) {
-        // Primitive example
-        int value = 10;
+
+    <span class="keyword">public static void</span> main(String[] args) {
+        <span class="comment">// Primitive example</span>
+        <span class="keyword">int</span> value = <span class="number">10</span>;
         modifyPrimitive(value);
-        System.out.println(value); // Still 10
-        
-        // Array example
-        int[] numbers = {1, 2, 3};
+        System.out.println(value); <span class="comment">// Still 10</span>
+
+        <span class="comment">// Array example</span>
+        <span class="keyword">int</span>[] numbers = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};
         modifyArray(numbers);
-        System.out.println(numbers[0]); // Now 999
-        
-        // Varargs examples
-        System.out.println(sum(1, 2, 3)); // 6
-        System.out.println(sum(1, 2, 3, 4, 5)); // 15
+        System.out.println(numbers[<span class="number">0</span>]); <span class="comment">// Now 999</span>
+
+        <span class="comment">// Varargs examples</span>
+        System.out.println(sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>)); <span class="comment">// 6</span>
+        System.out.println(sum(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>)); <span class="comment">// 15</span>
     }
 }</code></pre>
-                    </div>
-                </div>
-            </section>
+                            </div>
 
-            <!-- Method Overloading -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-layer-group"></i> Method Overloading</h2>
-                </div>
-                <div class="card-content">
-                    <div class="overloading-visual">
-                        <div class="method-signature">
-                            <span class="method-name">calculate</span>
-                            <div class="signature-variations">
-                                <div class="variation">
-                                    <code>calculate(int a, int b)</code>
-                                    <span class="badge">Addition</span>
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-cube"></i> Pass by Value</h4>
+                                    <ul>
+                                        <li>Primitives (int, double, char, etc.)</li>
+                                        <li>Copy of value is passed</li>
+                                        <li>Original unchanged</li>
+                                    </ul>
                                 </div>
-                                <div class="variation">
-                                    <code>calculate(double a, double b)</code>
-                                    <span class="badge">Double Addition</span>
-                                </div>
-                                <div class="variation">
-                                    <code>calculate(int a, int b, int c)</code>
-                                    <span class="badge">Triple Addition</span>
-                                </div>
-                                <div class="variation">
-                                    <code>calculate(String operation, int a, int b)</code>
-                                    <span class="badge">Operation</span>
+
+                                <div class="info-box">
+                                    <h4><i class="fas fa-cubes"></i> Pass by Reference</h4>
+                                    <ul>
+                                        <li>Objects, arrays, collections</li>
+                                        <li>Reference to object is passed</li>
+                                        <li>Original can be modified</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Overloaded Methods</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">public class MathUtils {
-    // Overloaded methods - same name, different parameters
-    
-    // Two integers
-    public static int calculate(int a, int b) {
-        return a + b;
+                    <!-- Chapter 3: Method Overloading -->
+                    <section id="method-overloading" class="chapter">
+                        <h2 class="chapter-title">3. Method Overloading</h2>
+                        <div class="chapter-content">
+                            <p>Method overloading allows multiple methods with the same name but different parameter lists. The compiler determines which method to call based on the arguments.</p>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-layer-group"></i> Overloaded Method Signatures</h4>
+                                <ul>
+                                    <li><code>calculate(int a, int b)</code> - Addition</li>
+                                    <li><code>calculate(double a, double b)</code> - Double Addition</li>
+                                    <li><code>calculate(int a, int b, int c)</code> - Triple Addition</li>
+                                    <li><code>calculate(String operation, int a, int b)</code> - Operation</li>
+                                </ul>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Overloaded Methods</span>
+                                </div>
+                                <pre><code><span class="keyword">public class</span> MathUtils {
+    <span class="comment">// Overloaded methods - same name, different parameters</span>
+
+    <span class="comment">// Two integers</span>
+    <span class="keyword">public static int</span> calculate(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+        <span class="keyword">return</span> a + b;
     }
-    
-    // Two doubles
-    public static double calculate(double a, double b) {
-        return a + b;
+
+    <span class="comment">// Two doubles</span>
+    <span class="keyword">public static double</span> calculate(<span class="keyword">double</span> a, <span class="keyword">double</span> b) {
+        <span class="keyword">return</span> a + b;
     }
-    
-    // Three integers
-    public static int calculate(int a, int b, int c) {
-        return a + b + c;
+
+    <span class="comment">// Three integers</span>
+    <span class="keyword">public static int</span> calculate(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c) {
+        <span class="keyword">return</span> a + b + c;
     }
-    
-    // String operation with two integers
-    public static int calculate(String operation, int a, int b) {
-        switch(operation) {
-            case "+": return a + b;
-            case "-": return a - b;
-            case "*": return a * b;
-            case "/": return a / b;
-            default: return 0;
+
+    <span class="comment">// String operation with two integers</span>
+    <span class="keyword">public static int</span> calculate(String operation, <span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+        <span class="keyword">switch</span>(operation) {
+            <span class="keyword">case</span> <span class="string">"+"</span>: <span class="keyword">return</span> a + b;
+            <span class="keyword">case</span> <span class="string">"-"</span>: <span class="keyword">return</span> a - b;
+            <span class="keyword">case</span> <span class="string">"*"</span>: <span class="keyword">return</span> a * b;
+            <span class="keyword">case</span> <span class="string">"/"</span>: <span class="keyword">return</span> a / b;
+            <span class="keyword">default</span>: <span class="keyword">return</span> <span class="number">0</span>;
         }
     }
-    
-    public static void main(String[] args) {
-        System.out.println(calculate(5, 3));           // 8
-        System.out.println(calculate(5.5, 3.2));       // 8.7
-        System.out.println(calculate(1, 2, 3));        // 6
-        System.out.println(calculate("*", 4, 5));      // 20
+
+    <span class="keyword">public static void</span> main(String[] args) {
+        System.out.println(calculate(<span class="number">5</span>, <span class="number">3</span>));           <span class="comment">// 8</span>
+        System.out.println(calculate(<span class="number">5.5</span>, <span class="number">3.2</span>));       <span class="comment">// 8.7</span>
+        System.out.println(calculate(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>));        <span class="comment">// 6</span>
+        System.out.println(calculate(<span class="string">"*"</span>, <span class="number">4</span>, <span class="number">5</span>));      <span class="comment">// 20</span>
     }
 }</code></pre>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Static vs Instance Methods -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-sitemap"></i> Static vs Instance Methods</h2>
-                </div>
-                <div class="card-content">
-                    <div class="comparison-grid">
-                        <div class="comparison-item static">
-                            <div class="comparison-header">
-                                <i class="fas fa-cube"></i>
-                                <h4>Static Methods</h4>
                             </div>
-                            <ul>
-                                <li>Belong to the class</li>
-                                <li>Called without object creation</li>
-                                <li>Cannot access instance variables</li>
-                                <li>Shared by all instances</li>
-                            </ul>
-                        </div>
-                        <div class="comparison-item instance">
-                            <div class="comparison-header">
-                                <i class="fas fa-cubes"></i>
-                                <h4>Instance Methods</h4>
-                            </div>
-                            <ul>
-                                <li>Belong to object instances</li>
-                                <li>Require object creation</li>
-                                <li>Can access instance variables</li>
-                                <li>Unique to each instance</li>
-                            </ul>
-                        </div>
-                    </div>
 
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Static vs Instance Example</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
+                            <div class="info-box">
+                                <h4><i class="fas fa-info-circle"></i> Overloading Rules</h4>
+                                <ul>
+                                    <li>Methods must differ in parameter count or types</li>
+                                    <li>Return type alone is not sufficient for overloading</li>
+                                    <li>Access modifiers can be different</li>
+                                    <li>Compiler determines which method to call at compile time</li>
+                                </ul>
+                            </div>
                         </div>
-                        <pre><code class="language-java">public class BankAccount {
-    // Instance variables
-    private String accountHolder;
-    private double balance;
-    
-    // Static variable
-    private static int totalAccounts = 0;
-    
-    // Constructor
-    public BankAccount(String holder, double initialBalance) {
-        this.accountHolder = holder;
-        this.balance = initialBalance;
-        totalAccounts++; // Increment static counter
+                    </section>
+
+                    <!-- Chapter 4: Static vs Instance Methods -->
+                    <section id="static-vs-instance" class="chapter">
+                        <h2 class="chapter-title">4. Static vs Instance Methods</h2>
+                        <div class="chapter-content">
+                            <p>Understanding the difference between static and instance methods is crucial for proper object-oriented design.</p>
+
+                            <div class="comparison-grid">
+                                <div class="comparison-card">
+                                    <h4><i class="fas fa-cube"></i> Static Methods</h4>
+                                    <ul>
+                                        <li>Belong to the class</li>
+                                        <li>Called without object creation</li>
+                                        <li>Cannot access instance variables</li>
+                                        <li>Shared by all instances</li>
+                                    </ul>
+                                </div>
+
+                                <div class="comparison-card">
+                                    <h4><i class="fas fa-cubes"></i> Instance Methods</h4>
+                                    <ul>
+                                        <li>Belong to object instances</li>
+                                        <li>Require object creation</li>
+                                        <li>Can access instance variables</li>
+                                        <li>Unique to each instance</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Static vs Instance Example</span>
+                                </div>
+                                <pre><code><span class="keyword">public class</span> BankAccount {
+    <span class="comment">// Instance variables</span>
+    <span class="keyword">private</span> String accountHolder;
+    <span class="keyword">private double</span> balance;
+
+    <span class="comment">// Static variable</span>
+    <span class="keyword">private static int</span> totalAccounts = <span class="number">0</span>;
+
+    <span class="comment">// Constructor</span>
+    <span class="keyword">public</span> BankAccount(String holder, <span class="keyword">double</span> initialBalance) {
+        <span class="keyword">this</span>.accountHolder = holder;
+        <span class="keyword">this</span>.balance = initialBalance;
+        totalAccounts++; <span class="comment">// Increment static counter</span>
     }
-    
-    // Instance method - operates on specific account
-    public void deposit(double amount) {
-        if (amount > 0) {
+
+    <span class="comment">// Instance method - operates on specific account</span>
+    <span class="keyword">public void</span> deposit(<span class="keyword">double</span> amount) {
+        <span class="keyword">if</span> (amount > <span class="number">0</span>) {
             balance += amount;
-            System.out.println("Deposited $" + amount);
+            System.out.println(<span class="string">"Deposited $"</span> + amount);
         }
     }
-    
-    // Instance method - returns instance data
-    public double getBalance() {
-        return balance;
+
+    <span class="comment">// Instance method - returns instance data</span>
+    <span class="keyword">public double</span> getBalance() {
+        <span class="keyword">return</span> balance;
     }
-    
-    // Static method - operates on class-level data
-    public static int getTotalAccounts() {
-        return totalAccounts;
+
+    <span class="comment">// Static method - operates on class-level data</span>
+    <span class="keyword">public static int</span> getTotalAccounts() {
+        <span class="keyword">return</span> totalAccounts;
     }
-    
-    // Static utility method
-    public static double calculateInterest(double principal, double rate) {
-        return principal * rate / 100;
+
+    <span class="comment">// Static utility method</span>
+    <span class="keyword">public static double</span> calculateInterest(<span class="keyword">double</span> principal, <span class="keyword">double</span> rate) {
+        <span class="keyword">return</span> principal * rate / <span class="number">100</span>;
     }
-    
-    public static void main(String[] args) {
-        // Static method call - no object needed
-        System.out.println("Interest: $" + 
-            BankAccount.calculateInterest(1000, 5)); // $50.0
-        
-        // Create objects for instance methods
-        BankAccount account1 = new BankAccount("Alice", 1000);
-        BankAccount account2 = new BankAccount("Bob", 2000);
-        
-        // Instance method calls
-        account1.deposit(500);
-        System.out.println("Alice's balance: $" + account1.getBalance()); // $1500
-        
-        // Static method call
-        System.out.println("Total accounts: " + 
-            BankAccount.getTotalAccounts()); // 2
+
+    <span class="keyword">public static void</span> main(String[] args) {
+        <span class="comment">// Static method call - no object needed</span>
+        System.out.println(<span class="string">"Interest: $"</span> +
+            BankAccount.calculateInterest(<span class="number">1000</span>, <span class="number">5</span>)); <span class="comment">// $50.0</span>
+
+        <span class="comment">// Create objects for instance methods</span>
+        BankAccount account1 = <span class="keyword">new</span> BankAccount(<span class="string">"Alice"</span>, <span class="number">1000</span>);
+        BankAccount account2 = <span class="keyword">new</span> BankAccount(<span class="string">"Bob"</span>, <span class="number">2000</span>);
+
+        <span class="comment">// Instance method calls</span>
+        account1.deposit(<span class="number">500</span>);
+        System.out.println(<span class="string">"Alice's balance: $"</span> + account1.getBalance()); <span class="comment">// $1500</span>
+
+        <span class="comment">// Static method call</span>
+        System.out.println(<span class="string">"Total accounts: "</span> +
+            BankAccount.getTotalAccounts()); <span class="comment">// 2</span>
     }
 }</code></pre>
-                    </div>
-                </div>
-            </section>
+                            </div>
+                        </div>
+                    </section>
 
-            <!-- Variable Scope -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-eye"></i> Variable Scope & Lifetime</h2>
-                </div>
-                <div class="card-content">
-                    <div class="scope-diagram">
-                        <div class="scope-level class-scope">
-                            <div class="scope-label">Class Scope</div>
-                            <div class="scope-content">
-                                <div class="variable">static variables</div>
-                                <div class="variable">instance variables</div>
-                                <div class="scope-level method-scope">
-                                    <div class="scope-label">Method Scope</div>
-                                    <div class="scope-content">
-                                        <div class="variable">parameters</div>
-                                        <div class="variable">local variables</div>
-                                        <div class="scope-level block-scope">
-                                            <div class="scope-label">Block Scope</div>
-                                            <div class="scope-content">
-                                                <div class="variable">loop variables</div>
-                                                <div class="variable">if block variables</div>
-                                            </div>
-                                        </div>
+                    <!-- Chapter 5: Variable Scope -->
+                    <section id="variable-scope" class="chapter">
+                        <h2 class="chapter-title">5. Variable Scope & Lifetime</h2>
+                        <div class="chapter-content">
+                            <p>Variable scope determines where a variable can be accessed. Understanding scope prevents bugs and helps write cleaner code.</p>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-eye"></i> Scope Hierarchy</h4>
+                                <ul>
+                                    <li><strong>Class Scope:</strong> static variables, instance variables</li>
+                                    <li><strong>Method Scope:</strong> parameters, local variables</li>
+                                    <li><strong>Block Scope:</strong> loop variables, if block variables</li>
+                                </ul>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Scope Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">public class</span> ScopeExample {
+    <span class="comment">// Class-level variables</span>
+    <span class="keyword">static int</span> classVariable = <span class="number">100</span>;     <span class="comment">// Static - shared by all</span>
+    <span class="keyword">int</span> instanceVariable = <span class="number">200</span>;         <span class="comment">// Instance - per object</span>
+
+    <span class="keyword">public void</span> demonstrateScope() {
+        <span class="comment">// Method-level variable</span>
+        <span class="keyword">int</span> methodVariable = <span class="number">300</span>;
+
+        System.out.println(<span class="string">"Class variable: "</span> + classVariable);       <span class="comment">// Accessible</span>
+        System.out.println(<span class="string">"Instance variable: "</span> + instanceVariable); <span class="comment">// Accessible</span>
+        System.out.println(<span class="string">"Method variable: "</span> + methodVariable);     <span class="comment">// Accessible</span>
+
+        <span class="comment">// Block scope</span>
+        <span class="keyword">if</span> (<span class="keyword">true</span>) {
+            <span class="keyword">int</span> blockVariable = <span class="number">400</span>;
+            System.out.println(<span class="string">"Block variable: "</span> + blockVariable);   <span class="comment">// Accessible</span>
+            System.out.println(<span class="string">"Method variable: "</span> + methodVariable); <span class="comment">// Still accessible</span>
+        }
+
+        <span class="comment">// System.out.println(blockVariable); // Error - out of scope</span>
+
+        <span class="comment">// Loop scope</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i < <span class="number">3</span>; i++) {
+            <span class="keyword">int</span> loopVariable = i * <span class="number">10</span>;
+            System.out.println(<span class="string">"Loop variable: "</span> + loopVariable);     <span class="comment">// Accessible</span>
+        }
+
+        <span class="comment">// System.out.println(i); // Error - loop variable out of scope</span>
+    }
+
+    <span class="keyword">public static void</span> staticMethod() {
+        System.out.println(<span class="string">"Class variable: "</span> + classVariable);       <span class="comment">// Accessible</span>
+        <span class="comment">// System.out.println(instanceVariable); // Error - no instance context</span>
+
+        <span class="comment">// Need instance to access instance variables</span>
+        ScopeExample obj = <span class="keyword">new</span> ScopeExample();
+        System.out.println(<span class="string">"Instance variable: "</span> + obj.instanceVariable); <span class="comment">// Now accessible</span>
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 6: Recursion -->
+                    <section id="recursion" class="chapter">
+                        <h2 class="chapter-title">6. Recursion Basics</h2>
+                        <div class="chapter-content">
+                            <p>Recursion is a technique where a method calls itself to solve a problem by breaking it into smaller subproblems.</p>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-sync-alt"></i> Factorial Recursion: factorial(4)</h4>
+                                <div class="flow-sequence">
+                                    <div class="flow-item">
+                                        <span class="flow-number">4</span>
+                                        <strong>factorial(4)</strong>
+                                        <p>4 * factorial(3)</p>
+                                    </div>
+                                    <div class="flow-item">
+                                        <span class="flow-number">3</span>
+                                        <strong>factorial(3)</strong>
+                                        <p>3 * factorial(2)</p>
+                                    </div>
+                                    <div class="flow-item">
+                                        <span class="flow-number">2</span>
+                                        <strong>factorial(2)</strong>
+                                        <p>2 * factorial(1)</p>
+                                    </div>
+                                    <div class="flow-item">
+                                        <span class="flow-number">1</span>
+                                        <strong>factorial(1)</strong>
+                                        <p>return 1 (base case)</p>
+                                    </div>
+                                </div>
+                                <p><strong>Result:</strong> 4 * 3 * 2 * 1 = 24</p>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Recursion Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">public class</span> RecursionExamples {
+
+    <span class="comment">// Classic factorial</span>
+    <span class="keyword">public static long</span> factorial(<span class="keyword">int</span> n) {
+        <span class="comment">// Base case - stops recursion</span>
+        <span class="keyword">if</span> (n <= <span class="number">1</span>) {
+            <span class="keyword">return</span> <span class="number">1</span>;
+        }
+        <span class="comment">// Recursive case - method calls itself</span>
+        <span class="keyword">return</span> n * factorial(n - <span class="number">1</span>);
+    }
+
+    <span class="comment">// Fibonacci sequence</span>
+    <span class="keyword">public static int</span> fibonacci(<span class="keyword">int</span> n) {
+        <span class="keyword">if</span> (n <= <span class="number">1</span>) {
+            <span class="keyword">return</span> n;
+        }
+        <span class="keyword">return</span> fibonacci(n - <span class="number">1</span>) + fibonacci(n - <span class="number">2</span>);
+    }
+
+    <span class="comment">// Power calculation</span>
+    <span class="keyword">public static double</span> power(<span class="keyword">double</span> base, <span class="keyword">int</span> exponent) {
+        <span class="comment">// Base cases</span>
+        <span class="keyword">if</span> (exponent == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">1</span>;
+        <span class="keyword">if</span> (exponent == <span class="number">1</span>) <span class="keyword">return</span> base;
+
+        <span class="comment">// Recursive cases</span>
+        <span class="keyword">if</span> (exponent > <span class="number">0</span>) {
+            <span class="keyword">return</span> base * power(base, exponent - <span class="number">1</span>);
+        } <span class="keyword">else</span> {
+            <span class="keyword">return</span> <span class="number">1</span> / power(base, -exponent);
+        }
+    }
+
+    <span class="comment">// Binary search (recursive)</span>
+    <span class="keyword">public static int</span> binarySearch(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> target, <span class="keyword">int</span> left, <span class="keyword">int</span> right) {
+        <span class="keyword">if</span> (left > right) {
+            <span class="keyword">return</span> -<span class="number">1</span>; <span class="comment">// Not found</span>
+        }
+
+        <span class="keyword">int</span> mid = left + (right - left) / <span class="number">2</span>;
+
+        <span class="keyword">if</span> (arr[mid] == target) {
+            <span class="keyword">return</span> mid;
+        } <span class="keyword">else if</span> (arr[mid] > target) {
+            <span class="keyword">return</span> binarySearch(arr, target, left, mid - <span class="number">1</span>);
+        } <span class="keyword">else</span> {
+            <span class="keyword">return</span> binarySearch(arr, target, mid + <span class="number">1</span>, right);
+        }
+    }
+
+    <span class="keyword">public static void</span> main(String[] args) {
+        System.out.println(<span class="string">"5! = "</span> + factorial(<span class="number">5</span>));           <span class="comment">// 120</span>
+        System.out.println(<span class="string">"Fib(6) = "</span> + fibonacci(<span class="number">6</span>));       <span class="comment">// 8</span>
+        System.out.println(<span class="string">"2^8 = "</span> + power(<span class="number">2</span>, <span class="number">8</span>));           <span class="comment">// 256.0</span>
+
+        <span class="keyword">int</span>[] sortedArray = {<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">11</span>, <span class="number">13</span>};
+        <span class="keyword">int</span> index = binarySearch(sortedArray, <span class="number">7</span>, <span class="number">0</span>, sortedArray.length - <span class="number">1</span>);
+        System.out.println(<span class="string">"Found 7 at index: "</span> + index);     <span class="comment">// 3</span>
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Recursion Considerations</h4>
+                                <ul>
+                                    <li>Always have a base case to prevent infinite recursion</li>
+                                    <li>Be aware of stack overflow for deep recursion</li>
+                                    <li>Consider iterative alternatives for performance</li>
+                                    <li>Use memoization to cache repeated calculations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 7: Best Practices -->
+                    <section id="best-practices" class="chapter">
+                        <h2 class="chapter-title">7. Best Practices</h2>
+                        <div class="chapter-content">
+                            <p>Following best practices when writing methods leads to cleaner, more maintainable code.</p>
+
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-check-circle"></i> Do</h4>
+                                    <ul>
+                                        <li>Use clear, descriptive method names</li>
+                                        <li>Keep methods focused (single responsibility)</li>
+                                        <li>Validate input parameters</li>
+                                        <li>Return meaningful values</li>
+                                        <li>Use objects for complex parameters</li>
+                                    </ul>
+                                </div>
+
+                                <div class="info-box warning">
+                                    <h4><i class="fas fa-times-circle"></i> Avoid</h4>
+                                    <ul>
+                                        <li>Long parameter lists (use objects instead)</li>
+                                        <li>Methods that do too many things</li>
+                                        <li>Side effects without documentation</li>
+                                        <li>Magic numbers (use constants)</li>
+                                        <li>Deeply nested code</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Clean Method Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">public class</span> CleanMethodExamples {
+
+    <span class="comment">// Good: Clear, specific name</span>
+    <span class="keyword">public static boolean</span> isValidEmail(String email) {
+        <span class="keyword">return</span> email != <span class="keyword">null</span> && email.contains(<span class="string">"@"</span>) && email.contains(<span class="string">"."</span>);
+    }
+
+    <span class="comment">// Good: Single responsibility</span>
+    <span class="keyword">public static double</span> calculateDiscount(<span class="keyword">double</span> price, <span class="keyword">int</span> discountPercent) {
+        <span class="keyword">return</span> price * discountPercent / <span class="number">100.0</span>;
+    }
+
+    <span class="comment">// Good: Input validation</span>
+    <span class="keyword">public static int</span> divide(<span class="keyword">int</span> dividend, <span class="keyword">int</span> divisor) {
+        <span class="keyword">if</span> (divisor == <span class="number">0</span>) {
+            <span class="keyword">throw new</span> IllegalArgumentException(<span class="string">"Division by zero"</span>);
+        }
+        <span class="keyword">return</span> dividend / divisor;
+    }
+
+    <span class="comment">// Good: Using objects for complex parameters</span>
+    <span class="keyword">public static class</span> OrderRequest {
+        <span class="keyword">private</span> String productId;
+        <span class="keyword">private int</span> quantity;
+        <span class="keyword">private</span> String customerId;
+        <span class="keyword">private boolean</span> expressShipping;
+
+        <span class="keyword">public</span> OrderRequest(String productId, <span class="keyword">int</span> quantity,
+                           String customerId, <span class="keyword">boolean</span> expressShipping) {
+            <span class="keyword">this</span>.productId = productId;
+            <span class="keyword">this</span>.quantity = quantity;
+            <span class="keyword">this</span>.customerId = customerId;
+            <span class="keyword">this</span>.expressShipping = expressShipping;
+        }
+
+        <span class="comment">// Getters</span>
+        <span class="keyword">public</span> String getProductId() { <span class="keyword">return</span> productId; }
+        <span class="keyword">public int</span> getQuantity() { <span class="keyword">return</span> quantity; }
+        <span class="keyword">public</span> String getCustomerId() { <span class="keyword">return</span> customerId; }
+        <span class="keyword">public boolean</span> isExpressShipping() { <span class="keyword">return</span> expressShipping; }
+    }
+
+    <span class="comment">// Instead of: processOrder(String id, int qty, String customer, boolean express, ...)</span>
+    <span class="keyword">public static boolean</span> processOrder(OrderRequest request) {
+        System.out.println(<span class="string">"Processing order for: "</span> + request.getCustomerId());
+        System.out.println(<span class="string">"Product: "</span> + request.getProductId());
+        System.out.println(<span class="string">"Quantity: "</span> + request.getQuantity());
+        <span class="keyword">return true</span>;
+    }
+
+    <span class="comment">// Good: Utility methods for common operations</span>
+    <span class="keyword">public static</span> String formatCurrency(<span class="keyword">double</span> amount) {
+        <span class="keyword">return</span> String.format(<span class="string">"$%.2f"</span>, amount);
+    }
+
+    <span class="keyword">public static boolean</span> isEmpty(String str) {
+        <span class="keyword">return</span> str == <span class="keyword">null</span> || str.trim().isEmpty();
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-bookmark"></i> Quick Reference</h4>
+                                <div class="two-column-grid">
+                                    <div>
+                                        <strong>Access Modifiers:</strong>
+                                        <ul>
+                                            <li><code>public</code> - Accessible everywhere</li>
+                                            <li><code>private</code> - Only within same class</li>
+                                            <li><code>protected</code> - Package + subclasses</li>
+                                            <li><code>(default)</code> - Package-level access</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong>Common Patterns:</strong>
+                                        <ul>
+                                            <li><code>static</code> - Class-level method</li>
+                                            <li><code>final</code> - Cannot be overridden</li>
+                                            <li><code>int... args</code> - Variable arguments</li>
+                                            <li><code>@Override</code> - Override parent method</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Scope Examples</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">public class ScopeExample {
-    // Class-level variables
-    static int classVariable = 100;     // Static - shared by all
-    int instanceVariable = 200;         // Instance - per object
-    
-    public void demonstrateScope() {
-        // Method-level variable
-        int methodVariable = 300;
-        
-        System.out.println("Class variable: " + classVariable);       // ✓ Accessible
-        System.out.println("Instance variable: " + instanceVariable); // ✓ Accessible
-        System.out.println("Method variable: " + methodVariable);     // ✓ Accessible
-        
-        // Block scope
-        if (true) {
-            int blockVariable = 400;
-            System.out.println("Block variable: " + blockVariable);   // ✓ Accessible
-            System.out.println("Method variable: " + methodVariable); // ✓ Still accessible
-        }
-        
-        // System.out.println(blockVariable); // ✗ Error - out of scope
-        
-        // Loop scope
-        for (int i = 0; i < 3; i++) {
-            int loopVariable = i * 10;
-            System.out.println("Loop variable: " + loopVariable);     // ✓ Accessible
-        }
-        
-        // System.out.println(i); // ✗ Error - loop variable out of scope
-    }
-    
-    public static void staticMethod() {
-        System.out.println("Class variable: " + classVariable);       // ✓ Accessible
-        // System.out.println(instanceVariable); // ✗ Error - no instance context
-        
-        // Need instance to access instance variables
-        ScopeExample obj = new ScopeExample();
-        System.out.println("Instance variable: " + obj.instanceVariable); // ✓ Now accessible
-    }
-}</code></pre>
-                    </div>
+                    </section>
                 </div>
-            </section>
 
-            <!-- Recursion -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-sync-alt"></i> Recursion Basics</h2>
-                </div>
-                <div class="card-content">
-                    <div class="recursion-visual">
-                        <div class="recursion-step">
-                            <div class="step-box">factorial(4)</div>
-                            <div class="step-detail">4 * factorial(3)</div>
-                        </div>
-                        <div class="recursion-arrow">↓</div>
-                        <div class="recursion-step">
-                            <div class="step-box">factorial(3)</div>
-                            <div class="step-detail">3 * factorial(2)</div>
-                        </div>
-                        <div class="recursion-arrow">↓</div>
-                        <div class="recursion-step">
-                            <div class="step-box">factorial(2)</div>
-                            <div class="step-detail">2 * factorial(1)</div>
-                        </div>
-                        <div class="recursion-arrow">↓</div>
-                        <div class="recursion-step">
-                            <div class="step-box">factorial(1)</div>
-                            <div class="step-detail">return 1</div>
-                        </div>
-                        <div class="recursion-arrow return-arrow">↑</div>
-                        <div class="return-values">
-                            <div class="return-step">2 * 1 = 2</div>
-                            <div class="return-step">3 * 2 = 6</div>
-                            <div class="return-step">4 * 6 = 24</div>
-                        </div>
-                    </div>
-
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Recursion Examples</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">public class RecursionExamples {
-    
-    // Classic factorial
-    public static long factorial(int n) {
-        // Base case - stops recursion
-        if (n <= 1) {
-            return 1;
-        }
-        // Recursive case - method calls itself
-        return n * factorial(n - 1);
-    }
-    
-    // Fibonacci sequence
-    public static int fibonacci(int n) {
-        if (n <= 1) {
-            return n;
-        }
-        return fibonacci(n - 1) + fibonacci(n - 2);
-    }
-    
-    // Power calculation
-    public static double power(double base, int exponent) {
-        // Base cases
-        if (exponent == 0) return 1;
-        if (exponent == 1) return base;
-        
-        // Recursive cases
-        if (exponent > 0) {
-            return base * power(base, exponent - 1);
-        } else {
-            return 1 / power(base, -exponent);
-        }
-    }
-    
-    // Binary search (recursive)
-    public static int binarySearch(int[] arr, int target, int left, int right) {
-        if (left > right) {
-            return -1; // Not found
-        }
-        
-        int mid = left + (right - left) / 2;
-        
-        if (arr[mid] == target) {
-            return mid;
-        } else if (arr[mid] > target) {
-            return binarySearch(arr, target, left, mid - 1);
-        } else {
-            return binarySearch(arr, target, mid + 1, right);
-        }
-    }
-    
-    public static void main(String[] args) {
-        System.out.println("5! = " + factorial(5));           // 120
-        System.out.println("Fib(6) = " + fibonacci(6));       // 8
-        System.out.println("2^8 = " + power(2, 8));           // 256.0
-        
-        int[] sortedArray = {1, 3, 5, 7, 9, 11, 13};
-        int index = binarySearch(sortedArray, 7, 0, sortedArray.length - 1);
-        System.out.println("Found 7 at index: " + index);     // 3
-    }
-}</code></pre>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Best Practices -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-star"></i> Best Practices</h2>
-                </div>
-                <div class="card-content">
-                    <div class="best-practices-grid">
-                        <div class="practice-item">
-                            <div class="practice-icon good">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Clear Naming</h4>
-                                <p>Use descriptive method names that clearly indicate purpose</p>
-                                <code>calculateTotalPrice()</code> vs <code>calc()</code>
-                            </div>
-                        </div>
-
-                        <div class="practice-item">
-                            <div class="practice-icon good">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Single Responsibility</h4>
-                                <p>Each method should have one clear purpose</p>
-                                <code>validateInput(), processData(), saveResult()</code>
-                            </div>
-                        </div>
-
-                        <div class="practice-item">
-                            <div class="practice-icon bad">
-                                <i class="fas fa-times"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Avoid Long Parameter Lists</h4>
-                                <p>Too many parameters make methods hard to use</p>
-                                <code>method(a,b,c,d,e,f,g)</code> ← Consider objects instead
-                            </div>
-                        </div>
-
-                        <div class="practice-item">
-                            <div class="practice-icon good">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Consistent Return Types</h4>
-                                <p>Be predictable with what methods return</p>
-                                <code>Optional&lt;User&gt;</code> for potentially null results
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Clean Method Examples</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">public class CleanMethodExamples {
-    
-    // ✓ Good: Clear, specific name
-    public static boolean isValidEmail(String email) {
-        return email != null && email.contains("@") && email.contains(".");
-    }
-    
-    // ✓ Good: Single responsibility
-    public static double calculateDiscount(double price, int discountPercent) {
-        return price * discountPercent / 100.0;
-    }
-    
-    // ✓ Good: Input validation
-    public static int divide(int dividend, int divisor) {
-        if (divisor == 0) {
-            throw new IllegalArgumentException("Division by zero");
-        }
-        return dividend / divisor;
-    }
-    
-    // ✓ Good: Using objects for complex parameters
-    public static class OrderRequest {
-        private String productId;
-        private int quantity;
-        private String customerId;
-        private boolean expressShipping;
-        
-        // Constructor and getters...
-        public OrderRequest(String productId, int quantity, String customerId, boolean expressShipping) {
-            this.productId = productId;
-            this.quantity = quantity;
-            this.customerId = customerId;
-            this.expressShipping = expressShipping;
-        }
-        
-        // Getters
-        public String getProductId() { return productId; }
-        public int getQuantity() { return quantity; }
-        public String getCustomerId() { return customerId; }
-        public boolean isExpressShipping() { return expressShipping; }
-    }
-    
-    // Instead of: processOrder(String id, int qty, String customer, boolean express, ...)
-    public static boolean processOrder(OrderRequest request) {
-        // Process order using request object
-        System.out.println("Processing order for: " + request.getCustomerId());
-        System.out.println("Product: " + request.getProductId());
-        System.out.println("Quantity: " + request.getQuantity());
-        return true;
-    }
-    
-    // ✓ Good: Utility methods for common operations
-    public static String formatCurrency(double amount) {
-        return String.format("$%.2f", amount);
-    }
-    
-    public static boolean isEmpty(String str) {
-        return str == null || str.trim().isEmpty();
-    }
-    
-    public static void main(String[] args) {
-        // Clean method usage
-        System.out.println(isValidEmail("user@example.com"));        // true
-        System.out.println(formatCurrency(calculateDiscount(100, 15))); // $15.00
-        
-        OrderRequest order = new OrderRequest("PROD123", 2, "CUST456", true);
-        processOrder(order);
-    }
-}</code></pre>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Quick Reference -->
-            <section class="concept-card reference-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-bookmark"></i> Quick Reference</h2>
-                </div>
-                <div class="card-content">
-                    <div class="reference-grid">
-                        <div class="reference-section">
-                            <h4>Method Declaration</h4>
-                            <div class="reference-item">
-                                <code>public static int method(int param)</code>
-                                <span>Basic method with return value</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>private void helper()</code>
-                                <span>Private method, no return</span>
-                            </div>
-                        </div>
-
-                        <div class="reference-section">
-                            <h4>Access Modifiers</h4>
-                            <div class="reference-item">
-                                <code>public</code>
-                                <span>Accessible everywhere</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>private</code>
-                                <span>Only within same class</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>protected</code>
-                                <span>Package + subclasses</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>(default)</code>
-                                <span>Package-level access</span>
-                            </div>
-                        </div>
-
-                        <div class="reference-section">
-                            <h4>Common Patterns</h4>
-                            <div class="reference-item">
-                                <code>static</code>
-                                <span>Class-level method</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>final</code>
-                                <span>Cannot be overridden</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>int... args</code>
-                                <span>Variable arguments</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                <!-- Article Navigation -->
+                <footer class="article-nav">
+                    <a href="/java/core/java-oops.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Java OOP</span>
+                    </a>
+                    <a href="/java/core/java-basic.html" class="nav-next">
+                        <span>Java Basics</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
         </div>
-    </div>
+    </main>
 
-     <!-- Footer Section -->
-        <footer class="footer">
-        <div id="footer-placeholder"></div>
-    </footer>
-    <script>
-        fetch("/footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
-    <script src="/js/footer.js"></script>
+    <!-- Footer -->
+    <footer class="site-footer" id="site-footer"></footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script>
-        function copyCode(button) {
-            const codeBlock = button.parentElement.nextElementSibling.querySelector('code');
-            const text = codeBlock.textContent;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                const icon = button.querySelector('i');
-                const srText = button.querySelector('.sr-only');
-                
-                // Update icon and text
-                icon.className = 'fas fa-check';
-                srText.textContent = 'Copied';
-                button.style.color = '#4CAF50';
-                button.title = 'Code copied to clipboard';
-                button.setAttribute('aria-label', 'Code copied to clipboard');
-                
-                setTimeout(() => {
-                    icon.className = 'fas fa-copy';
-                    srText.textContent = 'Copy';
-                    button.style.color = '';
-                    button.title = 'Copy code to clipboard';
-                    button.setAttribute('aria-label', 'Copy code to clipboard');
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                
-                const icon = button.querySelector('i');
-                const srText = button.querySelector('.sr-only');
-                icon.className = 'fas fa-check';
-                srText.textContent = 'Copied';
-                button.style.color = '#4CAF50';
-                
-                setTimeout(() => {
-                    icon.className = 'fas fa-copy';
-                    srText.textContent = 'Copy';
-                    button.style.color = '';
-                }, 2000);
-            });
-        }
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
-        // Add smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Add interactive effects to diagrams
-        document.querySelectorAll('.method-parts .part').forEach(part => {
-            part.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.05)';
-            });
-            
-            part.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-            });
-        });
-
-        // Add animation to recursion visual on scroll
-        const observerOptions = {
-            threshold: 0.5,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.recursion-visual, .parameter-flow, .scope-diagram').forEach(el => {
-            observer.observe(el);
-        });
-    </script>
+    <!-- Scripts -->
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
+
 </html>

@@ -1,1531 +1,1040 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master the four pillars of OOP: Encapsulation, Inheritance, Polymorphism, and Abstraction. Learn SOLID principles and design patterns.">
     <title>Java OOP - Object-Oriented Programming - TechTok Cafe</title>
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
-    <link rel="stylesheet" href="/css/java-oop.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
-    <link rel="stylesheet" href="/css/footer.css">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
+
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
-                    height="50px" alt="TechTok Cafe"></a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
-            </ul>
-        </div>
-    </nav>
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <div class="container">
-        <header class="page-header">
-            <div class="header-content">
-                <div class="breadcrumb">
-                    <a href="/">Home</a> > <a href="/java">Java</a> > <span>Object-Oriented Programming</span>
-                </div>
-                <h1><i class="fas fa-cube"></i> Java Object-Oriented Programming</h1>
-                <p class="subtitle">Master the four pillars of OOP: Encapsulation, Inheritance, Polymorphism, and Abstraction</p>
-            </div>
-        </header>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar"></aside>
 
-        <div class="content-grid">
-            <!-- OOP Overview -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-building"></i> OOP Fundamentals</h2>
-                </div>
-                <div class="card-content">
-                    <div class="theory-section">
-                        <h3>Understanding Object-Oriented Programming</h3>
-                        <p>OOP is a programming paradigm that organizes code around objects rather than functions. It models real-world entities as objects that contain both data (attributes) and behavior (methods). This approach promotes code reusability, modularity, and easier maintenance.</p>
-                        
-                        <div class="key-benefits">
-                            <h4>Key Benefits of OOP:</h4>
-                            <ul>
-                                <li><strong>Modularity:</strong> Code is organized into independent, interchangeable modules</li>
-                                <li><strong>Reusability:</strong> Classes can be reused across different parts of the application</li>
-                                <li><strong>Maintainability:</strong> Changes to one part don't affect other parts</li>
-                                <li><strong>Scalability:</strong> Easy to add new features without breaking existing code</li>
-                                <li><strong>Data Security:</strong> Encapsulation protects data from unauthorized access</li>
-                            </ul>
-                        </div>
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- Main Content -->
+    <main class="page-content" id="main-content">
+        <!-- Reading Progress -->
+        <div class="reading-progress" id="reading-progress"></div>
+
+        <div class="content-wrapper">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+
+            <!-- Article Container -->
+            <article class="article-container">
+                <!-- Article Header -->
+                <header class="article-header">
+                    <h1 class="article-title">Java Object-Oriented Programming</h1>
+                    <p class="article-subtitle">Master the four pillars of OOP: Encapsulation, Inheritance, Polymorphism, and Abstraction</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 45 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
                     </div>
+                </header>
 
-                    <div class="oop-pillars">
-                        <div class="pillar" data-pillar="encapsulation">
-                            <div class="pillar-icon">
-                                <i class="fas fa-lock"></i>
-                            </div>
-                            <h4>Encapsulation</h4>
-                            <p>Data hiding and bundling</p>
-                        </div>
-                        <div class="pillar" data-pillar="inheritance">
-                            <div class="pillar-icon">
-                                <i class="fas fa-sitemap"></i>
-                            </div>
-                            <h4>Inheritance</h4>
-                            <p>Code reuse and hierarchy</p>
-                        </div>
-                        <div class="pillar" data-pillar="polymorphism">
-                            <div class="pillar-icon">
-                                <i class="fas fa-shapes"></i>
-                            </div>
-                            <h4>Polymorphism</h4>
-                            <p>Many forms, one interface</p>
-                        </div>
-                        <div class="pillar" data-pillar="abstraction">
-                            <div class="pillar-icon">
-                                <i class="fas fa-eye-slash"></i>
-                            </div>
-                            <h4>Abstraction</h4>
-                            <p>Hide complexity, show essentials</p>
-                        </div>
-                    </div>
+                <!-- Table of Contents -->
+                <nav class="toc" id="toc"></nav>
 
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Basic Class Structure</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">// Class definition with fields and methods
-public class Car {
-    private String brand;    // Instance variable
-    private int year;        // Instance variable
-    
-    // Constructor
-    public Car(String brand, int year) {
-        this.brand = brand;
-        this.year = year;
-    }
-    
-    // Method
-    public void start() {
-        System.out.println(brand + " started");
-    }
-}
+                <!-- Article Body -->
+                <div class="article-body">
+                    <!-- Chapter 1: OOP Fundamentals -->
+                    <section id="oop-fundamentals" class="chapter">
+                        <h2 class="chapter-title">1. OOP Fundamentals</h2>
+                        <div class="chapter-content">
+                            <p>OOP is a programming paradigm that organizes code around objects rather than functions. It models real-world entities as objects that contain both data (attributes) and behavior (methods). This approach promotes code reusability, modularity, and easier maintenance.</p>
 
-// Object creation and usage
-Car myCar = new Car("Toyota", 2023);
-myCar.start(); // Output: Toyota started</code></pre>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Encapsulation -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-lock"></i> Encapsulation</h2>
-                </div>
-                <div class="card-content">
-                    <div class="theory-section">
-                        <h3>What is Encapsulation?</h3>
-                        <p>Encapsulation is the bundling of data (variables) and methods that operate on that data into a single unit (class). It also involves restricting direct access to some of an object's components, which is known as data hiding.</p>
-                        
-                        <div class="principles-grid">
-                            <div class="principle">
-                                <h4>Data Hiding</h4>
-                                <p>Make fields private to prevent direct access from outside the class</p>
-                            </div>
-                            <div class="principle">
-                                <h4>Controlled Access</h4>
-                                <p>Use public methods (getters/setters) to control how data is accessed and modified</p>
-                            </div>
-                            <div class="principle">
-                                <h4>Validation</h4>
-                                <p>Add validation logic in setter methods to ensure data integrity</p>
-                            </div>
-                        </div>
-
-                        <div class="guidelines">
-                            <h4>Encapsulation Guidelines:</h4>
-                            <ul>
-                                <li>Always make instance variables private</li>
-                                <li>Provide public getter/setter methods only when necessary</li>
-                                <li>Use validation in setter methods to maintain data integrity</li>
-                                <li>Consider immutable objects for better thread safety</li>
-                                <li>Don't expose internal collections directly - return copies instead</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="encapsulation-visual">
-                        <div class="class-box">
-                            <div class="class-header">BankAccount Class</div>
-                            <div class="access-levels">
-                                <div class="access-level private">
-                                    <span class="access-modifier">- private</span>
-                                    <div class="members">
-                                        <div class="member">accountNumber: String</div>
-                                        <div class="member">balance: double</div>
-                                        <div class="member">pin: String</div>
-                                    </div>
-                                </div>
-                                <div class="access-level public">
-                                    <span class="access-modifier">+ public</span>
-                                    <div class="members">
-                                        <div class="member">deposit(amount: double)</div>
-                                        <div class="member">withdraw(amount: double)</div>
-                                        <div class="member">getBalance(): double</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Encapsulation Example</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">// Proper encapsulation with data hiding
-public class Student {
-    private String name;        // Private field
-    private int age;           // Private field
-    private double gpa;        // Private field
-    
-    // Constructor
-    public Student(String name, int age) {
-        this.name = name;
-        setAge(age); // Use setter for validation
-    }
-    
-    // Getter with no validation needed
-    public String getName() {
-        return name;
-    }
-    
-    // Setter with validation
-    public void setAge(int age) {
-        if (age >= 0 && age <= 150) {
-            this.age = age;
-        } else {
-            throw new IllegalArgumentException("Invalid age");
-        }
-    }
-    
-    // Getter
-    public int getAge() {
-        return age;
-    }
-    
-    // Controlled access to GPA
-    public void setGPA(double gpa) {
-        if (gpa >= 0.0 && gpa <= 4.0) {
-            this.gpa = gpa;
-        }
-    }
-    
-    public double getGPA() {
-        return gpa;
-    }
-}
-
-// Usage
-Student student = new Student("Alice", 20);
-student.setGPA(3.8);
-// student.age = -5;  // ✗ Compilation error - field is private
-student.setAge(21);   // ✓ Uses validation</code></pre>
-                    </div>
-
-                    <div class="tips-section">
-                        <h4>💡 Encapsulation Best Practices</h4>
-                        <div class="tips-grid">
-                            <div class="tip">
-                                <strong>Use Builder Pattern:</strong> For classes with many parameters, consider the Builder pattern instead of long constructors
-                            </div>
-                            <div class="tip">
-                                <strong>Defensive Copying:</strong> When returning mutable objects, return copies to prevent external modification
-                            </div>
-                            <div class="tip">
-                                <strong>Immutable Objects:</strong> Consider making objects immutable when possible for thread safety
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Inheritance -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-sitemap"></i> Inheritance</h2>
-                </div>
-                <div class="card-content">
-                    <div class="theory-section">
-                        <h3>Understanding Inheritance</h3>
-                        <p>Inheritance allows a new class (subclass/child) to acquire properties and methods from an existing class (superclass/parent). It establishes an "is-a" relationship between classes and promotes code reuse.</p>
-                        
-                        <div class="principles-grid">
-                            <div class="principle">
-                                <h4>Code Reuse</h4>
-                                <p>Child classes inherit all non-private members from parent classes</p>
-                            </div>
-                            <div class="principle">
-                                <h4>Method Overriding</h4>
-                                <p>Child classes can provide specific implementations of parent methods</p>
-                            </div>
-                            <div class="principle">
-                                <h4>Hierarchical Structure</h4>
-                                <p>Creates a tree-like structure of related classes</p>
-                            </div>
-                        </div>
-
-                        <div class="guidelines">
-                            <h4>Inheritance Guidelines:</h4>
-                            <ul>
-                                <li>Use inheritance for "is-a" relationships (Dog is-a Animal)</li>
-                                <li>Keep inheritance hierarchies shallow (2-3 levels max)</li>
-                                <li>Use <code>protected</code> for members that subclasses need access to</li>
-                                <li>Always use <code>@Override</code> annotation when overriding methods</li>
-                                <li>Call <code>super()</code> in constructors to initialize parent state</li>
-                                <li>Favor composition over inheritance when relationship isn't clearly "is-a"</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="inheritance-tree">
-                        <div class="inheritance-level">
-                            <div class="class-node parent">
-                                <span class="class-name">Animal</span>
-                                <div class="class-members">
-                                    <div>+ name: String</div>
-                                    <div>+ age: int</div>
-                                    <div>+ eat()</div>
-                                    <div>+ sleep()</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="inheritance-arrows">
-                            <div class="arrow">↓</div>
-                            <div class="arrow">↓</div>
-                            <div class="arrow">↓</div>
-                        </div>
-                        <div class="inheritance-level">
-                            <div class="class-node child">
-                                <span class="class-name">Dog</span>
-                                <div class="class-members">
-                                    <div>+ breed: String</div>
-                                    <div>+ bark()</div>
-                                    <div>+ wagTail()</div>
-                                </div>
-                            </div>
-                            <div class="class-node child">
-                                <span class="class-name">Cat</span>
-                                <div class="class-members">
-                                    <div>+ color: String</div>
-                                    <div>+ meow()</div>
-                                    <div>+ purr()</div>
-                                </div>
-                            </div>
-                            <div class="class-node child">
-                                <span class="class-name">Bird</span>
-                                <div class="class-members">
-                                    <div>+ wingspan: double</div>
-                                    <div>+ fly()</div>
-                                    <div>+ chirp()</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Inheritance Example</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">// Parent class
-class Animal {
-    protected String name;    // Protected: accessible by subclasses
-    protected int age;
-    
-    public Animal(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-    
-    public void eat() {
-        System.out.println(name + " is eating");
-    }
-    
-    public void sleep() {
-        System.out.println(name + " is sleeping");
-    }
-}
-
-// Child class inheriting from Animal
-class Dog extends Animal {
-    private String breed;
-    
-    public Dog(String name, int age, String breed) {
-        super(name, age);    // Call parent constructor
-        this.breed = breed;
-    }
-    
-    // Method overriding
-    @Override
-    public void eat() {
-        System.out.println(name + " the dog is munching kibble");
-    }
-    
-    // New method specific to Dog
-    public void bark() {
-        System.out.println(name + " says Woof!");
-    }
-}
-
-// Usage
-Dog myDog = new Dog("Buddy", 3, "Golden Retriever");
-myDog.eat();    // Calls overridden method
-myDog.sleep();  // Inherited method
-myDog.bark();   // Dog-specific method</code></pre>
-                    </div>
-
-                    <div class="tips-section">
-                        <h4>Inheritance vs Composition</h4>
-                        <div class="comparison-tips">
-                            <div class="tip-item">
-                                <strong>Use Inheritance When:</strong>
+                            <div class="info-box">
+                                <h4><i class="fas fa-star"></i> Key Benefits of OOP</h4>
                                 <ul>
-                                    <li>Clear "is-a" relationship exists</li>
-                                    <li>You want to reuse code from a base class</li>
-                                    <li>You need polymorphic behavior</li>
+                                    <li><strong>Modularity:</strong> Code is organized into independent, interchangeable modules</li>
+                                    <li><strong>Reusability:</strong> Classes can be reused across different parts of the application</li>
+                                    <li><strong>Maintainability:</strong> Changes to one part don't affect other parts</li>
+                                    <li><strong>Scalability:</strong> Easy to add new features without breaking existing code</li>
+                                    <li><strong>Data Security:</strong> Encapsulation protects data from unauthorized access</li>
                                 </ul>
                             </div>
-                            <div class="tip-item">
-                                <strong>Use Composition When:</strong>
+
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-lock"></i></div>
+                                    <h4>Encapsulation</h4>
+                                    <p>Data hiding and bundling</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-sitemap"></i></div>
+                                    <h4>Inheritance</h4>
+                                    <p>Code reuse and hierarchy</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-shapes"></i></div>
+                                    <h4>Polymorphism</h4>
+                                    <p>Many forms, one interface</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-eye-slash"></i></div>
+                                    <h4>Abstraction</h4>
+                                    <p>Hide complexity, show essentials</p>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Basic Class Structure</span>
+                                </div>
+                                <pre><code><span class="comment">// Class definition with fields and methods</span>
+<span class="keyword">public class</span> Car {
+    <span class="keyword">private</span> String brand;    <span class="comment">// Instance variable</span>
+    <span class="keyword">private int</span> year;        <span class="comment">// Instance variable</span>
+
+    <span class="comment">// Constructor</span>
+    <span class="keyword">public</span> Car(String brand, <span class="keyword">int</span> year) {
+        <span class="keyword">this</span>.brand = brand;
+        <span class="keyword">this</span>.year = year;
+    }
+
+    <span class="comment">// Method</span>
+    <span class="keyword">public void</span> start() {
+        System.out.println(brand + <span class="string">" started"</span>);
+    }
+}
+
+<span class="comment">// Object creation and usage</span>
+Car myCar = <span class="keyword">new</span> Car(<span class="string">"Toyota"</span>, <span class="number">2023</span>);
+myCar.start(); <span class="comment">// Output: Toyota started</span></code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2: Encapsulation -->
+                    <section id="encapsulation" class="chapter">
+                        <h2 class="chapter-title">2. Encapsulation</h2>
+                        <div class="chapter-content">
+                            <p>Encapsulation is the bundling of data (variables) and methods that operate on that data into a single unit (class). It also involves restricting direct access to some of an object's components, which is known as data hiding.</p>
+
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-eye-slash"></i></div>
+                                    <h4>Data Hiding</h4>
+                                    <p>Make fields private to prevent direct access from outside the class</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-key"></i></div>
+                                    <h4>Controlled Access</h4>
+                                    <p>Use public methods (getters/setters) to control how data is accessed</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+                                    <h4>Validation</h4>
+                                    <p>Add validation logic in setter methods to ensure data integrity</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-list-check"></i> Encapsulation Guidelines</h4>
                                 <ul>
-                                    <li>"has-a" relationship is more appropriate</li>
-                                    <li>You need multiple inheritance-like behavior</li>
-                                    <li>You want more flexible design</li>
+                                    <li>Always make instance variables private</li>
+                                    <li>Provide public getter/setter methods only when necessary</li>
+                                    <li>Use validation in setter methods to maintain data integrity</li>
+                                    <li>Consider immutable objects for better thread safety</li>
+                                    <li>Don't expose internal collections directly - return copies instead</li>
+                                </ul>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Encapsulation Example</span>
+                                </div>
+                                <pre><code><span class="comment">// Proper encapsulation with data hiding</span>
+<span class="keyword">public class</span> Student {
+    <span class="keyword">private</span> String name;        <span class="comment">// Private field</span>
+    <span class="keyword">private int</span> age;           <span class="comment">// Private field</span>
+    <span class="keyword">private double</span> gpa;        <span class="comment">// Private field</span>
+
+    <span class="comment">// Constructor</span>
+    <span class="keyword">public</span> Student(String name, <span class="keyword">int</span> age) {
+        <span class="keyword">this</span>.name = name;
+        setAge(age); <span class="comment">// Use setter for validation</span>
+    }
+
+    <span class="comment">// Getter with no validation needed</span>
+    <span class="keyword">public</span> String getName() {
+        <span class="keyword">return</span> name;
+    }
+
+    <span class="comment">// Setter with validation</span>
+    <span class="keyword">public void</span> setAge(<span class="keyword">int</span> age) {
+        <span class="keyword">if</span> (age >= <span class="number">0</span> && age <= <span class="number">150</span>) {
+            <span class="keyword">this</span>.age = age;
+        } <span class="keyword">else</span> {
+            <span class="keyword">throw new</span> IllegalArgumentException(<span class="string">"Invalid age"</span>);
+        }
+    }
+
+    <span class="comment">// Getter</span>
+    <span class="keyword">public int</span> getAge() {
+        <span class="keyword">return</span> age;
+    }
+
+    <span class="comment">// Controlled access to GPA</span>
+    <span class="keyword">public void</span> setGPA(<span class="keyword">double</span> gpa) {
+        <span class="keyword">if</span> (gpa >= <span class="number">0.0</span> && gpa <= <span class="number">4.0</span>) {
+            <span class="keyword">this</span>.gpa = gpa;
+        }
+    }
+
+    <span class="keyword">public double</span> getGPA() {
+        <span class="keyword">return</span> gpa;
+    }
+}
+
+<span class="comment">// Usage</span>
+Student student = <span class="keyword">new</span> Student(<span class="string">"Alice"</span>, <span class="number">20</span>);
+student.setGPA(<span class="number">3.8</span>);
+<span class="comment">// student.age = -5;  // ✗ Compilation error - field is private</span>
+student.setAge(<span class="number">21</span>);   <span class="comment">// ✓ Uses validation</span></code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-lightbulb"></i> Encapsulation Best Practices</h4>
+                                <ul>
+                                    <li><strong>Use Builder Pattern:</strong> For classes with many parameters, consider the Builder pattern instead of long constructors</li>
+                                    <li><strong>Defensive Copying:</strong> When returning mutable objects, return copies to prevent external modification</li>
+                                    <li><strong>Immutable Objects:</strong> Consider making objects immutable when possible for thread safety</li>
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
+                    </section>
 
-            <!-- Polymorphism -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-shapes"></i> Polymorphism</h2>
-                </div>
-                <div class="card-content">
-                    <div class="theory-section">
-                        <h3>Understanding Polymorphism</h3>
-                        <p>Polymorphism allows objects of different types to be treated as objects of a common base type. The word "polymorphism" comes from Greek, meaning "many forms." It enables a single interface to represent different underlying forms (data types).</p>
-                        
-                        <div class="principles-grid">
-                            <div class="principle">
-                                <h4>Runtime Polymorphism</h4>
-                                <p>Method overriding - determined at runtime through dynamic method dispatch</p>
-                            </div>
-                            <div class="principle">
-                                <h4>Compile-time Polymorphism</h4>
-                                <p>Method overloading - resolved at compile time based on method signatures</p>
-                            </div>
-                            <div class="principle">
-                                <h4>Interface Implementation</h4>
-                                <p>Multiple classes can implement the same interface with different behaviors</p>
-                            </div>
-                        </div>
+                    <!-- Chapter 3: Inheritance -->
+                    <section id="inheritance" class="chapter">
+                        <h2 class="chapter-title">3. Inheritance</h2>
+                        <div class="chapter-content">
+                            <p>Inheritance allows a new class (subclass/child) to acquire properties and methods from an existing class (superclass/parent). It establishes an "is-a" relationship between classes and promotes code reuse.</p>
 
-                        <div class="guidelines">
-                            <h4>Polymorphism Best Practices:</h4>
-                            <ul>
-                                <li>Program to interfaces, not implementations</li>
-                                <li>Use polymorphism to reduce code duplication</li>
-                                <li>Leverage polymorphism in collections for flexible data handling</li>
-                                <li>Override <code>equals()</code> and <code>hashCode()</code> when necessary</li>
-                                <li>Use <code>instanceof</code> sparingly - prefer polymorphic methods</li>
-                            </ul>
-                        </div>
-                    </div>
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-copy"></i></div>
+                                    <h4>Code Reuse</h4>
+                                    <p>Child classes inherit all non-private members from parent classes</p>
+                                </div>
 
-                    <div class="polymorphism-visual">
-                        <div class="poly-section">
-                            <h4>Runtime Polymorphism (Method Overriding)</h4>
-                            <div class="poly-example">
-                                <div class="method-call">animal.makeSound()</div>
-                                <div class="poly-arrows">
-                                    <div class="poly-result">
-                                        <span>Dog Object</span>
-                                        <code>"Woof!"</code>
-                                    </div>
-                                    <div class="poly-result">
-                                        <span>Cat Object</span>
-                                        <code>"Meow!"</code>
-                                    </div>
-                                    <div class="poly-result">
-                                        <span>Bird Object</span>
-                                        <code>"Chirp!"</code>
-                                    </div>
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-edit"></i></div>
+                                    <h4>Method Overriding</h4>
+                                    <p>Child classes can provide specific implementations of parent methods</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-project-diagram"></i></div>
+                                    <h4>Hierarchical Structure</h4>
+                                    <p>Creates a tree-like structure of related classes</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-list-check"></i> Inheritance Guidelines</h4>
+                                <ul>
+                                    <li>Use inheritance for "is-a" relationships (Dog is-a Animal)</li>
+                                    <li>Keep inheritance hierarchies shallow (2-3 levels max)</li>
+                                    <li>Use <code>protected</code> for members that subclasses need access to</li>
+                                    <li>Always use <code>@Override</code> annotation when overriding methods</li>
+                                    <li>Call <code>super()</code> in constructors to initialize parent state</li>
+                                    <li>Favor composition over inheritance when relationship isn't clearly "is-a"</li>
+                                </ul>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Inheritance Example</span>
+                                </div>
+                                <pre><code><span class="comment">// Parent class</span>
+<span class="keyword">class</span> Animal {
+    <span class="keyword">protected</span> String name;    <span class="comment">// Protected: accessible by subclasses</span>
+    <span class="keyword">protected int</span> age;
+
+    <span class="keyword">public</span> Animal(String name, <span class="keyword">int</span> age) {
+        <span class="keyword">this</span>.name = name;
+        <span class="keyword">this</span>.age = age;
+    }
+
+    <span class="keyword">public void</span> eat() {
+        System.out.println(name + <span class="string">" is eating"</span>);
+    }
+
+    <span class="keyword">public void</span> sleep() {
+        System.out.println(name + <span class="string">" is sleeping"</span>);
+    }
+}
+
+<span class="comment">// Child class inheriting from Animal</span>
+<span class="keyword">class</span> Dog <span class="keyword">extends</span> Animal {
+    <span class="keyword">private</span> String breed;
+
+    <span class="keyword">public</span> Dog(String name, <span class="keyword">int</span> age, String breed) {
+        <span class="keyword">super</span>(name, age);    <span class="comment">// Call parent constructor</span>
+        <span class="keyword">this</span>.breed = breed;
+    }
+
+    <span class="comment">// Method overriding</span>
+    @Override
+    <span class="keyword">public void</span> eat() {
+        System.out.println(name + <span class="string">" the dog is munching kibble"</span>);
+    }
+
+    <span class="comment">// New method specific to Dog</span>
+    <span class="keyword">public void</span> bark() {
+        System.out.println(name + <span class="string">" says Woof!"</span>);
+    }
+}
+
+<span class="comment">// Usage</span>
+Dog myDog = <span class="keyword">new</span> Dog(<span class="string">"Buddy"</span>, <span class="number">3</span>, <span class="string">"Golden Retriever"</span>);
+myDog.eat();    <span class="comment">// Calls overridden method</span>
+myDog.sleep();  <span class="comment">// Inherited method</span>
+myDog.bark();   <span class="comment">// Dog-specific method</span></code></pre>
+                            </div>
+
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-sitemap"></i> Use Inheritance When:</h4>
+                                    <ul>
+                                        <li>Clear "is-a" relationship exists</li>
+                                        <li>You want to reuse code from a base class</li>
+                                        <li>You need polymorphic behavior</li>
+                                    </ul>
+                                </div>
+
+                                <div class="info-box">
+                                    <h4><i class="fas fa-cubes"></i> Use Composition When:</h4>
+                                    <ul>
+                                        <li>"has-a" relationship is more appropriate</li>
+                                        <li>You need multiple inheritance-like behavior</li>
+                                        <li>You want more flexible design</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="poly-section">
-                            <h4>Compile-time Polymorphism (Method Overloading)</h4>
-                            <div class="poly-example">
-                                <div class="overload-methods">
-                                    <div class="overload-method">calculate(int, int)</div>
-                                    <div class="overload-method">calculate(double, double)</div>
-                                    <div class="overload-method">calculate(int, int, int)</div>
+                    </section>
+
+                    <!-- Chapter 4: Polymorphism -->
+                    <section id="polymorphism" class="chapter">
+                        <h2 class="chapter-title">4. Polymorphism</h2>
+                        <div class="chapter-content">
+                            <p>Polymorphism allows objects of different types to be treated as objects of a common base type. The word "polymorphism" comes from Greek, meaning "many forms." It enables a single interface to represent different underlying forms (data types).</p>
+
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-running"></i></div>
+                                    <h4>Runtime Polymorphism</h4>
+                                    <p>Method overriding - determined at runtime through dynamic method dispatch</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-code"></i></div>
+                                    <h4>Compile-time Polymorphism</h4>
+                                    <p>Method overloading - resolved at compile time based on method signatures</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-plug"></i></div>
+                                    <h4>Interface Implementation</h4>
+                                    <p>Multiple classes can implement the same interface with different behaviors</p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Polymorphism Examples</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">// Runtime Polymorphism Example
-abstract class Shape {
-    public abstract double getArea();
-    public abstract void draw();
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-list-check"></i> Polymorphism Best Practices</h4>
+                                <ul>
+                                    <li>Program to interfaces, not implementations</li>
+                                    <li>Use polymorphism to reduce code duplication</li>
+                                    <li>Leverage polymorphism in collections for flexible data handling</li>
+                                    <li>Override <code>equals()</code> and <code>hashCode()</code> when necessary</li>
+                                    <li>Use <code>instanceof</code> sparingly - prefer polymorphic methods</li>
+                                </ul>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Runtime Polymorphism Example</span>
+                                </div>
+                                <pre><code><span class="comment">// Runtime Polymorphism Example</span>
+<span class="keyword">abstract class</span> Shape {
+    <span class="keyword">public abstract double</span> getArea();
+    <span class="keyword">public abstract void</span> draw();
 }
 
-class Circle extends Shape {
-    private double radius;
-    
-    public Circle(double radius) {
-        this.radius = radius;
+<span class="keyword">class</span> Circle <span class="keyword">extends</span> Shape {
+    <span class="keyword">private double</span> radius;
+
+    <span class="keyword">public</span> Circle(<span class="keyword">double</span> radius) {
+        <span class="keyword">this</span>.radius = radius;
     }
-    
+
     @Override
-    public double getArea() {
-        return Math.PI * radius * radius;
+    <span class="keyword">public double</span> getArea() {
+        <span class="keyword">return</span> Math.PI * radius * radius;
     }
-    
+
     @Override
-    public void draw() {
-        System.out.println("Drawing a circle");
+    <span class="keyword">public void</span> draw() {
+        System.out.println(<span class="string">"Drawing a circle"</span>);
     }
 }
 
-class Rectangle extends Shape {
-    private double width, height;
-    
-    public Rectangle(double width, double height) {
-        this.width = width;
-        this.height = height;
+<span class="keyword">class</span> Rectangle <span class="keyword">extends</span> Shape {
+    <span class="keyword">private double</span> width, height;
+
+    <span class="keyword">public</span> Rectangle(<span class="keyword">double</span> width, <span class="keyword">double</span> height) {
+        <span class="keyword">this</span>.width = width;
+        <span class="keyword">this</span>.height = height;
     }
-    
+
     @Override
-    public double getArea() {
-        return width * height;
+    <span class="keyword">public double</span> getArea() {
+        <span class="keyword">return</span> width * height;
     }
-    
+
     @Override
-    public void draw() {
-        System.out.println("Drawing a rectangle");
+    <span class="keyword">public void</span> draw() {
+        System.out.println(<span class="string">"Drawing a rectangle"</span>);
     }
 }
 
-// Polymorphism in action
-Shape[] shapes = {new Circle(5), new Rectangle(4, 6)};
-for (Shape shape : shapes) {
-    shape.draw();    // Calls appropriate draw() method
-    System.out.println("Area: " + shape.getArea());
-}
-
-// Method Overloading Example
-class Calculator {
-    public int add(int a, int b) {
-        return a + b;
-    }
-    
-    public double add(double a, double b) {
-        return a + b;
-    }
-    
-    public int add(int a, int b, int c) {
-        return a + b + c;
-    }
-}
-
-Calculator calc = new Calculator();
-System.out.println(calc.add(5, 3));        // Calls int version
-System.out.println(calc.add(5.5, 3.2));    // Calls double version
-System.out.println(calc.add(1, 2, 3));     // Calls three-parameter version</code></pre>
-                    </div>
-
-                    <div class="tips-section">
-                        <h4>Polymorphism Benefits</h4>
-                        <div class="tips-grid">
-                            <div class="tip">
-                                <strong>Code Flexibility:</strong> Write code that works with multiple types through common interfaces
+<span class="comment">// Polymorphism in action</span>
+Shape[] shapes = {<span class="keyword">new</span> Circle(<span class="number">5</span>), <span class="keyword">new</span> Rectangle(<span class="number">4</span>, <span class="number">6</span>)};
+<span class="keyword">for</span> (Shape shape : shapes) {
+    shape.draw();    <span class="comment">// Calls appropriate draw() method</span>
+    System.out.println(<span class="string">"Area: "</span> + shape.getArea());
+}</code></pre>
                             </div>
-                            <div class="tip">
-                                <strong>Maintainability:</strong> Add new types without modifying existing code
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Method Overloading Example</span>
+                                </div>
+                                <pre><code><span class="comment">// Method Overloading Example</span>
+<span class="keyword">class</span> Calculator {
+    <span class="keyword">public int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+        <span class="keyword">return</span> a + b;
+    }
+
+    <span class="keyword">public double</span> add(<span class="keyword">double</span> a, <span class="keyword">double</span> b) {
+        <span class="keyword">return</span> a + b;
+    }
+
+    <span class="keyword">public int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c) {
+        <span class="keyword">return</span> a + b + c;
+    }
+}
+
+Calculator calc = <span class="keyword">new</span> Calculator();
+System.out.println(calc.add(<span class="number">5</span>, <span class="number">3</span>));        <span class="comment">// Calls int version</span>
+System.out.println(calc.add(<span class="number">5.5</span>, <span class="number">3.2</span>));    <span class="comment">// Calls double version</span>
+System.out.println(calc.add(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>));     <span class="comment">// Calls three-parameter version</span></code></pre>
                             </div>
-                            <div class="tip">
-                                <strong>Extensibility:</strong> Easy to extend functionality through inheritance and interfaces
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-check-circle"></i> Polymorphism Benefits</h4>
+                                <ul>
+                                    <li><strong>Code Flexibility:</strong> Write code that works with multiple types through common interfaces</li>
+                                    <li><strong>Maintainability:</strong> Add new types without modifying existing code</li>
+                                    <li><strong>Extensibility:</strong> Easy to extend functionality through inheritance and interfaces</li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
-            <!-- Abstraction -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-eye-slash"></i> Abstraction</h2>
-                </div>
-                <div class="card-content">
-                    <div class="theory-section">
-                        <h3>Understanding Abstraction</h3>
-                        <p>Abstraction is the process of hiding implementation details while showing only essential features to the user. It focuses on what an object does rather than how it does it. Abstraction is achieved through abstract classes and interfaces.</p>
-                        
-                        <div class="principles-grid">
-                            <div class="principle">
-                                <h4>Abstract Classes</h4>
-                                <p>Classes that cannot be instantiated and may contain abstract methods</p>
-                            </div>
-                            <div class="principle">
-                                <h4>Interfaces</h4>
-                                <p>Contracts that define what methods a class must implement</p>
-                            </div>
-                            <div class="principle">
-                                <h4>Implementation Hiding</h4>
-                                <p>Hide complex logic behind simple, easy-to-use interfaces</p>
-                            </div>
-                        </div>
+                    </section>
 
-                        <div class="guidelines">
-                            <h4>Abstraction Guidelines:</h4>
-                            <ul>
-                                <li>Use abstract classes when you have common code to share among subclasses</li>
-                                <li>Use interfaces when you want to specify a contract without implementation</li>
-                                <li>Keep interfaces focused and cohesive (Interface Segregation Principle)</li>
-                                <li>Provide default methods in interfaces when it makes sense (Java 8+)</li>
-                                <li>Abstract away complex operations behind simple method calls</li>
-                            </ul>
-                        </div>
-                    </div>
+                    <!-- Chapter 5: Abstraction -->
+                    <section id="abstraction" class="chapter">
+                        <h2 class="chapter-title">5. Abstraction</h2>
+                        <div class="chapter-content">
+                            <p>Abstraction is the process of hiding implementation details while showing only essential features to the user. It focuses on what an object does rather than how it does it. Abstraction is achieved through abstract classes and interfaces.</p>
 
-                    <div class="abstraction-visual">
-                        <div class="abstraction-layers">
-                            <div class="layer user-layer">
-                                <h4>User Interaction Layer</h4>
-                                <div class="layer-content">
-                                    <span>car.start()</span>
-                                    <span>car.accelerate()</span>
-                                    <span>car.brake()</span>
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-file-code"></i></div>
+                                    <h4>Abstract Classes</h4>
+                                    <p>Classes that cannot be instantiated and may contain abstract methods</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-plug"></i></div>
+                                    <h4>Interfaces</h4>
+                                    <p>Contracts that define what methods a class must implement</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-eye-slash"></i></div>
+                                    <h4>Implementation Hiding</h4>
+                                    <p>Hide complex logic behind simple, easy-to-use interfaces</p>
                                 </div>
                             </div>
-                            <div class="layer-separator">
-                                <i class="fas fa-eye-slash"></i>
-                                <span>Abstraction Hides Complexity</span>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-list-check"></i> Abstraction Guidelines</h4>
+                                <ul>
+                                    <li>Use abstract classes when you have common code to share among subclasses</li>
+                                    <li>Use interfaces when you want to specify a contract without implementation</li>
+                                    <li>Keep interfaces focused and cohesive (Interface Segregation Principle)</li>
+                                    <li>Provide default methods in interfaces when it makes sense (Java 8+)</li>
+                                    <li>Abstract away complex operations behind simple method calls</li>
+                                </ul>
                             </div>
-                            <div class="layer implementation-layer">
-                                <h4>Hidden Implementation</h4>
-                                <div class="layer-content">
-                                    <span>Engine combustion</span>
-                                    <span>Fuel injection</span>
-                                    <span>Transmission control</span>
-                                    <span>Brake pad pressure</span>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Abstraction Examples</span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
+                                <pre><code><span class="comment">// Interface - Pure abstraction</span>
+<span class="keyword">interface</span> Drawable {
+    <span class="keyword">void</span> draw();                    <span class="comment">// Abstract method</span>
+    <span class="keyword">void</span> setColor(String color);    <span class="comment">// Abstract method</span>
 
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Abstraction Examples</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">// Interface - Pure abstraction
-interface Drawable {
-    void draw();                    // Abstract method
-    void setColor(String color);    // Abstract method
-    
-    // Default method (Java 8+)
-    default void display() {
-        System.out.println("Displaying drawable object");
+    <span class="comment">// Default method (Java 8+)</span>
+    <span class="keyword">default void</span> display() {
+        System.out.println(<span class="string">"Displaying drawable object"</span>);
     }
 }
 
-// Abstract class - Partial abstraction
-abstract class Vehicle {
-    protected String brand;
-    
-    // Concrete method
-    public void start() {
-        System.out.println(brand + " starting...");
+<span class="comment">// Abstract class - Partial abstraction</span>
+<span class="keyword">abstract class</span> Vehicle {
+    <span class="keyword">protected</span> String brand;
+
+    <span class="comment">// Concrete method</span>
+    <span class="keyword">public void</span> start() {
+        System.out.println(brand + <span class="string">" starting..."</span>);
     }
-    
-    // Abstract method - must be implemented by subclasses
-    public abstract void accelerate();
-    public abstract int getMaxSpeed();
+
+    <span class="comment">// Abstract method - must be implemented by subclasses</span>
+    <span class="keyword">public abstract void</span> accelerate();
+    <span class="keyword">public abstract int</span> getMaxSpeed();
 }
 
-// Concrete implementation
-class Car extends Vehicle implements Drawable {
-    private String color;
-    
-    public Car(String brand) {
-        this.brand = brand;
+<span class="comment">// Concrete implementation</span>
+<span class="keyword">class</span> Car <span class="keyword">extends</span> Vehicle <span class="keyword">implements</span> Drawable {
+    <span class="keyword">private</span> String color;
+
+    <span class="keyword">public</span> Car(String brand) {
+        <span class="keyword">this</span>.brand = brand;
     }
-    
+
     @Override
-    public void accelerate() {
-        System.out.println(brand + " car accelerating smoothly");
+    <span class="keyword">public void</span> accelerate() {
+        System.out.println(brand + <span class="string">" car accelerating smoothly"</span>);
     }
-    
+
     @Override
-    public int getMaxSpeed() {
-        return 200; // km/h
+    <span class="keyword">public int</span> getMaxSpeed() {
+        <span class="keyword">return</span> <span class="number">200</span>; <span class="comment">// km/h</span>
     }
-    
+
     @Override
-    public void draw() {
-        System.out.println("Drawing a " + color + " " + brand + " car");
+    <span class="keyword">public void</span> draw() {
+        System.out.println(<span class="string">"Drawing a "</span> + color + <span class="string">" "</span> + brand + <span class="string">" car"</span>);
     }
-    
+
     @Override
-    public void setColor(String color) {
-        this.color = color;
+    <span class="keyword">public void</span> setColor(String color) {
+        <span class="keyword">this</span>.color = color;
     }
 }
 
-// Usage
-Vehicle myCar = new Car("Toyota");  // Programming to abstraction
+<span class="comment">// Usage</span>
+Vehicle myCar = <span class="keyword">new</span> Car(<span class="string">"Toyota"</span>);  <span class="comment">// Programming to abstraction</span>
 myCar.start();
 myCar.accelerate();
 
-Drawable drawable = (Car) myCar;    // Interface reference
-drawable.setColor("Red");
+Drawable drawable = (Car) myCar;    <span class="comment">// Interface reference</span>
+drawable.setColor(<span class="string">"Red"</span>);
 drawable.draw();</code></pre>
-                    </div>
-
-                    <div class="tips-section">
-                        <h4>When to Use Abstract Classes vs Interfaces</h4>
-                        <div class="comparison-tips">
-                            <div class="tip-item">
-                                <strong>Use Abstract Classes When:</strong>
-                                <ul>
-                                    <li>You have common code to share</li>
-                                    <li>You need to define non-public members</li>
-                                    <li>You want to provide a template for subclasses</li>
-                                </ul>
                             </div>
-                            <div class="tip-item">
-                                <strong>Use Interfaces When:</strong>
-                                <ul>
-                                    <li>You want to specify a contract only</li>
-                                    <li>You need multiple inheritance-like behavior</li>
-                                    <li>You want loose coupling between classes</li>
-                                </ul>
+
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-file-code"></i> Use Abstract Classes When:</h4>
+                                    <ul>
+                                        <li>You have common code to share</li>
+                                        <li>You need to define non-public members</li>
+                                        <li>You want to provide a template for subclasses</li>
+                                    </ul>
+                                </div>
+
+                                <div class="info-box">
+                                    <h4><i class="fas fa-plug"></i> Use Interfaces When:</h4>
+                                    <ul>
+                                        <li>You want to specify a contract only</li>
+                                        <li>You need multiple inheritance-like behavior</li>
+                                        <li>You want loose coupling between classes</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
+                    </section>
 
-            <!-- Composition vs Inheritance -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-code-branch"></i> Composition vs Inheritance</h2>
-                </div>
-                <div class="card-content">
-                    <div class="theory-section">
-                        <h3>Choosing the Right Relationship</h3>
-                        <p>One of the most important decisions in OOP design is whether to use inheritance ("is-a") or composition ("has-a"). This choice affects flexibility, maintainability, and the overall design of your application.</p>
-                        
-                        <div class="comparison-tips">
-                            <div class="tip-item">
-                                <strong>Use Inheritance When:</strong>
-                                <ul>
-                                    <li>There's a clear "is-a" relationship (Dog is-a Animal)</li>
-                                    <li>You want to provide polymorphic behavior</li>
-                                    <li>You need to override specific methods</li>
-                                    <li>The relationship is stable and unlikely to change</li>
-                                </ul>
-                            </div>
-                            <div class="tip-item">
-                                <strong>Use Composition When:</strong>
-                                <ul>
-                                    <li>There's a "has-a" relationship (Car has-a Engine)</li>
-                                    <li>You need flexibility to change behavior at runtime</li>
-                                    <li>You want to avoid deep inheritance hierarchies</li>
-                                    <li>You need multiple inheritance-like behavior</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Chapter 6: Composition vs Inheritance -->
+                    <section id="composition-vs-inheritance" class="chapter">
+                        <h2 class="chapter-title">6. Composition vs Inheritance</h2>
+                        <div class="chapter-content">
+                            <p>One of the most important decisions in OOP design is whether to use inheritance ("is-a") or composition ("has-a"). This choice affects flexibility, maintainability, and the overall design of your application.</p>
 
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Composition vs Inheritance Example</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">// Composition Example - "Has-a" relationship
-class Engine {
-    private String type;
-    private int horsepower;
-    
-    public Engine(String type, int horsepower) {
-        this.type = type;
-        this.horsepower = horsepower;
+                            <div class="comparison-grid">
+                                <div class="comparison-card">
+                                    <h4><i class="fas fa-sitemap"></i> Use Inheritance When:</h4>
+                                    <ul>
+                                        <li>There's a clear "is-a" relationship (Dog is-a Animal)</li>
+                                        <li>You want to provide polymorphic behavior</li>
+                                        <li>You need to override specific methods</li>
+                                        <li>The relationship is stable and unlikely to change</li>
+                                    </ul>
+                                </div>
+
+                                <div class="comparison-card">
+                                    <h4><i class="fas fa-cubes"></i> Use Composition When:</h4>
+                                    <ul>
+                                        <li>There's a "has-a" relationship (Car has-a Engine)</li>
+                                        <li>You need flexibility to change behavior at runtime</li>
+                                        <li>You want to avoid deep inheritance hierarchies</li>
+                                        <li>You need multiple inheritance-like behavior</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Composition vs Inheritance Example</span>
+                                </div>
+                                <pre><code><span class="comment">// Composition Example - "Has-a" relationship</span>
+<span class="keyword">class</span> Engine {
+    <span class="keyword">private</span> String type;
+    <span class="keyword">private int</span> horsepower;
+
+    <span class="keyword">public</span> Engine(String type, <span class="keyword">int</span> horsepower) {
+        <span class="keyword">this</span>.type = type;
+        <span class="keyword">this</span>.horsepower = horsepower;
     }
-    
-    public void start() {
-        System.out.println(type + " engine starting");
+
+    <span class="keyword">public void</span> start() {
+        System.out.println(type + <span class="string">" engine starting"</span>);
     }
-    
-    public void stop() {
-        System.out.println(type + " engine stopping");
+
+    <span class="keyword">public void</span> stop() {
+        System.out.println(type + <span class="string">" engine stopping"</span>);
     }
 }
 
-class Car {
-    private Engine engine;  // Composition - Car HAS-A Engine
-    private String model;
-    
-    public Car(String model, Engine engine) {
-        this.model = model;
-        this.engine = engine;  // Injected dependency
+<span class="keyword">class</span> Car {
+    <span class="keyword">private</span> Engine engine;  <span class="comment">// Composition - Car HAS-A Engine</span>
+    <span class="keyword">private</span> String model;
+
+    <span class="keyword">public</span> Car(String model, Engine engine) {
+        <span class="keyword">this</span>.model = model;
+        <span class="keyword">this</span>.engine = engine;  <span class="comment">// Injected dependency</span>
     }
-    
-    public void start() {
-        engine.start();  // Delegating to composed object
-        System.out.println(model + " is ready");
+
+    <span class="keyword">public void</span> start() {
+        engine.start();  <span class="comment">// Delegating to composed object</span>
+        System.out.println(model + <span class="string">" is ready"</span>);
     }
-    
-    public void stop() {
+
+    <span class="keyword">public void</span> stop() {
         engine.stop();
-        System.out.println(model + " stopped");
+        System.out.println(model + <span class="string">" stopped"</span>);
     }
-    
-    // Can change engine at runtime
-    public void replaceEngine(Engine newEngine) {
-        this.engine = newEngine;
+
+    <span class="comment">// Can change engine at runtime</span>
+    <span class="keyword">public void</span> replaceEngine(Engine newEngine) {
+        <span class="keyword">this</span>.engine = newEngine;
     }
 }
 
-// Inheritance Example - "Is-a" relationship  
-abstract class Vehicle {
-    protected String brand;
-    
-    public Vehicle(String brand) {
-        this.brand = brand;
-    }
-    
-    public abstract void start();
-    public abstract void stop();
-}
-
-class Motorcycle extends Vehicle {  // Motorcycle IS-A Vehicle
-    public Motorcycle(String brand) {
-        super(brand);
-    }
-    
-    @Override
-    public void start() {
-        System.out.println(brand + " motorcycle starting");
-    }
-    
-    @Override 
-    public void stop() {
-        System.out.println(brand + " motorcycle stopping");
-    }
-}
-
-// Usage demonstrating both approaches
-Engine v6Engine = new Engine("V6", 300);
-Car myCar = new Car("Sedan", v6Engine);
+<span class="comment">// Usage demonstrating both approaches</span>
+Engine v6Engine = <span class="keyword">new</span> Engine(<span class="string">"V6"</span>, <span class="number">300</span>);
+Car myCar = <span class="keyword">new</span> Car(<span class="string">"Sedan"</span>, v6Engine);
 myCar.start();
 
-// Can replace engine (flexibility of composition)
-Engine electricEngine = new Engine("Electric", 400);
-myCar.replaceEngine(electricEngine);
-
-Motorcycle bike = new Motorcycle("Harley");
-bike.start();</code></pre>
-                    </div>
-
-                    <div class="tips-section">
-                        <h4>Design Guidelines</h4>
-                        <div class="tips-grid">
-                            <div class="tip">
-                                <strong>Favor Composition:</strong> It's generally more flexible and leads to looser coupling between classes
+<span class="comment">// Can replace engine (flexibility of composition)</span>
+Engine electricEngine = <span class="keyword">new</span> Engine(<span class="string">"Electric"</span>, <span class="number">400</span>);
+myCar.replaceEngine(electricEngine);</code></pre>
                             </div>
-                            <div class="tip">
-                                <strong>Limit Inheritance Depth:</strong> Keep inheritance hierarchies shallow (3-4 levels maximum)
-                            </div>
-                            <div class="tip">
-                                <strong>Think About Change:</strong> How likely are the relationships to change? Composition handles change better
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-lightbulb"></i> Design Guidelines</h4>
+                                <ul>
+                                    <li><strong>Favor Composition:</strong> It's generally more flexible and leads to looser coupling between classes</li>
+                                    <li><strong>Limit Inheritance Depth:</strong> Keep inheritance hierarchies shallow (3-4 levels maximum)</li>
+                                    <li><strong>Think About Change:</strong> How likely are the relationships to change? Composition handles change better</li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </section>
+                    </section>
 
-            <!-- SOLID Principles -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-cube"></i> SOLID Principles</h2>
-                </div>
-                <div class="card-content">
-                    <div class="theory-section">
-                        <h3>The Five Pillars of Good Object-Oriented Design</h3>
-                        <p>SOLID is an acronym for five design principles intended to make software designs more understandable, flexible, and maintainable. These principles form the foundation of clean, robust object-oriented code.</p>
-                    </div>
+                    <!-- Chapter 7: SOLID Principles -->
+                    <section id="solid-principles" class="chapter">
+                        <h2 class="chapter-title">7. SOLID Principles</h2>
+                        <div class="chapter-content">
+                            <p>SOLID is an acronym for five design principles intended to make software designs more understandable, flexible, and maintainable. These principles form the foundation of clean, robust object-oriented code.</p>
 
-                    <div class="solid-principles">
-                        <div class="solid-principle" data-principle="S">
-                            <div class="principle-header">
-                                <span class="principle-letter">S</span>
-                                <h4>Single Responsibility Principle</h4>
-                            </div>
-                            <p>A class should have only one reason to change. Each class should have a single, well-defined responsibility.</p>
-                            <div class="principle-example">
-                                <strong>Example:</strong> Separate UserValidator, UserRepository, and UserService classes instead of one User class doing everything.
-                            </div>
-                        </div>
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <div class="card-icon"><strong>S</strong></div>
+                                    <h4>Single Responsibility</h4>
+                                    <p>A class should have only one reason to change</p>
+                                </div>
 
-                        <div class="solid-principle" data-principle="O">
-                            <div class="principle-header">
-                                <span class="principle-letter">O</span>
-                                <h4>Open/Closed Principle</h4>
-                            </div>
-                            <p>Classes should be open for extension but closed for modification. Use inheritance and interfaces to add new functionality.</p>
-                            <div class="principle-example">
-                                <strong>Example:</strong> Use Strategy pattern for different payment methods instead of modifying existing payment code.
-                            </div>
-                        </div>
+                                <div class="card">
+                                    <div class="card-icon"><strong>O</strong></div>
+                                    <h4>Open/Closed</h4>
+                                    <p>Open for extension, closed for modification</p>
+                                </div>
 
-                        <div class="solid-principle" data-principle="L">
-                            <div class="principle-header">
-                                <span class="principle-letter">L</span>
-                                <h4>Liskov Substitution Principle</h4>
-                            </div>
-                            <p>Objects of a superclass should be replaceable with objects of a subclass without breaking functionality.</p>
-                            <div class="principle-example">
-                                <strong>Example:</strong> If Bird is a superclass, Penguin shouldn't extend it if Bird has a fly() method that Penguin can't implement properly.
-                            </div>
-                        </div>
+                                <div class="card">
+                                    <div class="card-icon"><strong>L</strong></div>
+                                    <h4>Liskov Substitution</h4>
+                                    <p>Subclasses should be substitutable for base classes</p>
+                                </div>
 
-                        <div class="solid-principle" data-principle="I">
-                            <div class="principle-header">
-                                <span class="principle-letter">I</span>
-                                <h4>Interface Segregation Principle</h4>
-                            </div>
-                            <p>Many client-specific interfaces are better than one general-purpose interface. Don't force clients to depend on methods they don't use.</p>
-                            <div class="principle-example">
-                                <strong>Example:</strong> Split large interfaces like Worker into smaller ones like Workable, Eatable, Sleepable.
-                            </div>
-                        </div>
+                                <div class="card">
+                                    <div class="card-icon"><strong>I</strong></div>
+                                    <h4>Interface Segregation</h4>
+                                    <p>Many specific interfaces over one general interface</p>
+                                </div>
 
-                        <div class="solid-principle" data-principle="D">
-                            <div class="principle-header">
-                                <span class="principle-letter">D</span>
-                                <h4>Dependency Inversion Principle</h4>
+                                <div class="card">
+                                    <div class="card-icon"><strong>D</strong></div>
+                                    <h4>Dependency Inversion</h4>
+                                    <p>Depend on abstractions, not concretions</p>
+                                </div>
                             </div>
-                            <p>High-level modules should not depend on low-level modules. Both should depend on abstractions.</p>
-                            <div class="principle-example">
-                                <strong>Example:</strong> Use dependency injection to provide implementations rather than creating them directly in classes.
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>SOLID Principles in Action</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">// Single Responsibility - Each class has one job
-class User {
-    private String name;
-    private String email;
-    // Only user data, no validation or persistence logic
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> SOLID Principles in Action</span>
+                                </div>
+                                <pre><code><span class="comment">// Single Responsibility - Each class has one job</span>
+<span class="keyword">class</span> User {
+    <span class="keyword">private</span> String name;
+    <span class="keyword">private</span> String email;
+    <span class="comment">// Only user data, no validation or persistence logic</span>
 }
 
-class UserValidator {
-    public boolean isValidEmail(String email) {
-        return email.contains("@") && email.contains(".");
+<span class="keyword">class</span> UserValidator {
+    <span class="keyword">public boolean</span> isValidEmail(String email) {
+        <span class="keyword">return</span> email.contains(<span class="string">"@"</span>) && email.contains(<span class="string">"."</span>);
     }
 }
 
-class UserRepository {
-    public void save(User user) {
-        // Database saving logic only
+<span class="keyword">class</span> UserRepository {
+    <span class="keyword">public void</span> save(User user) {
+        <span class="comment">// Database saving logic only</span>
     }
 }
 
-// Open/Closed - Strategy pattern for extensibility
-interface PaymentStrategy {
-    void pay(double amount);
+<span class="comment">// Open/Closed - Strategy pattern for extensibility</span>
+<span class="keyword">interface</span> PaymentStrategy {
+    <span class="keyword">void</span> pay(<span class="keyword">double</span> amount);
 }
 
-class CreditCardPayment implements PaymentStrategy {
-    public void pay(double amount) {
-        System.out.println("Paid $" + amount + " with credit card");
+<span class="keyword">class</span> CreditCardPayment <span class="keyword">implements</span> PaymentStrategy {
+    <span class="keyword">public void</span> pay(<span class="keyword">double</span> amount) {
+        System.out.println(<span class="string">"Paid $"</span> + amount + <span class="string">" with credit card"</span>);
     }
 }
 
-class PayPalPayment implements PaymentStrategy {
-    public void pay(double amount) {
-        System.out.println("Paid $" + amount + " with PayPal");
+<span class="keyword">class</span> PayPalPayment <span class="keyword">implements</span> PaymentStrategy {
+    <span class="keyword">public void</span> pay(<span class="keyword">double</span> amount) {
+        System.out.println(<span class="string">"Paid $"</span> + amount + <span class="string">" with PayPal"</span>);
     }
 }
 
-// Interface Segregation - Specific interfaces
-interface Flyable {
-    void fly();
+<span class="comment">// Interface Segregation - Specific interfaces</span>
+<span class="keyword">interface</span> Flyable {
+    <span class="keyword">void</span> fly();
 }
 
-interface Swimmable {
-    void swim();
+<span class="keyword">interface</span> Swimmable {
+    <span class="keyword">void</span> swim();
 }
 
-// Duck can fly and swim
-class Duck implements Flyable, Swimmable {
-    public void fly() { System.out.println("Duck flying"); }
-    public void swim() { System.out.println("Duck swimming"); }
+<span class="comment">// Duck can fly and swim</span>
+<span class="keyword">class</span> Duck <span class="keyword">implements</span> Flyable, Swimmable {
+    <span class="keyword">public void</span> fly() { System.out.println(<span class="string">"Duck flying"</span>); }
+    <span class="keyword">public void</span> swim() { System.out.println(<span class="string">"Duck swimming"</span>); }
 }
 
-// Fish only swims
-class Fish implements Swimmable {
-    public void swim() { System.out.println("Fish swimming"); }
+<span class="comment">// Fish only swims</span>
+<span class="keyword">class</span> Fish <span class="keyword">implements</span> Swimmable {
+    <span class="keyword">public void</span> swim() { System.out.println(<span class="string">"Fish swimming"</span>); }
 }</code></pre>
-                    </div>
-                </div>
-            </section>
+                            </div>
+                        </div>
+                    </section>
 
-            <!-- Advanced Design Patterns -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-puzzle-piece"></i> Common Design Patterns</h2>
-                </div>
-                <div class="card-content">
-                    <div class="theory-section">
-                        <h3>Essential OOP Design Patterns</h3>
-                        <p>Design patterns are reusable solutions to common problems in object-oriented design. They represent best practices and provide a shared vocabulary for developers.</p>
-                    </div>
+                    <!-- Chapter 8: Design Patterns -->
+                    <section id="design-patterns" class="chapter">
+                        <h2 class="chapter-title">8. Common Design Patterns</h2>
+                        <div class="chapter-content">
+                            <p>Design patterns are reusable solutions to common problems in object-oriented design. They represent best practices and provide a shared vocabulary for developers.</p>
 
-                    <div class="patterns-grid">
-                        <div class="pattern-item">
-                            <div class="pattern-icon">
-                                <i class="fas fa-clone"></i>
-                            </div>
-                            <h4>Singleton</h4>
-                            <p>Ensures only one instance of a class exists</p>
-                        </div>
-                        <div class="pattern-item">
-                            <div class="pattern-icon">
-                                <i class="fas fa-industry"></i>
-                            </div>
-                            <h4>Factory</h4>
-                            <p>Creates objects without specifying exact classes</p>
-                        </div>
-                        <div class="pattern-item">
-                            <div class="pattern-icon">
-                                <i class="fas fa-eye"></i>
-                            </div>
-                            <h4>Observer</h4>
-                            <p>Notifies multiple objects of state changes</p>
-                        </div>
-                        <div class="pattern-item">
-                            <div class="pattern-icon">
-                                <i class="fas fa-chess"></i>
-                            </div>
-                            <h4>Strategy</h4>
-                            <p>Encapsulates algorithms for runtime selection</p>
-                        </div>
-                    </div>
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-clone"></i></div>
+                                    <h4>Singleton</h4>
+                                    <p>Ensures only one instance of a class exists</p>
+                                </div>
 
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Design Pattern Examples</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">// Singleton Pattern
-class DatabaseConnection {
-    private static DatabaseConnection instance;
-    
-    private DatabaseConnection() {} // Private constructor
-    
-    public static DatabaseConnection getInstance() {
-        if (instance == null) {
-            instance = new DatabaseConnection();
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-industry"></i></div>
+                                    <h4>Factory</h4>
+                                    <p>Creates objects without specifying exact classes</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-eye"></i></div>
+                                    <h4>Observer</h4>
+                                    <p>Notifies multiple objects of state changes</p>
+                                </div>
+
+                                <div class="card">
+                                    <div class="card-icon"><i class="fas fa-chess"></i></div>
+                                    <h4>Strategy</h4>
+                                    <p>Encapsulates algorithms for runtime selection</p>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Design Pattern Examples</span>
+                                </div>
+                                <pre><code><span class="comment">// Singleton Pattern</span>
+<span class="keyword">class</span> DatabaseConnection {
+    <span class="keyword">private static</span> DatabaseConnection instance;
+
+    <span class="keyword">private</span> DatabaseConnection() {} <span class="comment">// Private constructor</span>
+
+    <span class="keyword">public static</span> DatabaseConnection getInstance() {
+        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) {
+            instance = <span class="keyword">new</span> DatabaseConnection();
         }
-        return instance;
+        <span class="keyword">return</span> instance;
     }
 }
 
-// Factory Pattern
-interface Animal {
-    void makeSound();
+<span class="comment">// Factory Pattern</span>
+<span class="keyword">interface</span> Animal {
+    <span class="keyword">void</span> makeSound();
 }
 
-class Dog implements Animal {
-    public void makeSound() { System.out.println("Woof!"); }
+<span class="keyword">class</span> Dog <span class="keyword">implements</span> Animal {
+    <span class="keyword">public void</span> makeSound() { System.out.println(<span class="string">"Woof!"</span>); }
 }
 
-class Cat implements Animal {
-    public void makeSound() { System.out.println("Meow!"); }
+<span class="keyword">class</span> Cat <span class="keyword">implements</span> Animal {
+    <span class="keyword">public void</span> makeSound() { System.out.println(<span class="string">"Meow!"</span>); }
 }
 
-class AnimalFactory {
-    public static Animal createAnimal(String type) {
-        switch (type.toLowerCase()) {
-            case "dog": return new Dog();
-            case "cat": return new Cat();
-            default: throw new IllegalArgumentException("Unknown animal type");
+<span class="keyword">class</span> AnimalFactory {
+    <span class="keyword">public static</span> Animal createAnimal(String type) {
+        <span class="keyword">switch</span> (type.toLowerCase()) {
+            <span class="keyword">case</span> <span class="string">"dog"</span>: <span class="keyword">return new</span> Dog();
+            <span class="keyword">case</span> <span class="string">"cat"</span>: <span class="keyword">return new</span> Cat();
+            <span class="keyword">default</span>: <span class="keyword">throw new</span> IllegalArgumentException(<span class="string">"Unknown animal type"</span>);
         }
     }
 }
 
-// Observer Pattern
-interface Observer {
-    void update(String message);
+<span class="comment">// Observer Pattern</span>
+<span class="keyword">interface</span> Observer {
+    <span class="keyword">void</span> update(String message);
 }
 
-class NewsAgency {
-    private List<Observer> observers = new ArrayList<>();
-    
-    public void addObserver(Observer observer) {
+<span class="keyword">class</span> NewsAgency {
+    <span class="keyword">private</span> List&lt;Observer&gt; observers = <span class="keyword">new</span> ArrayList&lt;&gt;();
+
+    <span class="keyword">public void</span> addObserver(Observer observer) {
         observers.add(observer);
     }
-    
-    public void notifyObservers(String news) {
-        for (Observer observer : observers) {
+
+    <span class="keyword">public void</span> notifyObservers(String news) {
+        <span class="keyword">for</span> (Observer observer : observers) {
             observer.update(news);
         }
     }
 }</code></pre>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Best Practices -->
-            <section class="concept-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-star"></i> OOP Best Practices & Guidelines</h2>
-                </div>
-                <div class="card-content">
-                    <div class="theory-section">
-                        <h3>Writing Clean, Maintainable Object-Oriented Code</h3>
-                        <p>Following established best practices ensures your OOP code is readable, maintainable, and follows industry standards. These guidelines help create robust applications that scale well over time.</p>
-                    </div>
-
-                    <div class="best-practices-grid">
-                        <div class="practice-item">
-                            <div class="practice-icon good">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Favor Composition over Inheritance</h4>
-                                <p>Use "has-a" relationships when inheritance becomes complex or doesn't represent a true "is-a" relationship</p>
-                                <code>Car has Engine</code> vs <code>Car extends Vehicle</code>
                             </div>
                         </div>
+                    </section>
 
-                        <div class="practice-item">
-                            <div class="practice-icon good">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Program to Interfaces, Not Implementations</h4>
-                                <p>Depend on abstractions to create flexible, testable code</p>
-                                <code>List&lt;String&gt; list = new ArrayList&lt;&gt;();</code>
-                            </div>
-                        </div>
+                    <!-- Chapter 9: Best Practices -->
+                    <section id="best-practices" class="chapter">
+                        <h2 class="chapter-title">9. OOP Best Practices</h2>
+                        <div class="chapter-content">
+                            <p>Following established best practices ensures your OOP code is readable, maintainable, and follows industry standards.</p>
 
-                        <div class="practice-item">
-                            <div class="practice-icon good">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Keep Classes Focused (SRP)</h4>
-                                <p>Each class should have a single responsibility and one reason to change</p>
-                                <code>UserValidator, UserRepository, UserService</code>
-                            </div>
-                        </div>
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-check-circle"></i> Best Practices</h4>
+                                    <ul>
+                                        <li>Favor composition over inheritance</li>
+                                        <li>Program to interfaces, not implementations</li>
+                                        <li>Keep classes focused (Single Responsibility)</li>
+                                        <li>Use access modifiers properly</li>
+                                        <li>Override equals() and hashCode() together</li>
+                                        <li>Use meaningful names</li>
+                                        <li>Make objects immutable when possible</li>
+                                    </ul>
+                                </div>
 
-                        <div class="practice-item">
-                            <div class="practice-icon bad">
-                                <i class="fas fa-times"></i>
+                                <div class="info-box warning">
+                                    <h4><i class="fas fa-times-circle"></i> Common Mistakes to Avoid</h4>
+                                    <ul>
+                                        <li>God Objects - classes that do too much</li>
+                                        <li>Inappropriate inheritance hierarchies</li>
+                                        <li>Exposing internal state directly</li>
+                                        <li>Tight coupling between classes</li>
+                                        <li>Deep inheritance hierarchies (3+ levels)</li>
+                                        <li>Using instanceof excessively</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="practice-content">
-                                <h4>Avoid Deep Inheritance Hierarchies</h4>
-                                <p>More than 3-4 levels become hard to understand and maintain</p>
-                                <code>Animal → Mammal → Carnivore → Feline → Cat</code> ← Too deep
-                            </div>
-                        </div>
 
-                        <div class="practice-item">
-                            <div class="practice-icon good">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Use Access Modifiers Properly</h4>
-                                <p>Expose only what's necessary, hide implementation details</p>
-                                <code>private fields, public methods, protected for inheritance</code>
-                            </div>
-                        </div>
-
-                        <div class="practice-item">
-                            <div class="practice-icon good">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Override equals() and hashCode() Together</h4>
-                                <p>Essential for objects in collections and proper comparisons</p>
-                                <code>@Override equals() and @Override hashCode()</code>
-                            </div>
-                        </div>
-
-                        <div class="practice-item">
-                            <div class="practice-icon good">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Use Meaningful Names</h4>
-                                <p>Class and method names should clearly express their purpose</p>
-                                <code>UserAccountManager</code> vs <code>Manager</code>
-                            </div>
-                        </div>
-
-                        <div class="practice-item">
-                            <div class="practice-icon good">
-                                <i class="fas fa-check"></i>
-                            </div>
-                            <div class="practice-content">
-                                <h4>Make Objects Immutable When Possible</h4>
-                                <p>Immutable objects are thread-safe and easier to reason about</p>
-                                <code>final fields, no setters, defensive copying</code>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="code-example">
-                        <div class="example-header">
-                            <span>Clean OOP Code Example</span>
-                            <button class="copy-btn" onclick="copyCode(this)" title="Copy code to clipboard" aria-label="Copy code to clipboard">
-                                <i class="fas fa-copy" aria-hidden="true"></i>
-                                <span class="sr-only">Copy</span>
-                            </button>
-                        </div>
-                        <pre><code class="language-java">// Good: Single Responsibility Principle
-class EmailValidator {
-    public boolean isValid(String email) {
-        return email != null && email.contains("@") && email.contains(".");
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Clean OOP Code Example</span>
+                                </div>
+                                <pre><code><span class="comment">// Good: Single Responsibility Principle</span>
+<span class="keyword">class</span> EmailValidator {
+    <span class="keyword">public boolean</span> isValid(String email) {
+        <span class="keyword">return</span> email != <span class="keyword">null</span> && email.contains(<span class="string">"@"</span>) && email.contains(<span class="string">"."</span>);
     }
 }
 
-class UserRepository {
-    public void save(User user) {
-        // Database operations only
+<span class="keyword">class</span> UserRepository {
+    <span class="keyword">public void</span> save(User user) {
+        <span class="comment">// Database operations only</span>
     }
-    
-    public User findById(Long id) {
-        // Database query only
-        return null; // Simplified
+
+    <span class="keyword">public</span> User findById(Long id) {
+        <span class="comment">// Database query only</span>
+        <span class="keyword">return null</span>; <span class="comment">// Simplified</span>
     }
 }
 
-// Good: Immutable class
-final class Money {
-    private final BigDecimal amount;
-    private final Currency currency;
-    
-    public Money(BigDecimal amount, Currency currency) {
-        this.amount = amount;
-        this.currency = currency;
+<span class="comment">// Good: Immutable class</span>
+<span class="keyword">final class</span> Money {
+    <span class="keyword">private final</span> BigDecimal amount;
+    <span class="keyword">private final</span> Currency currency;
+
+    <span class="keyword">public</span> Money(BigDecimal amount, Currency currency) {
+        <span class="keyword">this</span>.amount = amount;
+        <span class="keyword">this</span>.currency = currency;
     }
-    
-    public BigDecimal getAmount() { return amount; }
-    public Currency getCurrency() { return currency; }
-    
-    public Money add(Money other) {
-        // Returns new instance instead of modifying
-        return new Money(amount.add(other.amount), currency);
+
+    <span class="keyword">public</span> BigDecimal getAmount() { <span class="keyword">return</span> amount; }
+    <span class="keyword">public</span> Currency getCurrency() { <span class="keyword">return</span> currency; }
+
+    <span class="keyword">public</span> Money add(Money other) {
+        <span class="comment">// Returns new instance instead of modifying</span>
+        <span class="keyword">return new</span> Money(amount.add(other.amount), currency);
     }
 }
 
-// Good: Composition over inheritance
-class Car {
-    private final Engine engine;        // Composition
-    private final Transmission transmission;  // Composition
-    
-    public Car(Engine engine, Transmission transmission) {
-        this.engine = engine;
-        this.transmission = transmission;
+<span class="comment">// Good: Composition over inheritance</span>
+<span class="keyword">class</span> Car {
+    <span class="keyword">private final</span> Engine engine;        <span class="comment">// Composition</span>
+    <span class="keyword">private final</span> Transmission transmission;  <span class="comment">// Composition</span>
+
+    <span class="keyword">public</span> Car(Engine engine, Transmission transmission) {
+        <span class="keyword">this</span>.engine = engine;
+        <span class="keyword">this</span>.transmission = transmission;
     }
-    
-    public void start() {
+
+    <span class="keyword">public void</span> start() {
         engine.start();
     }
 }</code></pre>
-                    </div>
+                            </div>
 
-                    <div class="common-mistakes">
-                        <h4>Common OOP Mistakes to Avoid</h4>
-                        <div class="mistakes-grid">
-                            <div class="mistake-item">
-                                <strong>God Objects:</strong> Classes that do too much. Break them into smaller, focused classes.
-                            </div>
-                            <div class="mistake-item">
-                                <strong>Inappropriate Inheritance:</strong> Using inheritance when composition would be better.
-                            </div>
-                            <div class="mistake-item">
-                                <strong>Exposing Internal State:</strong> Making fields public or returning mutable objects directly.
-                            </div>
-                            <div class="mistake-item">
-                                <strong>Tight Coupling:</strong> Classes that know too much about each other's implementation details.
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-bookmark"></i> OOP Quick Reference</h4>
+                                <div class="two-column-grid">
+                                    <div>
+                                        <strong>Class Elements:</strong>
+                                        <ul>
+                                            <li><code>private String field</code> - Instance variable</li>
+                                            <li><code>public Class(params)</code> - Constructor</li>
+                                            <li><code>public void method()</code> - Instance method</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <strong>Keywords:</strong>
+                                        <ul>
+                                            <li><code>extends</code> - Class inheritance</li>
+                                            <li><code>implements</code> - Interface implementation</li>
+                                            <li><code>abstract</code> - Cannot be instantiated</li>
+                                            <li><code>final</code> - Cannot be overridden</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
-            </section>
 
-            <!-- Quick Reference -->
-            <section class="concept-card reference-card">
-                <div class="card-header">
-                    <h2><i class="fas fa-bookmark"></i> OOP Quick Reference</h2>
-                </div>
-                <div class="card-content">
-                    <div class="reference-grid">
-                        <div class="reference-section">
-                            <h4>Class Elements</h4>
-                            <div class="reference-item">
-                                <code>private String field</code>
-                                <span>Instance variable</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>public Class(params)</code>
-                                <span>Constructor</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>public void method()</code>
-                                <span>Instance method</span>
-                            </div>
-                        </div>
-
-                        <div class="reference-section">
-                            <h4>Inheritance</h4>
-                            <div class="reference-item">
-                                <code>extends ClassName</code>
-                                <span>Class inheritance</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>implements Interface</code>
-                                <span>Interface implementation</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>@Override</code>
-                                <span>Method overriding</span>
-                            </div>
-                        </div>
-
-                        <div class="reference-section">
-                            <h4>Access Modifiers</h4>
-                            <div class="reference-item">
-                                <code>public</code>
-                                <span>Accessible everywhere</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>protected</code>
-                                <span>Package + subclasses</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>private</code>
-                                <span>Same class only</span>
-                            </div>
-                        </div>
-
-                        <div class="reference-section">
-                            <h4>Keywords</h4>
-                            <div class="reference-item">
-                                <code>abstract</code>
-                                <span>Cannot be instantiated</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>final</code>
-                                <span>Cannot be overridden</span>
-                            </div>
-                            <div class="reference-item">
-                                <code>super</code>
-                                <span>Call parent method/constructor</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                <!-- Article Navigation -->
+                <footer class="article-nav">
+                    <a href="/java/core/java-exceptions.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Java Exceptions</span>
+                    </a>
+                    <a href="/java/core/java-methods.html" class="nav-next">
+                        <span>Java Methods</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
         </div>
-    </div>
+    </main>
 
-     <!-- Footer Section -->
-        <footer class="footer">
-        <div id="footer-placeholder"></div>
-    </footer>
-    <script>
-        fetch("/footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
-    <script src="/js/footer.js"></script>
+    <!-- Footer -->
+    <footer class="site-footer" id="site-footer"></footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
-    <script>
-        function copyCode(button) {
-            const codeBlock = button.parentElement.nextElementSibling.querySelector('code');
-            const text = codeBlock.textContent;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                const icon = button.querySelector('i');
-                const srText = button.querySelector('.sr-only');
-                
-                icon.className = 'fas fa-check';
-                srText.textContent = 'Copied';
-                button.style.color = '#4CAF50';
-                button.title = 'Code copied to clipboard';
-                button.setAttribute('aria-label', 'Code copied to clipboard');
-                
-                setTimeout(() => {
-                    icon.className = 'fas fa-copy';
-                    srText.textContent = 'Copy';
-                    button.style.color = '';
-                    button.title = 'Copy code to clipboard';
-                    button.setAttribute('aria-label', 'Copy code to clipboard');
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-                const textArea = document.createElement('textarea');
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                
-                const icon = button.querySelector('i');
-                const srText = button.querySelector('.sr-only');
-                icon.className = 'fas fa-check';
-                srText.textContent = 'Copied';
-                button.style.color = '#4CAF50';
-                
-                setTimeout(() => {
-                    icon.className = 'fas fa-copy';
-                    srText.textContent = 'Copy';
-                    button.style.color = '';
-                }, 2000);
-            });
-        }
+    <!-- Back to Top -->
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
-        // Add interactive effects to OOP pillars
-        document.querySelectorAll('.pillar').forEach(pillar => {
-            pillar.addEventListener('click', function() {
-                document.querySelectorAll('.pillar').forEach(p => p.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Add interactive effects to SOLID principles
-        document.querySelectorAll('.solid-principle').forEach(principle => {
-            principle.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-5px) scale(1.02)';
-            });
-            
-            principle.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(-2px) scale(1)';
-            });
-        });
-
-        // Add smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Add intersection observer for animations
-        const observerOptions = {
-            threshold: 0.3,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for animation
-        document.querySelectorAll('.inheritance-tree, .polymorphism-visual, .abstraction-visual').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Add hover effects to pattern items
-        document.querySelectorAll('.pattern-item').forEach(item => {
-            item.addEventListener('mouseenter', function() {
-                this.querySelector('.pattern-icon').style.transform = 'scale(1.1) rotate(5deg)';
-            });
-            
-            item.addEventListener('mouseleave', function() {
-                this.querySelector('.pattern-icon').style.transform = 'scale(1) rotate(0deg)';
-            });
-        });
-
-        // Add click effects to best practice items
-        document.querySelectorAll('.practice-item').forEach(item => {
-            item.addEventListener('click', function() {
-                this.style.transform = 'translateY(-3px)';
-                setTimeout(() => {
-                    this.style.transform = 'translateY(-2px)';
-                }, 150);
-            });
-        });
-
-        // Mobile menu functionality (if needed for responsive nav)
-        const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(22, 33, 62, 0.98)';
-            } else {
-                navbar.style.background = 'rgba(22, 33, 62, 0.95)';
-            }
-        });
-    </script>
+    <!-- Scripts -->
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
+
 </html>
