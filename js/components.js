@@ -6,7 +6,7 @@
 const TechTokComponents = {
     // Initialization
     init() {
-        this.loadTopNav();
+        this.loadMobileMenuToggle();
         this.loadSidebar();
         this.loadFooter();
         this.initThemeToggle();
@@ -18,29 +18,18 @@ const TechTokComponents = {
         this.highlightCurrentNav();
     },
 
-    // ===== Top Navigation =====
-    loadTopNav() {
-        const topNav = document.getElementById('top-nav');
-        if (!topNav) return;
-
-        const isHomepage = document.body.classList.contains('homepage');
-
-        topNav.innerHTML = `
-            <div class="top-nav-left">
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <a href="/index.html" class="top-nav-brand">
-                    <img src="${SITE_NAVIGATION.brand.logo}" alt="${SITE_NAVIGATION.brand.name}" class="top-nav-brand-logo">
-                    <span class="top-nav-brand-text">${SITE_NAVIGATION.brand.name}</span>
-                </a>
-            </div>
-            <div class="top-nav-right">
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-sun"></i>
-                </button>
-            </div>
-        `;
+    // ===== Mobile Menu Toggle (separate from top nav) =====
+    loadMobileMenuToggle() {
+        // Create mobile menu toggle button if it doesn't exist
+        let toggle = document.getElementById('mobile-menu-toggle');
+        if (!toggle) {
+            toggle = document.createElement('button');
+            toggle.id = 'mobile-menu-toggle';
+            toggle.className = 'mobile-menu-toggle';
+            toggle.setAttribute('aria-label', 'Toggle menu');
+            toggle.innerHTML = '<i class="fas fa-bars"></i>';
+            document.body.appendChild(toggle);
+        }
     },
 
     // ===== Sidebar Navigation =====
@@ -51,16 +40,18 @@ const TechTokComponents = {
         const currentDomain = getCurrentDomain();
         let sidebarContent = '';
 
-        // Sidebar Header
+        // Sidebar Header with Theme Toggle
         sidebarContent += `
             <div class="sidebar-header">
                 <a href="/index.html" class="sidebar-brand">
                     <img src="${SITE_NAVIGATION.brand.logo}" alt="${SITE_NAVIGATION.brand.name}" class="sidebar-brand-logo">
                     <span class="sidebar-brand-text">${SITE_NAVIGATION.brand.name}</span>
                 </a>
-                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
+                <div class="sidebar-header-actions">
+                    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </div>
             </div>
         `;
 

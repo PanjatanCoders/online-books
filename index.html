@@ -29,91 +29,11 @@
     <!-- Skip Link -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Homepage Navigation -->
-    <nav class="homepage-nav" id="homepage-nav">
-        <div class="homepage-nav-container">
-            <a href="/index.html" class="homepage-nav-brand">
-                <img src="/assets/images/logo.png" alt="TechTok Cafe" class="homepage-nav-logo">
-                <span class="homepage-nav-title">TechTok Cafe</span>
-            </a>
-            <ul class="homepage-nav-menu">
-                <li><a href="#home" class="homepage-nav-link">Home</a></li>
-                <li><a href="/java/index.html" class="homepage-nav-link">Java</a></li>
-                <li><a href="/interview-qna/index.html" class="homepage-nav-link">Interview Q&A</a></li>
-                <li><a href="#" class="homepage-nav-link disabled" title="Coming Soon">Python</a></li>
-                <li><a href="#" class="homepage-nav-link disabled" title="Coming Soon">Web Dev</a></li>
-                <li><a href="#featured" class="homepage-nav-link">Projects</a></li>
-                <li><a href="#about" class="homepage-nav-link">About</a></li>
-            </ul>
-            <div class="top-nav-right">
-                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">
-                    <i class="fas fa-sun"></i>
-                </button>
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle menu">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Mobile Sidebar -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <a href="/index.html" class="sidebar-brand">
-                <img src="/assets/images/logo.png" alt="TechTok Cafe" class="sidebar-brand-logo">
-                <span class="sidebar-brand-text">TechTok Cafe</span>
-            </a>
-            <button class="sidebar-toggle" id="sidebar-close" aria-label="Close menu">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <nav class="sidebar-nav">
-            <div class="sidebar-category">
-                <div class="sidebar-category-title">Navigate</div>
-                <a href="#home" class="sidebar-nav-item">
-                    <i class="sidebar-nav-icon fas fa-home"></i>
-                    <span class="sidebar-nav-text">Home</span>
-                </a>
-                <a href="#featured" class="sidebar-nav-item">
-                    <i class="sidebar-nav-icon fas fa-star"></i>
-                    <span class="sidebar-nav-text">Featured</span>
-                </a>
-                <a href="#about" class="sidebar-nav-item">
-                    <i class="sidebar-nav-icon fas fa-user"></i>
-                    <span class="sidebar-nav-text">About</span>
-                </a>
-            </div>
-            <div class="sidebar-category">
-                <div class="sidebar-category-title">Tutorials</div>
-                <a href="/java/index.html" class="sidebar-nav-item">
-                    <i class="sidebar-nav-icon fab fa-java"></i>
-                    <span class="sidebar-nav-text">Java</span>
-                </a>
-                <a href="/interview-qna/index.html" class="sidebar-nav-item">
-                    <i class="sidebar-nav-icon fas fa-book"></i>
-                    <span class="sidebar-nav-text">Interview Q&A</span>
-                </a>
-                <a href="#" class="sidebar-nav-item disabled">
-                    <i class="sidebar-nav-icon fab fa-python"></i>
-                    <span class="sidebar-nav-text">Python</span>
-                    <span class="sidebar-nav-badge coming-soon">Soon</span>
-                </a>
-                <a href="#" class="sidebar-nav-item disabled">
-                    <i class="sidebar-nav-icon fas fa-code"></i>
-                    <span class="sidebar-nav-text">Web Dev</span>
-                    <span class="sidebar-nav-badge coming-soon">Soon</span>
-                </a>
-                <a href="#" class="sidebar-nav-item disabled">
-                    <i class="sidebar-nav-icon fas fa-chart-bar"></i>
-                    <span class="sidebar-nav-text">Data Science</span>
-                    <span class="sidebar-nav-badge coming-soon">Soon</span>
-                </a>
-            </div>
-        </nav>
-    </aside>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar"></aside>
 
     <!-- Sidebar Overlay -->
-    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <div class="sidebar-overlay"></div>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
@@ -331,83 +251,10 @@
 
     <!-- Scripts -->
     <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
     <script>
         // Homepage specific functionality
         document.addEventListener('DOMContentLoaded', () => {
-            // Theme Toggle
-            const STORAGE_KEY = 'techtok-theme';
-            const themeToggle = document.getElementById('theme-toggle');
-            const savedTheme = localStorage.getItem(STORAGE_KEY);
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-
-            document.documentElement.setAttribute('data-theme', theme);
-            updateThemeIcon(theme);
-
-            themeToggle.addEventListener('click', () => {
-                const current = document.documentElement.getAttribute('data-theme');
-                const newTheme = current === 'dark' ? 'light' : 'dark';
-                document.documentElement.setAttribute('data-theme', newTheme);
-                localStorage.setItem(STORAGE_KEY, newTheme);
-                updateThemeIcon(newTheme);
-            });
-
-            function updateThemeIcon(theme) {
-                const icon = themeToggle.querySelector('i');
-                icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
-            }
-
-            // Mobile Menu
-            const mobileToggle = document.getElementById('mobile-menu-toggle');
-            const sidebar = document.getElementById('sidebar');
-            const sidebarClose = document.getElementById('sidebar-close');
-            const overlay = document.getElementById('sidebar-overlay');
-
-            function openSidebar() {
-                sidebar.classList.add('open');
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-
-            function closeSidebar() {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-
-            mobileToggle.addEventListener('click', openSidebar);
-            sidebarClose.addEventListener('click', closeSidebar);
-            overlay.addEventListener('click', closeSidebar);
-
-            // Close sidebar on link click
-            sidebar.querySelectorAll('.sidebar-nav-item:not(.disabled)').forEach(link => {
-                link.addEventListener('click', closeSidebar);
-            });
-
-            // Navbar scroll effect
-            const nav = document.getElementById('homepage-nav');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 100) {
-                    nav.classList.add('scrolled');
-                } else {
-                    nav.classList.remove('scrolled');
-                }
-            });
-
-            // Back to Top
-            const backToTop = document.getElementById('back-to-top');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 300) {
-                    backToTop.classList.add('visible');
-                } else {
-                    backToTop.classList.remove('visible');
-                }
-            });
-
-            backToTop.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
-
             // Smooth scroll for anchor links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function(e) {
