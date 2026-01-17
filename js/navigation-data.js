@@ -270,10 +270,10 @@ const SITE_NAVIGATION = {
     ],
 
     social: [
-        { name: 'YouTube', url: 'https://www.youtube.com/@techtok_cafe', icon: 'fab fa-youtube' },
-        { name: 'Medium', url: 'https://medium.com/@ajaykumar-4', icon: 'fab fa-medium' },
-        { name: 'GitHub', url: 'https://github.com/AjayKumarGogineni777', icon: 'fab fa-github' },
-        { name: 'Portfolio', url: 'https://ajay-me.vercel.app/', icon: 'fas fa-globe' }
+        { name: 'YouTube', url: 'https://www.youtube.com/@TechTok-Cafe', icon: 'fab fa-youtube' },
+        { name: 'Medium', url: 'https://medium.com/@sddmhossain786', icon: 'fab fa-medium' },
+        { name: 'GitHub', url: 'https://shossain786.github.io', icon: 'fab fa-github' },
+        { name: 'Portfolio', url: 'https://saddam-techspace.netlify.app', icon: 'fas fa-globe' }
     ],
 
     footer: {
