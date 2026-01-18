@@ -1,379 +1,261 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java-Selenium Interview Guide | 5-10 Years Experience</title>
+    <meta name="description" content="Comprehensive Java-Selenium interview questions and answers for experienced professionals (5-10 years). Covers WebDriver, TestNG, Page Object Model, and CI/CD.">
+    <title>Java-Selenium Interview Guide Set 1 - TechTok Cafe</title>
+
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/interview/interview-styles.css">
-    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
 
 <body>
-    <!-- Progress Bar -->
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-    <!-- Back Navigation -->
-    <div class="back-nav">
-        <a href="/index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-    </div>
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="header-content">
-                <h1><i class="fas fa-code"></i> Java-Selenium Interview Guide</h1>
-                <p class="subtitle">Comprehensive Questions for Experienced Professionals</p>
-                <p class="author">By Mohammad S Hossain</p>
-                <div class="experience-badge">
-                    <i class="fas fa-medal"></i> 5-10 Years Experience
-                </div>
-            </div>
-        </div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
 
-        <!-- Stats Section -->
-        <div class="stats-section">
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-question-circle"></i></div>
-                <div class="stat-number">20</div>
-                <div class="stat-label">Interview Questions</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-code"></i></div>
-                <div class="stat-number">15+</div>
-                <div class="stat-label">Code Examples</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-lightbulb"></i></div>
-                <div class="stat-number">50+</div>
-                <div class="stat-label">Pro Tips</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon"><i class="fas fa-clock"></i></div>
-                <div class="stat-number">2-3</div>
-                <div class="stat-label">Hours Study Time</div>
-            </div>
-        </div>
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
 
-        <!-- Search Section -->
-        <div class="search-section">
-            <input type="text" class="search-box" id="searchBox"
-                placeholder="🔍 Search questions... (e.g., 'WebDriver', 'TestNG', 'Page Object')">
-        </div>
-
-        <!-- Questions Section -->
-        <div class="questions-section">
-            <h2 class="section-title">Top 20 Java-Selenium Interview Questions</h2>
-
-            <!-- Question 1 -->
-            <div class="question-card" data-keywords="webdriver selenium framework architecture">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div style="display: flex; align-items: center;">
-                        <div class="question-number">1</div>
-                        <div class="question-text">Explain the WebDriver architecture and how Selenium communicates with
-                            browsers</div>
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Java-Selenium Interview Guide</h1>
+                    <p class="article-subtitle">Comprehensive Questions for Experienced Professionals (5-10 Years)</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 2-3 hours study</span>
+                        <span><i class="fas fa-signal"></i> Advanced</span>
+                        <span><i class="fas fa-question-circle"></i> 20 Questions</span>
                     </div>
-                    <i class="fas fa-chevron-down expand-icon"></i>
-                </div>
-                <div class="answer-content">
-                    <div class="answer-inner">
-                        <div class="answer-section">
-                            <h4><i class="fas fa-sitemap"></i> WebDriver Architecture</h4>
-                            <p>WebDriver uses a client-server architecture where tests act as clients sending HTTP
-                                requests to the browser driver, which then controls the browser.</p>
+                </header>
 
-                            <div class="key-points">
-                                <strong>Key Components:</strong>
+                <nav class="toc" id="toc"></nav>
+
+                <div class="article-body">
+                    <!-- Question 1 -->
+                    <section id="q1-webdriver-architecture" class="chapter">
+                        <h2 class="chapter-title">Q1: WebDriver Architecture</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                                <p>Explain the WebDriver architecture and how Selenium communicates with browsers.</p>
+                            </div>
+
+                            <p>WebDriver uses a client-server architecture where tests act as clients sending HTTP requests to the browser driver, which then controls the browser.</p>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-sitemap"></i> Key Components</h4>
                                 <ul>
-                                    <li><strong>WebDriver API:</strong> Language-specific bindings (Java, Python, C#)
-                                    </li>
+                                    <li><strong>WebDriver API:</strong> Language-specific bindings (Java, Python, C#)</li>
                                     <li><strong>JSON Wire Protocol/W3C Protocol:</strong> Communication standard</li>
                                     <li><strong>Browser Drivers:</strong> ChromeDriver, GeckoDriver, EdgeDriver</li>
                                     <li><strong>Browser:</strong> Actual browser instance</li>
                                 </ul>
                             </div>
-                        </div>
 
-                        <div class="answer-section">
-                            <h4><i class="fas fa-code"></i> Code Example</h4>
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">Java</span>
-                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                                </div>
-                                <pre><code>// Setting up WebDriver with proper configuration
-System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+                                <div class="code-header"><span><i class="fab fa-java"></i> WebDriver Setup Example</span></div>
+                                <pre><code><span class="comment">// Setting up WebDriver with proper configuration</span>
+System.setProperty(<span class="string">"webdriver.chrome.driver"</span>, <span class="string">"path/to/chromedriver"</span>);
 
-ChromeOptions options = new ChromeOptions();
-options.addArguments("--headless");
-options.addArguments("--no-sandbox");
-options.addArguments("--disable-dev-shm-usage");
+ChromeOptions options = <span class="keyword">new</span> ChromeOptions();
+options.addArguments(<span class="string">"--headless"</span>);
+options.addArguments(<span class="string">"--no-sandbox"</span>);
+options.addArguments(<span class="string">"--disable-dev-shm-usage"</span>);
 
-WebDriver driver = new ChromeDriver(options);
+WebDriver driver = <span class="keyword">new</span> ChromeDriver(options);
 
-// Communication flow
-driver.get("https://example.com"); // HTTP POST to /session/{id}/url
-WebElement element = driver.findElement(By.id("submit")); // POST to /session/{id}/element
-element.click(); // POST to /session/{id}/element/{id}/click</code></pre>
+<span class="comment">// Communication flow</span>
+driver.get(<span class="string">"https://example.com"</span>); <span class="comment">// HTTP POST to /session/{id}/url</span>
+WebElement element = driver.findElement(By.id(<span class="string">"submit"</span>)); <span class="comment">// POST to /session/{id}/element</span>
+element.click(); <span class="comment">// POST to /session/{id}/element/{id}/click</span></code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Pro Tip</h4>
+                                <p>Understanding this architecture helps in debugging connection issues and optimizing test performance by minimizing HTTP calls.</p>
                             </div>
                         </div>
+                    </section>
 
-                        <div class="tip-box">
-                            <strong>Pro Tip:</strong> Understanding this architecture helps in debugging connection
-                            issues and optimizing test performance by minimizing HTTP calls.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question 2 -->
-            <div class="question-card" data-keywords="page object model pom design pattern">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div style="display: flex; align-items: center;">
-                        <div class="question-number">2</div>
-                        <div class="question-text">Implement Page Object Model with Page Factory and explain its
-                            advantages</div>
-                    </div>
-                    <i class="fas fa-chevron-down expand-icon"></i>
-                </div>
-                <div class="answer-content">
-                    <div class="answer-inner">
-                        <div class="answer-section">
-                            <h4><i class="fas fa-layer-group"></i> Page Object Model Implementation</h4>
+                    <!-- Question 2 -->
+                    <section id="q2-page-object-model" class="chapter">
+                        <h2 class="chapter-title">Q2: Page Object Model with Page Factory</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                                <p>Implement Page Object Model with Page Factory and explain its advantages.</p>
+                            </div>
 
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">Java</span>
-                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                                </div>
-                                <pre><code>// Base Page class
-public abstract class BasePage {
-    protected WebDriver driver;
-    protected WebDriverWait wait;
-    
-    public BasePage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        PageFactory.initElements(driver, this);
+                                <div class="code-header"><span><i class="fab fa-java"></i> Page Object Implementation</span></div>
+                                <pre><code><span class="comment">// Base Page class</span>
+<span class="keyword">public abstract class</span> BasePage {
+    <span class="keyword">protected</span> WebDriver driver;
+    <span class="keyword">protected</span> WebDriverWait wait;
+
+    <span class="keyword">public</span> BasePage(WebDriver driver) {
+        <span class="keyword">this</span>.driver = driver;
+        <span class="keyword">this</span>.wait = <span class="keyword">new</span> WebDriverWait(driver, Duration.ofSeconds(<span class="number">10</span>));
+        PageFactory.initElements(driver, <span class="keyword">this</span>);
     }
 }
 
-// Login Page implementation
-public class LoginPage extends BasePage {
-    @FindBy(id = "username")
-    private WebElement usernameField;
-    
-    @FindBy(id = "password") 
-    private WebElement passwordField;
-    
-    @FindBy(xpath = "//button[@type='submit']")
-    private WebElement loginButton;
-    
-    @FindBy(css = ".error-message")
-    private WebElement errorMessage;
-    
-    public LoginPage(WebDriver driver) {
-        super(driver);
+<span class="comment">// Login Page implementation</span>
+<span class="keyword">public class</span> LoginPage <span class="keyword">extends</span> BasePage {
+    @FindBy(id = <span class="string">"username"</span>)
+    <span class="keyword">private</span> WebElement usernameField;
+
+    @FindBy(id = <span class="string">"password"</span>)
+    <span class="keyword">private</span> WebElement passwordField;
+
+    @FindBy(xpath = <span class="string">"//button[@type='submit']"</span>)
+    <span class="keyword">private</span> WebElement loginButton;
+
+    <span class="keyword">public</span> LoginPage(WebDriver driver) {
+        <span class="keyword">super</span>(driver);
     }
-    
-    public HomePage login(String username, String password) {
+
+    <span class="keyword">public</span> HomePage login(<span class="keyword">String</span> username, <span class="keyword">String</span> password) {
         usernameField.clear();
         usernameField.sendKeys(username);
         passwordField.clear();
         passwordField.sendKeys(password);
         loginButton.click();
-        return new HomePage(driver);
-    }
-    
-    public boolean isErrorDisplayed() {
-        try {
-            return errorMessage.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+        <span class="keyword">return new</span> HomePage(driver);
     }
 }</code></pre>
                             </div>
-                        </div>
 
-                        <div class="answer-section">
-                            <h4><i class="fas fa-trophy"></i> Advantages</h4>
-                            <div class="key-points">
+                            <div class="info-box success">
+                                <h4><i class="fas fa-trophy"></i> Advantages</h4>
                                 <ul>
-                                    <li><strong>Maintainability:</strong> Changes in UI require updates only in page
-                                        classes</li>
-                                    <li><strong>Reusability:</strong> Page methods can be used across multiple test
-                                        classes</li>
-                                    <li><strong>Readability:</strong> Tests become more readable and business-focused
-                                    </li>
-                                    <li><strong>Lazy Initialization:</strong> Page Factory initializes elements only
-                                        when accessed</li>
+                                    <li><strong>Maintainability:</strong> Changes in UI require updates only in page classes</li>
+                                    <li><strong>Reusability:</strong> Page methods can be used across multiple test classes</li>
+                                    <li><strong>Readability:</strong> Tests become more readable and business-focused</li>
+                                    <li><strong>Lazy Initialization:</strong> Page Factory initializes elements only when accessed</li>
                                 </ul>
                             </div>
                         </div>
+                    </section>
 
-                        <div class="note-box">
-                            <strong>Best Practice:</strong> Always return page objects from methods to enable method
-                            chaining and maintain the flow of page navigation.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question 3 -->
-            <div class="question-card" data-keywords="waits explicit implicit fluent wait">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div style="display: flex; align-items: center;">
-                        <div class="question-number">3</div>
-                        <div class="question-text">Differentiate between Implicit, Explicit, and Fluent waits with
-                            implementation examples</div>
-                    </div>
-                    <i class="fas fa-chevron-down expand-icon"></i>
-                </div>
-                <div class="answer-content">
-                    <div class="answer-inner">
-                        <div class="answer-section">
-                            <h4><i class="fas fa-clock"></i> Types of Waits</h4>
+                    <!-- Question 3 -->
+                    <section id="q3-waits" class="chapter">
+                        <h2 class="chapter-title">Q3: Implicit, Explicit, and Fluent Waits</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                                <p>Differentiate between Implicit, Explicit, and Fluent waits with implementation examples.</p>
+                            </div>
 
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">Java</span>
-                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                                </div>
-                                <pre><code>// 1. Implicit Wait - Global setting
-driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+                                <div class="code-header"><span><i class="fab fa-java"></i> Types of Waits</span></div>
+                                <pre><code><span class="comment">// 1. Implicit Wait - Global setting</span>
+driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(<span class="number">10</span>));
 
-// 2. Explicit Wait - Specific conditions
-WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+<span class="comment">// 2. Explicit Wait - Specific conditions</span>
+WebDriverWait wait = <span class="keyword">new</span> WebDriverWait(driver, Duration.ofSeconds(<span class="number">10</span>));
 
-// Wait for element to be clickable
-WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id("submit")));
+<span class="comment">// Wait for element to be clickable</span>
+WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.id(<span class="string">"submit"</span>)));
 
-// Wait for element to be visible
-wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("loading")));
+<span class="comment">// Wait for element to be visible</span>
+wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(<span class="string">"loading"</span>)));
 
-// Wait for text to be present
-wait.until(ExpectedConditions.textToBePresentInElement(statusElement, "Success"));
+<span class="comment">// 3. Fluent Wait - Custom polling and exceptions</span>
+FluentWait&lt;WebDriver&gt; fluentWait = <span class="keyword">new</span> FluentWait&lt;&gt;(driver)
+    .withTimeout(Duration.ofSeconds(<span class="number">30</span>))
+    .pollingEvery(Duration.ofSeconds(<span class="number">2</span>))
+    .ignoring(NoSuchElementException.<span class="keyword">class</span>)
+    .ignoring(StaleElementReferenceException.<span class="keyword">class</span>);
 
-// 3. Fluent Wait - Custom polling and exceptions
-FluentWait&lt;WebDriver&gt; fluentWait = new FluentWait&lt;&gt;(driver)
-    .withTimeout(Duration.ofSeconds(30))
-    .pollingEvery(Duration.ofSeconds(2))
-    .ignoring(NoSuchElementException.class)
-    .ignoring(StaleElementReferenceException.class);
-
-WebElement element = fluentWait.until(driver -> {
-    WebElement el = driver.findElement(By.id("dynamic-element"));
-    return el.isDisplayed() ? el : null;
+WebElement element = fluentWait.until(driver -&gt; {
+    WebElement el = driver.findElement(By.id(<span class="string">"dynamic-element"</span>));
+    <span class="keyword">return</span> el.isDisplayed() ? el : <span class="keyword">null</span>;
 });</code></pre>
                             </div>
-                        </div>
 
-                        <div class="answer-section">
-                            <h4><i class="fas fa-balance-scale"></i> Comparison</h4>
-                            <div class="key-points">
+                            <div class="info-box">
+                                <h4><i class="fas fa-balance-scale"></i> Comparison</h4>
                                 <ul>
-                                    <li><strong>Implicit Wait:</strong> Applied globally, affects all elements, not
-                                        recommended with explicit waits</li>
-                                    <li><strong>Explicit Wait:</strong> Applied to specific elements, condition-based,
-                                        more control</li>
-                                    <li><strong>Fluent Wait:</strong> Most flexible, custom polling intervals, can
-                                        ignore specific exceptions</li>
+                                    <li><strong>Implicit Wait:</strong> Applied globally, affects all elements, not recommended with explicit waits</li>
+                                    <li><strong>Explicit Wait:</strong> Applied to specific elements, condition-based, more control</li>
+                                    <li><strong>Fluent Wait:</strong> Most flexible, custom polling intervals, can ignore specific exceptions</li>
                                 </ul>
                             </div>
-                        </div>
 
-                        <div class="important-box">
-                            <strong>Important:</strong> Never mix implicit and explicit waits as it can lead to
-                            unpredictable results and longer wait times.
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Important</h4>
+                                <p>Never mix implicit and explicit waits as it can lead to unpredictable results and longer wait times.</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </section>
 
-            <!-- Question 4 -->
-            <div class="question-card" data-keywords="testng annotations groups parallel execution">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div style="display: flex; align-items: center;">
-                        <div class="question-number">4</div>
-                        <div class="question-text">Explain TestNG annotations, groups, and parallel execution
-                            configuration</div>
-                    </div>
-                    <i class="fas fa-chevron-down expand-icon"></i>
-                </div>
-                <div class="answer-content">
-                    <div class="answer-inner">
-                        <div class="answer-section">
-                            <h4><i class="fas fa-tags"></i> TestNG Annotations & Groups</h4>
+                    <!-- Question 4 -->
+                    <section id="q4-testng" class="chapter">
+                        <h2 class="chapter-title">Q4: TestNG Annotations and Parallel Execution</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                                <p>Explain TestNG annotations, groups, and parallel execution configuration.</p>
+                            </div>
 
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">Java</span>
-                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                                </div>
-                                <pre><code>public class TestClass {
-    
+                                <div class="code-header"><span><i class="fab fa-java"></i> TestNG Annotations</span></div>
+                                <pre><code><span class="keyword">public class</span> TestClass {
+
     @BeforeSuite
-    public void beforeSuite() {
-        // Database setup, report initialization
+    <span class="keyword">public void</span> beforeSuite() {
+        <span class="comment">// Database setup, report initialization</span>
     }
-    
-    @BeforeTest
-    public void beforeTest() {
-        // Browser setup for test groups
-    }
-    
+
     @BeforeClass
-    public void beforeClass() {
-        // Class-level setup
-        driver = new ChromeDriver();
+    <span class="keyword">public void</span> beforeClass() {
+        driver = <span class="keyword">new</span> ChromeDriver();
     }
-    
-    @BeforeMethod(groups = {"smoke", "regression"})
-    public void beforeMethod() {
-        // Method-level setup - login, navigate to page
+
+    @BeforeMethod(groups = {<span class="string">"smoke"</span>, <span class="string">"regression"</span>})
+    <span class="keyword">public void</span> beforeMethod() {
+        <span class="comment">// Method-level setup - login, navigate to page</span>
     }
-    
-    @Test(groups = "smoke", priority = 1)
-    public void loginTest() {
-        // High priority smoke test
+
+    @Test(groups = <span class="string">"smoke"</span>, priority = <span class="number">1</span>)
+    <span class="keyword">public void</span> loginTest() {
+        <span class="comment">// High priority smoke test</span>
     }
-    
-    @Test(groups = {"regression", "api"}, dependsOnMethods = "loginTest")
-    public void userProfileTest() {
-        // Depends on login test
+
+    @Test(groups = {<span class="string">"regression"</span>}, dependsOnMethods = <span class="string">"loginTest"</span>)
+    <span class="keyword">public void</span> userProfileTest() {
+        <span class="comment">// Depends on login test</span>
     }
-    
-    @Test(groups = "integration", dataProvider = "userData")
-    public void dataProviderTest(String username, String password) {
-        // Data-driven test
+
+    @Test(dataProvider = <span class="string">"userData"</span>)
+    <span class="keyword">public void</span> dataProviderTest(<span class="keyword">String</span> username, <span class="keyword">String</span> password) {
+        <span class="comment">// Data-driven test</span>
     }
-    
-    @DataProvider(name = "userData")
-    public Object[][] getUserData() {
-        return new Object[][] {
-            {"user1", "pass1"},
-            {"user2", "pass2"}
+
+    @DataProvider(name = <span class="string">"userData"</span>)
+    <span class="keyword">public</span> Object[][] getUserData() {
+        <span class="keyword">return new</span> Object[][] {
+            {<span class="string">"user1"</span>, <span class="string">"pass1"</span>},
+            {<span class="string">"user2"</span>, <span class="string">"pass2"</span>}
         };
     }
 }</code></pre>
                             </div>
-                        </div>
-
-                        <div class="answer-section">
-                            <h4><i class="fas fa-cogs"></i> Parallel Execution XML</h4>
 
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">XML (testng.xml)</span>
-                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                                </div>
+                                <div class="code-header"><span><i class="fas fa-cog"></i> testng.xml for Parallel Execution</span></div>
                                 <pre><code>&lt;suite name="ParallelSuite" parallel="methods" thread-count="3"&gt;
     &lt;test name="RegressionTests"&gt;
         &lt;groups&gt;
@@ -389,84 +271,52 @@ WebElement element = fluentWait.until(driver -> {
 &lt;/suite&gt;</code></pre>
                             </div>
                         </div>
+                    </section>
 
-                        <div class="tip-box">
-                            <strong>Pro Tip:</strong> Use parallel="methods" for faster execution, but ensure your tests
-                            are thread-safe and independent.
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <!-- Question 5 -->
+                    <section id="q5-stale-element" class="chapter">
+                        <h2 class="chapter-title">Q5: Handling StaleElementReferenceException</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                                <p>How do you handle StaleElementReferenceException and implement retry logic?</p>
+                            </div>
 
-            <!-- Question 5 -->
-            <div class="question-card" data-keywords="stale element exception handling retry">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div style="display: flex; align-items: center;">
-                        <div class="question-number">5</div>
-                        <div class="question-text">How do you handle StaleElementReferenceException and implement retry
-                            logic?</div>
-                    </div>
-                    <i class="fas fa-chevron-down expand-icon"></i>
-                </div>
-                <div class="answer-content">
-                    <div class="answer-inner">
-                        <div class="answer-section">
-                            <h4><i class="fas fa-bug"></i> Understanding Stale Element Exception</h4>
-                            <p>Occurs when an element reference becomes invalid due to DOM changes. Common in AJAX-heavy
-                                applications.</p>
+                            <p>Occurs when an element reference becomes invalid due to DOM changes. Common in AJAX-heavy applications.</p>
 
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">Java</span>
-                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                                </div>
-                                <pre><code>// Method 1: Retry mechanism with exponential backoff
-public WebElement findElementWithRetry(By locator, int maxAttempts) {
-    int attempts = 0;
-    while (attempts < maxAttempts) {
-        try {
-            return driver.findElement(locator);
-        } catch (StaleElementReferenceException e) {
+                                <div class="code-header"><span><i class="fab fa-java"></i> Retry Mechanism</span></div>
+                                <pre><code><span class="comment">// Method 1: Retry mechanism with exponential backoff</span>
+<span class="keyword">public</span> WebElement findElementWithRetry(By locator, <span class="keyword">int</span> maxAttempts) {
+    <span class="keyword">int</span> attempts = <span class="number">0</span>;
+    <span class="keyword">while</span> (attempts &lt; maxAttempts) {
+        <span class="keyword">try</span> {
+            <span class="keyword">return</span> driver.findElement(locator);
+        } <span class="keyword">catch</span> (StaleElementReferenceException e) {
             attempts++;
-            if (attempts == maxAttempts) throw e;
-            
-            try {
-                Thread.sleep(500 * attempts); // Exponential backoff
-            } catch (InterruptedException ie) {
+            <span class="keyword">if</span> (attempts == maxAttempts) <span class="keyword">throw</span> e;
+
+            <span class="keyword">try</span> {
+                Thread.sleep(<span class="number">500</span> * attempts); <span class="comment">// Exponential backoff</span>
+            } <span class="keyword">catch</span> (InterruptedException ie) {
                 Thread.currentThread().interrupt();
             }
         }
     }
-    return null;
+    <span class="keyword">return null</span>;
 }
 
-// Method 2: Using ExpectedConditions
-public WebElement refreshElement(By locator) {
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    return wait.until(ExpectedConditions.refreshed(
+<span class="comment">// Method 2: Using ExpectedConditions</span>
+<span class="keyword">public</span> WebElement refreshElement(By locator) {
+    WebDriverWait wait = <span class="keyword">new</span> WebDriverWait(driver, Duration.ofSeconds(<span class="number">10</span>));
+    <span class="keyword">return</span> wait.until(ExpectedConditions.refreshed(
         ExpectedConditions.presenceOfElementLocated(locator)
     ));
-}
-
-// Method 3: Custom wrapper with automatic retry
-public void clickWithRetry(By locator, int maxRetries) {
-    for (int i = 0; i < maxRetries; i++) {
-        try {
-            WebElement element = new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(locator));
-            element.click();
-            return;
-        } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
-            if (i == maxRetries - 1) throw e;
-        }
-    }
 }</code></pre>
                             </div>
-                        </div>
 
-                        <div class="answer-section">
-                            <h4><i class="fas fa-shield-alt"></i> Prevention Strategies</h4>
-                            <div class="key-points">
+                            <div class="info-box">
+                                <h4><i class="fas fa-shield-alt"></i> Prevention Strategies</h4>
                                 <ul>
                                     <li>Always re-locate elements after page modifications</li>
                                     <li>Use dynamic locators instead of storing WebElement references</li>
@@ -475,103 +325,69 @@ public void clickWithRetry(By locator, int maxRetries) {
                                 </ul>
                             </div>
                         </div>
+                    </section>
 
-                        <div class="important-box">
-                            <strong>Important:</strong> Avoid storing WebElement references in class variables. Always
-                            use By locators and find elements when needed.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Continue with remaining 15 questions... For brevity, I'll add a few more key questions -->
-
-            <!-- Question 6 -->
-            <div class="question-card" data-keywords="actions class mouse keyboard events">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div style="display: flex; align-items: center;">
-                        <div class="question-number">6</div>
-                        <div class="question-text">Demonstrate advanced Actions class usage for complex user
-                            interactions</div>
-                    </div>
-                    <i class="fas fa-chevron-down expand-icon"></i>
-                </div>
-                <div class="answer-content">
-                    <div class="answer-inner">
-                        <div class="answer-section">
-                            <h4><i class="fas fa-mouse-pointer"></i> Actions Class Implementation</h4>
+                    <!-- Question 6 -->
+                    <section id="q6-actions-class" class="chapter">
+                        <h2 class="chapter-title">Q6: Advanced Actions Class Usage</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                                <p>Demonstrate advanced Actions class usage for complex user interactions.</p>
+                            </div>
 
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">Java</span>
-                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                                </div>
-                                <pre><code>Actions actions = new Actions(driver);
+                                <div class="code-header"><span><i class="fab fa-java"></i> Actions Class Examples</span></div>
+                                <pre><code>Actions actions = <span class="keyword">new</span> Actions(driver);
 
-// Drag and Drop
-WebElement source = driver.findElement(By.id("draggable"));
-WebElement target = driver.findElement(By.id("droppable"));
+<span class="comment">// Drag and Drop</span>
+WebElement source = driver.findElement(By.id(<span class="string">"draggable"</span>));
+WebElement target = driver.findElement(By.id(<span class="string">"droppable"</span>));
 actions.dragAndDrop(source, target).perform();
 
-// Hover over menu and click submenu
-WebElement menu = driver.findElement(By.id("menu"));
-WebElement submenu = driver.findElement(By.id("submenu"));
+<span class="comment">// Hover over menu and click submenu</span>
+WebElement menu = driver.findElement(By.id(<span class="string">"menu"</span>));
+WebElement submenu = driver.findElement(By.id(<span class="string">"submenu"</span>));
 actions.moveToElement(menu)
-       .pause(Duration.ofSeconds(1))
+       .pause(Duration.ofSeconds(<span class="number">1</span>))
        .moveToElement(submenu)
        .click()
        .perform();
 
-// Right-click context menu
-WebElement element = driver.findElement(By.id("contextMenu"));
+<span class="comment">// Right-click context menu</span>
 actions.contextClick(element).perform();
 
-// Double click
+<span class="comment">// Double click</span>
 actions.doubleClick(element).perform();
 
-// Keyboard shortcuts
+<span class="comment">// Keyboard shortcuts (Ctrl+A, Delete)</span>
 actions.keyDown(Keys.CONTROL)
-       .sendKeys("a")
+       .sendKeys(<span class="string">"a"</span>)
        .keyUp(Keys.CONTROL)
        .sendKeys(Keys.DELETE)
        .perform();
 
-// Slider movement
-WebElement slider = driver.findElement(By.id("slider"));
+<span class="comment">// Slider movement</span>
+WebElement slider = driver.findElement(By.id(<span class="string">"slider"</span>));
 actions.clickAndHold(slider)
-       .moveByOffset(100, 0)
+       .moveByOffset(<span class="number">100</span>, <span class="number">0</span>)
        .release()
        .perform();</code></pre>
                             </div>
                         </div>
+                    </section>
 
-                        <div class="tip-box">
-                            <strong>Pro Tip:</strong> Always call .perform() at the end of Actions chain, and use
-                            pause() for timing-sensitive operations.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Question 7 -->
-            <div class="question-card" data-keywords="framework design hybrid data driven">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div style="display: flex; align-items: center;">
-                        <div class="question-number">7</div>
-                        <div class="question-text">Design a hybrid test automation framework with proper project
-                            structure</div>
-                    </div>
-                    <i class="fas fa-chevron-down expand-icon"></i>
-                </div>
-                <div class="answer-content">
-                    <div class="answer-inner">
-                        <div class="answer-section">
-                            <h4><i class="fas fa-folder-tree"></i> Framework Architecture</h4>
+                    <!-- Question 7 -->
+                    <section id="q7-framework-design" class="chapter">
+                        <h2 class="chapter-title">Q7: Hybrid Test Automation Framework Design</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                                <p>Design a hybrid test automation framework with proper project structure.</p>
+                            </div>
 
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">Project Structure</span>
-                                </div>
+                                <div class="code-header"><span><i class="fas fa-folder-tree"></i> Project Structure</span></div>
                                 <pre><code>src/
 ├── main/
 │   ├── java/
@@ -584,7 +400,6 @@ actions.clickAndHold(slider)
 │   │   ├── utils/
 │   │   │   ├── DriverFactory.java
 │   │   │   ├── ConfigReader.java
-│   │   │   ├── ExcelUtils.java
 │   │   │   └── ExtentReportManager.java
 │   │   └── constants/
 │   │       └── FrameworkConstants.java
@@ -599,405 +414,218 @@ actions.clickAndHold(slider)
 │   └── resources/
 │       └── testng.xml</code></pre>
                             </div>
-                        </div>
-
-                        <div class="answer-section">
-                            <h4><i class="fas fa-code"></i> Base Test Implementation</h4>
 
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">Java</span>
-                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                                </div>
-                                <pre><code>public class BaseTest {
-    protected ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-    protected Properties config;
-    
+                                <div class="code-header"><span><i class="fab fa-java"></i> Base Test Implementation</span></div>
+                                <pre><code><span class="keyword">public class</span> BaseTest {
+    <span class="keyword">protected</span> ThreadLocal&lt;WebDriver&gt; driver = <span class="keyword">new</span> ThreadLocal&lt;&gt;();
+    <span class="keyword">protected</span> Properties config;
+
     @BeforeSuite
-    public void setupSuite() {
+    <span class="keyword">public void</span> setupSuite() {
         ExtentReportManager.initReports();
         config = ConfigReader.loadProperties();
     }
-    
+
     @BeforeMethod
-    @Parameters("browser")
-    public void setup(@Optional("chrome") String browser) {
+    @Parameters(<span class="string">"browser"</span>)
+    <span class="keyword">public void</span> setup(@Optional(<span class="string">"chrome"</span>) <span class="keyword">String</span> browser) {
         WebDriver webDriver = DriverFactory.createDriver(browser);
         driver.set(webDriver);
-        
         getDriver().manage().window().maximize();
-        getDriver().manage().timeouts()
-            .implicitlyWait(Duration.ofSeconds(
-                Long.parseLong(config.getProperty("implicit.wait"))
-            ));
     }
-    
-    protected WebDriver getDriver() {
-        return driver.get();
+
+    <span class="keyword">protected</span> WebDriver getDriver() {
+        <span class="keyword">return</span> driver.get();
     }
-    
+
     @AfterMethod
-    public void tearDown(ITestResult result) {
-        if (result.getStatus() == ITestResult.FAILURE) {
-            String screenshot = captureScreenshot(result.getName());
+    <span class="keyword">public void</span> tearDown(ITestResult result) {
+        <span class="keyword">if</span> (result.getStatus() == ITestResult.FAILURE) {
+            <span class="keyword">String</span> screenshot = captureScreenshot(result.getName());
             ExtentReportManager.attachScreenshot(screenshot);
         }
-        
-        if (getDriver() != null) {
+
+        <span class="keyword">if</span> (getDriver() != <span class="keyword">null</span>) {
             getDriver().quit();
             driver.remove();
         }
     }
 }</code></pre>
                             </div>
-                        </div>
 
-                        <div class="key-points">
-                            <strong>Framework Components:</strong>
-                            <ul>
-                                <li><strong>ThreadLocal:</strong> For parallel execution support</li>
-                                <li><strong>Factory Pattern:</strong> For driver initialization</li>
-                                <li><strong>Singleton Pattern:</strong> For configuration management</li>
-                                <li><strong>Listener Interface:</strong> For custom reporting</li>
-                            </ul>
+                            <div class="info-box">
+                                <h4><i class="fas fa-cubes"></i> Framework Components</h4>
+                                <ul>
+                                    <li><strong>ThreadLocal:</strong> For parallel execution support</li>
+                                    <li><strong>Factory Pattern:</strong> For driver initialization</li>
+                                    <li><strong>Singleton Pattern:</strong> For configuration management</li>
+                                    <li><strong>Listener Interface:</strong> For custom reporting</li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </section>
 
-            <!-- Question 8 -->
-            <div class="question-card" data-keywords="jenkins ci cd pipeline integration">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div style="display: flex; align-items: center;">
-                        <div class="question-number">8</div>
-                        <div class="question-text">Implement CI/CD pipeline with Jenkins for automated test execution
-                        </div>
-                    </div>
-                    <i class="fas fa-chevron-down expand-icon"></i>
-                </div>
-                <div class="answer-content">
-                    <div class="answer-inner">
-                        <div class="answer-section">
-                            <h4><i class="fas fa-code-branch"></i> Jenkinsfile Pipeline</h4>
+                    <!-- Question 8 -->
+                    <section id="q8-cicd" class="chapter">
+                        <h2 class="chapter-title">Q8: CI/CD Pipeline with Jenkins</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                                <p>Implement CI/CD pipeline with Jenkins for automated test execution.</p>
+                            </div>
 
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">Groovy (Jenkinsfile)</span>
-                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                                </div>
+                                <div class="code-header"><span><i class="fas fa-code-branch"></i> Jenkinsfile Pipeline</span></div>
                                 <pre><code>pipeline {
     agent any
-    
+
     tools {
-        maven 'Maven-3.8.1'
-        jdk 'JDK-11'
+        maven <span class="string">'Maven-3.8.1'</span>
+        jdk <span class="string">'JDK-11'</span>
     }
-    
+
     parameters {
-        choice(name: 'BROWSER', choices: ['chrome', 'firefox', 'edge'], 
-               description: 'Select browser')
-        choice(name: 'TEST_SUITE', choices: ['smoke', 'regression', 'all'], 
-               description: 'Select test suite')
+        choice(name: <span class="string">'BROWSER'</span>, choices: [<span class="string">'chrome'</span>, <span class="string">'firefox'</span>, <span class="string">'edge'</span>],
+               description: <span class="string">'Select browser'</span>)
+        choice(name: <span class="string">'TEST_SUITE'</span>, choices: [<span class="string">'smoke'</span>, <span class="string">'regression'</span>, <span class="string">'all'</span>],
+               description: <span class="string">'Select test suite'</span>)
     }
-    
+
     stages {
-        stage('Checkout') {
+        stage(<span class="string">'Checkout'</span>) {
             steps {
-                git branch: 'main', 
-                    url: 'https://github.com/your-repo/selenium-tests.git'
+                git branch: <span class="string">'main'</span>,
+                    url: <span class="string">'https://github.com/your-repo/selenium-tests.git'</span>
             }
         }
-        
-        stage('Build') {
+
+        stage(<span class="string">'Build'</span>) {
             steps {
-                sh 'mvn clean compile'
+                sh <span class="string">'mvn clean compile'</span>
             }
         }
-        
-        stage('Run Tests') {
+
+        stage(<span class="string">'Run Tests'</span>) {
             steps {
-                sh """
-                    mvn test -Dbrowser=${params.BROWSER} \
-                             -Dsuite=${params.TEST_SUITE} \
+                sh <span class="string">"""
+                    mvn test -Dbrowser=\${params.BROWSER} \\
+                             -Dsuite=\${params.TEST_SUITE} \\
                              -Dthreads=3
-                """
-            }
-        }
-        
-        stage('Generate Reports') {
-            steps {
-                publishHTML([
-                    reportDir: 'target/extent-reports',
-                    reportFiles: 'ExtentReport.html',
-                    reportName: 'Test Report'
-                ])
+                """</span>
             }
         }
     }
-    
+
     post {
         always {
-            junit 'target/surefire-reports/*.xml'
-            archiveArtifacts artifacts: 'target/screenshots/**', 
-                            allowEmptyArchive: true
+            junit <span class="string">'target/surefire-reports/*.xml'</span>
         }
         failure {
             emailext (
-                subject: "Test Execution Failed - Build #${BUILD_NUMBER}",
-                body: "Please check Jenkins console for details",
-                to: 'team@company.com'
+                subject: <span class="string">"Test Failed - Build #\${BUILD_NUMBER}"</span>,
+                body: <span class="string">"Please check Jenkins console"</span>,
+                to: <span class="string">'team@company.com'</span>
             )
         }
     }
 }</code></pre>
                             </div>
                         </div>
+                    </section>
 
-                        <div class="note-box">
-                            <strong>Integration Steps:</strong> Configure Docker containers for Selenium Grid, implement
-                            email notifications, and set up scheduled builds for nightly regression.
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <!-- Question 20 - Best Practices -->
+                    <section id="q20-best-practices" class="chapter">
+                        <h2 class="chapter-title">Q20: Best Practices and Performance Optimization</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                                <p>What are the best practices and performance optimization techniques in Selenium?</p>
+                            </div>
 
-            <!-- Additional questions 9-20 would continue here with similar structure -->
-
-            <!-- Question 20 - Final Question -->
-            <div class="question-card" data-keywords="best practices performance optimization">
-                <div class="question-header" onclick="toggleQuestion(this)">
-                    <div style="display: flex; align-items: center;">
-                        <div class="question-number">20</div>
-                        <div class="question-text">What are the best practices and performance optimization techniques
-                            in Selenium?</div>
-                    </div>
-                    <i class="fas fa-chevron-down expand-icon"></i>
-                </div>
-                <div class="answer-content">
-                    <div class="answer-inner">
-                        <div class="answer-section">
-                            <h4><i class="fas fa-rocket"></i> Performance Optimization</h4>
-
-                            <div class="key-points">
-                                <strong>Key Optimization Techniques:</strong>
+                            <div class="info-box success">
+                                <h4><i class="fas fa-rocket"></i> Key Optimization Techniques</h4>
                                 <ul>
                                     <li><strong>Use CSS Selectors:</strong> Faster than XPath for element location</li>
-                                    <li><strong>Disable Unnecessary Features:</strong> Images, JavaScript (when
-                                        possible)</li>
-                                    <li><strong>Implement Page Load Strategy:</strong> Use "eager" or "none" when
-                                        appropriate</li>
-                                    <li><strong>Parallel Execution:</strong> Run tests concurrently using TestNG or
-                                        Selenium Grid</li>
-                                    <li><strong>Headless Mode:</strong> Use headless browsers for faster execution in
-                                        CI/CD</li>
+                                    <li><strong>Disable Unnecessary Features:</strong> Images, JavaScript (when possible)</li>
+                                    <li><strong>Page Load Strategy:</strong> Use "eager" or "none" when appropriate</li>
+                                    <li><strong>Parallel Execution:</strong> Run tests concurrently using TestNG or Selenium Grid</li>
+                                    <li><strong>Headless Mode:</strong> Use headless browsers for faster execution in CI/CD</li>
                                     <li><strong>Smart Waits:</strong> Replace Thread.sleep() with explicit waits</li>
-                                    <li><strong>Browser Reuse:</strong> Reuse browser sessions when possible</li>
-                                    <li><strong>Data-Driven Optimization:</strong> Use efficient data providers</li>
                                 </ul>
                             </div>
-                        </div>
-
-                        <div class="answer-section">
-                            <h4><i class="fas fa-code"></i> Implementation Example</h4>
 
                             <div class="code-block">
-                                <div class="code-header">
-                                    <span class="code-language">Java</span>
-                                    <button class="copy-button" onclick="copyCode(this)">Copy</button>
-                                </div>
-                                <pre><code>// Optimized ChromeOptions Configuration
-ChromeOptions options = new ChromeOptions();
+                                <div class="code-header"><span><i class="fab fa-java"></i> Optimized Configuration</span></div>
+                                <pre><code><span class="comment">// Optimized ChromeOptions Configuration</span>
+ChromeOptions options = <span class="keyword">new</span> ChromeOptions();
 
-// Performance optimizations
-options.addArguments("--headless");
-options.addArguments("--disable-gpu");
-options.addArguments("--no-sandbox");
-options.addArguments("--disable-dev-shm-usage");
-options.addArguments("--disable-images");
-options.addArguments("--blink-settings=imagesEnabled=false");
+<span class="comment">// Performance optimizations</span>
+options.addArguments(<span class="string">"--headless"</span>);
+options.addArguments(<span class="string">"--disable-gpu"</span>);
+options.addArguments(<span class="string">"--no-sandbox"</span>);
+options.addArguments(<span class="string">"--disable-dev-shm-usage"</span>);
+options.addArguments(<span class="string">"--blink-settings=imagesEnabled=false"</span>);
 
-// Page load strategy
+<span class="comment">// Page load strategy</span>
 options.setPageLoadStrategy(PageLoadStrategy.EAGER);
 
-// Disable unnecessary features
-Map<String, Object> prefs = new HashMap<>();
-prefs.put("profile.managed_default_content_settings.images", 2);
-prefs.put("profile.default_content_setting_values.notifications", 2);
-options.setExperimentalOption("prefs", prefs);
+<span class="comment">// Disable unnecessary features</span>
+Map&lt;<span class="keyword">String</span>, Object&gt; prefs = <span class="keyword">new</span> HashMap&lt;&gt;();
+prefs.put(<span class="string">"profile.managed_default_content_settings.images"</span>, <span class="number">2</span>);
+prefs.put(<span class="string">"profile.default_content_setting_values.notifications"</span>, <span class="number">2</span>);
+options.setExperimentalOption(<span class="string">"prefs"</span>, prefs);
 
-WebDriver driver = new ChromeDriver(options);
+WebDriver driver = <span class="keyword">new</span> ChromeDriver(options);</code></pre>
+                            </div>
 
-// Efficient element location
-public WebElement findElementEfficiently(String id) {
-    // CSS Selector is faster than XPath
-    return driver.findElement(By.cssSelector("#" + id));
-}
-
-// Batch operations
-public void fillFormEfficiently(Map<String, String> formData) {
-    JavascriptExecutor js = (JavascriptExecutor) driver;
-    
-    // Use JavaScript for bulk operations
-    StringBuilder script = new StringBuilder();
-    formData.forEach((id, value) -> 
-        script.append("document.getElementById('").append(id)
-              .append("').value='").append(value).append("';")
-    );
-    
-    js.executeScript(script.toString());
-}</code></pre>
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-check-circle"></i> Best Practices</h4>
+                                    <ul>
+                                        <li>Use unique, stable locators (IDs > CSS > XPath)</li>
+                                        <li>Implement proper exception handling</li>
+                                        <li>Add logging and reporting mechanisms</li>
+                                        <li>Maintain test independence and isolation</li>
+                                        <li>Use meaningful assertions</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box warning">
+                                    <h4><i class="fas fa-times-circle"></i> Avoid</h4>
+                                    <ul>
+                                        <li>Hardcoded waits (Thread.sleep)</li>
+                                        <li>Flaky locators</li>
+                                        <li>Test dependencies</li>
+                                        <li>Missing error handling</li>
+                                        <li>Ignoring test isolation</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="answer-section">
-                            <h4><i class="fas fa-check-circle"></i> Best Practices Checklist</h4>
-
-                            <div class="key-points">
-                                <ul>
-                                    <li>✅ Use unique, stable locators (IDs > CSS > XPath)</li>
-                                    <li>✅ Implement proper exception handling</li>
-                                    <li>✅ Add logging and reporting mechanisms</li>
-                                    <li>✅ Maintain test independence and isolation</li>
-                                    <li>✅ Follow naming conventions consistently</li>
-                                    <li>✅ Use meaningful assertions and validations</li>
-                                    <li>✅ Implement retry mechanisms for flaky tests</li>
-                                    <li>✅ Regular code reviews and refactoring</li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="tip-box">
-                            <strong>Expert Tip:</strong> Monitor test execution metrics regularly. Aim for test
-                            execution under 30 seconds per test case for optimal CI/CD integration.
-                        </div>
-                    </div>
+                    </section>
                 </div>
-            </div>
 
+                <footer class="article-nav">
+                    <a href="/interview-qna/index.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Interview Q&A Home</span>
+                    </a>
+                    <a href="automations-set-2.html" class="nav-next">
+                        <span>Automation Set 2</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
         </div>
+    </main>
 
-        <!-- Footer Section -->
-        <footer class="footer">
-        <div id="footer-placeholder"></div>
-    </footer>
-    <script>
-        fetch("/footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
-    <script src="/js/footer.js"></script>
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
-    <!-- JavaScript -->
-    <script>
-        // Toggle question expansion
-        function toggleQuestion(element) {
-            const card = element.closest('.question-card');
-            card.classList.toggle('expanded');
-
-            // Update progress bar
-            updateProgress();
-        }
-
-        // Copy code functionality
-        function copyCode(button) {
-            const codeBlock = button.closest('.code-block');
-            const code = codeBlock.querySelector('code').textContent;
-
-            navigator.clipboard.writeText(code).then(() => {
-                button.textContent = 'Copied!';
-                button.style.background = '#4CAF50';
-
-                setTimeout(() => {
-                    button.textContent = 'Copy';
-                    button.style.background = '#667eea';
-                }, 2000);
-            });
-        }
-
-        // Search functionality
-        const searchBox = document.getElementById('searchBox');
-        searchBox.addEventListener('input', function (e) {
-            const searchTerm = e.target.value.toLowerCase();
-            const cards = document.querySelectorAll('.question-card');
-
-            cards.forEach(card => {
-                const keywords = card.getAttribute('data-keywords');
-                const questionText = card.querySelector('.question-text').textContent.toLowerCase();
-
-                if (questionText.includes(searchTerm) || keywords.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-
-        // Progress bar update
-        function updateProgress() {
-            const totalQuestions = document.querySelectorAll('.question-card').length;
-            const expandedQuestions = document.querySelectorAll('.question-card.expanded').length;
-            const progress = (expandedQuestions / totalQuestions) * 100;
-
-            document.getElementById('progressBar').style.width = progress + '%';
-        }
-
-        // Smooth scroll for navigation
-        document.addEventListener('DOMContentLoaded', function () {
-            // Add smooth scrolling
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-
-            // Initialize animations on scroll
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.question-card').forEach(card => {
-                observer.observe(card);
-            });
-        });
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function (e) {
-            // Ctrl/Cmd + K to focus search
-            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                e.preventDefault();
-                searchBox.focus();
-            }
-
-            // Escape to clear search
-            if (e.key === 'Escape' && document.activeElement === searchBox) {
-                searchBox.value = '';
-                searchBox.dispatchEvent(new Event('input'));
-            }
-        });
-
-        // Track reading progress
-        window.addEventListener('scroll', function () {
-            const scrolled = window.scrollY;
-            const height = document.documentElement.scrollHeight - window.innerHeight;
-            const progress = (scrolled / height) * 100;
-
-            document.getElementById('progressBar').style.width = progress + '%';
-        });
-    </script>
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
 
 </html>
