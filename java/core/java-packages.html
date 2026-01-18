@@ -1,95 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java Packages & Access Modifiers Guide - TechTok Cafe</title>
+    <meta name="description" content="Master Java package organization and access control mechanisms. Learn package structure, import statements, and access modifiers.">
+    <title>Java Packages & Access Modifiers - TechTok Cafe</title>
+
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/array.css">
-    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
 
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
-                    height="50px" alt="TechTok Cafe"></a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
 
-    <!-- Back Navigation -->
-    <div class="back-nav">
-        <a href="/index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-    </div>
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
 
-    <!-- Main Content -->
-    <div class="guide-container">
-        <!-- Header -->
-        <div class="guide-header">
-            <h1 class="guide-title">Java Packages & Access Modifiers</h1>
-            <p class="guide-subtitle">Master Java package organization and access control mechanisms</p>
-        </div>
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Java Packages & Access Modifiers</h1>
+                    <p class="article-subtitle">Master Java package organization and access control mechanisms</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                    </div>
+                </header>
 
-        <!-- Table of Contents -->
-        <div class="toc">
-            <h3><i class="fas fa-list"></i> Table of Contents</h3>
-            <ul>
-                <li><a href="#introduction">1. Introduction to Packages</a></li>
-                <li><a href="#package-structure">2. Package Structure & Naming</a></li>
-                <li><a href="#creating-packages">3. Creating and Using Packages</a></li>
-                <li><a href="#import-statements">4. Import Statements</a></li>
-                <li><a href="#access-modifiers">5. Access Modifiers Overview</a></li>
-                <li><a href="#modifier-details">6. Access Modifier Details</a></li>
-                <li><a href="#practical-examples">7. Practical Examples</a></li>
-                <li><a href="#best-practices">8. Best Practices & Common Pitfalls</a></li>
-            </ul>
-        </div>
+                <nav class="toc" id="toc"></nav>
 
-        <!-- Chapter 1: Introduction -->
-        <div id="introduction" class="chapter">
-            <h2 class="chapter-title">1. Introduction to Packages</h2>
-            <div class="chapter-content">
-                <p>Packages in Java provide a way to organize related classes and interfaces into a hierarchical structure. They serve as namespaces that help avoid naming conflicts and provide access control mechanisms.</p>
+                <div class="article-body">
+                    <!-- Chapter 1: Introduction -->
+                    <section id="introduction" class="chapter">
+                        <h2 class="chapter-title">1. Introduction to Packages</h2>
+                        <div class="chapter-content">
+                            <p>Packages in Java provide a way to organize related classes and interfaces into a hierarchical structure. They serve as namespaces that help avoid naming conflicts and provide access control mechanisms.</p>
 
-                <div class="key-points">
-                    <h4><i class="fas fa-key"></i> Why Use Packages?</h4>
-                    <ul>
-                        <li><strong>Organization:</strong> Group related classes logically</li>
-                        <li><strong>Namespace:</strong> Avoid naming conflicts between classes</li>
-                        <li><strong>Access Control:</strong> Control visibility of classes and members</li>
-                        <li><strong>Modularity:</strong> Enable better code maintenance and reusability</li>
-                        <li><strong>Security:</strong> Restrict access to sensitive code components</li>
-                    </ul>
-                </div>
+                            <div class="info-box">
+                                <h4><i class="fas fa-key"></i> Why Use Packages?</h4>
+                                <ul>
+                                    <li><strong>Organization:</strong> Group related classes logically</li>
+                                    <li><strong>Namespace:</strong> Avoid naming conflicts between classes</li>
+                                    <li><strong>Access Control:</strong> Control visibility of classes and members</li>
+                                    <li><strong>Modularity:</strong> Enable better code maintenance and reusability</li>
+                                    <li><strong>Security:</strong> Restrict access to sensitive code components</li>
+                                </ul>
+                            </div>
 
-                <div class="highlight-box">
-                    <h4><i class="fas fa-lightbulb"></i> Real-World Analogy</h4>
-                    <p>Think of packages like folders on your computer. Just as you organize files into folders and subfolders, packages organize Java classes into a hierarchical directory structure.</p>
-                </div>
-            </div>
-        </div>
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Real-World Analogy</h4>
+                                <p>Think of packages like folders on your computer. Just as you organize files into folders and subfolders, packages organize Java classes into a hierarchical directory structure.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 2: Package Structure -->
-        <div id="package-structure" class="chapter">
-            <h2 class="chapter-title">2. Package Structure & Naming</h2>
-            <div class="chapter-content">
-                <p>Java packages follow a hierarchical naming convention that typically mirrors the directory structure of your project.</p>
+                    <!-- Chapter 2: Package Structure -->
+                    <section id="package-structure" class="chapter">
+                        <h2 class="chapter-title">2. Package Structure & Naming</h2>
+                        <div class="chapter-content">
+                            <p>Java packages follow a hierarchical naming convention that typically mirrors the directory structure of your project.</p>
 
-                <h4>Standard Naming Convention</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Package Naming Examples</div>
-                    <pre><span class="comment">// Company domain in reverse + project + module</span>
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Package Naming Examples</span></div>
+                                <pre><code><span class="comment">// Company domain in reverse + project + module</span>
 <span class="keyword">package</span> com.company.projectname.module;
 
 <span class="comment">// Examples:</span>
@@ -99,13 +83,12 @@
 
 <span class="comment">// Open source projects often use:</span>
 <span class="keyword">package</span> org.apache.commons.lang;
-<span class="keyword">package</span> org.springframework.boot.autoconfigure;</pre>
-                </div>
+<span class="keyword">package</span> org.springframework.boot.autoconfigure;</code></pre>
+                            </div>
 
-                <h4>Directory Structure Example</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fas fa-folder"></i> Project Directory Structure</div>
-                    <pre>src/
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-folder"></i> Project Directory Structure</span></div>
+                                <pre><code>src/
 └── main/
     └── java/
         └── com/
@@ -119,53 +102,49 @@
                     │   └── PaymentService.java
                     └── controller/
                         ├── UserController.java
-                        └── ProductController.java</pre>
-                </div>
+                        └── ProductController.java</code></pre>
+                            </div>
 
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Naming Rules</h4>
-                    <ul>
-                        <li>Package names must be lowercase</li>
-                        <li>Use dots (.) to separate package levels</li>
-                        <li>Start with reversed domain name for uniqueness</li>
-                        <li>Avoid Java keywords and reserved words</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Naming Rules</h4>
+                                <ul>
+                                    <li>Package names must be lowercase</li>
+                                    <li>Use dots (.) to separate package levels</li>
+                                    <li>Start with reversed domain name for uniqueness</li>
+                                    <li>Avoid Java keywords and reserved words</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 3: Creating Packages -->
-        <div id="creating-packages" class="chapter">
-            <h2 class="chapter-title">3. Creating and Using Packages</h2>
-            <div class="chapter-content">
-                <p>Creating packages involves declaring the package at the top of your Java file and organizing files in the corresponding directory structure.</p>
+                    <!-- Chapter 3: Creating Packages -->
+                    <section id="creating-packages" class="chapter">
+                        <h2 class="chapter-title">3. Creating and Using Packages</h2>
+                        <div class="chapter-content">
+                            <p>Creating packages involves declaring the package at the top of your Java file and organizing files in the corresponding directory structure.</p>
 
-                <h4>Package Declaration</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> User.java</div>
-                    <pre><span class="comment">// Package declaration must be first non-comment line</span>
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> User.java</span></div>
+                                <pre><code><span class="comment">// Package declaration must be first non-comment line</span>
 <span class="keyword">package</span> com.techtok.ecommerce.model;
 
 <span class="keyword">public class</span> User {
-    <span class="keyword">private</span> <span class="keyword">String</span> username;
-    <span class="keyword">private</span> <span class="keyword">String</span> email;
-    
-    <span class="comment">// Constructor</span>
-    <span class="keyword">public</span> User(<span class="keyword">String</span> username, <span class="keyword">String</span> email) {
+    <span class="keyword">private</span> String username;
+    <span class="keyword">private</span> String email;
+
+    <span class="keyword">public</span> User(String username, String email) {
         <span class="keyword">this</span>.username = username;
         <span class="keyword">this</span>.email = email;
     }
-    
-    <span class="comment">// Getters and setters</span>
-    <span class="keyword">public</span> <span class="keyword">String</span> getUsername() { <span class="keyword">return</span> username; }
-    <span class="keyword">public</span> <span class="keyword">String</span> getEmail() { <span class="keyword">return</span> email; }
-}</pre>
-                </div>
 
-                <h4>Using Classes from Other Packages</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> UserService.java</div>
-                    <pre><span class="keyword">package</span> com.techtok.ecommerce.service;
+    <span class="keyword">public</span> String getUsername() { <span class="keyword">return</span> username; }
+    <span class="keyword">public</span> String getEmail() { <span class="keyword">return</span> email; }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> UserService.java</span></div>
+                                <pre><code><span class="keyword">package</span> com.techtok.ecommerce.service;
 
 <span class="comment">// Import statement to use User class</span>
 <span class="keyword">import</span> com.techtok.ecommerce.model.User;
@@ -174,33 +153,32 @@
 
 <span class="keyword">public class</span> UserService {
     <span class="keyword">private</span> List&lt;User&gt; users = <span class="keyword">new</span> ArrayList&lt;&gt;();
-    
-    <span class="keyword">public</span> <span class="keyword">void</span> addUser(<span class="keyword">String</span> username, <span class="keyword">String</span> email) {
+
+    <span class="keyword">public void</span> addUser(String username, String email) {
         User user = <span class="keyword">new</span> User(username, email);
         users.add(user);
     }
-    
-    <span class="keyword">public</span> User findUserByUsername(<span class="keyword">String</span> username) {
+
+    <span class="keyword">public</span> User findUserByUsername(String username) {
         <span class="keyword">return</span> users.stream()
             .filter(user -&gt; user.getUsername().equals(username))
             .findFirst()
             .orElse(<span class="keyword">null</span>);
     }
-}</pre>
-                </div>
-            </div>
-        </div>
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 4: Import Statements -->
-        <div id="import-statements" class="chapter">
-            <h2 class="chapter-title">4. Import Statements</h2>
-            <div class="chapter-content">
-                <p>Import statements allow you to use classes from other packages without fully qualifying their names every time.</p>
+                    <!-- Chapter 4: Import Statements -->
+                    <section id="import-statements" class="chapter">
+                        <h2 class="chapter-title">4. Import Statements</h2>
+                        <div class="chapter-content">
+                            <p>Import statements allow you to use classes from other packages without fully qualifying their names every time.</p>
 
-                <h4>Types of Import Statements</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Import Examples</div>
-                    <pre><span class="keyword">package</span> com.techtok.ecommerce.controller;
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Import Examples</span></div>
+                                <pre><code><span class="keyword">package</span> com.techtok.ecommerce.controller;
 
 <span class="comment">// Single class import (preferred)</span>
 <span class="keyword">import</span> com.techtok.ecommerce.model.User;
@@ -216,152 +194,128 @@
 
 <span class="comment">// Static import for constants/methods</span>
 <span class="keyword">import static</span> java.lang.Math.PI;
-<span class="keyword">import static</span> java.lang.Math.sqrt;
+<span class="keyword">import static</span> java.lang.Math.sqrt;</code></pre>
+                            </div>
 
-<span class="keyword">public class</span> UserController {
-    <span class="keyword">private</span> UserService userService = <span class="keyword">new</span> UserService();
-    
-    <span class="keyword">public</span> <span class="keyword">void</span> calculateDistance() {
-        <span class="comment">// Using static import</span>
-        <span class="keyword">double</span> result = sqrt(<span class="number">16</span>) * PI;
-    }
-}</pre>
-                </div>
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-info-circle"></i> Import Best Practices</h4>
+                                <ul>
+                                    <li><strong>Specific imports:</strong> Import specific classes rather than using wildcards</li>
+                                    <li><strong>Organize imports:</strong> Group by package hierarchy</li>
+                                    <li><strong>Remove unused:</strong> Clean up unused import statements</li>
+                                    <li><strong>Static imports:</strong> Use for frequently used constants/utility methods</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
 
-                <div class="highlight-box">
-                    <h4><i class="fas fa-info-circle"></i> Import Best Practices</h4>
-                    <ul>
-                        <li><strong>Specific imports:</strong> Import specific classes rather than using wildcards</li>
-                        <li><strong>Organize imports:</strong> Group by package hierarchy</li>
-                        <li><strong>Remove unused:</strong> Clean up unused import statements</li>
-                        <li><strong>Static imports:</strong> Use for frequently used constants/utility methods</li>
-                    </ul>
-                </div>
+                    <!-- Chapter 5: Access Modifiers -->
+                    <section id="access-modifiers" class="chapter">
+                        <h2 class="chapter-title">5. Access Modifiers Overview</h2>
+                        <div class="chapter-content">
+                            <p>Access modifiers in Java control the visibility and accessibility of classes, methods, and variables.</p>
 
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Import Conflicts</h4>
-                    <p>When two classes have the same name from different packages, you must use fully qualified names or import only one and fully qualify the other.</p>
-                </div>
+                            <div class="feature-grid">
+                                <div class="card" style="border-left: 4px solid #4CAF50;">
+                                    <div class="card-icon"><i class="fas fa-globe"></i></div>
+                                    <h4>public</h4>
+                                    <p>Accessible from anywhere</p>
+                                </div>
+                                <div class="card" style="border-left: 4px solid #FF9800;">
+                                    <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+                                    <h4>protected</h4>
+                                    <p>Package + Subclasses</p>
+                                </div>
+                                <div class="card" style="border-left: 4px solid #2196F3;">
+                                    <div class="card-icon"><i class="fas fa-box"></i></div>
+                                    <h4>default</h4>
+                                    <p>Package Only</p>
+                                </div>
+                                <div class="card" style="border-left: 4px solid #F44336;">
+                                    <div class="card-icon"><i class="fas fa-lock"></i></div>
+                                    <h4>private</h4>
+                                    <p>Same Class Only</p>
+                                </div>
+                            </div>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Handling Name Conflicts</div>
-                    <pre><span class="keyword">package</span> com.techtok.example;
-
-<span class="comment">// Import one Date class</span>
-<span class="keyword">import</span> java.util.Date;
-
-<span class="keyword">public class</span> DateExample {
-    <span class="keyword">public</span> <span class="keyword">void</span> demonstrateConflict() {
-        <span class="comment">// Using imported Date</span>
-        Date utilDate = <span class="keyword">new</span> Date();
-        
-        <span class="comment">// Using fully qualified name for SQL Date</span>
-        java.sql.Date sqlDate = <span class="keyword">new</span> java.sql.Date(System.currentTimeMillis());
-    }
-}</pre>
-                </div>
-            </div>
-        </div>
-
-        <!-- Chapter 5: Access Modifiers Overview -->
-        <div id="access-modifiers" class="chapter">
-            <h2 class="chapter-title">5. Access Modifiers Overview</h2>
-            <div class="chapter-content">
-                <p>Access modifiers in Java control the visibility and accessibility of classes, methods, and variables. They are fundamental to encapsulation and security in object-oriented programming.</p>
-
-                <div class="key-points">
-                    <h4><i class="fas fa-shield-alt"></i> Four Access Levels</h4>
-                    <ul>
-                        <li><strong>public:</strong> Accessible from anywhere</li>
-                        <li><strong>protected:</strong> Accessible within package and subclasses</li>
-                        <li><strong>default (package-private):</strong> Accessible within same package only</li>
-                        <li><strong>private:</strong> Accessible within same class only</li>
-                    </ul>
-                </div>
-
-                <div class="array-visual" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0;">
-                    <div class="array-cell" style="background: #4CAF50;">
-                        <strong>public</strong><br>
-                        <small>Everywhere</small>
-                    </div>
-                    <div class="array-cell" style="background: #FF9800;">
-                        <strong>protected</strong><br>
-                        <small>Package + Subclasses</small>
-                    </div>
-                    <div class="array-cell" style="background: #2196F3;">
-                        <strong>default</strong><br>
-                        <small>Package Only</small>
-                    </div>
-                    <div class="array-cell" style="background: #F44336;">
-                        <strong>private</strong><br>
-                        <small>Same Class</small>
-                    </div>
-                </div>
-
-                <h4>Access Level Summary Table</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fas fa-table"></i> Visibility Matrix</div>
-                    <pre>Modifier    | Same Class | Same Package | Subclass | Different Package
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-table"></i> Visibility Matrix</span></div>
+                                <pre><code>Modifier    | Same Class | Same Package | Subclass | Different Package
 ------------|------------|--------------|----------|------------------
 public      |     ✓      |      ✓       |    ✓     |        ✓
 protected   |     ✓      |      ✓       |    ✓     |        ✗
 default     |     ✓      |      ✓       |    ✗     |        ✗
-private     |     ✓      |      ✗       |    ✗     |        ✗</pre>
+private     |     ✓      |      ✗       |    ✗     |        ✗</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Access Modifier Example</span></div>
+                                <pre><code><span class="keyword">public class</span> AccessExample {
+    <span class="keyword">public</span> String publicField = <span class="string">"Accessible everywhere"</span>;
+    <span class="keyword">protected</span> String protectedField = <span class="string">"Package + subclasses"</span>;
+    String defaultField = <span class="string">"Package only"</span>;
+    <span class="keyword">private</span> String privateField = <span class="string">"This class only"</span>;
+
+    <span class="keyword">public void</span> publicMethod() { }
+    <span class="keyword">protected void</span> protectedMethod() { }
+    <span class="keyword">void</span> defaultMethod() { }
+    <span class="keyword">private void</span> privateMethod() { }
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 6: Best Practices -->
+                    <section id="best-practices" class="chapter">
+                        <h2 class="chapter-title">6. Best Practices</h2>
+                        <div class="chapter-content">
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-check-circle"></i> Do</h4>
+                                    <ul>
+                                        <li>Use meaningful package names</li>
+                                        <li>Follow reverse domain naming</li>
+                                        <li>Keep packages focused and cohesive</li>
+                                        <li>Use specific imports</li>
+                                        <li>Make fields private by default</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box warning">
+                                    <h4><i class="fas fa-times-circle"></i> Avoid</h4>
+                                    <ul>
+                                        <li>Wildcard imports in production</li>
+                                        <li>Circular package dependencies</li>
+                                        <li>Public fields without encapsulation</li>
+                                        <li>Deep package hierarchies</li>
+                                        <li>Package names with uppercase letters</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </div>
+
+                <footer class="article-nav">
+                    <a href="/java/core/java-basic.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Java Basics</span>
+                    </a>
+                    <a href="/java/core/array.html" class="nav-next">
+                        <span>Java Arrays</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
         </div>
+    </main>
 
-    </div>
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
-    <!-- Footer Section -->
-        <footer class="footer">
-        <div id="footer-placeholder"></div>
-    </footer>
-    <script>
-        fetch("/footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
-    <script src="/js/footer.js"></script>
-
-    <script>
-        // Smooth scrolling for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Highlight current section in table of contents
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.chapter');
-            const tocLinks = document.querySelectorAll('.toc a');
-
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            tocLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
 
 </html>

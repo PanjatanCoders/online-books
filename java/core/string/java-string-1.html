@@ -1,94 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java Strings Guide - Part 1A: Fundamentals - TechTok Cafe</title>
+    <meta name="description" content="Learn Java String fundamentals including creation methods, immutability concepts, and the String pool. Master string basics for efficient Java programming.">
+    <title>Java Strings Part 1A: Fundamentals - TechTok Cafe</title>
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/array.css">
-    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
-
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/index.html" class="logo"><img src="/assets/images/logo.png" class="logo" width="50px"
-                    height="50px" alt="TechTok Cafe"></a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Java Strings Guide - Part 1A</h1>
+                    <p class="article-subtitle">String fundamentals, creation, and immutability concepts</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 10 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                    </div>
+                </header>
 
-    <!-- Back Navigation -->
-    <div class="back-nav">
-        <a href="/index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-    </div>
+                <nav class="toc" id="toc"></nav>
 
-    <!-- Main Content -->
-    <div class="guide-container">
-        <!-- Header -->
-        <div class="guide-header">
-            <h1 class="guide-title">Java Strings Guide - Part 1A</h1>
-            <p class="guide-subtitle">String fundamentals, creation, and immutability concepts</p>
-        </div>
+                <div class="article-body">
+                    <!-- Series Overview -->
+                    <div class="info-box">
+                        <h4><i class="fas fa-book-open"></i> Complete Series Overview</h4>
+                        <p><strong>Part 1A:</strong> String Fundamentals & Creation (Current)<br>
+                           <strong>Part 1B:</strong> String Methods & Comparison<br>
+                           <strong>Part 1C:</strong> Common Pitfalls & Best Practices<br>
+                           <strong>Part 2:</strong> StringBuilder & StringBuffer<br>
+                           <strong>Part 3:</strong> Regular Expressions</p>
+                    </div>
 
-        <!-- Series Navigation -->
-        <div class="toc">
-            <h3><i class="fas fa-book-open"></i> Complete Series Overview</h3>
-            <div class="highlight-box">
-                <p><strong>Part 1A:</strong> String Fundamentals & Creation (Current)<br>
-                   <strong>Part 1B:</strong> String Methods & Comparison<br>
-                   <strong>Part 1C:</strong> Common Pitfalls & Best Practices<br>
-                   <strong>Part 2:</strong> StringBuilder & StringBuffer<br>
-                   <strong>Part 3:</strong> Regular Expressions</p>
-            </div>
-        </div>
+                    <!-- Chapter 1: Introduction -->
+                    <section id="introduction" class="chapter">
+                        <h2 class="chapter-title">1. Introduction to Strings</h2>
+                        <div class="chapter-content">
+                            <p>Strings are one of the most frequently used data types in Java programming. Understanding their behavior, methods, and performance characteristics is crucial for writing efficient applications.</p>
 
-        <!-- Table of Contents -->
-        <div class="toc">
-            <h3><i class="fas fa-list"></i> Part 1A Contents</h3>
-            <ul>
-                <li><a href="#introduction">1. Introduction to Strings</a></li>
-                <li><a href="#string-creation">2. String Creation Methods</a></li>
-                <li><a href="#immutability">3. String Immutability</a></li>
-                <li><a href="#string-pool">4. String Pool vs Heap</a></li>
-            </ul>
-        </div>
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-key"></i> Key String Characteristics</h4>
+                                <ul>
+                                    <li><strong>Immutable:</strong> String objects cannot be modified after creation</li>
+                                    <li><strong>Reference Type:</strong> Strings are objects, not primitive types</li>
+                                    <li><strong>String Pool:</strong> Java maintains a pool of string literals for memory efficiency</li>
+                                    <li><strong>Unicode Support:</strong> Strings support Unicode characters (UTF-16)</li>
+                                    <li><strong>Thread-Safe:</strong> String immutability makes them inherently thread-safe</li>
+                                </ul>
+                            </div>
 
-        <!-- Chapter 1: Introduction -->
-        <div id="introduction" class="chapter">
-            <h2 class="chapter-title">1. Introduction to Strings</h2>
-            <div class="chapter-content">
-                <p>Strings are one of the most frequently used data types in Java programming. Understanding their behavior, methods, and performance characteristics is crucial for writing efficient applications.</p>
+                            <div class="info-box">
+                                <h4><i class="fas fa-lightbulb"></i> Why Strings Matter</h4>
+                                <p>Strings are used in virtually every Java application for user input, file processing, network communication, logging, and data representation. Mastering string handling is essential for Java developers.</p>
+                            </div>
 
-                <div class="key-points">
-                    <h4><i class="fas fa-key"></i> Key String Characteristics</h4>
-                    <ul>
-                        <li><strong>Immutable:</strong> String objects cannot be modified after creation</li>
-                        <li><strong>Reference Type:</strong> Strings are objects, not primitive types</li>
-                        <li><strong>String Pool:</strong> Java maintains a pool of string literals for memory efficiency</li>
-                        <li><strong>Unicode Support:</strong> Strings support Unicode characters (UTF-16)</li>
-                        <li><strong>Thread-Safe:</strong> String immutability makes them inherently thread-safe</li>
-                    </ul>
-                </div>
-
-                <div class="highlight-box">
-                    <h4><i class="fas fa-lightbulb"></i> Why Strings Matter</h4>
-                    <p>Strings are used in virtually every Java application for user input, file processing, network communication, logging, and data representation. Mastering string handling is essential for Java developers.</p>
-                </div>
-
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Basic String Declaration</div>
-                    <pre><span class="comment">// Simple string declaration</span>
+                            <div class="code-block">
+                                <div class="code-header"><i class="fab fa-java"></i> Basic String Declaration</div>
+                                <pre><span class="comment">// Simple string declaration</span>
 <span class="keyword">String</span> greeting = <span class="string">"Hello, World!"</span>;
 <span class="keyword">String</span> language = <span class="string">"Java"</span>;
 
@@ -97,20 +79,20 @@
 <span class="keyword">String</span> upper = greeting.toUpperCase(); <span class="comment">// "HELLO, WORLD!"</span>
 
 System.out.println(greeting); <span class="comment">// Hello, World!</span></pre>
-                </div>
-            </div>
-        </div>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 2: String Creation -->
-        <div id="string-creation" class="chapter">
-            <h2 class="chapter-title">2. String Creation Methods</h2>
-            <div class="chapter-content">
-                <p>Java provides several ways to create strings, each with different memory and performance implications.</p>
+                    <!-- Chapter 2: String Creation -->
+                    <section id="string-creation" class="chapter">
+                        <h2 class="chapter-title">2. String Creation Methods</h2>
+                        <div class="chapter-content">
+                            <p>Java provides several ways to create strings, each with different memory and performance implications.</p>
 
-                <h4>String Literal Creation</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> String Literals (Recommended)</div>
-                    <pre><span class="comment">// String literals - most common and efficient</span>
+                            <h4>String Literal Creation</h4>
+                            <div class="code-block">
+                                <div class="code-header"><i class="fab fa-java"></i> String Literals (Recommended)</div>
+                                <pre><span class="comment">// String literals - most common and efficient</span>
 <span class="keyword">String</span> name = <span class="string">"Alice"</span>;
 <span class="keyword">String</span> city = <span class="string">"New York"</span>;
 <span class="keyword">String</span> empty = <span class="string">""</span>;
@@ -121,14 +103,14 @@ System.out.println(greeting); <span class="comment">// Hello, World!</span></pre
 <span class="keyword">String</span> quote = <span class="string">"He said \"Hello\""</span>;
 
 <span class="comment">// Unicode support</span>
-<span class="keyword">String</span> unicode = <span class="string">"Café ☕"</span>;
-<span class="keyword">String</span> emoji = <span class="string">"Java rocks! 🚀"</span>;</pre>
-                </div>
+<span class="keyword">String</span> unicode = <span class="string">"Cafe"</span>;
+<span class="keyword">String</span> emoji = <span class="string">"Java rocks!"</span>;</pre>
+                            </div>
 
-                <h4>Constructor-Based Creation</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> String Constructors</div>
-                    <pre><span class="comment">// Using new keyword (creates new object)</span>
+                            <h4>Constructor-Based Creation</h4>
+                            <div class="code-block">
+                                <div class="code-header"><i class="fab fa-java"></i> String Constructors</div>
+                                <pre><span class="comment">// Using new keyword (creates new object)</span>
 <span class="keyword">String</span> str1 = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"Hello"</span>);
 <span class="keyword">String</span> str2 = <span class="keyword">new</span> <span class="keyword">String</span>();  <span class="comment">// Empty string</span>
 
@@ -142,24 +124,24 @@ System.out.println(greeting); <span class="comment">// Hello, World!</span></pre
 <span class="comment">// From byte array</span>
 <span class="keyword">byte</span>[] bytes = {<span class="number">72</span>, <span class="number">101</span>, <span class="number">108</span>, <span class="number">108</span>, <span class="number">111</span>}; <span class="comment">// ASCII for "Hello"</span>
 <span class="keyword">String</span> fromBytes = <span class="keyword">new</span> <span class="keyword">String</span>(bytes);  <span class="comment">// "Hello"</span></pre>
-                </div>
+                            </div>
 
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Constructor vs Literal</h4>
-                    <p><strong>Recommendation:</strong> Use string literals unless you specifically need a new object. String literals are more memory-efficient and leverage the string pool.</p>
-                </div>
-            </div>
-        </div>
+                            <div class="highlight-box" style="border-left-color: var(--warning-color);">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Constructor vs Literal</h4>
+                                <p><strong>Recommendation:</strong> Use string literals unless you specifically need a new object. String literals are more memory-efficient and leverage the string pool.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 3: Immutability -->
-        <div id="immutability" class="chapter">
-            <h2 class="chapter-title">3. String Immutability</h2>
-            <div class="chapter-content">
-                <p>One of the most important concepts in Java strings is immutability. Once a String object is created, it cannot be modified.</p>
+                    <!-- Chapter 3: Immutability -->
+                    <section id="immutability" class="chapter">
+                        <h2 class="chapter-title">3. String Immutability</h2>
+                        <div class="chapter-content">
+                            <p>One of the most important concepts in Java strings is immutability. Once a String object is created, it cannot be modified.</p>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Immutability Demonstration</div>
-                    <pre><span class="keyword">String</span> original = <span class="string">"Hello"</span>;
+                            <div class="code-block">
+                                <div class="code-header"><i class="fab fa-java"></i> Immutability Demonstration</div>
+                                <pre><span class="keyword">String</span> original = <span class="string">"Hello"</span>;
 <span class="keyword">String</span> reference = original;
 
 System.out.println(<span class="string">"Before: original = "</span> + original);      <span class="comment">// Hello</span>
@@ -173,22 +155,22 @@ System.out.println(<span class="string">"After: reference = "</span> + reference
 
 <span class="comment">// They now point to different objects</span>
 System.out.println(original == reference);  <span class="comment">// false</span></pre>
-                </div>
+                            </div>
 
-                <h4>Why Immutability Exists</h4>
-                <div class="key-points">
-                    <h4><i class="fas fa-shield-alt"></i> Benefits of Immutability</h4>
-                    <ul>
-                        <li><strong>Thread Safety:</strong> Multiple threads can safely access the same string</li>
-                        <li><strong>Security:</strong> Prevents accidental or malicious modification</li>
-                        <li><strong>Caching:</strong> Enables string pooling and hash code caching</li>
-                        <li><strong>Simplicity:</strong> No need to worry about defensive copying</li>
-                    </ul>
-                </div>
+                            <h4>Why Immutability Exists</h4>
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-shield-alt"></i> Benefits of Immutability</h4>
+                                <ul>
+                                    <li><strong>Thread Safety:</strong> Multiple threads can safely access the same string</li>
+                                    <li><strong>Security:</strong> Prevents accidental or malicious modification</li>
+                                    <li><strong>Caching:</strong> Enables string pooling and hash code caching</li>
+                                    <li><strong>Simplicity:</strong> No need to worry about defensive copying</li>
+                                </ul>
+                            </div>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Immutability in Action</div>
-                    <pre><span class="comment">// Each operation creates a new string</span>
+                            <div class="code-block">
+                                <div class="code-header"><i class="fab fa-java"></i> Immutability in Action</div>
+                                <pre><span class="comment">// Each operation creates a new string</span>
 <span class="keyword">String</span> str = <span class="string">"Java"</span>;
 str.toUpperCase();  <span class="comment">// Creates "JAVA" but doesn't change str</span>
 str.concat(<span class="string">" Programming"</span>);  <span class="comment">// Creates "Java Programming" but doesn't change str</span>
@@ -200,24 +182,24 @@ str = str.toUpperCase();  <span class="comment">// Now str points to "JAVA"</spa
 str = str.concat(<span class="string">" ROCKS"</span>);  <span class="comment">// Now str points to "JAVA ROCKS"</span>
 
 System.out.println(str);  <span class="comment">// "JAVA ROCKS"</span></pre>
-                </div>
+                            </div>
 
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Performance Impact</h4>
-                    <p>String concatenation in loops creates many temporary objects. For multiple string modifications, use StringBuilder (covered in Part 2).</p>
-                </div>
-            </div>
-        </div>
+                            <div class="highlight-box" style="border-left-color: var(--warning-color);">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Performance Impact</h4>
+                                <p>String concatenation in loops creates many temporary objects. For multiple string modifications, use StringBuilder (covered in Part 2).</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 4: String Pool -->
-        <div id="string-pool" class="chapter">
-            <h2 class="chapter-title">4. String Pool vs Heap Memory</h2>
-            <div class="chapter-content">
-                <p>Java uses a special memory area called the "string pool" to store string literals efficiently.</p>
+                    <!-- Chapter 4: String Pool -->
+                    <section id="string-pool" class="chapter">
+                        <h2 class="chapter-title">4. String Pool vs Heap Memory</h2>
+                        <div class="chapter-content">
+                            <p>Java uses a special memory area called the "string pool" to store string literals efficiently.</p>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> String Pool Behavior</div>
-                    <pre><span class="comment">// String literals go to the string pool</span>
+                            <div class="code-block">
+                                <div class="code-header"><i class="fab fa-java"></i> String Pool Behavior</div>
+                                <pre><span class="comment">// String literals go to the string pool</span>
 <span class="keyword">String</span> s1 = <span class="string">"Java"</span>;
 <span class="keyword">String</span> s2 = <span class="string">"Java"</span>;
 
@@ -231,12 +213,12 @@ System.out.println(s1.equals(s2));   <span class="comment">// true (same content
 <span class="comment">// Different memory locations</span>
 System.out.println(s1 == s3);        <span class="comment">// false (different references)</span>
 System.out.println(s1.equals(s3));   <span class="comment">// true (same content)</span></pre>
-                </div>
+                            </div>
 
-                <h4>The intern() Method</h4>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Using intern() Method</div>
-                    <pre><span class="keyword">String</span> pooled = <span class="string">"Hello"</span>;
+                            <h4>The intern() Method</h4>
+                            <div class="code-block">
+                                <div class="code-header"><i class="fab fa-java"></i> Using intern() Method</div>
+                                <pre><span class="keyword">String</span> pooled = <span class="string">"Hello"</span>;
 <span class="keyword">String</span> heapString = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"Hello"</span>);
 
 System.out.println(pooled == heapString);  <span class="comment">// false</span>
@@ -252,125 +234,93 @@ System.out.println(pooled == internedString);  <span class="comment">// true</sp
 
 System.out.println(dynamic == literal);         <span class="comment">// false</span>
 System.out.println(dynamic.intern() == literal); <span class="comment">// true</span></pre>
-                </div>
+                            </div>
 
-                <div class="array-visual" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; margin: 2rem 0;">
-                    <div class="array-cell" style="background: #4CAF50;">
-                        <strong>String Pool</strong><br>
-                        <small>• String literals<br>• Shared references<br>• Memory efficient</small>
-                    </div>
-                    <div class="array-cell" style="background: #FF9800;">
-                        <strong>Heap Memory</strong><br>
-                        <small>• new String()<br>• Separate objects<br>• More memory usage</small>
-                    </div>
-                </div>
+                            <div class="two-column-grid">
+                                <div class="card">
+                                    <h4>String Pool</h4>
+                                    <ul>
+                                        <li>String literals</li>
+                                        <li>Shared references</li>
+                                        <li>Memory efficient</li>
+                                    </ul>
+                                </div>
+                                <div class="card">
+                                    <h4>Heap Memory</h4>
+                                    <ul>
+                                        <li>new String()</li>
+                                        <li>Separate objects</li>
+                                        <li>More memory usage</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                <div class="highlight-box">
-                    <h4><i class="fas fa-info-circle"></i> When to Use intern()</h4>
-                    <p>Use intern() sparingly, primarily when you have many duplicate strings from external sources (files, network) and need to save memory. Modern JVMs handle string pooling efficiently for most use cases.</p>
-                </div>
+                            <div class="info-box">
+                                <h4><i class="fas fa-info-circle"></i> When to Use intern()</h4>
+                                <p>Use intern() sparingly, primarily when you have many duplicate strings from external sources (files, network) and need to save memory. Modern JVMs handle string pooling efficiently for most use cases.</p>
+                            </div>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Memory Comparison Example</div>
-                    <pre><span class="comment">// Memory-efficient: Uses string pool</span>
+                            <div class="code-block">
+                                <div class="code-header"><i class="fab fa-java"></i> Memory Comparison Example</div>
+                                <pre><span class="comment">// Memory-efficient: Uses string pool</span>
 <span class="keyword">String</span>[] countries1 = {<span class="string">"USA"</span>, <span class="string">"UK"</span>, <span class="string">"USA"</span>, <span class="string">"Canada"</span>, <span class="string">"UK"</span>};
 
 <span class="comment">// Memory-wasteful: Creates separate objects</span>
 <span class="keyword">String</span>[] countries2 = {
-    <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"USA"</span>), 
-    <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"UK"</span>), 
-    <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"USA"</span>), 
-    <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"Canada"</span>), 
+    <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"USA"</span>),
+    <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"UK"</span>),
+    <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"USA"</span>),
+    <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"Canada"</span>),
     <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">"UK"</span>)
 };
 
 <span class="comment">// Check memory sharing</span>
 System.out.println(countries1[<span class="number">0</span>] == countries1[<span class="number">2</span>]);  <span class="comment">// true (shared)</span>
 System.out.println(countries2[<span class="number">0</span>] == countries2[<span class="number">2</span>]);  <span class="comment">// false (separate objects)</span></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Summary Section -->
+                    <section id="summary" class="chapter">
+                        <h2 class="chapter-title">Part 1A Summary</h2>
+                        <div class="chapter-content">
+                            <p>In Part 1A, we've covered the fundamental concepts of Java strings that form the foundation for all string operations.</p>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
+                                <ul>
+                                    <li><strong>String Immutability:</strong> Strings cannot be modified; operations create new objects</li>
+                                    <li><strong>String Pool:</strong> Literals are stored efficiently in a special memory area</li>
+                                    <li><strong>Memory Efficiency:</strong> Use string literals instead of constructors when possible</li>
+                                    <li><strong>Reference vs Content:</strong> Understand the difference between == and equals()</li>
+                                </ul>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-forward"></i> Coming Next: Part 1B</h4>
+                                <p><strong>Part 1B</strong> will cover:</p>
+                                <ul>
+                                    <li>Essential string methods (length, charAt, substring, etc.)</li>
+                                    <li>String searching and finding operations</li>
+                                    <li>String transformation methods</li>
+                                    <li>Safe string comparison techniques</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </div>
+
+                <footer class="article-nav">
+                    <a href="/java/core/core-landing.html" class="nav-prev"><i class="fas fa-arrow-left"></i><span>Core Java</span></a>
+                    <a href="java-string-2.html" class="nav-next"><span>Part 1B: Methods</span><i class="fas fa-arrow-right"></i></a>
+                </footer>
+            </article>
         </div>
-
-        <!-- Summary Section -->
-        <div class="chapter">
-            <h2 class="chapter-title">Part 1A Summary</h2>
-            <div class="chapter-content">
-                <p>In Part 1A, we've covered the fundamental concepts of Java strings that form the foundation for all string operations.</p>
-
-                <div class="key-points">
-                    <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
-                    <ul>
-                        <li><strong>String Immutability:</strong> Strings cannot be modified; operations create new objects</li>
-                        <li><strong>String Pool:</strong> Literals are stored efficiently in a special memory area</li>
-                        <li><strong>Memory Efficiency:</strong> Use string literals instead of constructors when possible</li>
-                        <li><strong>Reference vs Content:</strong> Understand the difference between == and equals()</li>
-                    </ul>
-                </div>
-
-                <div class="highlight-box">
-                    <h4><i class="fas fa-forward"></i> Coming Next: Part 1B</h4>
-                    <p><strong>Part 1B</strong> will cover:</p>
-                    <ul>
-                        <li>Essential string methods (length, charAt, substring, etc.)</li>
-                        <li>String searching and finding operations</li>
-                        <li>String transformation methods</li>
-                        <li>Safe string comparison techniques</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Footer Section -->
-        <footer class="footer">
-        <div id="footer-placeholder"></div>
-    </footer>
-    <script>
-        fetch("/footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
-    <script src="/js/footer.js"></script>
-
-    <script>
-        // Smooth scrolling for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Highlight current section in table of contents
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.chapter');
-            const tocLinks = document.querySelectorAll('.toc a');
-
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                if (scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            tocLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+    </main>
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
-
 </html>

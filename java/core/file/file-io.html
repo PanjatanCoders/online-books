@@ -1,1259 +1,1085 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java File I/O Guide - TechTok Cafe</title>
+    <meta name="description" content="Complete guide to Java File I/O from basic file operations to advanced NIO.2 with practical examples and best practices">
+    <title>Java File I/O Mastery - TechTok Cafe</title>
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/file-io/file-io.css">
-    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
-
 <body>
-    <!-- Reading Progress Bar -->
-    <div class="reading-progress" id="reading-progress"></div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Java File I/O Mastery</h1>
+                    <p class="article-subtitle">Complete guide from basic file operations to advanced NIO.2 with practical examples</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                    </div>
+                </header>
+                <nav class="toc" id="toc"></nav>
+                <div class="article-body">
+                    <!-- Chapter 1: Introduction -->
+                    <section id="introduction" class="chapter">
+                        <h2 class="chapter-title">Introduction to File I/O</h2>
+                        <div class="chapter-content">
+                            <p>Java provides comprehensive APIs for file and I/O operations through two main packages: the traditional java.io package and the modern java.nio (NIO.2) package introduced in Java 7.</p>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/index.html" class="logo">
-                <img src="/assets/images/logo.png" class="logo" width="50px" height="50px" alt="TechTok Cafe">
-            </a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
-            </ul>
-        </div>
-    </nav>
+                            <h3>Evolution of File I/O in Java</h3>
+                            <div class="info-box">
+                                <h4><i class="fas fa-history"></i> Timeline</h4>
+                                <ul>
+                                    <li><strong>Java 1.0:</strong> Basic I/O with File, FileInputStream, FileOutputStream</li>
+                                    <li><strong>Java 1.4:</strong> NIO (New I/O) with Channels and Buffers</li>
+                                    <li><strong>Java 7:</strong> NIO.2 with Path, Files, and improved file operations</li>
+                                    <li><strong>Java 11+:</strong> Enhanced methods for reading/writing strings</li>
+                                </ul>
+                            </div>
 
-    <!-- Back Navigation -->
-    <div class="back-nav">
-        <a href="/index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-    </div>
+                            <h3>Key Packages Overview</h3>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Package</th>
+                                            <th>Key Classes</th>
+                                            <th>When to Use</th>
+                                            <th>Performance</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>java.io</td>
+                                            <td>File, FileInputStream, BufferedReader</td>
+                                            <td>Simple file operations, streams</td>
+                                            <td>Good for small files</td>
+                                        </tr>
+                                        <tr>
+                                            <td>java.nio.file</td>
+                                            <td>Path, Files, FileSystem</td>
+                                            <td>Modern file operations, large files</td>
+                                            <td>Optimized, memory-efficient</td>
+                                        </tr>
+                                        <tr>
+                                            <td>java.nio.channels</td>
+                                            <td>FileChannel, ByteBuffer</td>
+                                            <td>High-performance, direct I/O</td>
+                                            <td>Fastest for large files</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-    <!-- Main Content -->
-    <div class="guide-container">
-        <!-- Header -->
-        <div class="guide-header">
-            <h1 class="guide-title">Java File I/O Mastery</h1>
-            <p class="guide-subtitle">Complete guide from basic file operations to advanced NIO.2 with practical examples</p>
-        </div>
-
-        <!-- Table of Contents -->
-        <div class="toc">
-            <h3><i class="fas fa-list"></i> Table of Contents</h3>
-            <ul>
-                <li><a href="#introduction">1. Introduction to File I/O</a></li>
-                <li><a href="#traditional-io">2. Traditional I/O (java.io)</a></li>
-                <li><a href="#nio">3. New I/O (NIO.2 - java.nio)</a></li>
-                <li><a href="#reading-files">4. Reading Files Efficiently</a></li>
-                <li><a href="#writing-files">5. Writing Files Efficiently</a></li>
-                <li><a href="#serialization">6. Serialization & Deserialization</a></li>
-                <li><a href="#advanced-operations">7. Advanced File Operations</a></li>
-                <li><a href="#best-practices">8. Best Practices & Performance</a></li>
-            </ul>
-        </div>
-
-        <!-- Chapter 1: Introduction -->
-        <div id="introduction" class="chapter">
-            <h2 class="chapter-title">1. Introduction to File I/O</h2>
-            <div class="chapter-content">
-                <p>Java provides comprehensive APIs for file and I/O operations through two main packages: the traditional java.io package and the modern java.nio (NIO.2) package introduced in Java 7.</p>
-
-                <h3 class="section-title">Evolution of File I/O in Java</h3>
-                <div class="info-box">
-                    <h4><i class="fas fa-history"></i> Timeline</h4>
-                    <ul>
-                        <li><strong>Java 1.0:</strong> Basic I/O with File, FileInputStream, FileOutputStream</li>
-                        <li><strong>Java 1.4:</strong> NIO (New I/O) with Channels and Buffers</li>
-                        <li><strong>Java 7:</strong> NIO.2 with Path, Files, and improved file operations</li>
-                        <li><strong>Java 11+:</strong> Enhanced methods for reading/writing strings</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">Key Packages Overview</h3>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Package</th>
-                                <th>Key Classes</th>
-                                <th>When to Use</th>
-                                <th>Performance</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>java.io</td>
-                                <td>File, FileInputStream, BufferedReader</td>
-                                <td>Simple file operations, streams</td>
-                                <td>Good for small files</td>
-                            </tr>
-                            <tr>
-                                <td>java.nio.file</td>
-                                <td>Path, Files, FileSystem</td>
-                                <td>Modern file operations, large files</td>
-                                <td>Optimized, memory-efficient</td>
-                            </tr>
-                            <tr>
-                                <td>java.nio.channels</td>
-                                <td>FileChannel, ByteBuffer</td>
-                                <td>High-performance, direct I/O</td>
-                                <td>Fastest for large files</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3 class="section-title">Quick Comparison: Traditional vs NIO.2</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Traditional vs Modern Approach</div>
-                    <pre><span class="keyword">import</span> java.io.*;
+                            <h3>Quick Comparison: Traditional vs NIO.2</h3>
+                            <div class="code-block">
+                                <div class="code-header">Traditional vs Modern Approach</div>
+                                <pre><code><span class="keyword">import</span> java.io.*;
 <span class="keyword">import</span> java.nio.file.*;
 
-<span class="keyword">public class</span> <span class="type">FileIOComparison</span> {
+<span class="keyword">public class</span> FileIOComparison {
     <span class="comment">// Traditional java.io approach</span>
-    <span class="keyword">public static void</span> readFileTraditional(<span class="type">String</span> path) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">BufferedReader</span> reader = <span class="keyword">new</span> <span class="type">BufferedReader</span>(<span class="keyword">new</span> <span class="type">FileReader</span>(path));
-        <span class="type">String</span> line;
+    <span class="keyword">public static void</span> readFileTraditional(String path) <span class="keyword">throws</span> IOException {
+        BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(path));
+        String line;
         <span class="keyword">while</span> ((line = reader.readLine()) != <span class="keyword">null</span>) {
             System.out.println(line);
         }
         reader.close();
     }
-    
+
     <span class="comment">// Modern NIO.2 approach (Java 7+)</span>
-    <span class="keyword">public static void</span> readFileModern(<span class="type">String</span> path) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">Files</span>.lines(<span class="type">Paths</span>.get(path))
-             .forEach(<span class="type">System</span>.out::println);
+    <span class="keyword">public static void</span> readFileModern(String path) <span class="keyword">throws</span> IOException {
+        Files.lines(Paths.get(path))
+             .forEach(System.out::println);
     }
-    
+
     <span class="comment">// Java 11+ - simplest approach</span>
-    <span class="keyword">public static void</span> readFileSimple(<span class="type">String</span> path) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">String</span> content = <span class="type">Files</span>.readString(<span class="type">Path</span>.of(path));
+    <span class="keyword">public static void</span> readFileSimple(String path) <span class="keyword">throws</span> IOException {
+        String content = Files.readString(Path.of(path));
         System.out.println(content);
     }
-}</pre>
-                </div>
-            </div>
-        </div>
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 2: Traditional I/O -->
-        <div id="traditional-io" class="chapter">
-            <h2 class="chapter-title">2. Traditional I/O (java.io)</h2>
-            <div class="chapter-content">
-                <p>The java.io package provides stream-based I/O operations. Understanding these fundamentals is essential even when using modern APIs.</p>
+                    <!-- Chapter 2: Traditional I/O -->
+                    <section id="traditional-io" class="chapter">
+                        <h2 class="chapter-title">Traditional I/O (java.io)</h2>
+                        <div class="chapter-content">
+                            <p>The java.io package provides stream-based I/O operations. Understanding these fundamentals is essential even when using modern APIs.</p>
 
-                <h3 class="section-title">Stream Hierarchy</h3>
-                <div class="hierarchy-visual">
-                    <div class="root">InputStream / OutputStream (Byte Streams)</div>
-                    <div style="margin: 10px 0;">├── FileInputStream / FileOutputStream</div>
-                    <div style="margin: 10px 0;">├── BufferedInputStream / BufferedOutputStream</div>
-                    <div style="margin: 10px 0;">└── ObjectInputStream / ObjectOutputStream</div>
-                    <div style="margin: 20px 0; font-weight: 600; color: #764ba2;">Reader / Writer (Character Streams)</div>
-                    <div style="margin: 10px 0;">├── FileReader / FileWriter</div>
-                    <div style="margin: 10px 0;">├── BufferedReader / BufferedWriter</div>
-                    <div style="margin: 10px 0;">└── PrintWriter</div>
-                </div>
+                            <h3>Stream Hierarchy</h3>
+                            <div class="highlight-box">
+                                <pre><code>InputStream / OutputStream (Byte Streams)
+  |-- FileInputStream / FileOutputStream
+  |-- BufferedInputStream / BufferedOutputStream
+  |-- ObjectInputStream / ObjectOutputStream
 
-                <h3 class="section-title">File Class Operations</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> File Class Examples</div>
-                    <pre><span class="keyword">import</span> java.io.*;
+Reader / Writer (Character Streams)
+  |-- FileReader / FileWriter
+  |-- BufferedReader / BufferedWriter
+  |-- PrintWriter</code></pre>
+                            </div>
 
-<span class="keyword">public class</span> <span class="type">FileClassDemo</span> {
-    <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
-        <span class="type">File</span> file = <span class="keyword">new</span> <span class="type">File</span>(<span class="string">"example.txt"</span>);
-        
+                            <h3>File Class Operations</h3>
+                            <div class="code-block">
+                                <div class="code-header">File Class Examples</div>
+                                <pre><code><span class="keyword">import</span> java.io.*;
+
+<span class="keyword">public class</span> FileClassDemo {
+    <span class="keyword">public static void</span> main(String[] args) {
+        File file = <span class="keyword">new</span> File(<span class="string">"example.txt"</span>);
+
         <span class="comment">// File properties</span>
         System.out.println(<span class="string">"Exists: "</span> + file.exists());
         System.out.println(<span class="string">"Is File: "</span> + file.isFile());
         System.out.println(<span class="string">"Is Directory: "</span> + file.isDirectory());
         System.out.println(<span class="string">"Can Read: "</span> + file.canRead());
         System.out.println(<span class="string">"Can Write: "</span> + file.canWrite());
-        
+
         <span class="comment">// File metadata</span>
         System.out.println(<span class="string">"Name: "</span> + file.getName());
         System.out.println(<span class="string">"Path: "</span> + file.getPath());
         System.out.println(<span class="string">"Absolute Path: "</span> + file.getAbsolutePath());
         System.out.println(<span class="string">"Size: "</span> + file.length() + <span class="string">" bytes"</span>);
-        
+
         <span class="comment">// Directory operations</span>
-        <span class="type">File</span> dir = <span class="keyword">new</span> <span class="type">File</span>(<span class="string">"mydir"</span>);
+        File dir = <span class="keyword">new</span> File(<span class="string">"mydir"</span>);
         dir.mkdir();  <span class="comment">// Create single directory</span>
         dir.mkdirs(); <span class="comment">// Create directory hierarchy</span>
-        
+
         <span class="comment">// List files</span>
-        <span class="type">File</span>[] files = dir.listFiles();
+        File[] files = dir.listFiles();
         <span class="keyword">if</span> (files != <span class="keyword">null</span>) {
-            <span class="keyword">for</span> (<span class="type">File</span> f : files) {
+            <span class="keyword">for</span> (File f : files) {
                 System.out.println(f.getName());
             }
         }
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">BufferedReader & BufferedWriter</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Buffered I/O Operations</div>
-                    <pre><span class="keyword">import</span> java.io.*;
+                            <h3>BufferedReader and BufferedWriter</h3>
+                            <div class="code-block">
+                                <div class="code-header">Buffered I/O Operations</div>
+                                <pre><code><span class="keyword">import</span> java.io.*;
 
-<span class="keyword">public class</span> <span class="type">BufferedIOExample</span> {
+<span class="keyword">public class</span> BufferedIOExample {
     <span class="comment">// Reading with BufferedReader (try-with-resources)</span>
-    <span class="keyword">public static void</span> readFile(<span class="type">String</span> filename) {
-        <span class="keyword">try</span> (<span class="type">BufferedReader</span> br = <span class="keyword">new</span> <span class="type">BufferedReader</span>(<span class="keyword">new</span> <span class="type">FileReader</span>(filename))) {
-            <span class="type">String</span> line;
+    <span class="keyword">public static void</span> readFile(String filename) {
+        <span class="keyword">try</span> (BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(filename))) {
+            String line;
             <span class="keyword">while</span> ((line = br.readLine()) != <span class="keyword">null</span>) {
                 System.out.println(line);
             }
-        } <span class="keyword">catch</span> (<span class="type">IOException</span> e) {
+        } <span class="keyword">catch</span> (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     <span class="comment">// Writing with BufferedWriter</span>
-    <span class="keyword">public static void</span> writeFile(<span class="type">String</span> filename, <span class="type">String</span> content) {
-        <span class="keyword">try</span> (<span class="type">BufferedWriter</span> bw = <span class="keyword">new</span> <span class="type">BufferedWriter</span>(<span class="keyword">new</span> <span class="type">FileWriter</span>(filename))) {
+    <span class="keyword">public static void</span> writeFile(String filename, String content) {
+        <span class="keyword">try</span> (BufferedWriter bw = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> FileWriter(filename))) {
             bw.write(content);
             bw.newLine(); <span class="comment">// Platform-independent line separator</span>
             bw.flush();   <span class="comment">// Ensure data is written</span>
-        } <span class="keyword">catch</span> (<span class="type">IOException</span> e) {
+        } <span class="keyword">catch</span> (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     <span class="comment">// Append to file</span>
-    <span class="keyword">public static void</span> appendToFile(<span class="type">String</span> filename, <span class="type">String</span> content) {
-        <span class="keyword">try</span> (<span class="type">BufferedWriter</span> bw = <span class="keyword">new</span> <span class="type">BufferedWriter</span>(
-                <span class="keyword">new</span> <span class="type">FileWriter</span>(filename, <span class="keyword">true</span>))) { <span class="comment">// true = append mode</span>
+    <span class="keyword">public static void</span> appendToFile(String filename, String content) {
+        <span class="keyword">try</span> (BufferedWriter bw = <span class="keyword">new</span> BufferedWriter(
+                <span class="keyword">new</span> FileWriter(filename, <span class="keyword">true</span>))) { <span class="comment">// true = append mode</span>
             bw.write(content);
-        } <span class="keyword">catch</span> (<span class="type">IOException</span> e) {
+        } <span class="keyword">catch</span> (IOException e) {
             e.printStackTrace();
         }
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Important</h4>
-                    <p>Always use try-with-resources (Java 7+) to ensure proper resource cleanup. This automatically closes streams even if exceptions occur.</p>
-                </div>
-            </div>
-        </div>
+                            <div class="info-box">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Important</h4>
+                                <p>Always use try-with-resources (Java 7+) to ensure proper resource cleanup. This automatically closes streams even if exceptions occur.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 3: NIO.2 -->
-        <div id="nio" class="chapter">
-            <h2 class="chapter-title">3. New I/O (NIO.2 - java.nio)</h2>
-            <div class="chapter-content">
-                <p>Java NIO.2 (introduced in Java 7) provides a more modern, efficient, and feature-rich API for file operations with better exception handling, symbolic link support, and platform-independent file attributes.</p>
+                    <!-- Chapter 3: NIO.2 -->
+                    <section id="nio" class="chapter">
+                        <h2 class="chapter-title">New I/O (NIO.2 - java.nio)</h2>
+                        <div class="chapter-content">
+                            <p>Java NIO.2 (introduced in Java 7) provides a more modern, efficient, and feature-rich API for file operations with better exception handling, symbolic link support, and platform-independent file attributes.</p>
 
-                <h3 class="section-title">Why NIO.2 Over Traditional I/O?</h3>
-                <div class="info-box">
-                    <h4><i class="fas fa-rocket"></i> NIO.2 Advantages</h4>
-                    <ul>
-                        <li><strong>Better Error Handling:</strong> Specific exceptions instead of boolean returns</li>
-                        <li><strong>File System Support:</strong> Work with multiple file systems, including zip files</li>
-                        <li><strong>Symbolic Links:</strong> Full support for symbolic links and hard links</li>
-                        <li><strong>Asynchronous I/O:</strong> Non-blocking file operations</li>
-                        <li><strong>File Watching:</strong> Monitor directory changes in real-time</li>
-                        <li><strong>Atomic Operations:</strong> Move and copy with atomic guarantees</li>
-                        <li><strong>Metadata Access:</strong> Rich file attributes and permissions</li>
-                    </ul>
-                </div>
+                            <h3>Why NIO.2 Over Traditional I/O?</h3>
+                            <div class="info-box">
+                                <h4><i class="fas fa-rocket"></i> NIO.2 Advantages</h4>
+                                <ul>
+                                    <li><strong>Better Error Handling:</strong> Specific exceptions instead of boolean returns</li>
+                                    <li><strong>File System Support:</strong> Work with multiple file systems, including zip files</li>
+                                    <li><strong>Symbolic Links:</strong> Full support for symbolic links and hard links</li>
+                                    <li><strong>Asynchronous I/O:</strong> Non-blocking file operations</li>
+                                    <li><strong>File Watching:</strong> Monitor directory changes in real-time</li>
+                                    <li><strong>Atomic Operations:</strong> Move and copy with atomic guarantees</li>
+                                    <li><strong>Metadata Access:</strong> Rich file attributes and permissions</li>
+                                </ul>
+                            </div>
 
-                <h3 class="section-title">Path vs File - Deep Dive</h3>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>File (java.io)</th>
-                                <th>Path (java.nio)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Performance</td>
-                                <td>Slower, more system calls</td>
-                                <td>Optimized, fewer system calls</td>
-                            </tr>
-                            <tr>
-                                <td>Exception Handling</td>
-                                <td>Returns false on error</td>
-                                <td>Throws specific exceptions</td>
-                            </tr>
-                            <tr>
-                                <td>Symbolic Links</td>
-                                <td>Limited support</td>
-                                <td>Full support with LinkOption</td>
-                            </tr>
-                            <tr>
-                                <td>File Attributes</td>
-                                <td>Basic (size, modified time)</td>
-                                <td>Comprehensive (owner, permissions, ACLs)</td>
-                            </tr>
-                            <tr>
-                                <td>File System Support</td>
-                                <td>Default file system only</td>
-                                <td>Multiple file systems (ZIP, JAR, custom)</td>
-                            </tr>
-                            <tr>
-                                <td>Atomic Operations</td>
-                                <td>No guarantee</td>
-                                <td>Atomic move and copy options</td>
-                            </tr>
-                            <tr>
-                                <td>Directory Streams</td>
-                                <td>Array of files</td>
-                                <td>Stream-based iteration</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            <h3>Path vs File - Deep Dive</h3>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Feature</th>
+                                            <th>File (java.io)</th>
+                                            <th>Path (java.nio)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Performance</td>
+                                            <td>Slower, more system calls</td>
+                                            <td>Optimized, fewer system calls</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Exception Handling</td>
+                                            <td>Returns false on error</td>
+                                            <td>Throws specific exceptions</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Symbolic Links</td>
+                                            <td>Limited support</td>
+                                            <td>Full support with LinkOption</td>
+                                        </tr>
+                                        <tr>
+                                            <td>File Attributes</td>
+                                            <td>Basic (size, modified time)</td>
+                                            <td>Comprehensive (owner, permissions, ACLs)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>File System Support</td>
+                                            <td>Default file system only</td>
+                                            <td>Multiple file systems (ZIP, JAR, custom)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Atomic Operations</td>
+                                            <td>No guarantee</td>
+                                            <td>Atomic move and copy options</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Directory Streams</td>
+                                            <td>Array of files</td>
+                                            <td>Stream-based iteration</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                <h3 class="section-title">Path API - Advanced Examples</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Comprehensive Path Operations</div>
-                    <pre><span class="keyword">import</span> java.nio.file.*;
+                            <h3>Path API - Advanced Examples</h3>
+                            <div class="code-block">
+                                <div class="code-header">Comprehensive Path Operations</div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.*;
 <span class="keyword">import</span> java.io.IOException;
 
-<span class="keyword">public class</span> <span class="type">PathOperationsAdvanced</span> {
-    <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) <span class="keyword">throws</span> <span class="type">IOException</span> {
+<span class="keyword">public class</span> PathOperationsAdvanced {
+    <span class="keyword">public static void</span> main(String[] args) <span class="keyword">throws</span> IOException {
         <span class="comment">// Creating Paths - Multiple ways</span>
-        <span class="type">Path</span> path1 = <span class="type">Path</span>.of(<span class="string">"data"</span>, <span class="string">"file.txt"</span>);          <span class="comment">// Java 11+</span>
-        <span class="type">Path</span> path2 = <span class="type">Paths</span>.get(<span class="string">"data/file.txt"</span>);         <span class="comment">// Java 7+</span>
-        <span class="type">Path</span> path3 = <span class="type">Path</span>.of(<span class="type">URI</span>.create(<span class="string">"file:///home/user/file.txt"</span>));
-        
+        Path path1 = Path.of(<span class="string">"data"</span>, <span class="string">"file.txt"</span>);          <span class="comment">// Java 11+</span>
+        Path path2 = Paths.get(<span class="string">"data/file.txt"</span>);         <span class="comment">// Java 7+</span>
+        Path path3 = Path.of(URI.create(<span class="string">"file:///home/user/file.txt"</span>));
+
         <span class="comment">// Working with home directory</span>
-        <span class="type">Path</span> home = <span class="type">Paths</span>.get(<span class="type">System</span>.getProperty(<span class="string">"user.home"</span>));
-        <span class="type">Path</span> config = home.resolve(<span class="string">".config/myapp/settings.json"</span>);
-        
+        Path home = Paths.get(System.getProperty(<span class="string">"user.home"</span>));
+        Path config = home.resolve(<span class="string">".config/myapp/settings.json"</span>);
+
         <span class="comment">// Path decomposition</span>
-        <span class="type">Path</span> fullPath = <span class="type">Path</span>.of(<span class="string">"/home/user/documents/report.pdf"</span>);
-        System.out.println(<span class="string">"File name: "</span> + fullPath.getFileName());        <span class="comment">// report.pdf</span>
-        System.out.println(<span class="string">"Parent: "</span> + fullPath.getParent());              <span class="comment">// /home/user/documents</span>
-        System.out.println(<span class="string">"Root: "</span> + fullPath.getRoot());                  <span class="comment">// /</span>
-        System.out.println(<span class="string">"Name count: "</span> + fullPath.getNameCount());      <span class="comment">// 4</span>
-        
+        Path fullPath = Path.of(<span class="string">"/home/user/documents/report.pdf"</span>);
+        System.out.println(<span class="string">"File name: "</span> + fullPath.getFileName());
+        System.out.println(<span class="string">"Parent: "</span> + fullPath.getParent());
+        System.out.println(<span class="string">"Root: "</span> + fullPath.getRoot());
+        System.out.println(<span class="string">"Name count: "</span> + fullPath.getNameCount());
+
         <span class="comment">// Iterating path elements</span>
-        <span class="keyword">for</span> (<span class="type">Path</span> element : fullPath) {
+        <span class="keyword">for</span> (Path element : fullPath) {
             System.out.println(<span class="string">"Element: "</span> + element);
         }
-        
+
         <span class="comment">// Path resolution - combining paths</span>
-        <span class="type">Path</span> base = <span class="type">Path</span>.of(<span class="string">"/home/user"</span>);
-        <span class="type">Path</span> resolved = base.resolve(<span class="string">"documents/file.txt"</span>);
-        System.out.println(<span class="string">"Resolved: "</span> + resolved);                        <span class="comment">// /home/user/documents/file.txt</span>
-        
+        Path base = Path.of(<span class="string">"/home/user"</span>);
+        Path resolved = base.resolve(<span class="string">"documents/file.txt"</span>);
+
         <span class="comment">// Resolve sibling - replace file name</span>
-        <span class="type">Path</span> file = <span class="type">Path</span>.of(<span class="string">"/data/old.txt"</span>);
-        <span class="type">Path</span> sibling = file.resolveSibling(<span class="string">"new.txt"</span>);       <span class="comment">// /data/new.txt</span>
-        
+        Path file = Path.of(<span class="string">"/data/old.txt"</span>);
+        Path sibling = file.resolveSibling(<span class="string">"new.txt"</span>);
+
         <span class="comment">// Relativizing - create relative path</span>
-        <span class="type">Path</span> path = <span class="type">Path</span>.of(<span class="string">"/home/user/documents/file.txt"</span>);
-        <span class="type">Path</span> base2 = <span class="type">Path</span>.of(<span class="string">"/home/user"</span>);
-        <span class="type">Path</span> relative = base2.relativize(path);
-        System.out.println(<span class="string">"Relative: "</span> + relative);                       <span class="comment">// documents/file.txt</span>
-        
+        Path path = Path.of(<span class="string">"/home/user/documents/file.txt"</span>);
+        Path base2 = Path.of(<span class="string">"/home/user"</span>);
+        Path relative = base2.relativize(path);
+
         <span class="comment">// Normalize - clean up path</span>
-        <span class="type">Path</span> messy = <span class="type">Path</span>.of(<span class="string">"./data/../data/./file.txt"</span>);
-        <span class="type">Path</span> clean = messy.normalize();
-        System.out.println(<span class="string">"Normalized: "</span> + clean);                         <span class="comment">// data/file.txt</span>
-        
+        Path messy = Path.of(<span class="string">"./data/../data/./file.txt"</span>);
+        Path clean = messy.normalize();
+
         <span class="comment">// Convert to absolute path</span>
-        <span class="type">Path</span> relative2 = <span class="type">Path</span>.of(<span class="string">"data/file.txt"</span>);
-        <span class="type">Path</span> absolute = relative2.toAbsolutePath();
-        
-        <span class="comment">// Real path - resolve symbolic links</span>
-        <span class="type">Path</span> realPath = path1.toRealPath();                        <span class="comment">// Throws if doesn't exist</span>
-        
+        Path relative2 = Path.of(<span class="string">"data/file.txt"</span>);
+        Path absolute = relative2.toAbsolutePath();
+
         <span class="comment">// Compare paths</span>
-        <span class="keyword">boolean</span> isSame = <span class="type">Files</span>.isSameFile(path1, path2);
-        
+        <span class="keyword">boolean</span> isSame = Files.isSameFile(path1, path2);
+
         <span class="comment">// StartsWith / Ends With</span>
         <span class="keyword">boolean</span> isInHome = fullPath.startsWith(<span class="string">"/home"</span>);
         <span class="keyword">boolean</span> isPdf = fullPath.toString().endsWith(<span class="string">".pdf"</span>);
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Files Utility Class - Complete Guide</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Files Class Advanced Operations</div>
-                    <pre><span class="keyword">import</span> java.nio.file.*;
+                            <h3>Files Utility Class - Complete Guide</h3>
+                            <div class="code-block">
+                                <div class="code-header">Files Class Advanced Operations</div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.*;
 <span class="keyword">import</span> java.nio.file.attribute.*;
 <span class="keyword">import</span> java.io.IOException;
 <span class="keyword">import</span> java.util.*;
 
-<span class="keyword">public class</span> <span class="type">FilesUtilityComplete</span> {
-    <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">Path</span> path = <span class="type">Path</span>.of(<span class="string">"example.txt"</span>);
-        
+<span class="keyword">public class</span> FilesUtilityComplete {
+    <span class="keyword">public static void</span> main(String[] args) <span class="keyword">throws</span> IOException {
+        Path path = Path.of(<span class="string">"example.txt"</span>);
+
         <span class="comment">// ===== Existence and Type Checks =====</span>
-        <span class="keyword">boolean</span> exists = <span class="type">Files</span>.exists(path);
-        <span class="keyword">boolean</span> notExists = <span class="type">Files</span>.notExists(path);
-        <span class="keyword">boolean</span> isRegular = <span class="type">Files</span>.isRegularFile(path);
-        <span class="keyword">boolean</span> isDir = <span class="type">Files</span>.isDirectory(path);
-        <span class="keyword">boolean</span> isSymLink = <span class="type">Files</span>.isSymbolicLink(path);
-        <span class="keyword">boolean</span> isHidden = <span class="type">Files</span>.isHidden(path);
-        
+        <span class="keyword">boolean</span> exists = Files.exists(path);
+        <span class="keyword">boolean</span> notExists = Files.notExists(path);
+        <span class="keyword">boolean</span> isRegular = Files.isRegularFile(path);
+        <span class="keyword">boolean</span> isDir = Files.isDirectory(path);
+        <span class="keyword">boolean</span> isSymLink = Files.isSymbolicLink(path);
+        <span class="keyword">boolean</span> isHidden = Files.isHidden(path);
+
         <span class="comment">// ===== Permission Checks =====</span>
-        <span class="keyword">boolean</span> isReadable = <span class="type">Files</span>.isReadable(path);
-        <span class="keyword">boolean</span> isWritable = <span class="type">Files</span>.isWritable(path);
-        <span class="keyword">boolean</span> isExecutable = <span class="type">Files</span>.isExecutable(path);
-        
+        <span class="keyword">boolean</span> isReadable = Files.isReadable(path);
+        <span class="keyword">boolean</span> isWritable = Files.isWritable(path);
+        <span class="keyword">boolean</span> isExecutable = Files.isExecutable(path);
+
         <span class="comment">// ===== File Metadata =====</span>
-        <span class="keyword">long</span> size = <span class="type">Files</span>.size(path);                              <span class="comment">// in bytes</span>
-        <span class="type">FileTime</span> lastModified = <span class="type">Files</span>.getLastModifiedTime(path);
-        <span class="type">FileTime</span> creationTime = <span class="type">Files</span>.getAttribute(path, <span class="string">"creationTime"</span>);
-        <span class="type">UserPrincipal</span> owner = <span class="type">Files</span>.getOwner(path);
-        
+        <span class="keyword">long</span> size = Files.size(path);
+        FileTime lastModified = Files.getLastModifiedTime(path);
+        UserPrincipal owner = Files.getOwner(path);
+
         <span class="comment">// ===== Create Operations =====</span>
-        <span class="comment">// Create file (fails if exists)</span>
-        <span class="type">Path</span> newFile = <span class="type">Files</span>.createFile(<span class="type">Path</span>.of(<span class="string">"new.txt"</span>));
-        
-        <span class="comment">// Create directory</span>
-        <span class="type">Files</span>.createDirectory(<span class="type">Path</span>.of(<span class="string">"newdir"</span>));
-        
-        <span class="comment">// Create all parent directories</span>
-        <span class="type">Files</span>.createDirectories(<span class="type">Path</span>.of(<span class="string">"a/b/c/d"</span>));
-        
-        <span class="comment">// Create temp file/directory</span>
-        <span class="type">Path</span> tempFile = <span class="type">Files</span>.createTempFile(<span class="string">"prefix"</span>, <span class="string">".tmp"</span>);
-        <span class="type">Path</span> tempDir = <span class="type">Files</span>.createTempDirectory(<span class="string">"myapp"</span>);
-        
-        <span class="comment">// Create symbolic link (Unix/Linux)</span>
-        <span class="type">Path</span> link = <span class="type">Path</span>.of(<span class="string">"link.txt"</span>);
-        <span class="type">Files</span>.createSymbolicLink(link, path);
-        
+        Path newFile = Files.createFile(Path.of(<span class="string">"new.txt"</span>));
+        Files.createDirectory(Path.of(<span class="string">"newdir"</span>));
+        Files.createDirectories(Path.of(<span class="string">"a/b/c/d"</span>));
+        Path tempFile = Files.createTempFile(<span class="string">"prefix"</span>, <span class="string">".tmp"</span>);
+        Path tempDir = Files.createTempDirectory(<span class="string">"myapp"</span>);
+
         <span class="comment">// ===== Copy Operations =====</span>
-        <span class="type">Path</span> source = <span class="type">Path</span>.of(<span class="string">"source.txt"</span>);
-        <span class="type">Path</span> target = <span class="type">Path</span>.of(<span class="string">"target.txt"</span>);
-        
-        <span class="comment">// Simple copy</span>
-        <span class="type">Files</span>.copy(source, target);
-        
-        <span class="comment">// Copy with options</span>
-        <span class="type">Files</span>.copy(source, target, 
-            <span class="type">StandardCopyOption</span>.REPLACE_EXISTING,
-            <span class="type">StandardCopyOption</span>.COPY_ATTRIBUTES,
-            <span class="type">LinkOption</span>.NOFOLLOW_LINKS);
-        
-        <span class="comment">// Copy from InputStream</span>
-        <span class="type">InputStream</span> is = <span class="keyword">new</span> <span class="type">FileInputStream</span>(<span class="string">"input.txt"</span>);
-        <span class="type">Files</span>.copy(is, target, <span class="type">StandardCopyOption</span>.REPLACE_EXISTING);
-        
-        <span class="comment">// Copy to OutputStream</span>
-        <span class="type">OutputStream</span> os = <span class="keyword">new</span> <span class="type">FileOutputStream</span>(<span class="string">"output.txt"</span>);
-        <span class="type">Files</span>.copy(source, os);
-        
+        Path source = Path.of(<span class="string">"source.txt"</span>);
+        Path target = Path.of(<span class="string">"target.txt"</span>);
+
+        Files.copy(source, target);
+        Files.copy(source, target,
+            StandardCopyOption.REPLACE_EXISTING,
+            StandardCopyOption.COPY_ATTRIBUTES,
+            LinkOption.NOFOLLOW_LINKS);
+
         <span class="comment">// ===== Move/Rename Operations =====</span>
-        <span class="comment">// Atomic move (if supported)</span>
-        <span class="type">Files</span>.move(source, target, <span class="type">StandardCopyOption</span>.ATOMIC_MOVE);
-        
-        <span class="comment">// Move with replace</span>
-        <span class="type">Files</span>.move(source, target, <span class="type">StandardCopyOption</span>.REPLACE_EXISTING);
-        
+        Files.move(source, target, StandardCopyOption.ATOMIC_MOVE);
+        Files.move(source, target, StandardCopyOption.REPLACE_EXISTING);
+
         <span class="comment">// ===== Delete Operations =====</span>
-        <span class="type">Files</span>.delete(path);                    <span class="comment">// Throws if doesn't exist</span>
-        <span class="type">Files</span>.deleteIfExists(path);            <span class="comment">// No exception if missing</span>
-        
+        Files.delete(path);
+        Files.deleteIfExists(path);
+
         <span class="comment">// ===== File Attributes =====</span>
-        <span class="comment">// Basic attributes</span>
-        <span class="type">BasicFileAttributes</span> attrs = <span class="type">Files</span>.readAttributes(
-            path, <span class="type">BasicFileAttributes</span>.<span class="keyword">class</span>);
+        BasicFileAttributes attrs = Files.readAttributes(
+            path, BasicFileAttributes.<span class="keyword">class</span>);
         System.out.println(<span class="string">"Size: "</span> + attrs.size());
         System.out.println(<span class="string">"Created: "</span> + attrs.creationTime());
         System.out.println(<span class="string">"Modified: "</span> + attrs.lastModifiedTime());
-        System.out.println(<span class="string">"Is Directory: "</span> + attrs.isDirectory());
-        
-        <span class="comment">// POSIX attributes (Unix/Linux)</span>
-        <span class="keyword">try</span> {
-            <span class="type">PosixFileAttributes</span> posixAttrs = <span class="type">Files</span>.readAttributes(
-                path, <span class="type">PosixFileAttributes</span>.<span class="keyword">class</span>);
-            System.out.println(<span class="string">"Owner: "</span> + posixAttrs.owner());
-            System.out.println(<span class="string">"Permissions: "</span> + posixAttrs.permissions());
-        } <span class="keyword">catch</span> (<span class="type">UnsupportedOperationException</span> e) {
-            System.out.println(<span class="string">"POSIX attributes not supported"</span>);
-        }
-        
-        <span class="comment">// Set attributes</span>
-        <span class="type">Files</span>.setLastModifiedTime(path, <span class="type">FileTime</span>.fromMillis(<span class="type">System</span>.currentTimeMillis()));
-        <span class="type">Files</span>.setAttribute(path, <span class="string">"dos:hidden"</span>, <span class="keyword">true</span>);  <span class="comment">// Windows</span>
-        
-        <span class="comment">// ===== File Comparison =====</span>
-        <span class="keyword">long</span> mismatch = <span class="type">Files</span>.mismatch(path, target);  <span class="comment">// -1 if identical</span>
-    }
-}</pre>
-                </div>
 
-                <h3 class="section-title">Working with File Systems</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> File System Operations</div>
-                    <pre><span class="keyword">import</span> java.nio.file.*;
+        <span class="comment">// ===== File Comparison =====</span>
+        <span class="keyword">long</span> mismatch = Files.mismatch(path, target);
+    }
+}</code></pre>
+                            </div>
+
+                            <h3>Working with File Systems</h3>
+                            <div class="code-block">
+                                <div class="code-header">File System Operations</div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.*;
 <span class="keyword">import</span> java.net.URI;
 
-<span class="keyword">public class</span> <span class="type">FileSystemExample</span> {
-    <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) <span class="keyword">throws</span> <span class="type">Exception</span> {
+<span class="keyword">public class</span> FileSystemExample {
+    <span class="keyword">public static void</span> main(String[] args) <span class="keyword">throws</span> Exception {
         <span class="comment">// Get default file system</span>
-        <span class="type">FileSystem</span> defaultFS = <span class="type">FileSystems</span>.getDefault();
+        FileSystem defaultFS = FileSystems.getDefault();
         System.out.println(<span class="string">"File System: "</span> + defaultFS);
-        
+
         <span class="comment">// Get root directories</span>
-        <span class="keyword">for</span> (<span class="type">Path</span> root : defaultFS.getRootDirectories()) {
+        <span class="keyword">for</span> (Path root : defaultFS.getRootDirectories()) {
             System.out.println(<span class="string">"Root: "</span> + root);
-            <span class="type">FileStore</span> store = <span class="type">Files</span>.getFileStore(root);
+            FileStore store = Files.getFileStore(root);
             System.out.println(<span class="string">"  Total: "</span> + store.getTotalSpace() / (<span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span>) + <span class="string">" GB"</span>);
             System.out.println(<span class="string">"  Available: "</span> + store.getUsableSpace() / (<span class="number">1024</span> * <span class="number">1024</span> * <span class="number">1024</span>) + <span class="string">" GB"</span>);
         }
-        
+
         <span class="comment">// Working with ZIP file system</span>
-        <span class="type">Map</span>&lt;<span class="type">String</span>, <span class="type">String</span>&gt; env = <span class="keyword">new</span> <span class="type">HashMap</span>&lt;&gt;();
+        Map&lt;String, String&gt; env = <span class="keyword">new</span> HashMap&lt;&gt;();
         env.put(<span class="string">"create"</span>, <span class="string">"true"</span>);
-        
-        <span class="type">URI</span> uri = <span class="type">URI</span>.create(<span class="string">"jar:file:/path/to/file.zip"</span>);
-        <span class="keyword">try</span> (<span class="type">FileSystem</span> zipFS = <span class="type">FileSystems</span>.newFileSystem(uri, env)) {
-            <span class="type">Path</span> fileInZip = zipFS.getPath(<span class="string">"/data/file.txt"</span>);
-            <span class="type">Files</span>.writeString(fileInZip, <span class="string">"Content in ZIP"</span>);
+
+        URI uri = URI.create(<span class="string">"jar:file:/path/to/file.zip"</span>);
+        <span class="keyword">try</span> (FileSystem zipFS = FileSystems.newFileSystem(uri, env)) {
+            Path fileInZip = zipFS.getPath(<span class="string">"/data/file.txt"</span>);
+            Files.writeString(fileInZip, <span class="string">"Content in ZIP"</span>);
         }
     }
-}</pre>
-                </div>
-            </div>
-        </div>of(<span class="string">"moved.txt"</span>));
-        <span class="type">Files</span>.delete(moved);
-        
-        <span class="comment">// Create directories</span>
-        <span class="type">Files</span>.createDirectory(<span class="type">Path</span>.of(<span class="string">"newdir"</span>));
-        <span class="type">Files</span>.createDirectories(<span class="type">Path</span>.of(<span class="string">"parent/child/grandchild"</span>));
-        
-        <span class="comment">// File attributes</span>
-        <span class="type">Files</span>.setAttribute(path, <span class="string">"dos:hidden"</span>, <span class="keyword">true</span>); <span class="comment">// Windows</span>
-        <span class="type">Files</span>.setAttribute(path, <span class="string">"posix:permissions"</span>, 
-            <span class="type">PosixFilePermissions</span>.fromString(<span class="string">"rw-r--r--"</span>)); <span class="comment">// Unix/Linux</span>
-    }
-}</pre>
-                </div>
-            </div>
-        </div>
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 4: Reading Files -->
-        <div id="reading-files" class="chapter">
-            <h2 class="chapter-title">4. Reading Files Efficiently</h2>
-            <div class="chapter-content">
-                <p>Choose the right reading method based on file size, content type, and performance requirements. Modern Java provides multiple approaches, each optimized for different scenarios.</p>
+                    <!-- Chapter 4: Reading Files -->
+                    <section id="reading-files" class="chapter">
+                        <h2 class="chapter-title">Reading Files Efficiently</h2>
+                        <div class="chapter-content">
+                            <p>Choose the right reading method based on file size, content type, and performance requirements. Modern Java provides multiple approaches, each optimized for different scenarios.</p>
 
-                <h3 class="section-title">Reading Strategies - Decision Tree</h3>
-                <div class="info-box">
-                    <h4><i class="fas fa-tree"></i> When to Use Each Method</h4>
-                    <ul>
-                        <li><strong>Files.readString():</strong> Small text files (&lt;100MB), need entire content</li>
-                        <li><strong>Files.readAllLines():</strong> Small files, need line-by-line processing</li>
-                        <li><strong>Files.lines():</strong> Large files, lazy loading, stream processing</li>
-                        <li><strong>BufferedReader:</strong> Large files, custom parsing, backwards compatibility</li>
-                        <li><strong>FileChannel:</strong> Binary files, random access, memory-mapped operations</li>
-                        <li><strong>Scanner:</strong> Parsing formatted data, token-based reading</li>
-                    </ul>
-                </div>
+                            <h3>Reading Strategies - Decision Tree</h3>
+                            <div class="info-box">
+                                <h4><i class="fas fa-tree"></i> When to Use Each Method</h4>
+                                <ul>
+                                    <li><strong>Files.readString():</strong> Small text files (&lt;100MB), need entire content</li>
+                                    <li><strong>Files.readAllLines():</strong> Small files, need line-by-line processing</li>
+                                    <li><strong>Files.lines():</strong> Large files, lazy loading, stream processing</li>
+                                    <li><strong>BufferedReader:</strong> Large files, custom parsing, backwards compatibility</li>
+                                    <li><strong>FileChannel:</strong> Binary files, random access, memory-mapped operations</li>
+                                    <li><strong>Scanner:</strong> Parsing formatted data, token-based reading</li>
+                                </ul>
+                            </div>
 
-                <h3 class="section-title">Text File Reading - Complete Examples</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Comprehensive Text Reading</div>
-                    <pre><span class="keyword">import</span> java.nio.file.*;
+                            <h3>Text File Reading - Complete Examples</h3>
+                            <div class="code-block">
+                                <div class="code-header">Comprehensive Text Reading</div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.*;
 <span class="keyword">import</span> java.io.*;
 <span class="keyword">import</span> java.util.*;
 <span class="keyword">import</span> java.util.stream.*;
 
-<span class="keyword">public class</span> <span class="type">TextFileReading</span> {
-    
+<span class="keyword">public class</span> TextFileReading {
+
     <span class="comment">// Method 1: Read entire file as String (Java 11+)</span>
-    <span class="comment">// Best for: Small text files, simple content reading</span>
-    <span class="keyword">public static</span> <span class="type">String</span> readAsString(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">return</span> <span class="type">Files</span>.readString(<span class="type">Path</span>.of(filename), <span class="type">StandardCharsets</span>.UTF_8);
+    <span class="keyword">public static</span> String readAsString(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">return</span> Files.readString(Path.of(filename), StandardCharsets.UTF_8);
     }
-    
+
     <span class="comment">// Method 2: Read all lines into List</span>
-    <span class="comment">// Best for: Small files, need all lines in memory</span>
-    <span class="keyword">public static</span> <span class="type">List</span>&lt;<span class="type">String</span>&gt; readAllLines(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">return</span> <span class="type">Files</span>.readAllLines(<span class="type">Path</span>.of(filename), <span class="type">StandardCharsets</span>.UTF_8);
+    <span class="keyword">public static</span> List&lt;String&gt; readAllLines(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">return</span> Files.readAllLines(Path.of(filename), StandardCharsets.UTF_8);
     }
-    
+
     <span class="comment">// Method 3: Stream-based reading (memory efficient)</span>
-    <span class="comment">// Best for: Large files, selective processing</span>
-    <span class="keyword">public static void</span> processLargeFile(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">Stream</span>&lt;<span class="type">String</span>&gt; lines = <span class="type">Files</span>.lines(<span class="type">Path</span>.of(filename))) {
-            lines.filter(line -> !line.trim().isEmpty())
-                 .filter(line -> line.contains(<span class="string">"ERROR"</span>))
-                 .map(<span class="type">String</span>::toUpperCase)
-                 .forEach(<span class="type">System</span>.out::println);
+    <span class="keyword">public static void</span> processLargeFile(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (Stream&lt;String&gt; lines = Files.lines(Path.of(filename))) {
+            lines.filter(line -&gt; !line.trim().isEmpty())
+                 .filter(line -&gt; line.contains(<span class="string">"ERROR"</span>))
+                 .map(String::toUpperCase)
+                 .forEach(System.out::println);
         }
     }
-    
+
     <span class="comment">// Method 4: BufferedReader for custom processing</span>
-    <span class="comment">// Best for: Line-by-line processing, custom logic</span>
-    <span class="keyword">public static void</span> readWithBufferedReader(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">BufferedReader</span> reader = <span class="type">Files</span>.newBufferedReader(
-                <span class="type">Path</span>.of(filename), <span class="type">StandardCharsets</span>.UTF_8)) {
-            
-            <span class="type">String</span> line;
+    <span class="keyword">public static void</span> readWithBufferedReader(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (BufferedReader reader = Files.newBufferedReader(
+                Path.of(filename), StandardCharsets.UTF_8)) {
+
+            String line;
             <span class="keyword">int</span> lineNumber = <span class="number">0</span>;
-            
+
             <span class="keyword">while</span> ((line = reader.readLine()) != <span class="keyword">null</span>) {
                 lineNumber++;
-                <span class="comment">// Process each line</span>
                 processLine(line, lineNumber);
             }
         }
     }
-    
+
     <span class="comment">// Method 5: Scanner for formatted data</span>
-    <span class="comment">// Best for: Parsing numbers, tokens, formatted input</span>
-    <span class="keyword">public static void</span> readWithScanner(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">Scanner</span> scanner = <span class="keyword">new</span> <span class="type">Scanner</span>(<span class="type">Path</span>.of(filename))) {
-            <span class="comment">// Read line by line</span>
+    <span class="keyword">public static void</span> readWithScanner(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (Scanner scanner = <span class="keyword">new</span> Scanner(Path.of(filename))) {
             <span class="keyword">while</span> (scanner.hasNextLine()) {
-                <span class="type">String</span> line = scanner.nextLine();
+                String line = scanner.nextLine();
                 System.out.println(line);
             }
-            
-            <span class="comment">// Or read token by token</span>
+
             scanner.useDelimiter(<span class="string">","</span>);
             <span class="keyword">while</span> (scanner.hasNext()) {
-                <span class="type">String</span> token = scanner.next();
+                String token = scanner.next();
                 System.out.println(token.trim());
             }
         }
     }
-    
-    <span class="comment">// Method 6: Read CSV file</span>
-    <span class="keyword">public static</span> <span class="type">List</span>&lt;<span class="type">String</span>[]&gt; readCSV(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">Stream</span>&lt;<span class="type">String</span>&gt; lines = <span class="type">Files</span>.lines(<span class="type">Path</span>.of(filename))) {
-            <span class="keyword">return</span> lines.skip(<span class="number">1</span>) <span class="comment">// Skip header</span>
-                        .map(line -> line.split(<span class="string">","</span>))
-                        .collect(<span class="type">Collectors</span>.toList());
-        }
-    }
-    
-    <span class="comment">// Method 7: Read and count words</span>
-    <span class="keyword">public static</span> <span class="type">Map</span>&lt;<span class="type">String</span>, <span class="type">Long</span>&gt; wordFrequency(<span class="type">String</span> filename) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">Stream</span>&lt;<span class="type">String</span>&gt; lines = <span class="type">Files</span>.lines(<span class="type">Path</span>.of(filename))) {
-            <span class="keyword">return</span> lines.flatMap(line -> <span class="type">Arrays</span>.stream(line.split(<span class="string">"\\s+"</span>)))
-                        .map(<span class="type">String</span>::toLowerCase)
-                        .collect(<span class="type">Collectors</span>.groupingBy(
-                            <span class="type">Function</span>.identity(), 
-                            <span class="type">Collectors</span>.counting()));
-        }
-    }
-    
-    <span class="comment">// Method 8: Read with encoding detection</span>
-    <span class="keyword">public static</span> <span class="type">String</span> readWithEncodingDetection(<span class="type">String</span> filename) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="comment">// Try UTF-8 first, fall back to ISO-8859-1</span>
-        <span class="keyword">try</span> {
-            <span class="keyword">return</span> <span class="type">Files</span>.readString(<span class="type">Path</span>.of(filename), <span class="type">StandardCharsets</span>.UTF_8);
-        } <span class="keyword">catch</span> (<span class="type">CharacterCodingException</span> e) {
-            <span class="keyword">return</span> <span class="type">Files</span>.readString(<span class="type">Path</span>.of(filename), <span class="type">StandardCharsets</span>.ISO_8859_1);
-        }
-    }
-}</pre>
-                </div>
 
-                <h3 class="section-title">Binary File Reading - Advanced</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Binary File Operations</div>
-                    <pre><span class="keyword">import</span> java.nio.*;
+    <span class="comment">// Method 6: Read CSV file</span>
+    <span class="keyword">public static</span> List&lt;String[]&gt; readCSV(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (Stream&lt;String&gt; lines = Files.lines(Path.of(filename))) {
+            <span class="keyword">return</span> lines.skip(<span class="number">1</span>)
+                        .map(line -&gt; line.split(<span class="string">","</span>))
+                        .collect(Collectors.toList());
+        }
+    }
+
+    <span class="comment">// Method 7: Read and count words</span>
+    <span class="keyword">public static</span> Map&lt;String, Long&gt; wordFrequency(String filename)
+            <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (Stream&lt;String&gt; lines = Files.lines(Path.of(filename))) {
+            <span class="keyword">return</span> lines.flatMap(line -&gt; Arrays.stream(line.split(<span class="string">"\\s+"</span>)))
+                        .map(String::toLowerCase)
+                        .collect(Collectors.groupingBy(
+                            Function.identity(),
+                            Collectors.counting()));
+        }
+    }
+}</code></pre>
+                            </div>
+
+                            <h3>Binary File Reading - Advanced</h3>
+                            <div class="code-block">
+                                <div class="code-header">Binary File Operations</div>
+                                <pre><code><span class="keyword">import</span> java.nio.*;
 <span class="keyword">import</span> java.nio.channels.*;
 <span class="keyword">import</span> java.io.*;
 
-<span class="keyword">public class</span> <span class="type">BinaryFileReading</span> {
-    
+<span class="keyword">public class</span> BinaryFileReading {
+
     <span class="comment">// Method 1: Read all bytes (small files)</span>
-    <span class="keyword">public static</span> <span class="keyword">byte</span>[] readAllBytes(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">return</span> <span class="type">Files</span>.readAllBytes(<span class="type">Path</span>.of(filename));
+    <span class="keyword">public static</span> <span class="keyword">byte</span>[] readAllBytes(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">return</span> Files.readAllBytes(Path.of(filename));
     }
-    
+
     <span class="comment">// Method 2: Buffered reading for large files</span>
-    <span class="keyword">public static void</span> readLargeBinary(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">InputStream</span> is = <span class="type">Files</span>.newInputStream(<span class="type">Path</span>.of(filename));
-             <span class="type">BufferedInputStream</span> bis = <span class="keyword">new</span> <span class="type">BufferedInputStream</span>(is)) {
-            
-            <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8192</span>]; <span class="comment">// 8KB buffer</span>
+    <span class="keyword">public static void</span> readLargeBinary(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (InputStream is = Files.newInputStream(Path.of(filename));
+             BufferedInputStream bis = <span class="keyword">new</span> BufferedInputStream(is)) {
+
+            <span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">8192</span>];
             <span class="keyword">int</span> bytesRead;
-            
+
             <span class="keyword">while</span> ((bytesRead = bis.read(buffer)) != -<span class="number">1</span>) {
                 processBytes(buffer, bytesRead);
             }
         }
     }
-    
+
     <span class="comment">// Method 3: FileChannel for high performance</span>
-    <span class="keyword">public static void</span> readWithChannel(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">FileChannel</span> channel = <span class="type">FileChannel</span>.open(
-                <span class="type">Path</span>.of(filename), <span class="type">StandardOpenOption</span>.READ)) {
-            
-            <span class="type">ByteBuffer</span> buffer = <span class="type">ByteBuffer</span>.allocateDirect(<span class="number">1024</span> * <span class="number">64</span>); <span class="comment">// 64KB</span>
-            
-            <span class="keyword">while</span> (channel.read(buffer) > <span class="number">0</span>) {
+    <span class="keyword">public static void</span> readWithChannel(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (FileChannel channel = FileChannel.open(
+                Path.of(filename), StandardOpenOption.READ)) {
+
+            ByteBuffer buffer = ByteBuffer.allocateDirect(<span class="number">1024</span> * <span class="number">64</span>);
+
+            <span class="keyword">while</span> (channel.read(buffer) &gt; <span class="number">0</span>) {
                 buffer.flip();
-                
-                <span class="comment">// Process buffer content</span>
                 <span class="keyword">while</span> (buffer.hasRemaining()) {
                     <span class="keyword">byte</span> b = buffer.get();
-                    <span class="comment">// Process byte</span>
                 }
-                
                 buffer.clear();
             }
         }
     }
-    
+
     <span class="comment">// Method 4: Memory-mapped file (fastest for large files)</span>
-    <span class="keyword">public static void</span> readMemoryMapped(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">FileChannel</span> channel = <span class="type">FileChannel</span>.open(
-                <span class="type">Path</span>.of(filename), <span class="type">StandardOpenOption</span>.READ)) {
-            
+    <span class="keyword">public static void</span> readMemoryMapped(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (FileChannel channel = FileChannel.open(
+                Path.of(filename), StandardOpenOption.READ)) {
+
             <span class="keyword">long</span> size = channel.size();
-            <span class="type">MappedByteBuffer</span> buffer = channel.map(
-                <span class="type">FileChannel</span>.MapMode.READ_ONLY, <span class="number">0</span>, size);
-            
-            <span class="comment">// Direct memory access - fastest</span>
+            MappedByteBuffer buffer = channel.map(
+                FileChannel.MapMode.READ_ONLY, <span class="number">0</span>, size);
+
             <span class="keyword">while</span> (buffer.hasRemaining()) {
                 <span class="keyword">byte</span> b = buffer.get();
-                <span class="comment">// Process byte</span>
             }
         }
     }
-    
+
     <span class="comment">// Method 5: Random access file</span>
-    <span class="keyword">public static void</span> randomAccess(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">RandomAccessFile</span> raf = <span class="keyword">new</span> <span class="type">RandomAccessFile</span>(filename, <span class="string">"r"</span>)) {
-            <span class="comment">// Seek to specific position</span>
+    <span class="keyword">public static void</span> randomAccess(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (RandomAccessFile raf = <span class="keyword">new</span> RandomAccessFile(filename, <span class="string">"r"</span>)) {
             raf.seek(<span class="number">100</span>);
-            
-            <span class="comment">// Read different data types</span>
             <span class="keyword">int</span> value = raf.readInt();
             <span class="keyword">double</span> d = raf.readDouble();
-            <span class="type">String</span> line = raf.readLine();
-            
-            <span class="comment">// Get current position</span>
+            String line = raf.readLine();
             <span class="keyword">long</span> position = raf.getFilePointer();
-            
-            <span class="comment">// Jump to end</span>
             raf.seek(raf.length() - <span class="number">100</span>);
         }
     }
-    
-    <span class="comment">// Method 6: Read structured binary data</span>
-    <span class="keyword">public static class</span> <span class="type">BinaryRecord</span> {
-        <span class="keyword">int</span> id;
-        <span class="type">String</span> name;
-        <span class="keyword">double</span> value;
-    }
-    
-    <span class="keyword">public static</span> <span class="type">List</span>&lt;<span class="type">BinaryRecord</span>&gt; readBinaryRecords(<span class="type">String</span> filename) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">List</span>&lt;<span class="type">BinaryRecord</span>&gt; records = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;();
-        
-        <span class="keyword">try</span> (<span class="type">DataInputStream</span> dis = <span class="keyword">new</span> <span class="type">DataInputStream</span>(
-                <span class="keyword">new</span> <span class="type">BufferedInputStream</span>(
-                    <span class="keyword">new</span> <span class="type">FileInputStream</span>(filename)))) {
-            
-            <span class="keyword">while</span> (dis.available() > <span class="number">0</span>) {
-                <span class="type">BinaryRecord</span> record = <span class="keyword">new</span> <span class="type">BinaryRecord</span>();
-                record.id = dis.readInt();
-                record.name = dis.readUTF();
-                record.value = dis.readDouble();
-                records.add(record);
-            }
-        }
-        
-        <span class="keyword">return</span> records;
-    }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Performance Optimization Tips</h3>
-                <div class="highlight-box">
-                    <h4><i class="fas fa-rocket"></i> Reading Performance Best Practices</h4>
-                    <ul>
-                        <li><strong>Buffer Size:</strong> Use 8KB-64KB buffers for optimal performance</li>
-                        <li><strong>Direct Buffers:</strong> Use ByteBuffer.allocateDirect() for large files</li>
-                        <li><strong>Memory Mapping:</strong> Fastest for files &gt;100MB accessed sequentially</li>
-                        <li><strong>Stream Processing:</strong> Use Files.lines() to avoid loading entire file</li>
-                        <li><strong>Charset Specification:</strong> Always specify UTF-8 explicitly</li>
-                        <li><strong>Resource Management:</strong> Always use try-with-resources</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+                            <h3>Performance Optimization Tips</h3>
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-rocket"></i> Reading Performance Best Practices</h4>
+                                <ul>
+                                    <li><strong>Buffer Size:</strong> Use 8KB-64KB buffers for optimal performance</li>
+                                    <li><strong>Direct Buffers:</strong> Use ByteBuffer.allocateDirect() for large files</li>
+                                    <li><strong>Memory Mapping:</strong> Fastest for files &gt;100MB accessed sequentially</li>
+                                    <li><strong>Stream Processing:</strong> Use Files.lines() to avoid loading entire file</li>
+                                    <li><strong>Charset Specification:</strong> Always specify UTF-8 explicitly</li>
+                                    <li><strong>Resource Management:</strong> Always use try-with-resources</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 5: Writing Files -->
-        <div id="writing-files" class="chapter">
-            <h2 class="chapter-title">5. Writing Files Efficiently</h2>
-            <div class="chapter-content">
-                <p>Modern Java provides multiple ways to write files, each optimized for different scenarios.</p>
+                    <!-- Chapter 5: Writing Files -->
+                    <section id="writing-files" class="chapter">
+                        <h2 class="chapter-title">Writing Files Efficiently</h2>
+                        <div class="chapter-content">
+                            <p>Modern Java provides multiple ways to write files, each optimized for different scenarios.</p>
 
-                <h3 class="section-title">Simple File Writing (Java 11+)</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Modern File Writing</div>
-                    <pre><span class="keyword">import</span> java.nio.file.*;
+                            <h3>Simple File Writing (Java 11+)</h3>
+                            <div class="code-block">
+                                <div class="code-header">Modern File Writing</div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.*;
 <span class="keyword">import</span> java.io.IOException;
 
-<span class="keyword">public class</span> <span class="type">WriteFileModern</span> {
+<span class="keyword">public class</span> WriteFileModern {
     <span class="comment">// Write string to file (Java 11+)</span>
-    <span class="keyword">public static void</span> writeString(<span class="type">String</span> filename, <span class="type">String</span> content) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">Files</span>.writeString(<span class="type">Path</span>.of(filename), content);
+    <span class="keyword">public static void</span> writeString(String filename, String content)
+            <span class="keyword">throws</span> IOException {
+        Files.writeString(Path.of(filename), content);
     }
-    
+
     <span class="comment">// Write lines</span>
-    <span class="keyword">public static void</span> writeLines(<span class="type">String</span> filename, <span class="type">List</span>&lt;<span class="type">String</span>&gt; lines) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">Files</span>.write(<span class="type">Path</span>.of(filename), lines);
+    <span class="keyword">public static void</span> writeLines(String filename, List&lt;String&gt; lines)
+            <span class="keyword">throws</span> IOException {
+        Files.write(Path.of(filename), lines);
     }
-    
+
     <span class="comment">// Append to file</span>
-    <span class="keyword">public static void</span> appendContent(<span class="type">String</span> filename, <span class="type">String</span> content) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">Files</span>.writeString(<span class="type">Path</span>.of(filename), content, 
-            <span class="type">StandardOpenOption</span>.APPEND);
+    <span class="keyword">public static void</span> appendContent(String filename, String content)
+            <span class="keyword">throws</span> IOException {
+        Files.writeString(Path.of(filename), content,
+            StandardOpenOption.APPEND);
     }
-    
+
     <span class="comment">// Write with BufferedWriter</span>
-    <span class="keyword">public static void</span> writeWithBuffer(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">BufferedWriter</span> writer = <span class="type">Files</span>.newBufferedWriter(<span class="type">Path</span>.of(filename))) {
+    <span class="keyword">public static void</span> writeWithBuffer(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (BufferedWriter writer = Files.newBufferedWriter(Path.of(filename))) {
             writer.write(<span class="string">"Line 1"</span>);
             writer.newLine();
             writer.write(<span class="string">"Line 2"</span>);
         }
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Binary File Writing</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Writing Binary Files</div>
-                    <pre><span class="keyword">import</span> java.nio.file.*;
+                            <h3>Binary File Writing</h3>
+                            <div class="code-block">
+                                <div class="code-header">Writing Binary Files</div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.*;
 <span class="keyword">import</span> java.nio.*;
 
-<span class="keyword">public class</span> <span class="type">WriteBinaryFile</span> {
+<span class="keyword">public class</span> WriteBinaryFile {
     <span class="comment">// Write bytes directly</span>
-    <span class="keyword">public static void</span> writeBytes(<span class="type">String</span> filename, <span class="keyword">byte</span>[] data) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">Files</span>.write(<span class="type">Path</span>.of(filename), data);
+    <span class="keyword">public static void</span> writeBytes(String filename, <span class="keyword">byte</span>[] data)
+            <span class="keyword">throws</span> IOException {
+        Files.write(Path.of(filename), data);
     }
-    
+
     <span class="comment">// Write using OutputStream</span>
-    <span class="keyword">public static void</span> writeWithStream(<span class="type">String</span> filename, <span class="keyword">byte</span>[] data) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">OutputStream</span> os = <span class="type">Files</span>.newOutputStream(<span class="type">Path</span>.of(filename))) {
+    <span class="keyword">public static void</span> writeWithStream(String filename, <span class="keyword">byte</span>[] data)
+            <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (OutputStream os = Files.newOutputStream(Path.of(filename))) {
             os.write(data);
             os.flush();
         }
     }
-    
+
     <span class="comment">// High-performance with FileChannel</span>
-    <span class="keyword">public static void</span> writeWithChannel(<span class="type">String</span> filename, <span class="keyword">byte</span>[] data) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">FileChannel</span> channel = <span class="type">FileChannel</span>.open(
-                <span class="type">Path</span>.of(filename), 
-                <span class="type">StandardOpenOption</span>.CREATE, 
-                <span class="type">StandardOpenOption</span>.WRITE)) {
-            
-            <span class="type">ByteBuffer</span> buffer = <span class="type">ByteBuffer</span>.wrap(data);
+    <span class="keyword">public static void</span> writeWithChannel(String filename, <span class="keyword">byte</span>[] data)
+            <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (FileChannel channel = FileChannel.open(
+                Path.of(filename),
+                StandardOpenOption.CREATE,
+                StandardOpenOption.WRITE)) {
+
+            ByteBuffer buffer = ByteBuffer.wrap(data);
             channel.write(buffer);
         }
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <div class="performance-grid">
-                    <div class="performance-card">
-                        <h4>Files.writeString()</h4>
-                        <div class="performance-metric">
-                            <span class="metric-name">Use Case</span>
-                            <span class="metric-value">Small text files</span>
+                            <h3>Performance Comparison</h3>
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <h4>Files.writeString()</h4>
+                                    <p><strong>Use Case:</strong> Small text files</p>
+                                    <p><strong>Performance:</strong> Fast</p>
+                                </div>
+                                <div class="card">
+                                    <h4>BufferedWriter</h4>
+                                    <p><strong>Use Case:</strong> Large text files</p>
+                                    <p><strong>Performance:</strong> Efficient</p>
+                                </div>
+                                <div class="card">
+                                    <h4>FileChannel</h4>
+                                    <p><strong>Use Case:</strong> Binary files</p>
+                                    <p><strong>Performance:</strong> Fastest</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="performance-metric">
-                            <span class="metric-name">Performance</span>
-                            <span class="metric-value metric-good">Fast</span>
-                        </div>
-                    </div>
-                    <div class="performance-card">
-                        <h4>BufferedWriter</h4>
-                        <div class="performance-metric">
-                            <span class="metric-name">Use Case</span>
-                            <span class="metric-value">Large text files</span>
-                        </div>
-                        <div class="performance-metric">
-                            <span class="metric-name">Performance</span>
-                            <span class="metric-value metric-good">Efficient</span>
-                        </div>
-                    </div>
-                    <div class="performance-card">
-                        <h4>FileChannel</h4>
-                        <div class="performance-metric">
-                            <span class="metric-name">Use Case</span>
-                            <span class="metric-value">Binary files</span>
-                        </div>
-                        <div class="performance-metric">
-                            <span class="metric-name">Performance</span>
-                            <span class="metric-value metric-good">Fastest</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    </section>
 
-        <!-- Chapter 6: Serialization -->
-        <div id="serialization" class="chapter">
-            <h2 class="chapter-title">6. Serialization & Deserialization</h2>
-            <div class="chapter-content">
-                <p>Serialization converts objects into byte streams for storage or transmission. Java provides built-in serialization and modern alternatives.</p>
+                    <!-- Chapter 6: Serialization -->
+                    <section id="serialization" class="chapter">
+                        <h2 class="chapter-title">Serialization and Deserialization</h2>
+                        <div class="chapter-content">
+                            <p>Serialization converts objects into byte streams for storage or transmission. Java provides built-in serialization and modern alternatives.</p>
 
-                <h3 class="section-title">Java Serialization</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Object Serialization</div>
-                    <pre><span class="keyword">import</span> java.io.*;
+                            <h3>Java Serialization</h3>
+                            <div class="code-block">
+                                <div class="code-header">Object Serialization</div>
+                                <pre><code><span class="keyword">import</span> java.io.*;
 
-<span class="keyword">class</span> <span class="type">Person</span> <span class="keyword">implements</span> <span class="type">Serializable</span> {
+<span class="keyword">class</span> Person <span class="keyword">implements</span> Serializable {
     <span class="keyword">private static final long</span> serialVersionUID = <span class="number">1L</span>;
-    
-    <span class="keyword">private</span> <span class="type">String</span> name;
+
+    <span class="keyword">private</span> String name;
     <span class="keyword">private transient</span> <span class="keyword">int</span> age; <span class="comment">// Won't be serialized</span>
-    <span class="keyword">private static</span> <span class="type">String</span> company; <span class="comment">// Static fields not serialized</span>
+    <span class="keyword">private static</span> String company; <span class="comment">// Static fields not serialized</span>
 }
 
-<span class="keyword">public class</span> <span class="type">SerializationExample</span> {
+<span class="keyword">public class</span> SerializationExample {
     <span class="comment">// Serialize object to file</span>
-    <span class="keyword">public static void</span> serialize(<span class="type">Person</span> person, <span class="type">String</span> filename) {
-        <span class="keyword">try</span> (<span class="type">ObjectOutputStream</span> oos = <span class="keyword">new</span> <span class="type">ObjectOutputStream</span>(
-                <span class="keyword">new</span> <span class="type">FileOutputStream</span>(filename))) {
+    <span class="keyword">public static void</span> serialize(Person person, String filename) {
+        <span class="keyword">try</span> (ObjectOutputStream oos = <span class="keyword">new</span> ObjectOutputStream(
+                <span class="keyword">new</span> FileOutputStream(filename))) {
             oos.writeObject(person);
-        } <span class="keyword">catch</span> (<span class="type">IOException</span> e) {
+        } <span class="keyword">catch</span> (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     <span class="comment">// Deserialize object from file</span>
-    <span class="keyword">public static</span> <span class="type">Person</span> deserialize(<span class="type">String</span> filename) {
-        <span class="keyword">try</span> (<span class="type">ObjectInputStream</span> ois = <span class="keyword">new</span> <span class="type">ObjectInputStream</span>(
-                <span class="keyword">new</span> <span class="type">FileInputStream</span>(filename))) {
-            <span class="keyword">return</span> (<span class="type">Person</span>) ois.readObject();
-        } <span class="keyword">catch</span> (<span class="type">IOException</span> | <span class="type">ClassNotFoundException</span> e) {
+    <span class="keyword">public static</span> Person deserialize(String filename) {
+        <span class="keyword">try</span> (ObjectInputStream ois = <span class="keyword">new</span> ObjectInputStream(
+                <span class="keyword">new</span> FileInputStream(filename))) {
+            <span class="keyword">return</span> (Person) ois.readObject();
+        } <span class="keyword">catch</span> (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             <span class="keyword">return null</span>;
         }
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Modern Alternatives - JSON Serialization</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> JSON with Jackson/Gson</div>
-                    <pre><span class="keyword">import</span> com.google.gson.*;
+                            <h3>Modern Alternatives - JSON Serialization</h3>
+                            <div class="code-block">
+                                <div class="code-header">JSON with Jackson/Gson</div>
+                                <pre><code><span class="keyword">import</span> com.google.gson.*;
 <span class="keyword">import</span> java.nio.file.*;
 
-<span class="keyword">public class</span> <span class="type">JsonSerialization</span> {
-    <span class="keyword">private static final</span> <span class="type">Gson</span> gson = <span class="keyword">new</span> <span class="type">GsonBuilder</span>()
+<span class="keyword">public class</span> JsonSerialization {
+    <span class="keyword">private static final</span> Gson gson = <span class="keyword">new</span> GsonBuilder()
         .setPrettyPrinting()
         .create();
-    
+
     <span class="comment">// Serialize to JSON</span>
-    <span class="keyword">public static void</span> serializeToJson(<span class="type">Object</span> obj, <span class="type">String</span> filename) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">String</span> json = gson.toJson(obj);
-        <span class="type">Files</span>.writeString(<span class="type">Path</span>.of(filename), json);
+    <span class="keyword">public static void</span> serializeToJson(Object obj, String filename)
+            <span class="keyword">throws</span> IOException {
+        String json = gson.toJson(obj);
+        Files.writeString(Path.of(filename), json);
     }
-    
+
     <span class="comment">// Deserialize from JSON</span>
-    <span class="keyword">public static</span> &lt;<span class="type">T</span>&gt; <span class="type">T</span> deserializeFromJson(<span class="type">String</span> filename, <span class="type">Class</span>&lt;<span class="type">T</span>&gt; clazz) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">String</span> json = <span class="type">Files</span>.readString(<span class="type">Path</span>.of(filename));
+    <span class="keyword">public static</span> &lt;T&gt; T deserializeFromJson(String filename, Class&lt;T&gt; clazz)
+            <span class="keyword">throws</span> IOException {
+        String json = Files.readString(Path.of(filename));
         <span class="keyword">return</span> gson.fromJson(json, clazz);
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Security Warning</h4>
-                    <p>Java serialization has known security vulnerabilities. Prefer JSON, XML, or Protocol Buffers for data exchange, especially from untrusted sources.</p>
-                </div>
-            </div>
-        </div>
+                            <div class="info-box">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Security Warning</h4>
+                                <p>Java serialization has known security vulnerabilities. Prefer JSON, XML, or Protocol Buffers for data exchange, especially from untrusted sources.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 7: Advanced Operations -->
-        <div id="advanced-operations" class="chapter">
-            <h2 class="chapter-title">7. Advanced File Operations</h2>
-            <div class="chapter-content">
-                <h3 class="section-title">File Watching Service</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Monitor File Changes</div>
-                    <pre><span class="keyword">import</span> java.nio.file.*;
+                    <!-- Chapter 7: Advanced Operations -->
+                    <section id="advanced-operations" class="chapter">
+                        <h2 class="chapter-title">Advanced File Operations</h2>
+                        <div class="chapter-content">
+                            <h3>File Watching Service</h3>
+                            <div class="code-block">
+                                <div class="code-header">Monitor File Changes</div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.*;
 
-<span class="keyword">public class</span> <span class="type">FileWatcher</span> {
-    <span class="keyword">public static void</span> watchDirectory(<span class="type">String</span> dirPath) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">WatchService</span> watchService = <span class="type">FileSystems</span>.getDefault().newWatchService();
-        <span class="type">Path</span> path = <span class="type">Path</span>.of(dirPath);
-        
-        path.register(watchService, 
-            <span class="type">StandardWatchEventKinds</span>.ENTRY_CREATE,
-            <span class="type">StandardWatchEventKinds</span>.ENTRY_MODIFY,
-            <span class="type">StandardWatchEventKinds</span>.ENTRY_DELETE);
-        
+<span class="keyword">public class</span> FileWatcher {
+    <span class="keyword">public static void</span> watchDirectory(String dirPath) <span class="keyword">throws</span> IOException {
+        WatchService watchService = FileSystems.getDefault().newWatchService();
+        Path path = Path.of(dirPath);
+
+        path.register(watchService,
+            StandardWatchEventKinds.ENTRY_CREATE,
+            StandardWatchEventKinds.ENTRY_MODIFY,
+            StandardWatchEventKinds.ENTRY_DELETE);
+
         <span class="keyword">while</span> (<span class="keyword">true</span>) {
-            <span class="type">WatchKey</span> key = watchService.take();
-            <span class="keyword">for</span> (<span class="type">WatchEvent</span>&lt;?&gt; event : key.pollEvents()) {
-                System.out.println(<span class="string">"Event: "</span> + event.kind() + 
+            WatchKey key = watchService.take();
+            <span class="keyword">for</span> (WatchEvent&lt;?&gt; event : key.pollEvents()) {
+                System.out.println(<span class="string">"Event: "</span> + event.kind() +
                     <span class="string">" - File: "</span> + event.context());
             }
             key.reset();
         }
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Memory-Mapped Files</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> High-Performance I/O</div>
-                    <pre><span class="keyword">import</span> java.nio.*;
+                            <h3>Memory-Mapped Files</h3>
+                            <div class="code-block">
+                                <div class="code-header">High-Performance I/O</div>
+                                <pre><code><span class="keyword">import</span> java.nio.*;
 <span class="keyword">import</span> java.nio.channels.*;
 
-<span class="keyword">public class</span> <span class="type">MemoryMappedFile</span> {
-    <span class="keyword">public static void</span> readMemoryMapped(<span class="type">String</span> filename) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">RandomAccessFile</span> file = <span class="keyword">new</span> <span class="type">RandomAccessFile</span>(filename, <span class="string">"r"</span>);
-             <span class="type">FileChannel</span> channel = file.getChannel()) {
-            
-            <span class="type">MappedByteBuffer</span> buffer = channel.map(
-                <span class="type">FileChannel</span>.MapMode.READ_ONLY, <span class="number">0</span>, channel.size());
-            
-            <span class="comment">// Read data directly from memory</span>
+<span class="keyword">public class</span> MemoryMappedFile {
+    <span class="keyword">public static void</span> readMemoryMapped(String filename)
+            <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (RandomAccessFile file = <span class="keyword">new</span> RandomAccessFile(filename, <span class="string">"r"</span>);
+             FileChannel channel = file.getChannel()) {
+
+            MappedByteBuffer buffer = channel.map(
+                FileChannel.MapMode.READ_ONLY, <span class="number">0</span>, channel.size());
+
             <span class="keyword">while</span> (buffer.hasRemaining()) {
                 <span class="keyword">byte</span> b = buffer.get();
-                <span class="comment">// Process byte</span>
             }
         }
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Walking File Trees</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Traverse Directory Structure</div>
-                    <pre><span class="keyword">import</span> java.nio.file.*;
+                            <h3>Walking File Trees</h3>
+                            <div class="code-block">
+                                <div class="code-header">Traverse Directory Structure</div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.*;
 
-<span class="keyword">public class</span> <span class="type">FileTreeWalker</span> {
-    <span class="keyword">public static void</span> walkFileTree(<span class="type">String</span> startPath) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">Files</span>.walk(<span class="type">Path</span>.of(startPath))
-             .filter(<span class="type">Files</span>::isRegularFile)
-             .filter(p -> p.toString().endsWith(<span class="string">".java"</span>))
-             .forEach(<span class="type">System</span>.out::println);
+<span class="keyword">public class</span> FileTreeWalker {
+    <span class="keyword">public static void</span> walkFileTree(String startPath) <span class="keyword">throws</span> IOException {
+        Files.walk(Path.of(startPath))
+             .filter(Files::isRegularFile)
+             .filter(p -&gt; p.toString().endsWith(<span class="string">".java"</span>))
+             .forEach(System.out::println);
     }
-    
+
     <span class="comment">// Find files by criteria</span>
-    <span class="keyword">public static void</span> findLargeFiles(<span class="type">String</span> dir) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">Files</span>.find(<span class="type">Path</span>.of(dir), 
-                    <span class="type">Integer</span>.MAX_VALUE,
-                    (path, attrs) -> attrs.isRegularFile() && 
-                                     attrs.size() > <span class="number">1_000_000</span>)
-             .forEach(path -> System.out.println(path + <span class="string">": "</span> + 
-                     <span class="type">Files</span>.size(path) + <span class="string">" bytes"</span>));
+    <span class="keyword">public static void</span> findLargeFiles(String dir) <span class="keyword">throws</span> IOException {
+        Files.find(Path.of(dir),
+                    Integer.MAX_VALUE,
+                    (path, attrs) -&gt; attrs.isRegularFile() &&
+                                     attrs.size() &gt; <span class="number">1_000_000</span>)
+             .forEach(path -&gt; System.out.println(path + <span class="string">": "</span> +
+                     Files.size(path) + <span class="string">" bytes"</span>));
     }
-    
+
     <span class="comment">// Copy directory recursively</span>
-    <span class="keyword">public static void</span> copyDirectory(<span class="type">Path</span> source, <span class="type">Path</span> target) 
-            <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="type">Files</span>.walk(source)
-             .forEach(sourcePath -> {
-                 <span class="type">Path</span> targetPath = target.resolve(source.relativize(sourcePath));
+    <span class="keyword">public static void</span> copyDirectory(Path source, Path target)
+            <span class="keyword">throws</span> IOException {
+        Files.walk(source)
+             .forEach(sourcePath -&gt; {
+                 Path targetPath = target.resolve(source.relativize(sourcePath));
                  <span class="keyword">try</span> {
-                     <span class="type">Files</span>.copy(sourcePath, targetPath);
-                 } <span class="keyword">catch</span> (<span class="type">IOException</span> e) {
+                     Files.copy(sourcePath, targetPath);
+                 } <span class="keyword">catch</span> (IOException e) {
                      e.printStackTrace();
                  }
              });
     }
-}</pre>
-                </div>
-            </div>
-        </div>
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 8: Best Practices -->
-        <div id="best-practices" class="chapter">
-            <h2 class="chapter-title">8. Best Practices & Performance</h2>
-            <div class="chapter-content">
-                <h3 class="section-title">Resource Management</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Proper Resource Handling</div>
-                    <pre><span class="keyword">import</span> java.nio.file.*;
+                    <!-- Chapter 8: Best Practices -->
+                    <section id="best-practices" class="chapter">
+                        <h2 class="chapter-title">Best Practices and Performance</h2>
+                        <div class="chapter-content">
+                            <h3>Resource Management</h3>
+                            <div class="code-block">
+                                <div class="code-header">Proper Resource Handling</div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.*;
 
-<span class="keyword">public class</span> <span class="type">ResourceManagement</span> {
-    <span class="comment">// ✅ CORRECT: Try-with-resources (Java 7+)</span>
-    <span class="keyword">public static void</span> correctApproach(<span class="type">String</span> filename) <span class="keyword">throws</span> <span class="type">IOException</span> {
-        <span class="keyword">try</span> (<span class="type">BufferedReader</span> reader = <span class="type">Files</span>.newBufferedReader(<span class="type">Path</span>.of(filename))) {
-            reader.lines().forEach(<span class="type">System</span>.out::println);
+<span class="keyword">public class</span> ResourceManagement {
+    <span class="comment">// CORRECT: Try-with-resources (Java 7+)</span>
+    <span class="keyword">public static void</span> correctApproach(String filename) <span class="keyword">throws</span> IOException {
+        <span class="keyword">try</span> (BufferedReader reader = Files.newBufferedReader(Path.of(filename))) {
+            reader.lines().forEach(System.out::println);
         } <span class="comment">// Automatically closed</span>
     }
-    
-    <span class="comment">// ❌ AVOID: Manual closing</span>
-    <span class="keyword">public static void</span> manualApproach(<span class="type">String</span> filename) {
-        <span class="type">BufferedReader</span> reader = <span class="keyword">null</span>;
+
+    <span class="comment">// AVOID: Manual closing</span>
+    <span class="keyword">public static void</span> manualApproach(String filename) {
+        BufferedReader reader = <span class="keyword">null</span>;
         <span class="keyword">try</span> {
-            reader = <span class="type">Files</span>.newBufferedReader(<span class="type">Path</span>.of(filename));
+            reader = Files.newBufferedReader(Path.of(filename));
             <span class="comment">// Read file</span>
-        } <span class="keyword">catch</span> (<span class="type">IOException</span> e) {
+        } <span class="keyword">catch</span> (IOException e) {
             e.printStackTrace();
         } <span class="keyword">finally</span> {
             <span class="keyword">if</span> (reader != <span class="keyword">null</span>) {
                 <span class="keyword">try</span> {
                     reader.close();
-                } <span class="keyword">catch</span> (<span class="type">IOException</span> e) {
+                } <span class="keyword">catch</span> (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Performance Optimization</h3>
-                <div class="summary-grid">
-                    <div class="summary-card">
-                        <h4>Buffer Size</h4>
-                        <ul>
-                            <li>Default: 8KB - good for most cases</li>
-                            <li>Large files: 64KB - 1MB buffers</li>
-                            <li>Network files: Smaller buffers (4-16KB)</li>
-                        </ul>
-                    </div>
-                    <div class="summary-card">
-                        <h4>Reading Strategy</h4>
-                        <ul>
-                            <li>Sequential: Use BufferedReader</li>
-                            <li>Random access: Use RandomAccessFile</li>
-                            <li>Large files: Use streams/channels</li>
-                        </ul>
-                    </div>
-                    <div class="summary-card">
-                        <h4>Writing Strategy</h4>
-                        <ul>
-                            <li>Batch writes when possible</li>
-                            <li>Use buffered streams</li>
-                            <li>Flush strategically</li>
-                        </ul>
-                    </div>
-                </div>
+                            <h3>Performance Optimization</h3>
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <h4>Buffer Size</h4>
+                                    <ul>
+                                        <li>Default: 8KB - good for most cases</li>
+                                        <li>Large files: 64KB - 1MB buffers</li>
+                                        <li>Network files: Smaller buffers (4-16KB)</li>
+                                    </ul>
+                                </div>
+                                <div class="card">
+                                    <h4>Reading Strategy</h4>
+                                    <ul>
+                                        <li>Sequential: Use BufferedReader</li>
+                                        <li>Random access: Use RandomAccessFile</li>
+                                        <li>Large files: Use streams/channels</li>
+                                    </ul>
+                                </div>
+                                <div class="card">
+                                    <h4>Writing Strategy</h4>
+                                    <ul>
+                                        <li>Batch writes when possible</li>
+                                        <li>Use buffered streams</li>
+                                        <li>Flush strategically</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                <h3 class="section-title">Common Pitfalls & Solutions</h3>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Pitfall</th>
-                                <th>Problem</th>
-                                <th>Solution</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Platform-dependent paths</td>
-                                <td>Hard-coded "/" or "\\"</td>
-                                <td>Use File.separator or Path API</td>
-                            </tr>
-                            <tr>
-                                <td>Not closing resources</td>
-                                <td>Memory leaks</td>
-                                <td>Always use try-with-resources</td>
-                            </tr>
-                            <tr>
-                                <td>Reading large files at once</td>
-                                <td>OutOfMemoryError</td>
-                                <td>Use streams or BufferedReader</td>
-                            </tr>
-                            <tr>
-                                <td>Ignoring character encoding</td>
-                                <td>Corrupted text</td>
-                                <td>Specify UTF-8 explicitly</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            <h3>Common Pitfalls and Solutions</h3>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Pitfall</th>
+                                            <th>Problem</th>
+                                            <th>Solution</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Platform-dependent paths</td>
+                                            <td>Hard-coded "/" or "\\"</td>
+                                            <td>Use File.separator or Path API</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Not closing resources</td>
+                                            <td>Memory leaks</td>
+                                            <td>Always use try-with-resources</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Reading large files at once</td>
+                                            <td>OutOfMemoryError</td>
+                                            <td>Use streams or BufferedReader</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ignoring character encoding</td>
+                                            <td>Corrupted text</td>
+                                            <td>Specify UTF-8 explicitly</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                <h3 class="section-title">Performance Comparison</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Benchmarking Example</div>
-                    <pre><span class="keyword">import</span> java.nio.file.*;
+                            <h3>Performance Comparison</h3>
+                            <div class="code-block">
+                                <div class="code-header">Benchmarking Example</div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.*;
 
-<span class="keyword">public class</span> <span class="type">PerformanceBenchmark</span> {
-    <span class="keyword">public static void</span> benchmark(<span class="type">String</span> filename) {
+<span class="keyword">public class</span> PerformanceBenchmark {
+    <span class="keyword">public static void</span> benchmark(String filename) {
         <span class="keyword">long</span> start, end;
-        
+
         <span class="comment">// Method 1: Files.readAllLines()</span>
-        start = <span class="type">System</span>.nanoTime();
+        start = System.nanoTime();
         <span class="keyword">try</span> {
-            <span class="type">List</span>&lt;<span class="type">String</span>&gt; lines = <span class="type">Files</span>.readAllLines(<span class="type">Path</span>.of(filename));
+            List&lt;String&gt; lines = Files.readAllLines(Path.of(filename));
             System.out.println(<span class="string">"Lines: "</span> + lines.size());
-        } <span class="keyword">catch</span> (<span class="type">IOException</span> e) { }
-        end = <span class="type">System</span>.nanoTime();
+        } <span class="keyword">catch</span> (IOException e) { }
+        end = System.nanoTime();
         System.out.println(<span class="string">"readAllLines: "</span> + (end - start) / <span class="number">1_000_000</span> + <span class="string">" ms"</span>);
-        
+
         <span class="comment">// Method 2: Files.lines() stream</span>
-        start = <span class="type">System</span>.nanoTime();
-        <span class="keyword">try</span> (<span class="type">Stream</span>&lt;<span class="type">String</span>&gt; stream = <span class="type">Files</span>.lines(<span class="type">Path</span>.of(filename))) {
+        start = System.nanoTime();
+        <span class="keyword">try</span> (Stream&lt;String&gt; stream = Files.lines(Path.of(filename))) {
             <span class="keyword">long</span> count = stream.count();
             System.out.println(<span class="string">"Lines: "</span> + count);
-        } <span class="keyword">catch</span> (<span class="type">IOException</span> e) { }
-        end = <span class="type">System</span>.nanoTime();
+        } <span class="keyword">catch</span> (IOException e) { }
+        end = System.nanoTime();
         System.out.println(<span class="string">"lines() stream: "</span> + (end - start) / <span class="number">1_000_000</span> + <span class="string">" ms"</span>);
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <div class="highlight-box">
-                    <h4><i class="fas fa-trophy"></i> Best Practice Checklist</h4>
-                    <ul>
-                        <li>✅ Always use try-with-resources for automatic cleanup</li>
-                        <li>✅ Use NIO.2 (Path/Files) for new code</li>
-                        <li>✅ Specify character encoding explicitly (UTF-8)</li>
-                        <li>✅ Use buffered streams for better performance</li>
-                        <li>✅ Handle exceptions appropriately</li>
-                        <li>✅ Use Files.lines() for large files</li>
-                        <li>✅ Validate file paths and permissions</li>
-                        <li>✅ Close streams in finally or use try-with-resources</li>
-                    </ul>
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-trophy"></i> Best Practice Checklist</h4>
+                                <ul>
+                                    <li>Always use try-with-resources for automatic cleanup</li>
+                                    <li>Use NIO.2 (Path/Files) for new code</li>
+                                    <li>Specify character encoding explicitly (UTF-8)</li>
+                                    <li>Use buffered streams for better performance</li>
+                                    <li>Handle exceptions appropriately</li>
+                                    <li>Use Files.lines() for large files</li>
+                                    <li>Validate file paths and permissions</li>
+                                    <li>Close streams in finally or use try-with-resources</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-
-                <div style="text-align: center; margin: 3rem 0; padding: 2rem; background: var(--primary-gradient); color: white; border-radius: 12px;">
-                    <h3 style="margin: 0 0 1rem 0; font-size: 1.5rem;">Master Java File I/O!</h3>
-                    <p style="margin: 0; opacity: 0.9;">Choose the right tool for the job and write efficient, maintainable code</p>
-                </div>
-            </div>
+                <footer class="article-nav">
+                    <a href="file-io-2.html" class="nav-link next">
+                        <span>Next</span>
+                        <span>Java File I/O Part 2</span>
+                    </a>
+                </footer>
+            </article>
         </div>
-    </div>
-
-    <!-- Footer Section -->
-    <footer class="footer">
-        <div id="footer-placeholder"></div>
-    </footer>
-    
-    <script>
-        fetch("/footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
-    <script src="/js/footer.js"></script>
-    <script src="/js/reading-progress.js"></script>
-    <script src="/js/file-io-guide.js"></script>
+    </main>
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top"><i class="fas fa-chevron-up"></i></button>
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
-
 </html>

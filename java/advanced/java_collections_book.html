@@ -1,137 +1,112 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Java Collections Framework Guide - TechTok Cafe</title>
+    <meta name="description" content="Complete guide to Java Collections Framework - Learn List, Set, Map, Queue interfaces and implementations with practical examples">
+    <title>Java Collections Framework - TechTok Cafe</title>
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="stylesheet" href="/css/collections.css">
-    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
-
 <body>
-    <!-- Reading Progress Bar -->
-    <div class="reading-progress" id="reading-progress"></div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Java Collections Framework</h1>
+                    <p class="article-subtitle">Complete guide from basic concepts to advanced operations with practical examples</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                    </div>
+                </header>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/index.html" class="logo">
-                <img src="/assets/images/logo.png" class="logo" width="50px" height="50px" alt="TechTok Cafe">
-            </a>
-            <ul class="nav-menu">
-                <li class="nav-item"><a href="/index.html" class="nav-link"><i class="fas fa-home"></i>Home</a></li>
-            </ul>
-        </div>
-    </nav>
+                <nav class="toc" id="toc"></nav>
 
-    <!-- Back Navigation -->
-    <div class="back-nav">
-        <a href="/index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-    </div>
+                <div class="article-body">
+                    <!-- Chapter 1: Introduction -->
+                    <section id="introduction" class="chapter">
+                        <h2 class="chapter-title">1. Introduction to Collections</h2>
+                        <div class="chapter-content">
+                            <p>The Java Collections Framework is a unified architecture for representing and manipulating collections of objects. It provides interfaces, implementations, and algorithms for efficient data handling.</p>
 
-    <!-- Main Content -->
-    <div class="guide-container">
-        <!-- Header -->
-        <div class="guide-header">
-            <h1 class="guide-title">Java Collections Framework</h1>
-            <p class="guide-subtitle">Complete guide from basic concepts to advanced operations with practical examples
-            </p>
-        </div>
+                            <h3>What are Collections?</h3>
+                            <p>A collection is an object that groups multiple elements into a single unit. Collections are used to store, retrieve, manipulate, and communicate aggregate data.</p>
 
-        <!-- Table of Contents -->
-        <div class="toc">
-            <h3><i class="fas fa-list"></i> Table of Contents</h3>
-            <ul>
-                <li><a href="#introduction">1. Introduction to Collections</a></li>
-                <li><a href="#hierarchy">2. Collection Hierarchy</a></li>
-                <li><a href="#list-interface">3. List Interface & Implementations</a></li>
-                <li><a href="#set-interface">4. Set Interface & Implementations</a></li>
-                <li><a href="#map-interface">5. Map Interface & Implementations</a></li>
-                <li><a href="#queue-interface">6. Queue & Deque Interfaces</a></li>
-                <li><a href="#advanced-operations">7. Advanced Operations</a></li>
-                <li><a href="#best-practices">8. Performance & Best Practices</a></li>
-            </ul>
-        </div>
+                            <div class="info-box">
+                                <h4><i class="fas fa-star"></i> Benefits of Collections Framework</h4>
+                                <ul>
+                                    <li><strong>Reduces programming effort:</strong> Ready-to-use data structures</li>
+                                    <li><strong>Increases performance:</strong> High-performance implementations</li>
+                                    <li><strong>Interoperability:</strong> Common interface for all collections</li>
+                                    <li><strong>Reduces learning effort:</strong> Consistent API design</li>
+                                </ul>
+                            </div>
 
-        <!-- Chapter 1: Introduction -->
-        <div id="introduction" class="chapter">
-            <h2 class="chapter-title">1. Introduction to Collections</h2>
-            <div class="chapter-content">
-                <p>The Java Collections Framework is a unified architecture for representing and manipulating
-                    collections of objects. It provides interfaces, implementations, and algorithms for efficient data
-                    handling.</p>
+                            <h3>Core Interfaces Overview</h3>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Interface</th>
+                                            <th>Description</th>
+                                            <th>Key Features</th>
+                                            <th>Main Implementations</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Collection</td>
+                                            <td>Root interface</td>
+                                            <td>Basic operations: add, remove, contains</td>
+                                            <td>Abstract base for all collections</td>
+                                        </tr>
+                                        <tr>
+                                            <td>List</td>
+                                            <td>Ordered collection</td>
+                                            <td>Allows duplicates, indexed access</td>
+                                            <td>ArrayList, LinkedList, Vector</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Set</td>
+                                            <td>No duplicates</td>
+                                            <td>Mathematical set operations</td>
+                                            <td>HashSet, LinkedHashSet, TreeSet</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Map</td>
+                                            <td>Key-value pairs</td>
+                                            <td>Unique keys, value mapping</td>
+                                            <td>HashMap, LinkedHashMap, TreeMap</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Queue</td>
+                                            <td>Processing order</td>
+                                            <td>FIFO operations</td>
+                                            <td>LinkedList, PriorityQueue, ArrayDeque</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                <h3 class="section-title">What are Collections?</h3>
-                <p>A collection is an object that groups multiple elements into a single unit. Collections are used to
-                    store, retrieve, manipulate, and communicate aggregate data.</p>
-
-                <div class="info-box">
-                    <h4><i class="fas fa-star"></i> Benefits of Collections Framework</h4>
-                    <ul>
-                        <li><strong>Reduces programming effort:</strong> Ready-to-use data structures</li>
-                        <li><strong>Increases performance:</strong> High-performance implementations</li>
-                        <li><strong>Interoperability:</strong> Common interface for all collections</li>
-                        <li><strong>Reduces learning effort:</strong> Consistent API design</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">Core Interfaces Overview</h3>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Interface</th>
-                                <th>Description</th>
-                                <th>Key Features</th>
-                                <th>Main Implementations</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Collection</td>
-                                <td>Root interface</td>
-                                <td>Basic operations: add, remove, contains</td>
-                                <td>Abstract base for all collections</td>
-                            </tr>
-                            <tr>
-                                <td>List</td>
-                                <td>Ordered collection</td>
-                                <td>Allows duplicates, indexed access</td>
-                                <td>ArrayList, LinkedList, Vector</td>
-                            </tr>
-                            <tr>
-                                <td>Set</td>
-                                <td>No duplicates</td>
-                                <td>Mathematical set operations</td>
-                                <td>HashSet, LinkedHashSet, TreeSet</td>
-                            </tr>
-                            <tr>
-                                <td>Map</td>
-                                <td>Key-value pairs</td>
-                                <td>Unique keys, value mapping</td>
-                                <td>HashMap, LinkedHashMap, TreeMap</td>
-                            </tr>
-                            <tr>
-                                <td>Queue</td>
-                                <td>Processing order</td>
-                                <td>FIFO operations</td>
-                                <td>LinkedList, PriorityQueue, ArrayDeque</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h3 class="section-title">Basic Example</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Collections Overview Example</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>Basic Example</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Collections Overview Example</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">CollectionsIntro</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
@@ -140,69 +115,73 @@
         fruits.add(<span class="string">"Apple"</span>);
         fruits.add(<span class="string">"Banana"</span>);
         fruits.add(<span class="string">"Apple"</span>); <span class="comment">// Duplicate allowed</span>
-        
+
         <span class="comment">// Set - no duplicates</span>
         <span class="type">Set</span>&lt;<span class="type">Integer</span>&gt; numbers = <span class="keyword">new</span> <span class="type">HashSet</span>&lt;&gt;();
         numbers.add(<span class="number">1</span>);
         numbers.add(<span class="number">2</span>);
         numbers.add(<span class="number">1</span>); <span class="comment">// Duplicate ignored</span>
-        
+
         <span class="comment">// Map - key-value pairs</span>
         <span class="type">Map</span>&lt;<span class="type">String</span>, <span class="type">Integer</span>&gt; ages = <span class="keyword">new</span> <span class="type">HashMap</span>&lt;&gt;();
         ages.put(<span class="string">"Alice"</span>, <span class="number">25</span>);
         ages.put(<span class="string">"Bob"</span>, <span class="number">30</span>);
-        
+
         <span class="comment">// Queue - FIFO operations</span>
         <span class="type">Queue</span>&lt;<span class="type">String</span>&gt; tasks = <span class="keyword">new</span> <span class="type">LinkedList</span>&lt;&gt;();
         tasks.offer(<span class="string">"Task 1"</span>);
         tasks.offer(<span class="string">"Task 2"</span>);
-        
+
         <span class="comment">// Display results</span>
         System.out.println(<span class="string">"Fruits: "</span> + fruits);    <span class="comment">// [Apple, Banana, Apple]</span>
         System.out.println(<span class="string">"Numbers: "</span> + numbers);  <span class="comment">// [1, 2]</span>
         System.out.println(<span class="string">"Ages: "</span> + ages);        <span class="comment">// {Alice=25, Bob=30}</span>
         System.out.println(<span class="string">"Tasks: "</span> + tasks);      <span class="comment">// [Task 1, Task 2]</span>
     }
-}</pre>
-                </div>
-            </div>
-        </div>
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 2: Collection Hierarchy -->
-        <div id="hierarchy" class="chapter">
-            <h2 class="chapter-title">2. Collection Hierarchy</h2>
-            <div class="chapter-content">
-                <p>Understanding the collection hierarchy is crucial for choosing the right collection type for your
-                    specific use case.</p>
+                    <!-- Chapter 2: Collection Hierarchy -->
+                    <section id="hierarchy" class="chapter">
+                        <h2 class="chapter-title">2. Collection Hierarchy</h2>
+                        <div class="chapter-content">
+                            <p>Understanding the collection hierarchy is crucial for choosing the right collection type for your specific use case.</p>
 
-                <h3 class="section-title">The Collection Hierarchy</h3>
-                <div class="hierarchy-visual">
-                    <div class="root">Iterable&lt;T&gt;</div>
-                    <div style="margin: 10px 0;">│</div>
-                    <div class="interface">Collection&lt;E&gt;</div>
-                    <div style="margin: 10px 0;">├── <span class="interface">List&lt;E&gt;</span></div>
-                    <div class="implementation">├── ArrayList</div>
-                    <div class="implementation">├── LinkedList</div>
-                    <div class="implementation">└── Vector</div>
-                    <div style="margin: 10px 0;">├── <span class="interface">Set&lt;E&gt;</span></div>
-                    <div class="implementation">├── HashSet</div>
-                    <div class="implementation">├── LinkedHashSet</div>
-                    <div class="implementation">└── TreeSet</div>
-                    <div style="margin: 10px 0;">└── <span class="interface">Queue&lt;E&gt;</span></div>
-                    <div class="implementation">├── PriorityQueue</div>
-                    <div class="implementation">├── ArrayDeque</div>
-                    <div class="implementation">└── LinkedList</div>
-                    <div style="margin: 20px 0; font-weight: 600; color: #764ba2;">Map&lt;K,V&gt; (separate hierarchy)
-                    </div>
-                    <div class="implementation">├── HashMap</div>
-                    <div class="implementation">├── LinkedHashMap</div>
-                    <div class="implementation">└── TreeMap</div>
-                </div>
+                            <h3>The Collection Hierarchy</h3>
+                            <div class="highlight-box">
+                                <pre style="font-family: monospace; line-height: 1.6;">
+Iterable&lt;T&gt;
+    |
+Collection&lt;E&gt;
+    |-- List&lt;E&gt;
+    |      |-- ArrayList
+    |      |-- LinkedList
+    |      |-- Vector
+    |
+    |-- Set&lt;E&gt;
+    |      |-- HashSet
+    |      |-- LinkedHashSet
+    |      |-- TreeSet
+    |
+    |-- Queue&lt;E&gt;
+           |-- PriorityQueue
+           |-- ArrayDeque
+           |-- LinkedList
 
-                <h3 class="section-title">Collection Interface Methods</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Core Collection Methods</div>
-                    <pre><span class="keyword">public interface</span> <span class="type">Collection</span>&lt;<span class="type">E</span>&gt; <span class="keyword">extends</span> <span class="type">Iterable</span>&lt;<span class="type">E</span>&gt; {
+Map&lt;K,V&gt; (separate hierarchy)
+    |-- HashMap
+    |-- LinkedHashMap
+    |-- TreeMap</pre>
+                            </div>
+
+                            <h3>Collection Interface Methods</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Core Collection Methods</span>
+                                </div>
+                                <pre><code><span class="keyword">public interface</span> <span class="type">Collection</span>&lt;<span class="type">E</span>&gt; <span class="keyword">extends</span> <span class="type">Iterable</span>&lt;<span class="type">E</span>&gt; {
     <span class="comment">// Basic Operations</span>
     <span class="keyword">int</span> size();
     <span class="keyword">boolean</span> isEmpty();
@@ -210,47 +189,49 @@
     <span class="keyword">boolean</span> add(<span class="type">E</span> e);
     <span class="keyword">boolean</span> remove(<span class="type">Object</span> o);
     <span class="type">Iterator</span>&lt;<span class="type">E</span>&gt; iterator();
-    
+
     <span class="comment">// Bulk Operations</span>
     <span class="keyword">boolean</span> containsAll(<span class="type">Collection</span>&lt;?&gt; c);
     <span class="keyword">boolean</span> addAll(<span class="type">Collection</span>&lt;? <span class="keyword">extends</span> <span class="type">E</span>&gt; c);
     <span class="keyword">boolean</span> removeAll(<span class="type">Collection</span>&lt;?&gt; c);
     <span class="keyword">boolean</span> retainAll(<span class="type">Collection</span>&lt;?&gt; c);
     <span class="keyword">void</span> clear();
-    
+
     <span class="comment">// Array Operations</span>
     <span class="type">Object</span>[] toArray();
     &lt;<span class="type">T</span>&gt; <span class="type">T</span>[] toArray(<span class="type">T</span>[] a);
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Common Collection Operations</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Collection Operations Example</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>Common Collection Operations</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Collection Operations Example</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">CollectionOperations</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; languages = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;();
-        
+
         <span class="comment">// Adding elements</span>
         languages.add(<span class="string">"Java"</span>);
         languages.add(<span class="string">"Python"</span>);
         languages.add(<span class="string">"JavaScript"</span>);
-        
+
         <span class="comment">// Size and emptiness check</span>
         System.out.println(<span class="string">"Size: "</span> + languages.size());
         System.out.println(<span class="string">"Is Empty: "</span> + languages.isEmpty());
-        
+
         <span class="comment">// Contains check</span>
         System.out.println(<span class="string">"Contains Java: "</span> + languages.contains(<span class="string">"Java"</span>));
-        
+
         <span class="comment">// Iteration with for-each</span>
         System.out.println(<span class="string">"Languages:"</span>);
         <span class="keyword">for</span> (<span class="type">String</span> lang : languages) {
             System.out.println(<span class="string">"- "</span> + lang);
         }
-        
+
         <span class="comment">// Safe iteration with Iterator</span>
         <span class="type">Iterator</span>&lt;<span class="type">String</span>&gt; it = languages.iterator();
         <span class="keyword">while</span> (it.hasNext()) {
@@ -259,567 +240,555 @@
                 it.remove(); <span class="comment">// Safe removal during iteration</span>
             }
         }
-        
+
         <span class="comment">// Bulk operations</span>
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; moreLanguages = <span class="type">Arrays</span>.asList(<span class="string">"C++"</span>, <span class="string">"Go"</span>, <span class="string">"Rust"</span>);
         languages.addAll(moreLanguages);
-        
+
         System.out.println(<span class="string">"After operations: "</span> + languages);
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <div class="warning-box">
-                    <h4><i class="fas fa-exclamation-triangle"></i> Important</h4>
-                    <p>When iterating over a collection and modifying it, always use <code>Iterator.remove()</code>
-                        instead of <code>Collection.remove()</code> to avoid
-                        <code>ConcurrentModificationException</code>.</p>
-                </div>
-            </div>
-        </div>
+                            <div class="info-box" style="background: linear-gradient(135deg, #ff6b6b22, #feca5722); border-left-color: #ff6b6b;">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Important</h4>
+                                <p>When iterating over a collection and modifying it, always use <code>Iterator.remove()</code> instead of <code>Collection.remove()</code> to avoid <code>ConcurrentModificationException</code>.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 3: List Interface -->
-        <div id="list-interface" class="chapter">
-            <h2 class="chapter-title">3. List Interface & Implementations</h2>
-            <div class="chapter-content">
-                <p>The List interface extends Collection and represents an ordered collection that can contain duplicate
-                    elements with indexed access.</p>
+                    <!-- Chapter 3: List Interface -->
+                    <section id="list-interface" class="chapter">
+                        <h2 class="chapter-title">3. List Interface and Implementations</h2>
+                        <div class="chapter-content">
+                            <p>The List interface extends Collection and represents an ordered collection that can contain duplicate elements with indexed access.</p>
 
-                <h3 class="section-title">Key Characteristics</h3>
-                <ul>
-                    <li>Maintains insertion order</li>
-                    <li>Allows duplicate elements</li>
-                    <li>Provides positional access (indexed)</li>
-                    <li>Supports list-specific operations</li>
-                </ul>
+                            <h3>Key Characteristics</h3>
+                            <ul>
+                                <li>Maintains insertion order</li>
+                                <li>Allows duplicate elements</li>
+                                <li>Provides positional access (indexed)</li>
+                                <li>Supports list-specific operations</li>
+                            </ul>
 
-                <h3 class="section-title">ArrayList Implementation</h3>
-                <p>Dynamic array implementation providing fast random access and efficient iteration.</p>
+                            <h3>ArrayList Implementation</h3>
+                            <p>Dynamic array implementation providing fast random access and efficient iteration.</p>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> ArrayList Examples</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> ArrayList Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">ArrayListExample</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="comment">// Creation with initial capacity</span>
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; fruits = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;(<span class="number">10</span>);
-        
+
         <span class="comment">// Adding elements</span>
         fruits.add(<span class="string">"Apple"</span>);
         fruits.add(<span class="string">"Banana"</span>);
         fruits.add(<span class="string">"Orange"</span>);
         fruits.add(<span class="number">1</span>, <span class="string">"Mango"</span>); <span class="comment">// Insert at index 1</span>
-        
+
         System.out.println(<span class="string">"Fruits: "</span> + fruits);
-        
+
         <span class="comment">// Accessing elements</span>
         <span class="type">String</span> first = fruits.get(<span class="number">0</span>);
         System.out.println(<span class="string">"First fruit: "</span> + first);
-        
+
         <span class="comment">// Modifying elements</span>
         fruits.set(<span class="number">2</span>, <span class="string">"Grapes"</span>);
-        
+
         <span class="comment">// Finding elements</span>
         <span class="keyword">int</span> index = fruits.indexOf(<span class="string">"Mango"</span>);
         System.out.println(<span class="string">"Mango index: "</span> + index);
-        
+
         <span class="comment">// Removing elements</span>
         fruits.remove(<span class="number">0</span>); <span class="comment">// Remove by index</span>
         fruits.remove(<span class="string">"Orange"</span>); <span class="comment">// Remove by value</span>
-        
+
         <span class="comment">// Sublist operations</span>
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; subList = fruits.subList(<span class="number">0</span>, <span class="number">2</span>);
         System.out.println(<span class="string">"Sublist: "</span> + subList);
-        
+
         <span class="comment">// Sorting</span>
         <span class="type">Collections</span>.sort(fruits);
         System.out.println(<span class="string">"Sorted: "</span> + fruits);
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">LinkedList Implementation</h3>
-                <p>Doubly-linked list implementation providing efficient insertion and deletion operations.</p>
+                            <h3>LinkedList Implementation</h3>
+                            <p>Doubly-linked list implementation providing efficient insertion and deletion operations.</p>
 
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> LinkedList Examples</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> LinkedList Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">LinkedListExample</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="type">LinkedList</span>&lt;<span class="type">Integer</span>&gt; numbers = <span class="keyword">new</span> <span class="type">LinkedList</span>&lt;&gt;();
-        
+
         <span class="comment">// Adding elements</span>
         numbers.add(<span class="number">10</span>);
         numbers.add(<span class="number">20</span>);
         numbers.add(<span class="number">30</span>);
-        
+
         <span class="comment">// LinkedList specific methods</span>
         numbers.addFirst(<span class="number">5</span>);  <span class="comment">// Add to beginning</span>
         numbers.addLast(<span class="number">40</span>);   <span class="comment">// Add to end</span>
-        
+
         System.out.println(<span class="string">"Numbers: "</span> + numbers);
-        
+
         <span class="comment">// Accessing first and last elements</span>
         System.out.println(<span class="string">"First: "</span> + numbers.getFirst());
         System.out.println(<span class="string">"Last: "</span> + numbers.getLast());
-        
+
         <span class="comment">// Using as Stack (LIFO)</span>
         <span class="type">LinkedList</span>&lt;<span class="type">String</span>&gt; stack = <span class="keyword">new</span> <span class="type">LinkedList</span>&lt;&gt;();
         stack.push(<span class="string">"First"</span>);
         stack.push(<span class="string">"Second"</span>);
         stack.push(<span class="string">"Third"</span>);
-        
+
         System.out.println(<span class="string">"Stack: "</span> + stack);
         System.out.println(<span class="string">"Pop: "</span> + stack.pop());
-        
+
         <span class="comment">// Using as Queue (FIFO)</span>
         <span class="type">LinkedList</span>&lt;<span class="type">String</span>&gt; queue = <span class="keyword">new</span> <span class="type">LinkedList</span>&lt;&gt;();
         queue.offer(<span class="string">"A"</span>);
         queue.offer(<span class="string">"B"</span>);
         queue.offer(<span class="string">"C"</span>);
-        
+
         System.out.println(<span class="string">"Queue: "</span> + queue);
         System.out.println(<span class="string">"Poll: "</span> + queue.poll());
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Performance Comparison</h3>
-                <div class="performance-grid">
-                    <div class="performance-card">
-                        <h4>ArrayList</h4>
-                        <div class="performance-metric">
-                            <span class="metric-name">Random Access</span>
-                            <span class="metric-value metric-good">O(1)</span>
-                        </div>
-                        <div class="performance-metric">
-                            <span class="metric-name">Insert at End</span>
-                            <span class="metric-value metric-good">O(1)*</span>
-                        </div>
-                        <div class="performance-metric">
-                            <span class="metric-name">Insert at Beginning</span>
-                            <span class="metric-value metric-poor">O(n)</span>
-                        </div>
-                        <div class="performance-metric">
-                            <span class="metric-name">Memory Overhead</span>
-                            <span class="metric-value metric-good">Low</span>
-                        </div>
-                    </div>
-                    <div class="performance-card">
-                        <h4>LinkedList</h4>
-                        <div class="performance-metric">
-                            <span class="metric-name">Random Access</span>
-                            <span class="metric-value metric-poor">O(n)</span>
-                        </div>
-                        <div class="performance-metric">
-                            <span class="metric-name">Insert at End</span>
-                            <span class="metric-value metric-good">O(1)</span>
-                        </div>
-                        <div class="performance-metric">
-                            <span class="metric-name">Insert at Beginning</span>
-                            <span class="metric-value metric-good">O(1)</span>
-                        </div>
-                        <div class="performance-metric">
-                            <span class="metric-name">Memory Overhead</span>
-                            <span class="metric-value metric-poor">High</span>
-                        </div>
-                    </div>
-                </div>
+                            <h3>Performance Comparison</h3>
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <h4>ArrayList</h4>
+                                    <ul>
+                                        <li><strong>Random Access:</strong> O(1)</li>
+                                        <li><strong>Insert at End:</strong> O(1)*</li>
+                                        <li><strong>Insert at Beginning:</strong> O(n)</li>
+                                        <li><strong>Memory Overhead:</strong> Low</li>
+                                    </ul>
+                                </div>
+                                <div class="card">
+                                    <h4>LinkedList</h4>
+                                    <ul>
+                                        <li><strong>Random Access:</strong> O(n)</li>
+                                        <li><strong>Insert at End:</strong> O(1)</li>
+                                        <li><strong>Insert at Beginning:</strong> O(1)</li>
+                                        <li><strong>Memory Overhead:</strong> High</li>
+                                    </ul>
+                                </div>
+                            </div>
 
-                <div class="highlight-box">
-                    <h4><i class="fas fa-lightbulb"></i> Choosing Between ArrayList and LinkedList</h4>
-                    <p><strong>Use ArrayList when:</strong> You need frequent random access, have more reads than
-                        writes, or memory is a concern.</p>
-                    <p><strong>Use LinkedList when:</strong> You frequently insert/delete at the beginning/end, use it
-                        as a stack/queue, or have unpredictable insertion patterns.</p>
-                </div>
-            </div>
-        </div>
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Choosing Between ArrayList and LinkedList</h4>
+                                <p><strong>Use ArrayList when:</strong> You need frequent random access, have more reads than writes, or memory is a concern.</p>
+                                <p><strong>Use LinkedList when:</strong> You frequently insert/delete at the beginning/end, use it as a stack/queue, or have unpredictable insertion patterns.</p>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 4: Set Interface -->
-        <div id="set-interface" class="chapter">
-            <h2 class="chapter-title">4. Set Interface & Implementations</h2>
-            <div class="chapter-content">
-                <p>The Set interface models the mathematical set abstraction - a collection containing no duplicate
-                    elements.</p>
+                    <!-- Chapter 4: Set Interface -->
+                    <section id="set-interface" class="chapter">
+                        <h2 class="chapter-title">4. Set Interface and Implementations</h2>
+                        <div class="chapter-content">
+                            <p>The Set interface models the mathematical set abstraction - a collection containing no duplicate elements.</p>
 
-                <h3 class="section-title">Key Characteristics</h3>
-                <ul>
-                    <li>No duplicate elements allowed</li>
-                    <li>At most one null element</li>
-                    <li>Mathematical set operations</li>
-                    <li>Various ordering guarantees depending on implementation</li>
-                </ul>
+                            <h3>Key Characteristics</h3>
+                            <ul>
+                                <li>No duplicate elements allowed</li>
+                                <li>At most one null element</li>
+                                <li>Mathematical set operations</li>
+                                <li>Various ordering guarantees depending on implementation</li>
+                            </ul>
 
-                <h3 class="section-title">HashSet Implementation</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> HashSet Examples</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>HashSet Implementation</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> HashSet Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">HashSetExample</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="type">Set</span>&lt;<span class="type">String</span>&gt; colors = <span class="keyword">new</span> <span class="type">HashSet</span>&lt;&gt;();
-        
+
         <span class="comment">// Adding elements</span>
         colors.add(<span class="string">"Red"</span>);
         colors.add(<span class="string">"Green"</span>);
         colors.add(<span class="string">"Blue"</span>);
         colors.add(<span class="string">"Red"</span>); <span class="comment">// Duplicate - ignored</span>
-        
+
         System.out.println(<span class="string">"Colors: "</span> + colors);
         System.out.println(<span class="string">"Size: "</span> + colors.size());
-        
+
         <span class="comment">// Set operations</span>
         <span class="type">Set</span>&lt;<span class="type">String</span>&gt; moreColors = <span class="keyword">new</span> <span class="type">HashSet</span>&lt;&gt;(<span class="type">Arrays</span>.asList(<span class="string">"Blue"</span>, <span class="string">"Yellow"</span>, <span class="string">"Purple"</span>));
-        
+
         <span class="comment">// Union</span>
         <span class="type">Set</span>&lt;<span class="type">String</span>&gt; union = <span class="keyword">new</span> <span class="type">HashSet</span>&lt;&gt;(colors);
         union.addAll(moreColors);
         System.out.println(<span class="string">"Union: "</span> + union);
-        
+
         <span class="comment">// Intersection</span>
         <span class="type">Set</span>&lt;<span class="type">String</span>&gt; intersection = <span class="keyword">new</span> <span class="type">HashSet</span>&lt;&gt;(colors);
         intersection.retainAll(moreColors);
         System.out.println(<span class="string">"Intersection: "</span> + intersection);
-        
+
         <span class="comment">// Difference</span>
         <span class="type">Set</span>&lt;<span class="type">String</span>&gt; difference = <span class="keyword">new</span> <span class="type">HashSet</span>&lt;&gt;(colors);
         difference.removeAll(moreColors);
         System.out.println(<span class="string">"Difference: "</span> + difference);
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">TreeSet Implementation</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> TreeSet Examples</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>TreeSet Implementation</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> TreeSet Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">TreeSetExample</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="type">TreeSet</span>&lt;<span class="type">Integer</span>&gt; numbers = <span class="keyword">new</span> <span class="type">TreeSet</span>&lt;&gt;();
-        
+
         <span class="comment">// Adding elements</span>
         numbers.add(<span class="number">5</span>);
         numbers.add(<span class="number">2</span>);
         numbers.add(<span class="number">8</span>);
         numbers.add(<span class="number">1</span>);
         numbers.add(<span class="number">9</span>);
-        
+
         System.out.println(<span class="string">"TreeSet: "</span> + numbers); <span class="comment">// Automatically sorted</span>
-        
+
         <span class="comment">// NavigableSet operations</span>
         System.out.println(<span class="string">"First: "</span> + numbers.first());
         System.out.println(<span class="string">"Last: "</span> + numbers.last());
         System.out.println(<span class="string">"Lower than 5: "</span> + numbers.lower(<span class="number">5</span>));
         System.out.println(<span class="string">"Higher than 5: "</span> + numbers.higher(<span class="number">5</span>));
-        
+
         <span class="comment">// Range operations</span>
         <span class="type">SortedSet</span>&lt;<span class="type">Integer</span>&gt; subset = numbers.subSet(<span class="number">2</span>, <span class="number">8</span>);
         System.out.println(<span class="string">"Subset [2, 8): "</span> + subset);
-        
+
         <span class="comment">// Custom comparator</span>
         <span class="type">TreeSet</span>&lt;<span class="type">String</span>&gt; words = <span class="keyword">new</span> <span class="type">TreeSet</span>&lt;&gt;(<span class="type">Comparator</span>.comparing(<span class="type">String</span>::length));
         words.add(<span class="string">"elephant"</span>);
         words.add(<span class="string">"cat"</span>);
         words.add(<span class="string">"dog"</span>);
         words.add(<span class="string">"butterfly"</span>);
-        
+
         System.out.println(<span class="string">"Words by length: "</span> + words);
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Feature</th>
-                                <th>HashSet</th>
-                                <th>LinkedHashSet</th>
-                                <th>TreeSet</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Ordering</td>
-                                <td>No guarantee</td>
-                                <td>Insertion order</td>
-                                <td>Natural/Comparator</td>
-                            </tr>
-                            <tr>
-                                <td>Performance</td>
-                                <td>O(1)</td>
-                                <td>O(1)</td>
-                                <td>O(log n)</td>
-                            </tr>
-                            <tr>
-                                <td>Memory</td>
-                                <td>Lowest</td>
-                                <td>Medium</td>
-                                <td>Highest</td>
-                            </tr>
-                            <tr>
-                                <td>Null values</td>
-                                <td>One allowed</td>
-                                <td>One allowed</td>
-                                <td>Not allowed</td>
-                            </tr>
-                            <tr>
-                                <td>Range operations</td>
-                                <td>No</td>
-                                <td>No</td>
-                                <td>Yes</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Feature</th>
+                                            <th>HashSet</th>
+                                            <th>LinkedHashSet</th>
+                                            <th>TreeSet</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Ordering</td>
+                                            <td>No guarantee</td>
+                                            <td>Insertion order</td>
+                                            <td>Natural/Comparator</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Performance</td>
+                                            <td>O(1)</td>
+                                            <td>O(1)</td>
+                                            <td>O(log n)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Memory</td>
+                                            <td>Lowest</td>
+                                            <td>Medium</td>
+                                            <td>Highest</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Null values</td>
+                                            <td>One allowed</td>
+                                            <td>One allowed</td>
+                                            <td>Not allowed</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Range operations</td>
+                                            <td>No</td>
+                                            <td>No</td>
+                                            <td>Yes</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 5: Map Interface -->
-        <div id="map-interface" class="chapter">
-            <h2 class="chapter-title">5. Map Interface & Implementations</h2>
-            <div class="chapter-content">
-                <p>The Map interface represents a mapping between keys and values. Each key can map to at most one
-                    value.</p>
+                    <!-- Chapter 5: Map Interface -->
+                    <section id="map-interface" class="chapter">
+                        <h2 class="chapter-title">5. Map Interface and Implementations</h2>
+                        <div class="chapter-content">
+                            <p>The Map interface represents a mapping between keys and values. Each key can map to at most one value.</p>
 
-                <h3 class="section-title">HashMap Implementation</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> HashMap Examples</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>HashMap Implementation</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> HashMap Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">HashMapExample</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="type">Map</span>&lt;<span class="type">String</span>, <span class="type">Integer</span>&gt; grades = <span class="keyword">new</span> <span class="type">HashMap</span>&lt;&gt;();
-        
+
         <span class="comment">// Adding key-value pairs</span>
         grades.put(<span class="string">"Alice"</span>, <span class="number">95</span>);
         grades.put(<span class="string">"Bob"</span>, <span class="number">87</span>);
         grades.put(<span class="string">"Charlie"</span>, <span class="number">92</span>);
-        
+
         <span class="comment">// Accessing values</span>
         <span class="type">Integer</span> aliceGrade = grades.get(<span class="string">"Alice"</span>);
         System.out.println(<span class="string">"Alice's grade: "</span> + aliceGrade);
-        
+
         <span class="comment">// Safe operations</span>
         <span class="type">Integer</span> defaultGrade = grades.getOrDefault(<span class="string">"Eve"</span>, <span class="number">0</span>);
         grades.putIfAbsent(<span class="string">"Diana"</span>, <span class="number">88</span>);
-        
+
         <span class="comment">// Iterating over entries</span>
         System.out.println(<span class="string">"All grades:"</span>);
         <span class="keyword">for</span> (<span class="type">Map.Entry</span>&lt;<span class="type">String</span>, <span class="type">Integer</span>&gt; entry : grades.entrySet()) {
             System.out.println(entry.getKey() + <span class="string">": "</span> + entry.getValue());
         }
-        
+
         <span class="comment">// Using streams for advanced operations</span>
         <span class="keyword">double</span> average = grades.values().stream()
             .mapToInt(<span class="type">Integer</span>::intValue)
             .average()
             .orElse(<span class="number">0.0</span>);
         System.out.println(<span class="string">"Average grade: "</span> + average);
-        
+
         <span class="comment">// Find top student</span>
-        <span class="type">Optional</span>&lt;<span class="type">Map.Entry</span>&lt;<span class="type">String</span>, <span class="type">Integer</span>&gt;&gt; topStudent = 
+        <span class="type">Optional</span>&lt;<span class="type">Map.Entry</span>&lt;<span class="type">String</span>, <span class="type">Integer</span>&gt;&gt; topStudent =
             grades.entrySet().stream()
                 .max(<span class="type">Map.Entry</span>.comparingByValue());
-        
-        topStudent.ifPresent(entry -&gt; 
+
+        topStudent.ifPresent(entry -&gt;
             System.out.println(<span class="string">"Top student: "</span> + entry.getKey()));
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">TreeMap Implementation</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> TreeMap Examples</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>TreeMap Implementation</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> TreeMap Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">TreeMapExample</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="type">TreeMap</span>&lt;<span class="type">String</span>, <span class="type">Double</span>&gt; prices = <span class="keyword">new</span> <span class="type">TreeMap</span>&lt;&gt;();
-        
+
         <span class="comment">// Adding entries</span>
         prices.put(<span class="string">"AAPL"</span>, <span class="number">150.25</span>);
         prices.put(<span class="string">"GOOGL"</span>, <span class="number">2800.50</span>);
         prices.put(<span class="string">"MSFT"</span>, <span class="number">300.75</span>);
         prices.put(<span class="string">"AMZN"</span>, <span class="number">3200.00</span>);
-        
+
         System.out.println(<span class="string">"Sorted prices: "</span> + prices);
-        
+
         <span class="comment">// NavigableMap operations</span>
         System.out.println(<span class="string">"First entry: "</span> + prices.firstEntry());
         System.out.println(<span class="string">"Last entry: "</span> + prices.lastEntry());
-        
+
         <span class="comment">// Range queries</span>
         System.out.println(<span class="string">"Stocks A-M: "</span> + prices.subMap(<span class="string">"A"</span>, <span class="string">"M"</span>));
         System.out.println(<span class="string">"Stocks from M: "</span> + prices.tailMap(<span class="string">"M"</span>));
-        
+
         <span class="comment">// Finding highest priced stock</span>
         <span class="type">Map.Entry</span>&lt;<span class="type">String</span>, <span class="type">Double</span>&gt; highest = prices.entrySet().stream()
             .max(<span class="type">Map.Entry</span>.comparingByValue())
             .orElse(<span class="keyword">null</span>);
-        
+
         System.out.println(<span class="string">"Highest priced: "</span> + highest);
     }
-}</pre>
-                </div>
-            </div>
-        </div>
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 6: Queue Interface -->
-        <div id="queue-interface" class="chapter">
-            <h2 class="chapter-title">6. Queue & Deque Interfaces</h2>
-            <div class="chapter-content">
-                <p>The Queue interface represents a collection designed for holding elements prior to processing,
-                    typically in FIFO order.</p>
+                    <!-- Chapter 6: Queue Interface -->
+                    <section id="queue-interface" class="chapter">
+                        <h2 class="chapter-title">6. Queue and Deque Interfaces</h2>
+                        <div class="chapter-content">
+                            <p>The Queue interface represents a collection designed for holding elements prior to processing, typically in FIFO order.</p>
 
-                <h3 class="section-title">Queue Operations</h3>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Operation Type</th>
-                                <th>Throws Exception</th>
-                                <th>Returns Special Value</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Insert</td>
-                                <td>add(e)</td>
-                                <td>offer(e)</td>
-                            </tr>
-                            <tr>
-                                <td>Remove</td>
-                                <td>remove()</td>
-                                <td>poll()</td>
-                            </tr>
-                            <tr>
-                                <td>Examine</td>
-                                <td>element()</td>
-                                <td>peek()</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            <h3>Queue Operations</h3>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Operation Type</th>
+                                            <th>Throws Exception</th>
+                                            <th>Returns Special Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Insert</td>
+                                            <td>add(e)</td>
+                                            <td>offer(e)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Remove</td>
+                                            <td>remove()</td>
+                                            <td>poll()</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Examine</td>
+                                            <td>element()</td>
+                                            <td>peek()</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                <h3 class="section-title">PriorityQueue Implementation</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> PriorityQueue Examples</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>PriorityQueue Implementation</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> PriorityQueue Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">PriorityQueueExample</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="comment">// Min-heap (natural ordering)</span>
         <span class="type">PriorityQueue</span>&lt;<span class="type">Integer</span>&gt; minHeap = <span class="keyword">new</span> <span class="type">PriorityQueue</span>&lt;&gt;();
-        
+
         minHeap.offer(<span class="number">5</span>);
         minHeap.offer(<span class="number">2</span>);
         minHeap.offer(<span class="number">8</span>);
         minHeap.offer(<span class="number">1</span>);
-        
+
         System.out.println(<span class="string">"Polling from min-heap:"</span>);
         <span class="keyword">while</span> (!minHeap.isEmpty()) {
             System.out.println(minHeap.poll()); <span class="comment">// 1, 2, 5, 8</span>
         }
-        
+
         <span class="comment">// Max-heap using reverse comparator</span>
-        <span class="type">PriorityQueue</span>&lt;<span class="type">Integer</span>&gt; maxHeap = 
+        <span class="type">PriorityQueue</span>&lt;<span class="type">Integer</span>&gt; maxHeap =
             <span class="keyword">new</span> <span class="type">PriorityQueue</span>&lt;&gt;(<span class="type">Collections</span>.reverseOrder());
         maxHeap.addAll(<span class="type">Arrays</span>.asList(<span class="number">5</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">1</span>));
-        
+
         System.out.println(<span class="string">"Polling from max-heap:"</span>);
         <span class="keyword">while</span> (!maxHeap.isEmpty()) {
             System.out.println(maxHeap.poll()); <span class="comment">// 8, 5, 2, 1</span>
         }
-        
+
         <span class="comment">// Custom objects with priority</span>
         <span class="type">PriorityQueue</span>&lt;<span class="type">Task</span>&gt; taskQueue = <span class="keyword">new</span> <span class="type">PriorityQueue</span>&lt;&gt;(
             <span class="type">Comparator</span>.comparing(<span class="type">Task</span>::getPriority).reversed()
         );
-        
+
         taskQueue.offer(<span class="keyword">new</span> <span class="type">Task</span>(<span class="string">"Low priority"</span>, <span class="number">1</span>));
         taskQueue.offer(<span class="keyword">new</span> <span class="type">Task</span>(<span class="string">"High priority"</span>, <span class="number">10</span>));
         taskQueue.offer(<span class="keyword">new</span> <span class="type">Task</span>(<span class="string">"Medium priority"</span>, <span class="number">5</span>));
-        
+
         System.out.println(<span class="string">"Task execution order:"</span>);
         <span class="keyword">while</span> (!taskQueue.isEmpty()) {
             <span class="type">Task</span> task = taskQueue.poll();
             System.out.println(task.getName() + <span class="string">" (Priority: "</span> + task.getPriority() + <span class="string">")"</span>);
         }
     }
-    
+
     <span class="keyword">static class</span> <span class="type">Task</span> {
         <span class="keyword">private</span> <span class="type">String</span> name;
         <span class="keyword">private</span> <span class="keyword">int</span> priority;
-        
+
         <span class="keyword">public</span> Task(<span class="type">String</span> name, <span class="keyword">int</span> priority) {
             <span class="keyword">this</span>.name = name;
             <span class="keyword">this</span>.priority = priority;
         }
-        
+
         <span class="keyword">public</span> <span class="type">String</span> getName() { <span class="keyword">return</span> name; }
         <span class="keyword">public</span> <span class="keyword">int</span> getPriority() { <span class="keyword">return</span> priority; }
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">ArrayDeque Implementation</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> ArrayDeque Examples</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>ArrayDeque Implementation</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> ArrayDeque Examples</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">ArrayDequeExample</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="type">ArrayDeque</span>&lt;<span class="type">String</span>&gt; deque = <span class="keyword">new</span> <span class="type">ArrayDeque</span>&lt;&gt;();
-        
+
         <span class="comment">// Adding elements to both ends</span>
         deque.addFirst(<span class="string">"Second"</span>);
         deque.addFirst(<span class="string">"First"</span>);
         deque.addLast(<span class="string">"Third"</span>);
         deque.addLast(<span class="string">"Fourth"</span>);
-        
+
         System.out.println(<span class="string">"Deque: "</span> + deque);
-        
+
         <span class="comment">// Using as Stack (LIFO)</span>
         <span class="type">ArrayDeque</span>&lt;<span class="type">Integer</span>&gt; stack = <span class="keyword">new</span> <span class="type">ArrayDeque</span>&lt;&gt;();
         stack.push(<span class="number">1</span>);
         stack.push(<span class="number">2</span>);
         stack.push(<span class="number">3</span>);
-        
+
         System.out.println(<span class="string">"Stack operations:"</span>);
         <span class="keyword">while</span> (!stack.isEmpty()) {
             System.out.println(<span class="string">"Pop: "</span> + stack.pop());
         }
-        
+
         <span class="comment">// Using as Queue (FIFO)</span>
         <span class="type">ArrayDeque</span>&lt;<span class="type">String</span>&gt; queue = <span class="keyword">new</span> <span class="type">ArrayDeque</span>&lt;&gt;();
         queue.offer(<span class="string">"A"</span>);
         queue.offer(<span class="string">"B"</span>);
         queue.offer(<span class="string">"C"</span>);
-        
+
         System.out.println(<span class="string">"Queue operations:"</span>);
         <span class="keyword">while</span> (!queue.isEmpty()) {
             System.out.println(<span class="string">"Poll: "</span> + queue.poll());
         }
-        
+
         <span class="comment">// Palindrome checker</span>
         System.out.println(<span class="string">"Is 'racecar' palindrome? "</span> + isPalindrome(<span class="string">"racecar"</span>));
         System.out.println(<span class="string">"Is 'hello' palindrome? "</span> + isPalindrome(<span class="string">"hello"</span>));
     }
-    
+
     <span class="keyword">public static boolean</span> isPalindrome(<span class="type">String</span> str) {
         <span class="type">ArrayDeque</span>&lt;<span class="type">Character</span>&gt; deque = <span class="keyword">new</span> <span class="type">ArrayDeque</span>&lt;&gt;();
-        
+
         <span class="keyword">for</span> (<span class="keyword">char</span> c : str.toLowerCase().toCharArray()) {
             <span class="keyword">if</span> (<span class="type">Character</span>.isLetterOrDigit(c)) {
                 deque.offer(c);
             }
         }
-        
+
         <span class="keyword">while</span> (deque.size() > <span class="number">1</span>) {
             <span class="keyword">if</span> (!deque.pollFirst().equals(deque.pollLast())) {
                 <span class="keyword">return false</span>;
@@ -827,70 +796,73 @@
         }
         <span class="keyword">return true</span>;
     }
-}</pre>
-                </div>
-            </div>
-        </div>
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 7: Advanced Operations -->
-        <div id="advanced-operations" class="chapter">
-            <h2 class="chapter-title">7. Advanced Operations</h2>
-            <div class="chapter-content">
-                <p>This chapter covers advanced operations and utilities for working with Java Collections effectively.
-                </p>
+                    <!-- Chapter 7: Advanced Operations -->
+                    <section id="advanced-operations" class="chapter">
+                        <h2 class="chapter-title">7. Advanced Operations</h2>
+                        <div class="chapter-content">
+                            <p>This chapter covers advanced operations and utilities for working with Java Collections effectively.</p>
 
-                <h3 class="section-title">Collections Utility Class</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Collections Utilities</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>Collections Utility Class</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Collections Utilities</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">CollectionsUtilities</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="type">List</span>&lt;<span class="type">Integer</span>&gt; numbers = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;(<span class="type">Arrays</span>.asList(<span class="number">5</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">1</span>, <span class="number">9</span>));
-        
+
         System.out.println(<span class="string">"Original: "</span> + numbers);
-        
+
         <span class="comment">// Sorting</span>
         <span class="type">Collections</span>.sort(numbers);
         System.out.println(<span class="string">"Sorted: "</span> + numbers);
-        
+
         <span class="comment">// Reverse sorting</span>
         <span class="type">Collections</span>.sort(numbers, <span class="type">Collections</span>.reverseOrder());
         System.out.println(<span class="string">"Reverse sorted: "</span> + numbers);
-        
+
         <span class="comment">// Shuffling</span>
         <span class="type">Collections</span>.shuffle(numbers);
         System.out.println(<span class="string">"Shuffled: "</span> + numbers);
-        
+
         <span class="comment">// Binary search (requires sorted list)</span>
         <span class="type">Collections</span>.sort(numbers);
         <span class="keyword">int</span> index = <span class="type">Collections</span>.binarySearch(numbers, <span class="number">5</span>);
         System.out.println(<span class="string">"Index of 5: "</span> + index);
-        
+
         <span class="comment">// Min and Max</span>
         System.out.println(<span class="string">"Min: "</span> + <span class="type">Collections</span>.min(numbers));
         System.out.println(<span class="string">"Max: "</span> + <span class="type">Collections</span>.max(numbers));
-        
+
         <span class="comment">// Frequency</span>
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; words = <span class="type">Arrays</span>.asList(<span class="string">"hello"</span>, <span class="string">"world"</span>, <span class="string">"hello"</span>, <span class="string">"java"</span>);
         System.out.println(<span class="string">"Frequency of 'hello': "</span> + <span class="type">Collections</span>.frequency(words, <span class="string">"hello"</span>));
-        
+
         <span class="comment">// Rotate</span>
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; list = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;(<span class="type">Arrays</span>.asList(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>, <span class="string">"D"</span>));
         <span class="type">Collections</span>.rotate(list, <span class="number">2</span>);
         System.out.println(<span class="string">"Rotated by 2: "</span> + list);
-        
+
         <span class="comment">// Unmodifiable collections</span>
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; immutable = <span class="type">Collections</span>.unmodifiableList(list);
         System.out.println(<span class="string">"Immutable list: "</span> + immutable);
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Stream API with Collections</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Stream Operations</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>Stream API with Collections</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Stream Operations</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 <span class="keyword">import</span> java.util.stream.*;
 
 <span class="keyword">public class</span> <span class="type">StreamOperations</span> {
@@ -898,51 +870,53 @@
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; words = <span class="type">Arrays</span>.asList(
             <span class="string">"hello"</span>, <span class="string">"world"</span>, <span class="string">"java"</span>, <span class="string">"stream"</span>, <span class="string">"api"</span>, <span class="string">"collection"</span>
         );
-        
+
         <span class="comment">// Filter, map, and collect</span>
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; longWords = words.stream()
             .filter(word -> word.length() > <span class="number">4</span>)
             .map(<span class="type">String</span>::toUpperCase)
             .sorted()
             .collect(<span class="type">Collectors</span>.toList());
-        
+
         System.out.println(<span class="string">"Long words: "</span> + longWords);
-        
+
         <span class="comment">// Grouping by length</span>
         <span class="type">Map</span>&lt;<span class="type">Integer</span>, <span class="type">List</span>&lt;<span class="type">String</span>&gt;&gt; wordsByLength = words.stream()
             .collect(<span class="type">Collectors</span>.groupingBy(<span class="type">String</span>::length));
-        
+
         System.out.println(<span class="string">"Words by length: "</span> + wordsByLength);
-        
+
         <span class="comment">// Partitioning</span>
         <span class="type">Map</span>&lt;<span class="type">Boolean</span>, <span class="type">List</span>&lt;<span class="type">String</span>&gt;&gt; partitioned = words.stream()
             .collect(<span class="type">Collectors</span>.partitioningBy(word -> word.length() > <span class="number">4</span>));
-        
+
         System.out.println(<span class="string">"Long words: "</span> + partitioned.get(<span class="keyword">true</span>));
         System.out.println(<span class="string">"Short words: "</span> + partitioned.get(<span class="keyword">false</span>));
-        
+
         <span class="comment">// Joining strings</span>
         <span class="type">String</span> joined = words.stream()
             .collect(<span class="type">Collectors</span>.joining(<span class="string">", "</span>, <span class="string">"["</span>, <span class="string">"]"</span>));
-        
+
         System.out.println(<span class="string">"Joined: "</span> + joined);
-        
+
         <span class="comment">// Statistical operations</span>
         <span class="type">List</span>&lt;<span class="type">Integer</span>&gt; numbers = <span class="type">Arrays</span>.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>);
-        
+
         <span class="type">IntSummaryStatistics</span> stats = numbers.stream()
             .mapToInt(<span class="type">Integer</span>::intValue)
             .summaryStatistics();
-        
+
         System.out.println(<span class="string">"Statistics: "</span> + stats);
     }
-}</pre>
-                </div>
+}</code></pre>
+                            </div>
 
-                <h3 class="section-title">Custom Comparators</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Advanced Comparators</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>Custom Comparators</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Advanced Comparators</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 
 <span class="keyword">public class</span> <span class="type">CustomComparators</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
@@ -952,370 +926,262 @@
             <span class="keyword">new</span> <span class="type">Person</span>(<span class="string">"Charlie"</span>, <span class="number">35</span>, <span class="number">80000</span>),
             <span class="keyword">new</span> <span class="type">Person</span>(<span class="string">"Diana"</span>, <span class="number">28</span>, <span class="number">70000</span>)
         );
-        
+
         <span class="comment">// Sort by age</span>
         people.sort(<span class="type">Comparator</span>.comparing(<span class="type">Person</span>::getAge));
         System.out.println(<span class="string">"By age: "</span> + people);
-        
+
         <span class="comment">// Sort by salary descending, then age ascending</span>
         people.sort(<span class="type">Comparator</span>.comparing(<span class="type">Person</span>::getSalary).reversed()
                    .thenComparing(<span class="type">Person</span>::getAge));
         System.out.println(<span class="string">"By salary desc, age asc: "</span> + people);
-        
+
         <span class="comment">// Sort by name length, then alphabetically</span>
         people.sort(<span class="type">Comparator</span>.comparing((<span class="type">Person</span> p) -> p.getName().length())
                    .thenComparing(<span class="type">Person</span>::getName));
         System.out.println(<span class="string">"By name length, then alphabetically: "</span> + people);
     }
-    
+
     <span class="keyword">static class</span> <span class="type">Person</span> {
         <span class="keyword">private</span> <span class="type">String</span> name;
         <span class="keyword">private</span> <span class="keyword">int</span> age;
         <span class="keyword">private</span> <span class="keyword">double</span> salary;
-        
+
         <span class="keyword">public</span> Person(<span class="type">String</span> name, <span class="keyword">int</span> age, <span class="keyword">double</span> salary) {
             <span class="keyword">this</span>.name = name;
             <span class="keyword">this</span>.age = age;
             <span class="keyword">this</span>.salary = salary;
         }
-        
+
         <span class="keyword">public</span> <span class="type">String</span> getName() { <span class="keyword">return</span> name; }
         <span class="keyword">public</span> <span class="keyword">int</span> getAge() { <span class="keyword">return</span> age; }
         <span class="keyword">public</span> <span class="keyword">double</span> getSalary() { <span class="keyword">return</span> salary; }
-        
+
         <span class="annotation">@Override</span>
         <span class="keyword">public</span> <span class="type">String</span> toString() {
             <span class="keyword">return</span> <span class="type">String</span>.format(<span class="string">"Person{name='%s', age=%d, salary=%.0f}"</span>, name, age, salary);
         }
     }
-}</pre>
-                </div>
-            </div>
-        </div>
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
 
-        <!-- Chapter 8: Best Practices -->
-        <div id="best-practices" class="chapter">
-            <h2 class="chapter-title">8. Performance & Best Practices</h2>
-            <div class="chapter-content">
-                <p>Understanding performance characteristics and following best practices is crucial for efficient
-                    collection usage.</p>
+                    <!-- Chapter 8: Best Practices -->
+                    <section id="best-practices" class="chapter">
+                        <h2 class="chapter-title">8. Performance and Best Practices</h2>
+                        <div class="chapter-content">
+                            <p>Understanding performance characteristics and following best practices is crucial for efficient collection usage.</p>
 
-                <h3 class="section-title">Performance Characteristics</h3>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Collection</th>
-                                <th>Get/Access</th>
-                                <th>Add</th>
-                                <th>Remove</th>
-                                <th>Contains</th>
-                                <th>Memory</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>ArrayList</td>
-                                <td>O(1)</td>
-                                <td>O(1) amortized</td>
-                                <td>O(n)</td>
-                                <td>O(n)</td>
-                                <td>Low</td>
-                            </tr>
-                            <tr>
-                                <td>LinkedList</td>
-                                <td>O(n)</td>
-                                <td>O(1)</td>
-                                <td>O(1) if node known</td>
-                                <td>O(n)</td>
-                                <td>High</td>
-                            </tr>
-                            <tr>
-                                <td>HashSet</td>
-                                <td>N/A</td>
-                                <td>O(1)</td>
-                                <td>O(1)</td>
-                                <td>O(1)</td>
-                                <td>Medium</td>
-                            </tr>
-                            <tr>
-                                <td>TreeSet</td>
-                                <td>N/A</td>
-                                <td>O(log n)</td>
-                                <td>O(log n)</td>
-                                <td>O(log n)</td>
-                                <td>High</td>
-                            </tr>
-                            <tr>
-                                <td>HashMap</td>
-                                <td>O(1)</td>
-                                <td>O(1)</td>
-                                <td>O(1)</td>
-                                <td>O(1)</td>
-                                <td>Medium</td>
-                            </tr>
-                            <tr>
-                                <td>TreeMap</td>
-                                <td>O(log n)</td>
-                                <td>O(log n)</td>
-                                <td>O(log n)</td>
-                                <td>O(log n)</td>
-                                <td>High</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                            <h3>Performance Characteristics</h3>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Collection</th>
+                                            <th>Get/Access</th>
+                                            <th>Add</th>
+                                            <th>Remove</th>
+                                            <th>Contains</th>
+                                            <th>Memory</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>ArrayList</td>
+                                            <td>O(1)</td>
+                                            <td>O(1) amortized</td>
+                                            <td>O(n)</td>
+                                            <td>O(n)</td>
+                                            <td>Low</td>
+                                        </tr>
+                                        <tr>
+                                            <td>LinkedList</td>
+                                            <td>O(n)</td>
+                                            <td>O(1)</td>
+                                            <td>O(1) if node known</td>
+                                            <td>O(n)</td>
+                                            <td>High</td>
+                                        </tr>
+                                        <tr>
+                                            <td>HashSet</td>
+                                            <td>N/A</td>
+                                            <td>O(1)</td>
+                                            <td>O(1)</td>
+                                            <td>O(1)</td>
+                                            <td>Medium</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TreeSet</td>
+                                            <td>N/A</td>
+                                            <td>O(log n)</td>
+                                            <td>O(log n)</td>
+                                            <td>O(log n)</td>
+                                            <td>High</td>
+                                        </tr>
+                                        <tr>
+                                            <td>HashMap</td>
+                                            <td>O(1)</td>
+                                            <td>O(1)</td>
+                                            <td>O(1)</td>
+                                            <td>O(1)</td>
+                                            <td>Medium</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TreeMap</td>
+                                            <td>O(log n)</td>
+                                            <td>O(log n)</td>
+                                            <td>O(log n)</td>
+                                            <td>O(log n)</td>
+                                            <td>High</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
 
-                <h3 class="section-title">Best Practices Example</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Collections Best Practices</div>
-                    <pre><span class="keyword">import</span> java.util.*;
+                            <h3>Best Practices Example</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span><i class="fab fa-java"></i> Collections Best Practices</span>
+                                </div>
+                                <pre><code><span class="keyword">import</span> java.util.*;
 <span class="keyword">import</span> java.util.concurrent.ConcurrentHashMap;
 
 <span class="keyword">public class</span> <span class="type">BestPractices</span> {
     <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
         <span class="comment">// 1. Choose the right collection type</span>
         demonstrateCollectionChoice();
-        
+
         <span class="comment">// 2. Initialize with appropriate capacity</span>
         demonstrateCapacity();
-        
+
         <span class="comment">// 3. Use immutable collections when possible</span>
         demonstrateImmutableCollections();
-        
+
         <span class="comment">// 4. Thread safety considerations</span>
         demonstrateThreadSafety();
     }
-    
+
     <span class="keyword">private static void</span> demonstrateCollectionChoice() {
         System.out.println(<span class="string">"1. Choosing the right collection:"</span>);
-        
+
         <span class="comment">// Use ArrayList for frequent random access</span>
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; frequentAccess = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;();
-        
+
         <span class="comment">// Use LinkedList for frequent insertions at beginning/end</span>
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; frequentModification = <span class="keyword">new</span> <span class="type">LinkedList</span>&lt;&gt;();
-        
+
         <span class="comment">// Use HashSet for fast membership testing</span>
         <span class="type">Set</span>&lt;<span class="type">String</span>&gt; fastLookup = <span class="keyword">new</span> <span class="type">HashSet</span>&lt;&gt;();
-        
+
         <span class="comment">// Use ArrayDeque instead of Stack</span>
         <span class="type">Deque</span>&lt;<span class="type">String</span>&gt; stack = <span class="keyword">new</span> <span class="type">ArrayDeque</span>&lt;&gt;();
-        
-        System.out.println(<span class="string">"✓ Choose collection based on usage patterns\n"</span>);
+
+        System.out.println(<span class="string">"Choose collection based on usage patterns\n"</span>);
     }
-    
+
     <span class="keyword">private static void</span> demonstrateCapacity() {
         System.out.println(<span class="string">"2. Capacity initialization:"</span>);
-        
+
         <span class="comment">// Initialize with expected size to avoid resizing</span>
         <span class="type">List</span>&lt;<span class="type">Integer</span>&gt; list = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;(<span class="number">1000</span>);
-        
+
         <span class="comment">// For maps, consider load factor</span>
         <span class="keyword">int</span> expectedSize = <span class="number">1000</span>;
         <span class="type">Map</span>&lt;<span class="type">String</span>, <span class="type">String</span>&gt; map = <span class="keyword">new</span> <span class="type">HashMap</span>&lt;&gt;((<span class="keyword">int</span>) (expectedSize / <span class="number">0.75f</span>) + <span class="number">1</span>);
-        
-        System.out.println(<span class="string">"✓ Initialize with appropriate capacity\n"</span>);
+
+        System.out.println(<span class="string">"Initialize with appropriate capacity\n"</span>);
     }
-    
+
     <span class="keyword">private static void</span> demonstrateImmutableCollections() {
         System.out.println(<span class="string">"3. Immutable collections:"</span>);
-        
+
         <span class="comment">// Java 9+ immutable collections</span>
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; immutableList = <span class="type">List</span>.of(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>);
         <span class="type">Set</span>&lt;<span class="type">String</span>&gt; immutableSet = <span class="type">Set</span>.of(<span class="string">"X"</span>, <span class="string">"Y"</span>, <span class="string">"Z"</span>);
         <span class="type">Map</span>&lt;<span class="type">String</span>, <span class="type">Integer</span>&gt; immutableMap = <span class="type">Map</span>.of(<span class="string">"one"</span>, <span class="number">1</span>, <span class="string">"two"</span>, <span class="number">2</span>);
-        
+
         System.out.println(<span class="string">"Immutable list: "</span> + immutableList);
-        System.out.println(<span class="string">"✓ Use immutable collections when data won't change\n"</span>);
+        System.out.println(<span class="string">"Use immutable collections when data won't change\n"</span>);
     }
-    
+
     <span class="keyword">private static void</span> demonstrateThreadSafety() {
         System.out.println(<span class="string">"4. Thread safety:"</span>);
-        
+
         <span class="comment">// Thread-safe collections</span>
         <span class="type">Map</span>&lt;<span class="type">String</span>, <span class="type">String</span>&gt; concurrentMap = <span class="keyword">new</span> <span class="type">ConcurrentHashMap</span>&lt;&gt;();
         <span class="type">List</span>&lt;<span class="type">String</span>&gt; synchronizedList = <span class="type">Collections</span>.synchronizedList(<span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;());
-        
-        System.out.println(<span class="string">"✓ Choose appropriate thread-safe collections\n"</span>);
+
+        System.out.println(<span class="string">"Choose appropriate thread-safe collections\n"</span>);
     }
-}</pre>
+}</code></pre>
+                            </div>
+
+                            <div class="feature-grid">
+                                <div class="card">
+                                    <h4>Key Performance Tips</h4>
+                                    <ul>
+                                        <li>Initialize collections with expected capacity</li>
+                                        <li>Use appropriate collection for access patterns</li>
+                                        <li>Implement equals() and hashCode() properly</li>
+                                        <li>Use enhanced for-loops when possible</li>
+                                        <li>Consider thread-safety requirements</li>
+                                    </ul>
+                                </div>
+                                <div class="card">
+                                    <h4>Common Pitfalls</h4>
+                                    <ul>
+                                        <li>ConcurrentModificationException during iteration</li>
+                                        <li>Poor hashCode() implementation</li>
+                                        <li>Using wrong collection type</li>
+                                        <li>Memory leaks with unused references</li>
+                                        <li>Not using generics (raw types)</li>
+                                    </ul>
+                                </div>
+                                <div class="card">
+                                    <h4>Collection Selection Guide</h4>
+                                    <ul>
+                                        <li><strong>ArrayList:</strong> Random access, few modifications</li>
+                                        <li><strong>LinkedList:</strong> Frequent insertions/deletions</li>
+                                        <li><strong>HashSet:</strong> Fast lookups, no duplicates</li>
+                                        <li><strong>TreeSet:</strong> Sorted unique elements</li>
+                                        <li><strong>HashMap:</strong> Key-value mapping</li>
+                                        <li><strong>ArrayDeque:</strong> Stack/Queue operations</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
+                                <ul>
+                                    <li>Choose the right collection based on your specific use case</li>
+                                    <li>Understand time complexity for different operations</li>
+                                    <li>Use generics for type safety and better performance</li>
+                                    <li>Leverage Stream API for functional programming</li>
+                                    <li>Consider thread safety requirements in concurrent applications</li>
+                                    <li>Always implement equals() and hashCode() consistently</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
                 </div>
 
-                <div class="summary-grid">
-                    <div class="summary-card">
-                        <h4>Key Performance Tips</h4>
-                        <ul>
-                            <li>Initialize collections with expected capacity</li>
-                            <li>Use appropriate collection for access patterns</li>
-                            <li>Implement equals() and hashCode() properly</li>
-                            <li>Use enhanced for-loops when possible</li>
-                            <li>Consider thread-safety requirements</li>
-                        </ul>
-                    </div>
-                    <div class="summary-card">
-                        <h4>Common Pitfalls</h4>
-                        <ul>
-                            <li>ConcurrentModificationException during iteration</li>
-                            <li>Poor hashCode() implementation</li>
-                            <li>Using wrong collection type</li>
-                            <li>Memory leaks with unused references</li>
-                            <li>Not using generics (raw types)</li>
-                        </ul>
-                    </div>
-                    <div class="summary-card">
-                        <h4>Collection Selection Guide</h4>
-                        <ul>
-                            <li><strong>ArrayList:</strong> Random access, few modifications</li>
-                            <li><strong>LinkedList:</strong> Frequent insertions/deletions</li>
-                            <li><strong>HashSet:</strong> Fast lookups, no duplicates</li>
-                            <li><strong>TreeSet:</strong> Sorted unique elements</li>
-                            <li><strong>HashMap:</strong> Key-value mapping</li>
-                            <li><strong>ArrayDeque:</strong> Stack/Queue operations</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <h3 class="section-title">Memory Efficiency Tips</h3>
-                <div class="code-block">
-                    <div class="code-title"><i class="fab fa-java"></i> Memory Optimization</div>
-                    <pre><span class="keyword">import</span> java.util.*;
-
-<span class="keyword">public class</span> <span class="type">MemoryOptimization</span> {
-    <span class="keyword">public static void</span> main(<span class="type">String</span>[] args) {
-        <span class="comment">// Trim ArrayList after bulk operations</span>
-        <span class="type">List</span>&lt;<span class="type">String</span>&gt; list = <span class="keyword">new</span> <span class="type">ArrayList</span>&lt;&gt;(<span class="number">1000</span>);
-        <span class="comment">// ... add only 100 elements</span>
-        <span class="keyword">if</span> (list <span class="keyword">instanceof</span> <span class="type">ArrayList</span>) {
-            ((<span class="type">ArrayList</span>&lt;<span class="type">String</span>&gt;) list).trimToSize();
-        }
-        
-        <span class="comment">// Use primitive streams to avoid boxing</span>
-        <span class="keyword">int</span>[] numbers = {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>};
-        <span class="keyword">int</span> sum = <span class="type">Arrays</span>.stream(numbers).sum(); <span class="comment">// No boxing overhead</span>
-        
-        <span class="comment">// Remove unused references</span>
-        <span class="type">Map</span>&lt;<span class="type">String</span>, <span class="type">Object</span>&gt; cache = <span class="keyword">new</span> <span class="type">HashMap</span>&lt;&gt;();
-        <span class="comment">// ... use cache ...</span>
-        cache.clear(); <span class="comment">// Clear when no longer needed</span>
-        
-        System.out.println(<span class="string">"Memory optimizations applied"</span>);
-    }
-}</pre>
-                </div>
-
-                <div class="note-box">
-                    <h4><i class="fas fa-lightbulb"></i> Final Recommendations</h4>
-                    <p><strong>Profile first:</strong> Measure actual performance bottlenecks before optimizing.</p>
-                    <p><strong>Understand access patterns:</strong> Choose collections based on how you'll use them.</p>
-                    <p><strong>Consider external libraries:</strong> Guava, Eclipse Collections for specialized needs.
-                    </p>
-                    <p><strong>Stay updated:</strong> New Java versions bring performance improvements.</p>
-                </div>
-
-                <h3 class="section-title">Conclusion</h3>
-                <p>The Java Collections Framework provides a comprehensive set of data structures and algorithms for
-                    efficient data manipulation. By understanding the characteristics, performance implications, and
-                    best practices of different collection types, you can build more efficient and maintainable
-                    applications.</p>
-
-                <div class="highlight-box">
-                    <h4><i class="fas fa-graduation-cap"></i> Key Takeaways</h4>
-                    <ul>
-                        <li>Choose the right collection based on your specific use case</li>
-                        <li>Understand time complexity for different operations</li>
-                        <li>Use generics for type safety and better performance</li>
-                        <li>Leverage Stream API for functional programming</li>
-                        <li>Consider thread safety requirements in concurrent applications</li>
-                        <li>Always implement equals() and hashCode() consistently</li>
-                    </ul>
-                </div>
-
-                <div
-                    style="text-align: center; margin: 3rem 0; padding: 2rem; background: var(--primary-gradient); color: white; border-radius: 12px;">
-                    <h3 style="margin: 0 0 1rem 0; font-size: 1.5rem;">Master Java Collections!</h3>
-                    <p style="margin: 0; opacity: 0.9;">Choose wisely, code efficiently, and build scalable applications
-                    </p>
-                </div>
-            </div>
+                <footer class="article-nav">
+                    <a href="/java/advanced/thread.html" class="nav-link next">
+                        <span>Next</span>
+                        <strong>Java Multithreading</strong>
+                    </a>
+                </footer>
+            </article>
         </div>
-    </div>
+    </main>
 
-    <!-- Footer Section -->
-        <footer class="footer">
-        <div id="footer-placeholder"></div>
-    </footer>
-    <script>
-        fetch("/footer.html")
-            .then(res => res.text())
-            .then(data => {
-                document.getElementById("footer-placeholder").innerHTML = data;
-            });
-    </script>
-    <script src="/js/footer.js"></script>
-    <script src="/js/reading-progress.js"></script>
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
 
-    <script>
-        // Highlight current section in TOC
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.chapter');
-            const tocLinks = document.querySelectorAll('.toc a');
-
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 150;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
-                }
-            });
-
-            tocLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + current) {
-                    link.classList.add('active');
-                }
-            });
-        });
-
-        // Mobile menu functionality
-        const mobileToggle = document.querySelector('.mobile-toggle');
-        const navMenu = document.querySelector('.nav-menu');
-
-        if (mobileToggle) {
-            mobileToggle.addEventListener('click', () => {
-                navMenu.classList.toggle('active');
-            });
-        }
-
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', (e) => {
-            if (navMenu && mobileToggle &&
-                !navMenu.contains(e.target) &&
-                !mobileToggle.contains(e.target)) {
-                navMenu.classList.remove('active');
-            }
-        });
-
-        // Add collapsible functionality for code examples
-        document.querySelectorAll('.collapsible-header').forEach(header => {
-            header.addEventListener('click', () => {
-                const content = header.nextElementSibling;
-                const icon = header.querySelector('.collapsible-icon');
-
-                header.classList.toggle('active');
-                content.classList.toggle('active');
-
-                if (content.classList.contains('active')) {
-                    content.style.display = 'block';
-                } else {
-                    content.style.display = 'none';
-                }
-            });
-        });
-
-        // Initialize reading progress
-        updateReadingProgress();
-    </script>
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
-
 </html>
