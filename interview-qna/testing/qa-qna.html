@@ -1,1335 +1,919 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manual QA Testing - Interview Guide</title>
+    <meta name="description" content="Comprehensive Manual QA Testing Interview Guide covering testing fundamentals, test design, defect management, Agile practices, and scenario-based questions.">
+    <title>Manual QA Testing Interview Guide - TechTok Cafe</title>
+
     <link rel="icon" type="image/png" href="/assets/images/logo.png">
-    <link rel="stylesheet" href="interview.css">
-    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
 </head>
 
 <body>
-    <!-- Progress Bar -->
-    <div class="progress-container">
-        <div class="progress-bar" id="progressBar"></div>
-    </div>
-    <!-- Back Navigation -->
-    <div class="back-nav">
-        <a href="/index.html" class="back-btn">
-            <i class="fas fa-arrow-left"></i>
-            Back to Home
-        </a>
-    </div>
-    <div class="container">
-        <div class="header">
-            <h1>Manual QA Testing Interview Guide</h1>
-            <p>Comprehensive Q&A Reference for Testing Professionals</p>
-            <p class="author">By Mohammad S Hossain</p>
-        </div>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
 
-        <div class="toc">
-            <h2>📋 Table of Contents</h2>
-            <ul>
-                <li><a href="#fundamentals">Testing Fundamentals</a></li>
-                <li><a href="#test-design">Test Design & Execution</a></li>
-                <li><a href="#defect-management">Defect Management</a></li>
-                <li><a href="#agile-process">Agile & Process</a></li>
-                <li><a href="#domain-specific">Domain-Specific (Banking/Finance)</a></li>
-                <li><a href="#scenario-based">Scenario-Based Questions</a></li>
-            </ul>
-        </div>
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
 
-        <div class="section" id="fundamentals">
-            <div class="section-header">
-                <h2><span class="emoji">🔹</span>Testing Fundamentals</h2>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q3. What is Software Testing?</div>
-                <div class="question-content">
-                    <div class="answer-section">
-                        <h4>Definition</h4>
-                        <p>Software testing is the process of evaluating and verifying that a software application
-                            functions correctly, meets specified requirements, and is free of defects.</p>
-
-                        <div class="key-points">
-                            <h4>Key Points:</h4>
-                            <ul>
-                                <li><strong>Purpose:</strong> Find bugs, ensure quality, validate requirements</li>
-                                <li><strong>Types:</strong> Manual testing (human execution) vs Automated testing
-                                    (tool-based)</li>
-                                <li><strong>Goal:</strong> Deliver reliable, high-quality software to end users</li>
-                            </ul>
-                        </div>
-
-                        <div class="tip-box">
-                            <h5>Interview Tip</h5>
-                            <p>Always emphasize that testing is not just about finding bugs - it's about ensuring the
-                                software meets user expectations and business requirements.</p>
-                        </div>
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Manual QA Testing Interview Guide</h1>
+                    <p class="article-subtitle">Comprehensive Q&A Reference for Testing Professionals</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 3-4 hours study</span>
+                        <span><i class="fas fa-signal"></i> Beginner to Advanced</span>
+                        <span><i class="fas fa-question-circle"></i> 30+ Questions</span>
                     </div>
-                </div>
-            </div>
+                </header>
 
-            <div class="question-block">
-                <div class="question-header">Q4. What are the different levels of testing?</div>
-                <div class="question-content">
-                    <div class="process-flow">
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>Unit Testing</div>
+                <nav class="toc" id="toc"></nav>
+
+                <div class="article-body">
+                    <!-- TESTING FUNDAMENTALS SECTION -->
+                    <section id="testing-fundamentals" class="chapter">
+                        <h2 class="chapter-title">Testing Fundamentals</h2>
+                        <div class="chapter-content">
+                            <p>Core concepts every QA professional must know for interviews.</p>
                         </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>Integration Testing</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>System Testing</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>Acceptance Testing</div>
-                        </div>
-                    </div>
+                    </section>
 
-                    <div class="key-points">
-                        <h4>1. Unit Testing</h4>
-                        <ul>
-                            <li>Test individual components/modules in isolation</li>
-                            <li>Usually done by developers</li>
-                            <li>Fastest and cheapest to fix defects</li>
-                        </ul>
+                    <!-- Question 1 -->
+                    <section id="q1-software-testing" class="chapter">
+                        <h2 class="chapter-title">Q1: What is Software Testing?</h2>
+                        <div class="chapter-content">
+                            <p>Software testing is the process of evaluating and verifying that a software application functions correctly, meets specified requirements, and is free of defects.</p>
 
-                        <h4>2. Integration Testing</h4>
-                        <ul>
-                            <li>Test interaction between integrated modules</li>
-                            <li>Types: Big Bang, Top-down, Bottom-up, Sandwich</li>
-                        </ul>
-
-                        <h4>3. System Testing</h4>
-                        <ul>
-                            <li>Test complete integrated system</li>
-                            <li>Verify system meets specified requirements</li>
-                            <li>End-to-end functionality testing</li>
-                        </ul>
-
-                        <h4>4. Acceptance Testing</h4>
-                        <ul>
-                            <li>Final testing before release</li>
-                            <li>Types: User Acceptance Testing (UAT), Business Acceptance Testing (BAT)</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q5. Difference between Functional and Non-functional testing</div>
-                <div class="question-content">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Functional Testing</th>
-                                <th>Non-functional Testing</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Tests <strong>what</strong> the system does</td>
-                                <td>Tests <strong>how</strong> the system performs</td>
-                            </tr>
-                            <tr>
-                                <td>Validates business requirements</td>
-                                <td>Validates system characteristics</td>
-                            </tr>
-                            <tr>
-                                <td>Input → Process → Output</td>
-                                <td>Performance, security, usability</td>
-                            </tr>
-                            <tr>
-                                <td>Examples: Login, payments, search</td>
-                                <td>Examples: Load testing, security testing</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q6. Difference between Verification and Validation</div>
-                <div class="question-content">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Verification</th>
-                                <th>Validation</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>"Are we building the product right?"</td>
-                                <td>"Are we building the right product?"</td>
-                            </tr>
-                            <tr>
-                                <td>Static testing (no code execution)</td>
-                                <td>Dynamic testing (code execution)</td>
-                            </tr>
-                            <tr>
-                                <td>Reviews, inspections, walkthroughs</td>
-                                <td>Actual testing with test cases</td>
-                            </tr>
-                            <tr>
-                                <td>Done during development</td>
-                                <td>Done after development</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q7. What is the Software Testing Life Cycle (STLC)?</div>
-                <div class="question-content">
-                    <div class="process-flow">
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>Requirement Analysis</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>Test Planning</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>Test Case Development</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>Environment Setup</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">5</div>
-                            <div>Test Execution</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">6</div>
-                            <div>Test Closure</div>
-                        </div>
-                    </div>
-
-                    <div class="key-points">
-                        <h4>Phase Details:</h4>
-                        <ul>
-                            <li><strong>Requirement Analysis:</strong> Understand and analyze requirements, identify
-                                testable requirements</li>
-                            <li><strong>Test Planning:</strong> Create test strategy and plan, estimate effort and
-                                resources</li>
-                            <li><strong>Test Case Development:</strong> Write detailed test cases, prepare test data
-                            </li>
-                            <li><strong>Environment Setup:</strong> Configure test environment, set up test data</li>
-                            <li><strong>Test Execution:</strong> Execute test cases, log defects</li>
-                            <li><strong>Test Closure:</strong> Test completion report, lessons learned</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q8. Test Case vs Test Scenario</div>
-                <div class="question-content">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Test Case</th>
-                                <th>Test Scenario</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Detailed step-by-step instructions</td>
-                                <td>High-level functionality to test</td>
-                            </tr>
-                            <tr>
-                                <td>Specific input values and expected results</td>
-                                <td>One-liner description</td>
-                            </tr>
-                            <tr>
-                                <td>Example: "Enter username 'admin', password '123', click login, verify dashboard
-                                    appears"</td>
-                                <td>Example: "Verify user login functionality"</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="example-box">
-                        <h5>Example Relationship:</h5>
-                        <p><strong>Test Scenario:</strong> User Registration</p>
-                        <p><strong>Test Cases:</strong></p>
-                        <ul>
-                            <li>TC001: Register with valid data</li>
-                            <li>TC002: Register with invalid email</li>
-                            <li>TC003: Register with existing email</li>
-                            <li>TC004: Register with weak password</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q9. What is Regression Testing?</div>
-                <div class="question-content">
-                    <div class="answer-section">
-                        <h4>Definition</h4>
-                        <p>Testing existing functionality after changes to ensure new code doesn't break working
-                            features.</p>
-
-                        <div class="key-points">
-                            <h4>When to perform:</h4>
-                            <ul>
-                                <li>After bug fixes</li>
-                                <li>After new feature additions</li>
-                                <li>After code refactoring</li>
-                                <li>Before releases</li>
-                            </ul>
-                        </div>
-
-                        <div class="priority-matrix">
-                            <div class="priority-item">
-                                <h6>Full Regression</h6>
-                                <p>Test entire application</p>
+                            <div class="info-box">
+                                <h4><i class="fas fa-key"></i> Key Points</h4>
+                                <ul>
+                                    <li><strong>Purpose:</strong> Find bugs, ensure quality, validate requirements</li>
+                                    <li><strong>Types:</strong> Manual testing (human execution) vs Automated testing (tool-based)</li>
+                                    <li><strong>Goal:</strong> Deliver reliable, high-quality software to end users</li>
+                                </ul>
                             </div>
-                            <div class="priority-item">
-                                <h6>Partial Regression</h6>
-                                <p>Test affected areas only</p>
-                            </div>
-                            <div class="priority-item">
-                                <h6>Unit Regression</h6>
-                                <p>Test individual units</p>
-                            </div>
-                            <div class="priority-item">
-                                <h6>Progressive Regression</h6>
-                                <p>Test new functionality</p>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Interview Tip</h4>
+                                <p>Always emphasize that testing is not just about finding bugs - it's about ensuring the software meets user expectations and business requirements.</p>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </section>
 
-            <div class="question-block">
-                <div class="question-header">Q10. What is Smoke and Sanity Testing?</div>
-                <div class="question-content">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Smoke Testing</th>
-                                <th>Sanity Testing</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Wide and Shallow</strong></td>
-                                <td><strong>Narrow and Deep</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Tests basic functionality</td>
-                                <td>Tests specific functionality after changes</td>
-                            </tr>
-                            <tr>
-                                <td>Build acceptance testing</td>
-                                <td>Subset of regression testing</td>
-                            </tr>
-                            <tr>
-                                <td>"Can we proceed with detailed testing?"</td>
-                                <td>"Is the specific fix working correctly?"</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <!-- Question 2 -->
+                    <section id="q2-testing-levels" class="chapter">
+                        <h2 class="chapter-title">Q2: What are the different levels of testing?</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-layer-group"></i> Testing Levels</span></div>
+                                <pre><code>1. Unit Testing
+   - Test individual components/modules in isolation
+   - Usually done by developers
+   - Fastest and cheapest to fix defects
 
-                    <div class="example-box">
-                        <h5>Banking App Example:</h5>
-                        <p><strong>Smoke:</strong> Login works, main menu loads, basic navigation functional</p>
-                        <p><strong>Sanity:</strong> After fixing transfer bug, verify transfer functionality works
-                            correctly</p>
-                    </div>
-                </div>
-            </div>
+2. Integration Testing
+   - Test interaction between integrated modules
+   - Types: Big Bang, Top-down, Bottom-up, Sandwich
 
-            <div class="question-block">
-                <div class="question-header">Q11. What is Exploratory Testing?</div>
-                <div class="question-content">
-                    <div class="answer-section">
-                        <h4>Definition</h4>
-                        <p>Simultaneous learning, test design, and test execution without predetermined test cases.</p>
+3. System Testing
+   - Test complete integrated system
+   - Verify system meets specified requirements
+   - End-to-end functionality testing
 
-                        <div class="key-points">
-                            <h4>Characteristics:</h4>
-                            <ul>
-                                <li>Investigative approach</li>
-                                <li>Real-time decision making</li>
-                                <li>Unscripted testing</li>
-                                <li>Focus on discovery and learning</li>
-                            </ul>
-
-                            <h4>Benefits:</h4>
-                            <ul>
-                                <li>Finds unexpected issues</li>
-                                <li>Improves test coverage</li>
-                                <li>Provides quick feedback</li>
-                                <li>Complements scripted testing</li>
-                            </ul>
+4. Acceptance Testing
+   - Final testing before release
+   - Types: User Acceptance Testing (UAT), Business Acceptance Testing (BAT)</code></pre>
+                            </div>
                         </div>
+                    </section>
 
-                        <div class="note-box">
-                            <h5>When to Use Exploratory Testing</h5>
-                            <p>Best used when requirements are unclear, time is limited, or when looking for usability
-                                issues that scripted tests might miss.</p>
+                    <!-- Question 3 -->
+                    <section id="q3-functional-nonfunctional" class="chapter">
+                        <h2 class="chapter-title">Q3: Functional vs Non-functional Testing</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-balance-scale"></i> Comparison</span></div>
+                                <pre><code>Functional Testing          | Non-functional Testing
+----------------------------+---------------------------
+Tests WHAT the system does  | Tests HOW the system performs
+Validates business requirements | Validates system characteristics
+Input → Process → Output    | Performance, security, usability
+Examples: Login, payments   | Examples: Load testing, security</code></pre>
+                            </div>
                         </div>
-                    </div>
+                    </section>
+
+                    <!-- Question 4 -->
+                    <section id="q4-verification-validation" class="chapter">
+                        <h2 class="chapter-title">Q4: Verification vs Validation</h2>
+                        <div class="chapter-content">
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-check-double"></i> Verification</h4>
+                                    <ul>
+                                        <li>"Are we building the product right?"</li>
+                                        <li>Static testing (no code execution)</li>
+                                        <li>Reviews, inspections, walkthroughs</li>
+                                        <li>Done during development</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-check-circle"></i> Validation</h4>
+                                    <ul>
+                                        <li>"Are we building the right product?"</li>
+                                        <li>Dynamic testing (code execution)</li>
+                                        <li>Actual testing with test cases</li>
+                                        <li>Done after development</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 5 -->
+                    <section id="q5-stlc" class="chapter">
+                        <h2 class="chapter-title">Q5: Software Testing Life Cycle (STLC)</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-sync-alt"></i> STLC Phases</span></div>
+                                <pre><code>1. Requirement Analysis
+   └─ Understand and analyze requirements, identify testable requirements
+
+2. Test Planning
+   └─ Create test strategy and plan, estimate effort and resources
+
+3. Test Case Development
+   └─ Write detailed test cases, prepare test data
+
+4. Environment Setup
+   └─ Configure test environment, set up test data
+
+5. Test Execution
+   └─ Execute test cases, log defects
+
+6. Test Closure
+   └─ Test completion report, lessons learned</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 6 -->
+                    <section id="q6-testcase-scenario" class="chapter">
+                        <h2 class="chapter-title">Q6: Test Case vs Test Scenario</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-table"></i> Comparison</span></div>
+                                <pre><code>Test Case                          | Test Scenario
+-----------------------------------+---------------------------
+Detailed step-by-step instructions | High-level functionality to test
+Specific input values and results  | One-liner description
+Example: "Enter username 'admin',  | Example: "Verify user login
+password '123', click login,       | functionality"
+verify dashboard appears"          |</code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-project-diagram"></i> Example Relationship</h4>
+                                <p><strong>Test Scenario:</strong> User Registration</p>
+                                <ul>
+                                    <li>TC001: Register with valid data</li>
+                                    <li>TC002: Register with invalid email</li>
+                                    <li>TC003: Register with existing email</li>
+                                    <li>TC004: Register with weak password</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 7 -->
+                    <section id="q7-regression" class="chapter">
+                        <h2 class="chapter-title">Q7: What is Regression Testing?</h2>
+                        <div class="chapter-content">
+                            <p>Testing existing functionality after changes to ensure new code doesn't break working features.</p>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-redo"></i> When to Perform</h4>
+                                <ul>
+                                    <li>After bug fixes</li>
+                                    <li>After new feature additions</li>
+                                    <li>After code refactoring</li>
+                                    <li>Before releases</li>
+                                </ul>
+                            </div>
+
+                            <div class="two-column-grid">
+                                <div class="highlight-box">
+                                    <h4>Full Regression</h4>
+                                    <p>Test entire application</p>
+                                </div>
+                                <div class="highlight-box">
+                                    <h4>Partial Regression</h4>
+                                    <p>Test affected areas only</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 8 -->
+                    <section id="q8-smoke-sanity" class="chapter">
+                        <h2 class="chapter-title">Q8: Smoke vs Sanity Testing</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-balance-scale"></i> Comparison</span></div>
+                                <pre><code>Smoke Testing                     | Sanity Testing
+----------------------------------+----------------------------------
+Wide and Shallow                  | Narrow and Deep
+Tests basic functionality         | Tests specific functionality
+Build acceptance testing          | Subset of regression testing
+"Can we proceed with testing?"    | "Is the specific fix working?"</code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-university"></i> Banking App Example</h4>
+                                <ul>
+                                    <li><strong>Smoke:</strong> Login works, main menu loads, basic navigation functional</li>
+                                    <li><strong>Sanity:</strong> After fixing transfer bug, verify transfer functionality works correctly</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 9 -->
+                    <section id="q9-exploratory" class="chapter">
+                        <h2 class="chapter-title">Q9: What is Exploratory Testing?</h2>
+                        <div class="chapter-content">
+                            <p>Simultaneous learning, test design, and test execution without predetermined test cases.</p>
+
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-search"></i> Characteristics</h4>
+                                    <ul>
+                                        <li>Investigative approach</li>
+                                        <li>Real-time decision making</li>
+                                        <li>Unscripted testing</li>
+                                        <li>Focus on discovery</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-check"></i> Benefits</h4>
+                                    <ul>
+                                        <li>Finds unexpected issues</li>
+                                        <li>Improves test coverage</li>
+                                        <li>Provides quick feedback</li>
+                                        <li>Complements scripted testing</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> When to Use</h4>
+                                <p>Best used when requirements are unclear, time is limited, or when looking for usability issues that scripted tests might miss.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- TEST DESIGN SECTION -->
+                    <section id="test-design" class="chapter">
+                        <h2 class="chapter-title">Test Design & Execution</h2>
+                        <div class="chapter-content">
+                            <p>Creating effective test cases and ensuring thorough test coverage.</p>
+                        </div>
+                    </section>
+
+                    <!-- Question 10 -->
+                    <section id="q10-good-testcase" class="chapter">
+                        <h2 class="chapter-title">Q10: How to Write a Good Test Case?</h2>
+                        <div class="chapter-content">
+                            <div class="info-box">
+                                <h4><i class="fas fa-check-square"></i> Good Test Case Characteristics</h4>
+                                <ul>
+                                    <li><strong>Clear and Concise:</strong> Easy to understand</li>
+                                    <li><strong>Traceable:</strong> Linked to requirements</li>
+                                    <li><strong>Repeatable:</strong> Consistent results</li>
+                                    <li><strong>Independent:</strong> Not dependent on other test cases</li>
+                                </ul>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-alt"></i> Test Case Template</span></div>
+                                <pre><code>Test Case ID: TC_001
+Test Scenario: User Login
+Pre-conditions: User account exists
+
+Test Steps:
+1. Navigate to login page
+2. Enter valid username
+3. Enter valid password
+4. Click login button
+
+Expected Result: User redirected to dashboard
+Post-conditions: User logged in successfully
+Priority: High
+Test Data: Username: testuser@email.com, Password: Test123!</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Best Practices</h4>
+                                <ul>
+                                    <li>Use action verbs (Click, Enter, Verify)</li>
+                                    <li>Include specific test data</li>
+                                    <li>Write from user perspective</li>
+                                    <li>Keep steps simple and atomic</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 11 -->
+                    <section id="q11-test-coverage" class="chapter">
+                        <h2 class="chapter-title">Q11: How to Ensure Complete Test Coverage?</h2>
+                        <div class="chapter-content">
+                            <div class="info-box">
+                                <h4><i class="fas fa-clipboard-check"></i> Requirements Traceability Matrix (RTM)</h4>
+                                <ul>
+                                    <li>Map test cases to requirements</li>
+                                    <li>Ensure all requirements tested</li>
+                                </ul>
+                            </div>
+
+                            <div class="info-box success">
+                                <h4><i class="fas fa-tools"></i> Test Coverage Techniques</h4>
+                                <ul>
+                                    <li>Boundary Value Analysis</li>
+                                    <li>Equivalence Partitioning</li>
+                                    <li>Decision Table Testing</li>
+                                    <li>Peer reviews of test cases</li>
+                                    <li>Risk-based testing</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 12 -->
+                    <section id="q12-prioritize-testcases" class="chapter">
+                        <h2 class="chapter-title">Q12: How to Prioritize Test Cases?</h2>
+                        <div class="chapter-content">
+                            <div class="info-box">
+                                <h4><i class="fas fa-sort-amount-down"></i> Priority Factors</h4>
+                                <ol>
+                                    <li><strong>Business Impact:</strong> Critical functionality first</li>
+                                    <li><strong>Risk Assessment:</strong> High-risk areas priority</li>
+                                    <li><strong>Customer Usage:</strong> Frequently used features</li>
+                                    <li><strong>Complexity:</strong> Complex modules need more testing</li>
+                                </ol>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-flag"></i> Priority Levels</span></div>
+                                <pre><code>P0 - Critical: Blocker issues that prevent core functionality
+P1 - High:     Major functionality that impacts business
+P2 - Medium:   Important features with moderate impact
+P3 - Low:      Nice to have features</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- DEFECT MANAGEMENT SECTION -->
+                    <section id="defect-management" class="chapter">
+                        <h2 class="chapter-title">Defect Management</h2>
+                        <div class="chapter-content">
+                            <p>Bug lifecycle, reporting, and handling disagreements.</p>
+                        </div>
+                    </section>
+
+                    <!-- Question 13 -->
+                    <section id="q13-defect-lifecycle" class="chapter">
+                        <h2 class="chapter-title">Q13: What is the Defect Life Cycle?</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-bug"></i> Defect States</span></div>
+                                <pre><code>New → Assigned → Open → Fixed → Retest → Verified → Closed
+
+Alternative paths:
+- New → Rejected (not a valid defect)
+- Fixed → Reopened (issue persists)
+- Open → Deferred (fix postponed)
+
+Stage Descriptions:
+- New:      Defect reported by tester
+- Assigned: Assigned to developer
+- Open:     Developer working on fix
+- Fixed:    Developer completed fix
+- Retest:   Ready for testing
+- Verified: Fix confirmed working
+- Closed:   Defect resolved</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 14 -->
+                    <section id="q14-bug-report" class="chapter">
+                        <h2 class="chapter-title">Q14: What to Include When Raising a Bug?</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-bug"></i> Bug Report Template</span></div>
+                                <pre><code>Bug ID: BUG_001
+Summary: Login fails with valid credentials
+Description: User cannot login with correct username/password
+Severity: High | Priority: High
+Environment: Windows 10, Chrome 96.0
+
+Steps to Reproduce:
+1. Navigate to login page
+2. Enter username: test@email.com
+3. Enter password: Test123!
+4. Click Login button
+
+Expected Result: User should be logged in
+Actual Result: Error message "Invalid credentials"
+Screenshots: [attachment]
+Reporter: John Doe
+Date: 2024-01-15</code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-list-ul"></i> Essential Components</h4>
+                                <ul>
+                                    <li><strong>Bug ID:</strong> Unique identifier</li>
+                                    <li><strong>Summary:</strong> Brief description</li>
+                                    <li><strong>Steps to Reproduce:</strong> Detailed steps</li>
+                                    <li><strong>Severity/Priority:</strong> Impact assessment</li>
+                                    <li><strong>Environment:</strong> OS, browser, version</li>
+                                    <li><strong>Expected vs Actual Result:</strong> Clear comparison</li>
+                                    <li><strong>Screenshots:</strong> Visual evidence</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 15 -->
+                    <section id="q15-severity-priority" class="chapter">
+                        <h2 class="chapter-title">Q15: Severity vs Priority</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-balance-scale"></i> Comparison</span></div>
+                                <pre><code>Severity (Impact on functionality) | Priority (Business urgency)
+-----------------------------------+----------------------------
+Technical assessment               | Business decision
+High: System crash                 | High: Must fix immediately
+Medium: Feature not working        | Medium: Fix in current release
+Low: UI cosmetic issues            | Low: Fix in future release</code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-exclamation-circle"></i> Examples</h4>
+                                <ul>
+                                    <li><strong>High Severity, Low Priority:</strong> Crash in rarely used admin feature</li>
+                                    <li><strong>Low Severity, High Priority:</strong> Company logo missing on homepage</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 16 -->
+                    <section id="q16-developer-disagrees" class="chapter">
+                        <h2 class="chapter-title">Q16: Handling Developer Disagreement</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-question-circle"></i> Question</h4>
+                                <p>How do you handle a situation where a developer disagrees with your bug?</p>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-handshake"></i> Professional Approach</h4>
+                                <ol>
+                                    <li><strong>Document Evidence:</strong> Provide clear reproduction steps, screenshots</li>
+                                    <li><strong>Reference Requirements:</strong> Show how behavior violates specifications</li>
+                                    <li><strong>Facilitate Discussion:</strong> Arrange meeting with BA/PM if needed</li>
+                                    <li><strong>Seek Second Opinion:</strong> Ask team lead or senior tester</li>
+                                    <li><strong>Follow Process:</strong> Use established escalation procedures</li>
+                                    <li><strong>Maintain Professionalism:</strong> Focus on facts, not personal opinions</li>
+                                </ol>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Remember</h4>
+                                <p>The goal is to deliver quality software, not to be "right". Stay objective and collaborative.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- AGILE SECTION -->
+                    <section id="agile-process" class="chapter">
+                        <h2 class="chapter-title">Agile & Process</h2>
+                        <div class="chapter-content">
+                            <p>Agile methodology, sprints, and QA responsibilities.</p>
+                        </div>
+                    </section>
+
+                    <!-- Question 17 -->
+                    <section id="q17-agile-role" class="chapter">
+                        <h2 class="chapter-title">Q17: Your Role in Agile Sprint</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-tasks"></i> Sprint Phases</span></div>
+                                <pre><code>Sprint Planning:
+- Participate in story estimation
+- Understand acceptance criteria
+- Plan testing approach
+
+During Sprint:
+- Write test cases early
+- Collaborate with developers
+- Perform continuous testing
+- Attend daily standups
+
+Sprint Review/Retrospective:
+- Demo tested features
+- Share testing insights
+- Suggest improvements</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 18 -->
+                    <section id="q18-user-story" class="chapter">
+                        <h2 class="chapter-title">Q18: What is a User Story?</h2>
+                        <div class="chapter-content">
+                            <div class="info-box">
+                                <h4><i class="fas fa-user"></i> User Story Format</h4>
+                                <p><strong>"As a [user type], I want [functionality] so that [benefit]"</strong></p>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-university"></i> Example</span></div>
+                                <pre><code>As a bank customer,
+I want to check my account balance online
+So that I can monitor my finances without visiting the branch</code></pre>
+                            </div>
+
+                            <div class="info-box success">
+                                <h4><i class="fas fa-puzzle-piece"></i> Components</h4>
+                                <ul>
+                                    <li><strong>Role:</strong> Who wants the feature</li>
+                                    <li><strong>Goal:</strong> What they want to do</li>
+                                    <li><strong>Benefit:</strong> Why they want it</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 19 -->
+                    <section id="q19-acceptance-criteria" class="chapter">
+                        <h2 class="chapter-title">Q19: What is Acceptance Criteria?</h2>
+                        <div class="chapter-content">
+                            <p>Conditions that must be met for user story to be considered complete.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-clipboard-list"></i> Example</span></div>
+                                <pre><code>User Story: Account balance check
+
+Acceptance Criteria:
+- User must be logged in
+- Balance displays current amount
+- Balance updates reflect recent transactions
+- Error message for network issues
+- Response time under 3 seconds</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Testing Value</h4>
+                                <p>Acceptance criteria directly translate to test cases and help define "Definition of Done".</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 20 -->
+                    <section id="q20-daily-standup" class="chapter">
+                        <h2 class="chapter-title">Q20: Daily Standups and QA Contribution</h2>
+                        <div class="chapter-content">
+                            <div class="info-box">
+                                <h4><i class="fas fa-users"></i> Standard Format</h4>
+                                <ul>
+                                    <li>What did you do yesterday?</li>
+                                    <li>What will you do today?</li>
+                                    <li>Any blockers/impediments?</li>
+                                </ul>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-comment"></i> Tester Example</span></div>
+                                <pre><code>Yesterday: "Completed testing for login module, found 2 critical bugs"
+Today: "Will test password reset feature and retest fixed bugs"
+Blockers: "Test environment is down, need dev team support"</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- DOMAIN SPECIFIC SECTION -->
+                    <section id="domain-specific" class="chapter">
+                        <h2 class="chapter-title">Domain-Specific (Banking/Finance)</h2>
+                        <div class="chapter-content">
+                            <p>Testing considerations for financial applications.</p>
+                        </div>
+                    </section>
+
+                    <!-- Question 21 -->
+                    <section id="q21-banking-testing" class="chapter">
+                        <h2 class="chapter-title">Q21: Testing Banking Applications</h2>
+                        <div class="chapter-content">
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-wallet"></i> Account Management</h4>
+                                    <p>Balance inquiry, statement generation</p>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-exchange-alt"></i> Transaction Processing</h4>
+                                    <p>Transfers, payments, deposits</p>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-shield-alt"></i> Security Features</h4>
+                                    <p>Authentication, authorization, encryption</p>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-balance-scale"></i> Compliance</h4>
+                                    <p>Regulatory requirements, audit trails</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 22 -->
+                    <section id="q22-finance-challenges" class="chapter">
+                        <h2 class="chapter-title">Q22: Challenges in Finance Module Testing</h2>
+                        <div class="chapter-content">
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Common Challenges</h4>
+                                <ol>
+                                    <li><strong>Data Sensitivity:</strong> Cannot use production data for testing</li>
+                                    <li><strong>Complex Business Rules:</strong> Multiple validation scenarios</li>
+                                    <li><strong>Regulatory Compliance:</strong> Strict adherence to financial regulations</li>
+                                    <li><strong>Integration Complexity:</strong> Multiple system dependencies</li>
+                                    <li><strong>Security Requirements:</strong> Encryption, PCI DSS compliance</li>
+                                    <li><strong>Performance:</strong> High transaction volumes</li>
+                                    <li><strong>Currency/Regional Variations:</strong> Different formats and rules</li>
+                                </ol>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-info-circle"></i> Critical Note</h4>
+                                <p>Financial applications require extra attention to data accuracy, security vulnerabilities, and regulatory compliance. Any bug in production can have serious financial and legal consequences.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 23 -->
+                    <section id="q23-security-testing" class="chapter">
+                        <h2 class="chapter-title">Q23: Security Testing in Banking Apps</h2>
+                        <div class="chapter-content">
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-key"></i> Authentication Testing</h4>
+                                    <p>Login security, password policies, MFA</p>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-user-lock"></i> Authorization Testing</h4>
+                                    <p>Role-based access, transaction limits</p>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-lock"></i> Data Protection</h4>
+                                    <p>Encryption, PII protection</p>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-clock"></i> Session Management</h4>
+                                    <p>Timeout, session hijacking prevention</p>
+                                </div>
+                            </div>
+
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-bug"></i> Common Vulnerabilities to Test</h4>
+                                <ul>
+                                    <li><strong>SQL Injection:</strong> Malicious SQL queries</li>
+                                    <li><strong>Cross-site Scripting (XSS):</strong> Malicious scripts</li>
+                                    <li><strong>Session Hijacking:</strong> Unauthorized session access</li>
+                                    <li><strong>CSRF Attacks:</strong> Cross-site request forgery</li>
+                                    <li><strong>Man-in-the-Middle:</strong> Data interception</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SCENARIO BASED SECTION -->
+                    <section id="scenario-based" class="chapter">
+                        <h2 class="chapter-title">Scenario-Based Questions</h2>
+                        <div class="chapter-content">
+                            <p>Real-world situations and how to handle them.</p>
+                        </div>
+                    </section>
+
+                    <!-- Question 24 -->
+                    <section id="q24-unclear-requirements" class="chapter">
+                        <h2 class="chapter-title">Q24: Handling Unclear Requirements</h2>
+                        <div class="chapter-content">
+                            <div class="info-box">
+                                <h4><i class="fas fa-clipboard-list"></i> Action Plan</h4>
+                                <ol>
+                                    <li><strong>Document Questions:</strong> List all unclear points systematically</li>
+                                    <li><strong>Reach Out:</strong> Contact BA, PM, or stakeholders</li>
+                                    <li><strong>Schedule Meeting:</strong> Arrange face-to-face or virtual discussion</li>
+                                    <li><strong>Document Assumptions:</strong> If clarification is unavailable</li>
+                                    <li><strong>Get Written Confirmation:</strong> Email confirmations of discussions</li>
+                                    <li><strong>Update Test Cases:</strong> Modify based on clarifications</li>
+                                </ol>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Pro Tip</h4>
+                                <p>Never assume! It's better to ask questions and look thorough than to test the wrong functionality.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 25 -->
+                    <section id="q25-limited-time" class="chapter">
+                        <h2 class="chapter-title">Q25: Testing with Limited Time</h2>
+                        <div class="chapter-content">
+                            <div class="info-box">
+                                <h4><i class="fas fa-stopwatch"></i> Risk-Based Testing Approach</h4>
+                                <ol>
+                                    <li><strong>Prioritize:</strong> Focus on critical/high-risk functionality first</li>
+                                    <li><strong>Smoke Testing:</strong> Cover basic functionality quickly</li>
+                                    <li><strong>Automate:</strong> Use automation for repetitive tasks</li>
+                                    <li><strong>Parallel Testing:</strong> Divide work among team members</li>
+                                    <li><strong>Exploratory Testing:</strong> Efficient for finding quick issues</li>
+                                    <li><strong>Communicate Risks:</strong> Inform stakeholders of coverage limitations</li>
+                                </ol>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-clock"></i> Time-boxed Strategy (2 hours)</span></div>
+                                <pre><code>30 min: Smoke testing (basic flows)
+60 min: Critical business scenarios
+30 min: Exploratory testing on new features</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 26 -->
+                    <section id="q26-production-bug" class="chapter">
+                        <h2 class="chapter-title">Q26: Handling Production Bugs</h2>
+                        <div class="chapter-content">
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-fire"></i> Immediate Actions</h4>
+                                <ol>
+                                    <li><strong>Assess Impact:</strong> Critical/blocking vs minor issue</li>
+                                    <li><strong>Document:</strong> Create detailed bug report</li>
+                                    <li><strong>Reproduce:</strong> Verify in production environment</li>
+                                    <li><strong>Escalate:</strong> Notify management for critical issues</li>
+                                    <li><strong>Hotfix Testing:</strong> Quick verification of fix</li>
+                                    <li><strong>Root Cause Analysis:</strong> Why did it reach production?</li>
+                                    <li><strong>Process Improvement:</strong> Strengthen testing processes</li>
+                                </ol>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-exclamation-circle"></i> Production Bug Response</h4>
+                                <p>Speed and accuracy are crucial. Document everything, communicate clearly, and focus on resolution first, analysis second.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Question 27 -->
+                    <section id="q27-test-login" class="chapter">
+                        <h2 class="chapter-title">Q27: How to Test a Login Page?</h2>
+                        <div class="chapter-content">
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-check-circle"></i> Functional Testing</h4>
+                                    <ul>
+                                        <li>Valid credentials - Successful login</li>
+                                        <li>Invalid username - Error message</li>
+                                        <li>Invalid password - Error message</li>
+                                        <li>Empty fields - Validation messages</li>
+                                        <li>Password visibility toggle</li>
+                                        <li>Remember me functionality</li>
+                                        <li>Forgot password link</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-cog"></i> Non-Functional Testing</h4>
+                                    <ul>
+                                        <li><strong>Security:</strong> SQL injection, XSS attempts</li>
+                                        <li><strong>Performance:</strong> Response time under load</li>
+                                        <li><strong>Usability:</strong> User-friendly error messages</li>
+                                        <li><strong>Compatibility:</strong> Different browsers/devices</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-alt"></i> Sample Test Cases</span></div>
+                                <pre><code>TC_001: Valid login
+Steps: Enter valid username/password, click login
+Expected: Redirect to dashboard
+
+TC_002: Invalid password
+Steps: Enter valid username, invalid password, click login
+Expected: Error message "Invalid password"
+
+TC_003: Account lockout
+Steps: Enter wrong password 3 times
+Expected: Account locked for security
+
+TC_004: SQL Injection attempt
+Steps: Enter "admin'; DROP TABLE users;--" as username
+Expected: Input sanitized, login fails safely</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Interview Tips Section -->
+                    <section id="interview-tips" class="chapter">
+                        <h2 class="chapter-title">Interview Success Tips</h2>
+                        <div class="chapter-content">
+                            <div class="info-box success">
+                                <h4><i class="fas fa-check-circle"></i> Best Practices</h4>
+                                <ul>
+                                    <li><strong>Always provide specific examples</strong> from your experience</li>
+                                    <li><strong>Demonstrate knowledge of testing tools</strong> (JIRA, TestRail, Selenium, Postman)</li>
+                                    <li><strong>Show understanding</strong> of both manual and automation testing</li>
+                                    <li><strong>Emphasize collaboration</strong> and communication skills</li>
+                                    <li><strong>Prepare questions</strong> about their testing processes and tools</li>
+                                    <li><strong>Practice explaining concepts</strong> in simple terms</li>
+                                    <li><strong>Be ready with real scenarios</strong> from your testing experience</li>
+                                </ul>
+                            </div>
+
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-times-circle"></i> Common Mistakes to Avoid</h4>
+                                <ul>
+                                    <li><strong>Not asking clarifying questions</strong> - Always seek to understand the question fully</li>
+                                    <li><strong>Being too technical or too basic</strong> - Match your answer to the interviewer's level</li>
+                                    <li><strong>Not providing real examples</strong> - Always back up your knowledge with experience</li>
+                                    <li><strong>Speaking negatively about past employers</strong> - Focus on positive learnings</li>
+                                    <li><strong>Not preparing questions</strong> - Show genuine interest in their testing practices</li>
+                                </ul>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-question-circle"></i> Questions to Ask Your Interviewer</h4>
+                                <ul>
+                                    <li>What testing tools and frameworks does your team currently use?</li>
+                                    <li>How do you handle test data management and environment setup?</li>
+                                    <li>What's the ratio of manual to automated testing in your projects?</li>
+                                    <li>How does your team collaborate with developers during the development cycle?</li>
+                                    <li>What are the biggest testing challenges the team is currently facing?</li>
+                                </ul>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-clipboard-check"></i> Final Preparation Checklist</h4>
+                                <ul>
+                                    <li>Review testing fundamentals - STLC, test levels, types</li>
+                                    <li>Practice test case writing - Clear, concise, traceable</li>
+                                    <li>Understand defect lifecycle - States, severity vs priority</li>
+                                    <li>Know Agile methodology - User stories, acceptance criteria</li>
+                                    <li>Prepare domain examples - Banking, e-commerce, healthcare</li>
+                                    <li>Practice scenario-based answers - STAR method</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
                 </div>
-            </div>
+
+                <footer class="article-nav">
+                    <a href="/interview-qna/index.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Interview Q&A Home</span>
+                    </a>
+                    <a href="/interview-qna/automation/automations-set-1.html" class="nav-next">
+                        <span>Automation Set 1</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
         </div>
-
-        <div class="section" id="test-design">
-            <div class="section-header">
-                <h2><span class="emoji">🔹</span>Test Design & Execution</h2>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q12. How do you write a good test case?</div>
-                <div class="question-content">
-                    <div class="key-points">
-                        <h4>Good Test Case Characteristics:</h4>
-                        <ul>
-                            <li><strong>Clear and Concise:</strong> Easy to understand</li>
-                            <li><strong>Traceable:</strong> Linked to requirements</li>
-                            <li><strong>Repeatable:</strong> Consistent results</li>
-                            <li><strong>Independent:</strong> Not dependent on other test cases</li>
-                        </ul>
-                    </div>
-
-                    <div class="code-block">
-                        Test Case ID: TC_001
-                        Test Scenario: User Login
-                        Pre-conditions: User account exists
-                        Test Steps:
-                        1. Navigate to login page
-                        2. Enter valid username
-                        3. Enter valid password
-                        4. Click login button
-                        Expected Result: User redirected to dashboard
-                        Post-conditions: User logged in successfully
-                        Priority: High
-                        Test Data: Username: testuser@email.com, Password: Test123!
-                    </div>
-
-                    <div class="tip-box">
-                        <h5>Best Practices</h5>
-                        <ul>
-                            <li>Use action verbs (Click, Enter, Verify)</li>
-                            <li>Include specific test data</li>
-                            <li>Write from user perspective</li>
-                            <li>Keep steps simple and atomic</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q13. What do you include in a test case document?</div>
-                <div class="question-content">
-                    <div class="priority-matrix">
-                        <div class="priority-item">
-                            <h6>Test Case ID</h6>
-                            <p>Unique identifier</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Test Scenario</h6>
-                            <p>Brief description</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Pre-conditions</h6>
-                            <p>Setup requirements</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Test Steps</h6>
-                            <p>Detailed actions</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Test Data</h6>
-                            <p>Input values</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Expected Results</h6>
-                            <p>Expected outcomes</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Post-conditions</h6>
-                            <p>Final state</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Priority/Severity</h6>
-                            <p>Importance level</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q14. What is a Use Case? How do you test it?</div>
-                <div class="question-content">
-                    <div class="answer-section">
-                        <h4>Use Case Definition</h4>
-                        <p>Description of how users interact with system to achieve specific goals.</p>
-
-                        <div class="key-points">
-                            <h4>Testing Approach:</h4>
-                            <ol>
-                                <li><strong>Identify Actors:</strong> Who uses the system?</li>
-                                <li><strong>Map Scenarios:</strong> Normal flow, alternative flows, exception flows</li>
-                                <li><strong>Create Test Cases:</strong> Cover all flows</li>
-                                <li><strong>Validate:</strong> Ensure user goals are met</li>
-                            </ol>
-                        </div>
-
-                        <div class="example-box">
-                            <h5>Example: Online Purchase</h5>
-                            <p><strong>Actor:</strong> Customer</p>
-                            <p><strong>Normal Flow:</strong> Browse → Select → Add to Cart → Checkout → Payment →
-                                Confirmation</p>
-                            <p><strong>Test:</strong> Verify each step works correctly and user can complete purchase
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q15. How do you ensure complete test coverage?</div>
-                <div class="question-content">
-                    <div class="process-flow">
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>Requirements Analysis</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>Test Techniques</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>Traceability Matrix</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>Review & Analysis</div>
-                        </div>
-                    </div>
-
-                    <div class="key-points">
-                        <h4>1. Requirements Traceability Matrix (RTM)</h4>
-                        <ul>
-                            <li>Map test cases to requirements</li>
-                            <li>Ensure all requirements tested</li>
-                        </ul>
-
-                        <h4>2. Test Coverage Techniques</h4>
-                        <ul>
-                            <li>Boundary Value Analysis</li>
-                            <li>Equivalence Partitioning</li>
-                            <li>Decision Table Testing</li>
-                        </ul>
-
-                        <h4>3. Review and Analysis</h4>
-                        <ul>
-                            <li>Peer reviews of test cases</li>
-                            <li>Gap analysis</li>
-                            <li>Risk-based testing</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q16. How do you prioritize test cases?</div>
-                <div class="question-content">
-                    <div class="key-points">
-                        <h4>Priority Factors:</h4>
-                        <ol>
-                            <li><strong>Business Impact:</strong> Critical functionality first</li>
-                            <li><strong>Risk Assessment:</strong> High-risk areas priority</li>
-                            <li><strong>Customer Usage:</strong> Frequently used features</li>
-                            <li><strong>Complexity:</strong> Complex modules need more testing</li>
-                        </ol>
-                    </div>
-
-                    <div class="priority-matrix">
-                        <div class="priority-item">
-                            <h6>P0 - Critical</h6>
-                            <p>Blocker issues that prevent core functionality</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>P1 - High</h6>
-                            <p>Major functionality that impacts business</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>P2 - Medium</h6>
-                            <p>Important features with moderate impact</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>P3 - Low</h6>
-                            <p>Nice to have features</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section" id="defect-management">
-            <div class="section-header">
-                <h2><span class="emoji">🔹</span>Defect Management</h2>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q17. What is a defect life cycle?</div>
-                <div class="question-content">
-                    <div class="defect-lifecycle">
-                        <div class="lifecycle-stage">New</div>
-                        <div class="lifecycle-stage">Assigned</div>
-                        <div class="lifecycle-stage">Open</div>
-                        <div class="lifecycle-stage">Fixed</div>
-                        <div class="lifecycle-stage">Retest</div>
-                        <div class="lifecycle-stage">Verified</div>
-                        <div class="lifecycle-stage">Closed</div>
-                        <div class="lifecycle-stage">Rejected</div>
-                        <div class="lifecycle-stage">Deferred</div>
-                        <div class="lifecycle-stage">Reopened</div>
-                    </div>
-
-                    <div class="key-points">
-                        <h4>Stage Descriptions:</h4>
-                        <ul>
-                            <li><strong>New:</strong> Defect reported by tester</li>
-                            <li><strong>Assigned:</strong> Assigned to developer</li>
-                            <li><strong>Open:</strong> Developer working on fix</li>
-                            <li><strong>Fixed:</strong> Developer completed fix</li>
-                            <li><strong>Retest:</strong> Ready for testing</li>
-                            <li><strong>Verified:</strong> Fix confirmed working</li>
-                            <li><strong>Closed:</strong> Defect resolved</li>
-                            <li><strong>Rejected:</strong> Not a valid defect</li>
-                            <li><strong>Deferred:</strong> Fix postponed</li>
-                            <li><strong>Reopened:</strong> Issue persists after fix</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q18. What do you include when raising a bug?</div>
-                <div class="question-content">
-                    <div class="code-block">
-                        Bug ID: BUG_001
-                        Summary: Login fails with valid credentials
-                        Description: User cannot login with correct username/password
-                        Severity: High | Priority: High
-                        Environment: Windows 10, Chrome 96.0
-                        Steps to Reproduce:
-                        1. Navigate to login page
-                        2. Enter username: test@email.com
-                        3. Enter password: Test123!
-                        4. Click Login button
-                        Expected Result: User should be logged in
-                        Actual Result: Error message "Invalid credentials"
-                        Screenshots: [attachment]
-                        Reporter: John Doe
-                        Date: 2024-01-15
-                    </div>
-
-                    <div class="key-points">
-                        <h4>Essential Components:</h4>
-                        <ul>
-                            <li><strong>Bug ID:</strong> Unique identifier</li>
-                            <li><strong>Summary:</strong> Brief description</li>
-                            <li><strong>Description:</strong> Detailed steps to reproduce</li>
-                            <li><strong>Severity/Priority:</strong> Impact assessment</li>
-                            <li><strong>Environment:</strong> OS, browser, version</li>
-                            <li><strong>Expected vs Actual Result:</strong> Clear comparison</li>
-                            <li><strong>Screenshots/Attachments:</strong> Visual evidence</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q19. Severity vs Priority in bug reporting</div>
-                <div class="question-content">
-                    <table class="comparison-table">
-                        <thead>
-                            <tr>
-                                <th>Severity</th>
-                                <th>Priority</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Impact on functionality</strong></td>
-                                <td><strong>Business urgency</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Technical assessment</td>
-                                <td>Business decision</td>
-                            </tr>
-                            <tr>
-                                <td>High: System crash</td>
-                                <td>High: Must fix immediately</td>
-                            </tr>
-                            <tr>
-                                <td>Medium: Feature not working</td>
-                                <td>Medium: Fix in current release</td>
-                            </tr>
-                            <tr>
-                                <td>Low: UI cosmetic issues</td>
-                                <td>Low: Fix in future release</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="example-box">
-                        <h5>Examples:</h5>
-                        <p><strong>High Severity, Low Priority:</strong> Crash in rarely used admin feature</p>
-                        <p><strong>Low Severity, High Priority:</strong> Company logo missing on homepage</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q20. How do you handle a situation where a developer disagrees with your
-                    bug?</div>
-                <div class="question-content">
-                    <div class="process-flow">
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>Document Evidence</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>Reference Requirements</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>Facilitate Discussion</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>Seek Resolution</div>
-                        </div>
-                    </div>
-
-                    <div class="key-points">
-                        <h4>Professional Approach:</h4>
-                        <ul>
-                            <li><strong>Document Evidence:</strong> Provide clear reproduction steps, screenshots</li>
-                            <li><strong>Reference Requirements:</strong> Show how behavior violates specifications</li>
-                            <li><strong>Facilitate Discussion:</strong> Arrange meeting with BA/PM if needed</li>
-                            <li><strong>Seek Second Opinion:</strong> Ask team lead or senior tester</li>
-                            <li><strong>Follow Process:</strong> Use established escalation procedures</li>
-                            <li><strong>Maintain Professionalism:</strong> Focus on facts, not personal opinions</li>
-                        </ul>
-                    </div>
-
-                    <div class="tip-box">
-                        <h5>Remember</h5>
-                        <p>The goal is to deliver quality software, not to be "right". Stay objective and collaborative.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section" id="agile-process">
-            <div class="section-header">
-                <h2><span class="emoji">🔹</span>Agile & Process</h2>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q21. Have you worked in Agile? Describe your role in a sprint</div>
-                <div class="question-content">
-                    <div class="process-flow">
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>Sprint Planning</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>During Sprint</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>Sprint Review</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>Retrospective</div>
-                        </div>
-                    </div>
-
-                    <div class="key-points">
-                        <h4>Sprint Planning:</h4>
-                        <ul>
-                            <li>Participate in story estimation</li>
-                            <li>Understand acceptance criteria</li>
-                            <li>Plan testing approach</li>
-                        </ul>
-
-                        <h4>During Sprint:</h4>
-                        <ul>
-                            <li>Write test cases early</li>
-                            <li>Collaborate with developers</li>
-                            <li>Perform continuous testing</li>
-                            <li>Attend daily standups</li>
-                        </ul>
-
-                        <h4>Sprint Review/Retrospective:</h4>
-                        <ul>
-                            <li>Demo tested features</li>
-                            <li>Share testing insights</li>
-                            <li>Suggest improvements</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q22. What is a user story?</div>
-                <div class="question-content">
-                    <div class="answer-section">
-                        <h4>Format</h4>
-                        <p><strong>"As a [user type], I want [functionality] so that [benefit]"</strong></p>
-                    </div>
-
-                    <div class="code-block">
-                        Example:
-                        As a bank customer,
-                        I want to check my account balance online
-                        So that I can monitor my finances without visiting the branch
-                    </div>
-
-                    <div class="key-points">
-                        <h4>Components:</h4>
-                        <ul>
-                            <li><strong>Role:</strong> Who wants the feature</li>
-                            <li><strong>Goal:</strong> What they want to do</li>
-                            <li><strong>Benefit:</strong> Why they want it</li>
-                        </ul>
-                    </div>
-
-                    <div class="note-box">
-                        <h5>Testing Perspective</h5>
-                        <p>User stories help testers understand the user's perspective and create more meaningful test
-                            scenarios.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q23. What is acceptance criteria?</div>
-                <div class="question-content">
-                    <div class="answer-section">
-                        <h4>Definition</h4>
-                        <p>Conditions that must be met for user story to be considered complete.</p>
-                    </div>
-
-                    <div class="code-block">
-                        User Story: Account balance check
-                        Acceptance Criteria:
-                        ✓ User must be logged in
-                        ✓ Balance displays current amount
-                        ✓ Balance updates reflect recent transactions
-                        ✓ Error message for network issues
-                        ✓ Response time under 3 seconds
-                    </div>
-
-                    <div class="tip-box">
-                        <h5>Testing Value</h5>
-                        <p>Acceptance criteria directly translate to test cases and help define "Definition of Done".
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q24. What are daily standups and how do you contribute?</div>
-                <div class="question-content">
-                    <div class="key-points">
-                        <h4>Standard Format:</h4>
-                        <ul>
-                            <li><strong>What did you do yesterday?</strong></li>
-                            <li><strong>What will you do today?</strong></li>
-                            <li><strong>Any blockers/impediments?</strong></li>
-                        </ul>
-                    </div>
-
-                    <div class="example-box">
-                        <h5>Tester Contribution Example:</h5>
-                        <p><strong>Yesterday:</strong> "Completed testing for login module, found 2 critical bugs"</p>
-                        <p><strong>Today:</strong> "Will test password reset feature and retest fixed bugs"</p>
-                        <p><strong>Blockers:</strong> "Test environment is down, need dev team support"</p>
-                    </div>
-
-                    <div class="key-points">
-                        <h4>Value Add:</h4>
-                        <ul>
-                            <li>Testing progress updates</li>
-                            <li>Defects found and status</li>
-                            <li>Dependencies on other team members</li>
-                            <li>Environment or tool issues</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section" id="domain-specific">
-            <div class="section-header">
-                <h2><span class="emoji">🔹</span>Domain-Specific (Banking/Finance)</h2>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q25. Have you tested any banking applications?</div>
-                <div class="question-content">
-                    <div class="priority-matrix">
-                        <div class="priority-item">
-                            <h6>Account Management</h6>
-                            <p>Balance inquiry, statement generation</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Transaction Processing</h6>
-                            <p>Transfers, payments, deposits</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Security Features</h6>
-                            <p>Authentication, authorization, encryption</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Compliance</h6>
-                            <p>Regulatory requirements, audit trails</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Integration</h6>
-                            <p>Third-party gateways, core banking</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Reporting</h6>
-                            <p>Financial reports, transaction history</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q26. What challenges have you faced in testing finance-related modules?
-                </div>
-                <div class="question-content">
-                    <div class="key-points">
-                        <h4>Common Challenges:</h4>
-                        <ol>
-                            <li><strong>Data Sensitivity:</strong> Cannot use production data for testing</li>
-                            <li><strong>Complex Business Rules:</strong> Multiple validation scenarios</li>
-                            <li><strong>Regulatory Compliance:</strong> Strict adherence to financial regulations</li>
-                            <li><strong>Integration Complexity:</strong> Multiple system dependencies</li>
-                            <li><strong>Security Requirements:</strong> Encryption, PCI DSS compliance</li>
-                            <li><strong>Performance:</strong> High transaction volumes</li>
-                            <li><strong>Currency/Regional Variations:</strong> Different formats and rules</li>
-                        </ol>
-                    </div>
-
-                    <div class="warning-box">
-                        <h5>Critical Considerations</h5>
-                        <p>Financial applications require extra attention to data accuracy, security vulnerabilities,
-                            and regulatory compliance. Any bug in production can have serious financial and legal
-                            consequences.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q27. What do you understand by security testing in banking apps?</div>
-                <div class="question-content">
-                    <div class="priority-matrix">
-                        <div class="priority-item">
-                            <h6>Authentication Testing</h6>
-                            <p>Login security, password policies, MFA</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Authorization Testing</h6>
-                            <p>Role-based access, transaction limits</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Data Protection</h6>
-                            <p>Encryption, PII protection</p>
-                        </div>
-                        <div class="priority-item">
-                            <h6>Session Management</h6>
-                            <p>Timeout, session hijacking prevention</p>
-                        </div>
-                    </div>
-
-                    <div class="key-points">
-                        <h4>Common Vulnerabilities to Test:</h4>
-                        <ul>
-                            <li><strong>SQL Injection:</strong> Malicious SQL queries</li>
-                            <li><strong>Cross-site Scripting (XSS):</strong> Malicious scripts</li>
-                            <li><strong>Session Hijacking:</strong> Unauthorized session access</li>
-                            <li><strong>CSRF Attacks:</strong> Cross-site request forgery</li>
-                            <li><strong>Man-in-the-Middle:</strong> Data interception</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q28. What are the most critical areas to test in a banking web application?
-                </div>
-                <div class="question-content">
-                    <div class="process-flow">
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>Authentication</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>Transactions</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>Security</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>Compliance</div>
-                        </div>
-                    </div>
-
-                    <div class="key-points">
-                        <h4>1. Authentication & Authorization</h4>
-                        <ul>
-                            <li>Login/logout functionality</li>
-                            <li>Password reset mechanisms</li>
-                            <li>Account lockout after failed attempts</li>
-                            <li>Multi-factor authentication</li>
-                        </ul>
-
-                        <h4>2. Transaction Processing</h4>
-                        <ul>
-                            <li>Money transfers between accounts</li>
-                            <li>Bill payments and third-party transfers</li>
-                            <li>Transaction limits and validations</li>
-                            <li>Balance calculations and updates</li>
-                        </ul>
-
-                        <h4>3. Data Security</h4>
-                        <ul>
-                            <li>Sensitive data encryption</li>
-                            <li>Secure HTTPS communication</li>
-                            <li>Audit logs and transaction trails</li>
-                        </ul>
-
-                        <h4>4. Compliance</h4>
-                        <ul>
-                            <li>Regulatory reporting</li>
-                            <li>KYC (Know Your Customer) processes</li>
-                            <li>AML (Anti-Money Laundering) checks</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section" id="scenario-based">
-            <div class="section-header">
-                <h2><span class="emoji">🔹</span>Scenario-Based Questions</h2>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q29. What will you do if the requirements are unclear?</div>
-                <div class="question-content">
-                    <div class="process-flow">
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>Document Questions</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>Reach Out</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>Schedule Meeting</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>Document & Confirm</div>
-                        </div>
-                    </div>
-
-                    <div class="key-points">
-                        <h4>Action Plan:</h4>
-                        <ol>
-                            <li><strong>Document Questions:</strong> List all unclear points systematically</li>
-                            <li><strong>Reach Out:</strong> Contact BA, PM, or stakeholders</li>
-                            <li><strong>Schedule Meeting:</strong> Arrange face-to-face or virtual discussion</li>
-                            <li><strong>Document Assumptions:</strong> If clarification is unavailable</li>
-                            <li><strong>Get Written Confirmation:</strong> Email confirmations of discussions</li>
-                            <li><strong>Update Test Cases:</strong> Modify based on clarifications</li>
-                        </ol>
-                    </div>
-
-                    <div class="tip-box">
-                        <h5>Pro Tip</h5>
-                        <p>Never assume! It's better to ask questions and look thorough than to test the wrong
-                            functionality.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q30. How do you test when you have limited time?</div>
-                <div class="question-content">
-                    <div class="key-points">
-                        <h4>Risk-Based Testing Approach:</h4>
-                        <ol>
-                            <li><strong>Prioritize:</strong> Focus on critical/high-risk functionality first</li>
-                            <li><strong>Smoke Testing:</strong> Cover basic functionality quickly</li>
-                            <li><strong>Automate:</strong> Use automation for repetitive tasks</li>
-                            <li><strong>Parallel Testing:</strong> Divide work among team members</li>
-                            <li><strong>Exploratory Testing:</strong> Efficient for finding quick issues</li>
-                            <li><strong>Communicate Risks:</strong> Inform stakeholders of coverage limitations</li>
-                        </ol>
-                    </div>
-
-                    <div class="example-box">
-                        <h5>Time-boxed Strategy Example:</h5>
-                        <p><strong>2 hours available:</strong></p>
-                        <ul>
-                            <li>30 min: Smoke testing (basic flows)</li>
-                            <li>60 min: Critical business scenarios</li>
-                            <li>30 min: Exploratory testing on new features</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q31. A bug is found in production. How do you handle it?</div>
-                <div class="question-content">
-                    <div class="process-flow">
-                        <div class="process-step">
-                            <div class="step-number">1</div>
-                            <div>Assess Impact</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">2</div>
-                            <div>Document & Reproduce</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">3</div>
-                            <div>Escalate</div>
-                        </div>
-                        <div class="process-step">
-                            <div class="step-number">4</div>
-                            <div>Root Cause Analysis</div>
-                        </div>
-                    </div>
-
-                    <div class="key-points">
-                        <h4>Immediate Actions:</h4>
-                        <ol>
-                            <li><strong>Assess Impact:</strong> Critical/blocking vs minor issue</li>
-                            <li><strong>Document:</strong> Create detailed bug report</li>
-                            <li><strong>Reproduce:</strong> Verify in production environment</li>
-                            <li><strong>Escalate:</strong> Notify management for critical issues</li>
-                            <li><strong>Hotfix Testing:</strong> Quick verification of fix</li>
-                            <li><strong>Root Cause Analysis:</strong> Why did it reach production?</li>
-                            <li><strong>Process Improvement:</strong> Strengthen testing processes</li>
-                        </ol>
-                    </div>
-
-                    <div class="warning-box">
-                        <h5>Production Bug Response</h5>
-                        <p>Speed and accuracy are crucial. Document everything, communicate clearly, and focus on
-                            resolution first, analysis second.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="question-block">
-                <div class="question-header">Q32. How do you test a login page?</div>
-                <div class="question-content">
-                    <div class="key-points">
-                        <h4>Functional Testing:</h4>
-                        <ul>
-                            <li>Valid credentials → Successful login</li>
-                            <li>Invalid username → Error message</li>
-                            <li>Invalid password → Error message</li>
-                            <li>Empty fields → Validation messages</li>
-                            <li>Password visibility toggle</li>
-                            <li>Remember me functionality</li>
-                            <li>Forgot password link</li>
-                        </ul>
-
-                        <h4>Non-Functional Testing:</h4>
-                        <ul>
-                            <li><strong>Security:</strong> SQL injection, XSS attempts</li>
-                            <li><strong>Performance:</strong> Response time under load</li>
-                            <li><strong>Usability:</strong> User-friendly error messages</li>
-                            <li><strong>Compatibility:</strong> Different browsers/devices</li>
-                        </ul>
-                    </div>
-
-                    <div class="code-block">
-                        Test Cases Example:
-
-                        TC_001: Valid login
-                        Steps: Enter valid username/password, click login
-                        Expected: Redirect to dashboard
-
-                        TC_002: Invalid password
-                        Steps: Enter valid username, invalid password, click login
-                        Expected: Error message "Invalid password"
-
-                        TC_003: Account lockout
-                        Steps: Enter wrong password 3 times
-                        Expected: Account locked for security
-
-                        TC_004: SQL Injection attempt
-                        Steps: Enter "admin'; DROP TABLE users;--" as username
-                        Expected: Input sanitized, login fails safely
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="tip-box" style="margin-top: 40px;">
-            <h5>🎯 Interview Success Tips</h5>
-            <ul>
-                <li><strong>Always provide specific examples</strong> from your experience</li>
-                <li><strong>Demonstrate knowledge of testing tools</strong> (JIRA, TestRail, Selenium, Postman)</li>
-                <li><strong>Show understanding</strong> of both manual and automation testing</li>
-                <li><strong>Emphasize collaboration</strong> and communication skills</li>
-                <li><strong>Prepare questions</strong> about their testing processes and tools</li>
-                <li><strong>Practice explaining concepts</strong> in simple terms</li>
-                <li><strong>Be ready with real scenarios</strong> from your testing experience</li>
-            </ul>
-        </div>
-
-        <div class="note-box" style="margin-top: 20px;">
-            <h5>📚 Additional Study Resources</h5>
-            <ul>
-                <li><strong>ISTQB Foundation Level:</strong> Comprehensive testing knowledge</li>
-                <li><strong>Agile Testing:</strong> Lisa Crispin & Janet Gregory</li>
-                <li><strong>Testing Tools:</strong> Hands-on practice with JIRA, TestRail, Selenium</li>
-                <li><strong>Domain Knowledge:</strong> Banking regulations, e-commerce flows</li>
-                <li><strong>Test Management:</strong> Test planning, estimation, metrics</li>
-            </ul>
-        </div>
-
-        <div class="example-box" style="margin-top: 20px;">
-            <h5>🗣️ Sample STAR Method Response</h5>
-            <p><strong>Question:</strong> "Tell me about a challenging bug you found"</p>
-            <p><strong>Situation:</strong> "During testing of payment module in banking app..."</p>
-            <p><strong>Task:</strong> "I needed to verify transaction processing worked correctly..."</p>
-            <p><strong>Action:</strong> "I created comprehensive test cases covering edge cases..."</p>
-            <p><strong>Result:</strong> "Found critical bug where concurrent transactions caused data inconsistency..."
-            </p>
-        </div>
-
-        <div class="key-points"
-            style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px;">
-            <h4 style="color: white; border-bottom: 2px solid white; margin-bottom: 15px;">🎓 Final Interview
-                Preparation Checklist</h4>
-            <ul style="margin-left: 0; list-style: none;">
-                <li style="margin-bottom: 10px;">✅ <strong>Review testing fundamentals</strong> - STLC, test levels,
-                    types</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Practice test case writing</strong> - Clear, concise,
-                    traceable</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Understand defect lifecycle</strong> - States, severity vs
-                    priority</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Know Agile methodology</strong> - User stories, acceptance
-                    criteria</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Prepare domain examples</strong> - Banking, e-commerce,
-                    healthcare</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Practice scenario-based answers</strong> - STAR method</li>
-                <li style="margin-bottom: 10px;">✅ <strong>Review testing tools</strong> - Bug tracking, test management
-                </li>
-                <li style="margin-bottom: 10px;">✅ <strong>Prepare questions to ask</strong> - About their processes,
-                    tools, challenges</li>
-            </ul>
-        </div>
-
-        <div class="warning-box" style="margin-top: 20px;">
-            <h5>⚡ Common Interview Mistakes to Avoid</h5>
-            <ul>
-                <li><strong>Not asking clarifying questions</strong> - Always seek to understand the question fully</li>
-                <li><strong>Being too technical or too basic</strong> - Match your answer to the interviewer's level
-                </li>
-                <li><strong>Not providing real examples</strong> - Always back up your knowledge with experience</li>
-                <li><strong>Speaking negatively about past employers</strong> - Focus on positive learnings</li>
-                <li><strong>Not preparing questions</strong> - Show genuine interest in their testing practices</li>
-            </ul>
-        </div>
-
-        <div class="example-box" style="margin-top: 20px;">
-            <h5>🤔 Smart Questions to Ask Your Interviewer</h5>
-            <ul>
-                <li>What testing tools and frameworks does your team currently use?</li>
-                <li>How do you handle test data management and environment setup?</li>
-                <li>What's the ratio of manual to automated testing in your projects?</li>
-                <li>How does your team collaborate with developers during the development cycle?</li>
-                <li>What are the biggest testing challenges the team is currently facing?</li>
-                <li>How do you measure testing effectiveness and quality metrics?</li>
-                <li>What opportunities are there for professional development and learning new tools?</li>
-            </ul>
-        </div>
-
-        <div class="process-flow" style="margin-top: 30px;">
-            <div class="process-step">
-                <div class="step-number">1</div>
-                <div>Research Company</div>
-            </div>
-            <div class="process-step">
-                <div class="step-number">2</div>
-                <div>Review Job Description</div>
-            </div>
-            <div class="process-step">
-                <div class="step-number">3</div>
-                <div>Practice Mock Interviews</div>
-            </div>
-            <div class="process-step">
-                <div class="step-number">4</div>
-                <div>Prepare Real Examples</div>
-            </div>
-            <div class="process-step">
-                <div class="step-number">5</div>
-                <div>Follow Up</div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <div id="footer-placeholder"></div>
-        </footer>
-        <script>
-            fetch("/footer.html")
-                .then(res => res.text())
-                .then(data => {
-                    document.getElementById("footer-placeholder").innerHTML = data;
-                });
-        </script>
-    </div>
-    <!-- Link the JavaScript file -->
-    <script src="/js/interview.js"></script>
-    <script src="/js/footer.js"></script>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
 </body>
 
 </html>
