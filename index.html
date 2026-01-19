@@ -13,7 +13,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -36,16 +36,48 @@
     <div class="sidebar-overlay"></div>
 
     <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section id="home" class="hero hero-advanced">
+        <div class="hero-bg">
+            <div class="hero-particles"></div>
+            <div class="hero-grid"></div>
+            <div class="hero-glow"></div>
+            <div class="hero-glow hero-glow-2"></div>
+        </div>
         <div class="hero-content">
-            <h1 class="hero-title">Full-Stack Developer & Technical Writer</h1>
+            <div class="hero-badge">
+                <i class="fas fa-code"></i>
+                <span>Welcome to TechTok Cafe</span>
+            </div>
+            <h1 class="hero-title">Full-Stack Developer<br><span class="hero-title-highlight">& Technical Writer</span></h1>
+            <div class="hero-title-underline"></div>
             <p class="hero-subtitle">
                 Passionate about creating efficient solutions with Java, Python, JavaScript, and modern frameworks.
                 Sharing knowledge through comprehensive technical guides and tutorials.
             </p>
-            <a href="#featured" class="hero-cta">
-                <i class="fas fa-rocket"></i> Explore My Work
-            </a>
+            <div class="hero-cta-group">
+                <a href="#featured" class="hero-cta hero-cta-primary">
+                    <i class="fas fa-rocket"></i> Explore My Work
+                </a>
+                <a href="/java/index.html" class="hero-cta hero-cta-secondary">
+                    <i class="fab fa-java"></i> Java Tutorials
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">20+</span>
+                    <span class="hero-stat-label">Tutorials</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">5+</span>
+                    <span class="hero-stat-label">Technologies</span>
+                </div>
+                <div class="hero-stat-divider"></div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">100%</span>
+                    <span class="hero-stat-label">Free Content</span>
+                </div>
+            </div>
         </div>
     </section>
 
