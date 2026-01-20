@@ -1,11 +1,11 @@
 /**
- * TechTok Cafe - Navigation Data Structure
+ * GyanCode - Navigation Data Structure
  * This file contains the complete site navigation configuration
  */
 
 const SITE_NAVIGATION = {
     brand: {
-        name: 'TechTok Cafe',
+        name: 'GyanCode',
         logo: '/assets/images/logo.png',
         tagline: 'Technical Portfolio & Learning Hub'
     },
@@ -277,7 +277,7 @@ const SITE_NAVIGATION = {
     ],
 
     footer: {
-        copyright: '2024 TechTok Cafe. All rights reserved.',
+        copyright: '2024 GyanCode. All rights reserved.',
         madeWith: 'Made with love and lots of coffee',
         quote: '"Code is like humor. When you have to explain it, it\'s bad." - Cory House'
     }

@@ -1,5 +1,5 @@
 /**
- * TechTok Cafe - Component Loader System
+ * GyanCode - Component Loader System
  * Handles dynamic loading of navigation, sidebar, footer, and other components
  */
 
