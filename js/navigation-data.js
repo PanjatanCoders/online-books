@@ -274,6 +274,13 @@ const SITE_NAVIGATION = {
                             icon: 'fas fa-sitemap',
                             description: 'Design patterns for test automation',
                             readTime: '35 min'
+                        },
+                        {
+                            title: 'Data-Driven Testing',
+                            url: '/selenium/selenium-data-driven-testing.html',
+                            icon: 'fas fa-file-excel',
+                            description: 'Excel, CSV, JSON & Database integration',
+                            readTime: '35 min'
                         }
                     ]
                 }

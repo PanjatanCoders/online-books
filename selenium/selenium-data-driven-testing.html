@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete guide to data-driven testing in Selenium with Excel, CSV, JSON, and database integration for parameterized test execution.">
+    <title>Data-Driven Testing - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Data-Driven Testing</h1>
+                    <p class="article-subtitle">Parameterize tests with Excel, CSV, JSON, and Database</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 35 min read</span>
+                        <span><i class="fas fa-signal"></i> Advanced</span>
+                        <span><i class="fas fa-code"></i> Java</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc"></nav>
+
+                <div class="article-body">
+                    <!-- Introduction -->
+                    <section id="introduction" class="chapter">
+                        <h2 class="chapter-title">Introduction to Data-Driven Testing</h2>
+                        <div class="chapter-content">
+                            <p>Data-Driven Testing (DDT) separates test logic from test data, allowing the same test to run with multiple data sets. This approach improves test coverage, reduces code duplication, and makes tests easier to maintain.</p>
+
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-table"></i> Excel Integration</h4>
+                                    <p>Read test data from Excel files using Apache POI</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-file-csv"></i> CSV Support</h4>
+                                    <p>Parse CSV files for simple data structures</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-code"></i> JSON Data</h4>
+                                    <p>Use JSON for complex nested data</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-database"></i> Database</h4>
+                                    <p>Query test data directly from databases</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Benefits of Data-Driven Testing</h4>
+                                <ul>
+                                    <li>Test same functionality with multiple data sets</li>
+                                    <li>Separate test logic from test data</li>
+                                    <li>Easier to maintain and update test data</li>
+                                    <li>Non-technical users can update test data</li>
+                                    <li>Improved test coverage with minimal code</li>
+                                    <li>Reusable test scripts</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Excel Integration -->
+                    <section id="excel-integration" class="chapter">
+                        <h2 class="chapter-title">Excel Data Provider</h2>
+                        <div class="chapter-content">
+                            <p>Apache POI library enables reading and writing Excel files in Java. It's the most popular choice for data-driven testing.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Maven Dependencies</span></div>
+                                <pre><code><span class="comment">&lt;!-- Apache POI for Excel --&gt;</span>
+<span class="keyword">&lt;dependency&gt;</span>
+    <span class="keyword">&lt;groupId&gt;</span>org.apache.poi<span class="keyword">&lt;/groupId&gt;</span>
+    <span class="keyword">&lt;artifactId&gt;</span>poi<span class="keyword">&lt;/artifactId&gt;</span>
+    <span class="keyword">&lt;version&gt;</span>5.2.5<span class="keyword">&lt;/version&gt;</span>
+<span class="keyword">&lt;/dependency&gt;</span>
+
+<span class="comment">&lt;!-- For .xlsx files --&gt;</span>
+<span class="keyword">&lt;dependency&gt;</span>
+    <span class="keyword">&lt;groupId&gt;</span>org.apache.poi<span class="keyword">&lt;/groupId&gt;</span>
+    <span class="keyword">&lt;artifactId&gt;</span>poi-ooxml<span class="keyword">&lt;/artifactId&gt;</span>
+    <span class="keyword">&lt;version&gt;</span>5.2.5<span class="keyword">&lt;/version&gt;</span>
+<span class="keyword">&lt;/dependency&gt;</span></code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-table"></i> Sample Excel Structure</h4>
+                                <pre>TestData.xlsx - Sheet: LoginData
+
+| Username          | Password    | ExpectedResult |
+|-------------------|-------------|----------------|
+| user1@test.com    | Pass@123    | Success        |
+| user2@test.com    | Pass@456    | Success        |
+| invalid@test.com  | wrong       | Failed         |</pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Excel Utility Class</span></div>
+                                <pre><code><span class="keyword">import</span> org.apache.poi.ss.usermodel.*;
+<span class="keyword">import</span> org.apache.poi.xssf.usermodel.XSSFWorkbook;
+<span class="keyword">import</span> java.io.FileInputStream;
+
+<span class="keyword">public class</span> <span class="class-name">ExcelUtils</span> {
+    <span class="keyword">private</span> Workbook workbook;
+    <span class="keyword">private</span> Sheet sheet;
+    
+    <span class="keyword">public</span> ExcelUtils(String filePath, String sheetName) {
+        <span class="keyword">try</span> {
+            FileInputStream fis = <span class="keyword">new</span> FileInputStream(filePath);
+            workbook = <span class="keyword">new</span> XSSFWorkbook(fis);
+            sheet = workbook.getSheet(sheetName);
+        } <span class="keyword">catch</span> (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    <span class="keyword">public int</span> getRowCount() {
+        <span class="keyword">return</span> sheet.getLastRowNum() + <span class="number">1</span>;
+    }
+    
+    <span class="keyword">public int</span> getColumnCount() {
+        <span class="keyword">return</span> sheet.getRow(<span class="number">0</span>).getLastCellNum();
+    }
+    
+    <span class="keyword">public</span> String getCellData(<span class="keyword">int</span> rowNum, <span class="keyword">int</span> colNum) {
+        Cell cell = sheet.getRow(rowNum).getCell(colNum);
+        <span class="keyword">return</span> getCellValue(cell);
+    }
+    
+    <span class="keyword">private</span> String getCellValue(Cell cell) {
+        <span class="keyword">if</span> (cell == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="string">""</span>;
+        
+        <span class="keyword">switch</span> (cell.getCellType()) {
+            <span class="keyword">case</span> STRING:
+                <span class="keyword">return</span> cell.getStringCellValue();
+            <span class="keyword">case</span> NUMERIC:
+                <span class="keyword">return</span> String.valueOf((<span class="keyword">int</span>) cell.getNumericCellValue());
+            <span class="keyword">case</span> BOOLEAN:
+                <span class="keyword">return</span> String.valueOf(cell.getBooleanCellValue());
+            <span class="keyword">default</span>:
+                <span class="keyword">return</span> <span class="string">""</span>;
+        }
+    }
+    
+    <span class="keyword">public void</span> closeWorkbook() {
+        <span class="keyword">try</span> {
+            workbook.close();
+        } <span class="keyword">catch</span> (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Excel DataProvider</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.annotations.DataProvider;
+
+<span class="keyword">public class</span> <span class="class-name">TestDataProvider</span> {
+    
+    @DataProvider(name = <span class="string">"loginData"</span>)
+    <span class="keyword">public</span> Object[][] getLoginData() {
+        String filePath = <span class="string">"./testdata/TestData.xlsx"</span>;
+        String sheetName = <span class="string">"LoginData"</span>;
+        
+        ExcelUtils excel = <span class="keyword">new</span> ExcelUtils(filePath, sheetName);
+        
+        <span class="keyword">int</span> rows = excel.getRowCount() - <span class="number">1</span>; <span class="comment">// Exclude header</span>
+        <span class="keyword">int</span> cols = excel.getColumnCount();
+        
+        Object[][] data = <span class="keyword">new</span> Object[rows][cols];
+        
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++) {
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols; j++) {
+                data[i][j] = excel.getCellData(i + <span class="number">1</span>, j);
+            }
+        }
+        
+        excel.closeWorkbook();
+        <span class="keyword">return</span> data;
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Using Excel Data in Test</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.annotations.Test;
+
+<span class="keyword">public class</span> <span class="class-name">LoginTest</span> {
+    
+    @Test(dataProvider = <span class="string">"loginData"</span>, dataProviderClass = TestDataProvider.class)
+    <span class="keyword">public void</span> testLogin(String username, String password, String expectedResult) {
+        driver.get(<span class="string">"https://example.com/login"</span>);
+        
+        driver.findElement(By.id(<span class="string">"username"</span>)).sendKeys(username);
+        driver.findElement(By.id(<span class="string">"password"</span>)).sendKeys(password);
+        driver.findElement(By.id(<span class="string">"loginBtn"</span>)).click();
+        
+        <span class="keyword">if</span> (expectedResult.equals(<span class="string">"Success"</span>)) {
+            Assert.assertTrue(driver.findElement(By.id(<span class="string">"dashboard"</span>)).isDisplayed());
+        } <span class="keyword">else</span> {
+            Assert.assertTrue(driver.findElement(By.id(<span class="string">"error"</span>)).isDisplayed());
+        }
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Write Data to Excel</span></div>
+                                <pre><code><span class="keyword">import</span> org.apache.poi.xssf.usermodel.XSSFWorkbook;
+<span class="keyword">import</span> java.io.FileOutputStream;
+
+<span class="keyword">public void</span> writeTestResults(String filePath, <span class="keyword">int</span> row, String result) {
+    <span class="keyword">try</span> {
+        FileInputStream fis = <span class="keyword">new</span> FileInputStream(filePath);
+        Workbook workbook = <span class="keyword">new</span> XSSFWorkbook(fis);
+        Sheet sheet = workbook.getSheetAt(<span class="number">0</span>);
+        
+        Row rowObj = sheet.getRow(row);
+        Cell cell = rowObj.createCell(<span class="number">3</span>); <span class="comment">// Result column</span>
+        cell.setCellValue(result);
+        
+        fis.close();
+        
+        FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(filePath);
+        workbook.write(fos);
+        fos.close();
+        workbook.close();
+    } <span class="keyword">catch</span> (Exception e) {
+        e.printStackTrace();
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- CSV Integration -->
+                    <section id="csv-integration" class="chapter">
+                        <h2 class="chapter-title">CSV Data Provider</h2>
+                        <div class="chapter-content">
+                            <p>CSV files are simple, lightweight alternatives to Excel for storing test data.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Maven Dependencies</span></div>
+                                <pre><code><span class="comment">&lt;!-- OpenCSV --&gt;</span>
+<span class="keyword">&lt;dependency&gt;</span>
+    <span class="keyword">&lt;groupId&gt;</span>com.opencsv<span class="keyword">&lt;/groupId&gt;</span>
+    <span class="keyword">&lt;artifactId&gt;</span>opencsv<span class="keyword">&lt;/artifactId&gt;</span>
+    <span class="keyword">&lt;version&gt;</span>5.9<span class="keyword">&lt;/version&gt;</span>
+<span class="keyword">&lt;/dependency&gt;</span></code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-file-csv"></i> Sample CSV File</h4>
+                                <pre>testdata.csv
+
+username,password,expectedResult
+user1@test.com,Pass@123,Success
+user2@test.com,Pass@456,Success
+invalid@test.com,wrong,Failed</pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> CSV Utility Class</span></div>
+                                <pre><code><span class="keyword">import</span> com.opencsv.CSVReader;
+<span class="keyword">import</span> java.io.FileReader;
+<span class="keyword">import</span> java.util.List;
+
+<span class="keyword">public class</span> <span class="class-name">CSVUtils</span> {
+    
+    <span class="keyword">public static</span> Object[][] readCSV(String filePath) {
+        Object[][] data = <span class="keyword">null</span>;
+        
+        <span class="keyword">try</span> {
+            CSVReader reader = <span class="keyword">new</span> CSVReader(<span class="keyword">new</span> FileReader(filePath));
+            List&lt;String[]&gt; allRows = reader.readAll();
+            reader.close();
+            
+            <span class="comment">// Skip header row</span>
+            <span class="keyword">int</span> rows = allRows.size() - <span class="number">1</span>;
+            <span class="keyword">int</span> cols = allRows.get(<span class="number">0</span>).length;
+            
+            data = <span class="keyword">new</span> Object[rows][cols];
+            
+            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++) {
+                data[i] = allRows.get(i + <span class="number">1</span>);
+            }
+        } <span class="keyword">catch</span> (Exception e) {
+            e.printStackTrace();
+        }
+        
+        <span class="keyword">return</span> data;
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> CSV DataProvider</span></div>
+                                <pre><code>@DataProvider(name = <span class="string">"csvData"</span>)
+<span class="keyword">public</span> Object[][] getCSVData() {
+    String filePath = <span class="string">"./testdata/testdata.csv"</span>;
+    <span class="keyword">return</span> CSVUtils.readCSV(filePath);
+}
+
+@Test(dataProvider = <span class="string">"csvData"</span>)
+<span class="keyword">public void</span> testWithCSV(String username, String password, String expectedResult) {
+    <span class="comment">// Test implementation</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Read CSV Without Library</span></div>
+                                <pre><code><span class="keyword">import</span> java.io.BufferedReader;
+<span class="keyword">import</span> java.io.FileReader;
+<span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">import</span> java.util.List;
+
+<span class="keyword">public static</span> Object[][] readCSVManually(String filePath) {
+    List&lt;String[]&gt; data = <span class="keyword">new</span> ArrayList&lt;&gt;();
+    
+    <span class="keyword">try</span> (BufferedReader br = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(filePath))) {
+        String line;
+        <span class="keyword">boolean</span> isHeader = <span class="keyword">true</span>;
+        
+        <span class="keyword">while</span> ((line = br.readLine()) != <span class="keyword">null</span>) {
+            <span class="keyword">if</span> (isHeader) {
+                isHeader = <span class="keyword">false</span>;
+                <span class="keyword">continue</span>; <span class="comment">// Skip header</span>
+            }
+            String[] values = line.split(<span class="string">","</span>);
+            data.add(values);
+        }
+    } <span class="keyword">catch</span> (Exception e) {
+        e.printStackTrace();
+    }
+    
+    <span class="keyword">return</span> data.toArray(<span class="keyword">new</span> Object[<span class="number">0</span>][]);
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-info-circle"></i> CSV vs Excel</h4>
+                                <ul>
+                                    <li><strong>CSV Pros:</strong> Simple, lightweight, version control friendly, faster to read</li>
+                                    <li><strong>CSV Cons:</strong> No formatting, single sheet, limited data types</li>
+                                    <li><strong>Excel Pros:</strong> Multiple sheets, formatting, formulas, data validation</li>
+                                    <li><strong>Excel Cons:</strong> Larger files, requires external library</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- JSON Integration -->
+                    <section id="json-integration" class="chapter">
+                        <h2 class="chapter-title">JSON Data Provider</h2>
+                        <div class="chapter-content">
+                            <p>JSON is ideal for complex, nested test data structures and API test data.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Maven Dependencies</span></div>
+                                <pre><code><span class="comment">&lt;!-- Gson for JSON --&gt;</span>
+<span class="keyword">&lt;dependency&gt;</span>
+    <span class="keyword">&lt;groupId&gt;</span>com.google.code.gson<span class="keyword">&lt;/groupId&gt;</span>
+    <span class="keyword">&lt;artifactId&gt;</span>gson<span class="keyword">&lt;/artifactId&gt;</span>
+    <span class="keyword">&lt;version&gt;</span>2.10.1<span class="keyword">&lt;/version&gt;</span>
+<span class="keyword">&lt;/dependency&gt;</span>
+
+<span class="comment">&lt;!-- Or Jackson --&gt;</span>
+<span class="keyword">&lt;dependency&gt;</span>
+    <span class="keyword">&lt;groupId&gt;</span>com.fasterxml.jackson.core<span class="keyword">&lt;/groupId&gt;</span>
+    <span class="keyword">&lt;artifactId&gt;</span>jackson-databind<span class="keyword">&lt;/artifactId&gt;</span>
+    <span class="keyword">&lt;version&gt;</span>2.16.1<span class="keyword">&lt;/version&gt;</span>
+<span class="keyword">&lt;/dependency&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-code"></i> Sample JSON File</span></div>
+                                <pre><code>{
+  <span class="string">"testData"</span>: [
+    {
+      <span class="string">"username"</span>: <span class="string">"user1@test.com"</span>,
+      <span class="string">"password"</span>: <span class="string">"Pass@123"</span>,
+      <span class="string">"expectedResult"</span>: <span class="string">"Success"</span>
+    },
+    {
+      <span class="string">"username"</span>: <span class="string">"user2@test.com"</span>,
+      <span class="string">"password"</span>: <span class="string">"Pass@456"</span>,
+      <span class="string">"expectedResult"</span>: <span class="string">"Success"</span>
+    },
+    {
+      <span class="string">"username"</span>: <span class="string">"invalid@test.com"</span>,
+      <span class="string">"password"</span>: <span class="string">"wrong"</span>,
+      <span class="string">"expectedResult"</span>: <span class="string">"Failed"</span>
+    }
+  ]
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> POJO Class</span></div>
+                                <pre><code><span class="keyword">public class</span> <span class="class-name">LoginData</span> {
+    <span class="keyword">private</span> String username;
+    <span class="keyword">private</span> String password;
+    <span class="keyword">private</span> String expectedResult;
+    
+    <span class="comment">// Getters and Setters</span>
+    <span class="keyword">public</span> String getUsername() {
+        <span class="keyword">return</span> username;
+    }
+    
+    <span class="keyword">public void</span> setUsername(String username) {
+        <span class="keyword">this</span>.username = username;
+    }
+    
+    <span class="keyword">public</span> String getPassword() {
+        <span class="keyword">return</span> password;
+    }
+    
+    <span class="keyword">public void</span> setPassword(String password) {
+        <span class="keyword">this</span>.password = password;
+    }
+    
+    <span class="keyword">public</span> String getExpectedResult() {
+        <span class="keyword">return</span> expectedResult;
+    }
+    
+    <span class="keyword">public void</span> setExpectedResult(String expectedResult) {
+        <span class="keyword">this</span>.expectedResult = expectedResult;
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> JSON Utility with Gson</span></div>
+                                <pre><code><span class="keyword">import</span> com.google.gson.Gson;
+<span class="keyword">import</span> com.google.gson.JsonObject;
+<span class="keyword">import</span> com.google.gson.JsonArray;
+<span class="keyword">import</span> java.io.FileReader;
+
+<span class="keyword">public class</span> <span class="class-name">JSONUtils</span> {
+    
+    <span class="keyword">public static</span> Object[][] readJSON(String filePath) {
+        Object[][] data = <span class="keyword">null</span>;
+        
+        <span class="keyword">try</span> {
+            Gson gson = <span class="keyword">new</span> Gson();
+            FileReader reader = <span class="keyword">new</span> FileReader(filePath);
+            
+            JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+            JsonArray testData = jsonObject.getAsJsonArray(<span class="string">"testData"</span>);
+            
+            data = <span class="keyword">new</span> Object[testData.size()][<span class="number">1</span>];
+            
+            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; testData.size(); i++) {
+                LoginData loginData = gson.fromJson(testData.get(i), LoginData.class);
+                data[i][<span class="number">0</span>] = loginData;
+            }
+            
+            reader.close();
+        } <span class="keyword">catch</span> (Exception e) {
+            e.printStackTrace();
+        }
+        
+        <span class="keyword">return</span> data;
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> JSON DataProvider</span></div>
+                                <pre><code>@DataProvider(name = <span class="string">"jsonData"</span>)
+<span class="keyword">public</span> Object[][] getJSONData() {
+    String filePath = <span class="string">"./testdata/logindata.json"</span>;
+    <span class="keyword">return</span> JSONUtils.readJSON(filePath);
+}
+
+@Test(dataProvider = <span class="string">"jsonData"</span>)
+<span class="keyword">public void</span> testWithJSON(LoginData data) {
+    driver.get(<span class="string">"https://example.com/login"</span>);
+    
+    driver.findElement(By.id(<span class="string">"username"</span>)).sendKeys(data.getUsername());
+    driver.findElement(By.id(<span class="string">"password"</span>)).sendKeys(data.getPassword());
+    driver.findElement(By.id(<span class="string">"loginBtn"</span>)).click();
+    
+    <span class="comment">// Assertions based on expectedResult</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Complex JSON Structure</span></div>
+                                <pre><code>{
+  <span class="string">"users"</span>: [
+    {
+      <span class="string">"username"</span>: <span class="string">"admin"</span>,
+      <span class="string">"password"</span>: <span class="string">"admin123"</span>,
+      <span class="string">"profile"</span>: {
+        <span class="string">"firstName"</span>: <span class="string">"John"</span>,
+        <span class="string">"lastName"</span>: <span class="string">"Doe"</span>,
+        <span class="string">"email"</span>: <span class="string">"john@test.com"</span>
+      },
+      <span class="string">"permissions"</span>: [<span class="string">"read"</span>, <span class="string">"write"</span>, <span class="string">"delete"</span>]
+    }
+  ]
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Database Integration -->
+                    <section id="database-integration" class="chapter">
+                        <h2 class="chapter-title">Database Data Provider</h2>
+                        <div class="chapter-content">
+                            <p>For large datasets or dynamic test data, reading directly from a database provides flexibility and real-time data access.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Maven Dependencies</span></div>
+                                <pre><code><span class="comment">&lt;!-- MySQL Connector --&gt;</span>
+<span class="keyword">&lt;dependency&gt;</span>
+    <span class="keyword">&lt;groupId&gt;</span>mysql<span class="keyword">&lt;/groupId&gt;</span>
+    <span class="keyword">&lt;artifactId&gt;</span>mysql-connector-java<span class="keyword">&lt;/artifactId&gt;</span>
+    <span class="keyword">&lt;version&gt;</span>8.0.33<span class="keyword">&lt;/version&gt;</span>
+<span class="keyword">&lt;/dependency&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Database Utility Class</span></div>
+                                <pre><code><span class="keyword">import</span> java.sql.*;
+<span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">import</span> java.util.List;
+
+<span class="keyword">public class</span> <span class="class-name">DatabaseUtils</span> {
+    <span class="keyword">private static</span> Connection connection;
+
+    <span class="keyword">private static final</span> String URL = <span class="string">"jdbc:mysql://localhost:3306/testdb"</span>;
+    <span class="keyword">private static final</span> String USER = <span class="string">"root"</span>;
+    <span class="keyword">private static final</span> String PASSWORD = <span class="string">"password"</span>;
+
+    <span class="keyword">public static</span> Connection getConnection() {
+        <span class="keyword">try</span> {
+            <span class="keyword">if</span> (connection == <span class="keyword">null</span> || connection.isClosed()) {
+                connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            }
+        } <span class="keyword">catch</span> (SQLException e) {
+            e.printStackTrace();
+        }
+        <span class="keyword">return</span> connection;
+    }
+
+    <span class="keyword">public static void</span> closeConnection() {
+        <span class="keyword">try</span> {
+            <span class="keyword">if</span> (connection != <span class="keyword">null</span> && !connection.isClosed()) {
+                connection.close();
+            }
+        } <span class="keyword">catch</span> (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Database DataProvider</span></div>
+                                <pre><code>@DataProvider(name = <span class="string">"dbData"</span>)
+<span class="keyword">public</span> Object[][] getDBData() {
+    List&lt;Object[]&gt; data = <span class="keyword">new</span> ArrayList&lt;&gt;();
+
+    <span class="keyword">try</span> {
+        Connection conn = DatabaseUtils.getConnection();
+        String query = <span class="string">"SELECT username, password, expected_result FROM login_test_data"</span>;
+
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+
+        <span class="keyword">while</span> (rs.next()) {
+            String username = rs.getString(<span class="string">"username"</span>);
+            String password = rs.getString(<span class="string">"password"</span>);
+            String expectedResult = rs.getString(<span class="string">"expected_result"</span>);
+
+            data.add(<span class="keyword">new</span> Object[]{username, password, expectedResult});
+        }
+
+        rs.close();
+        stmt.close();
+    } <span class="keyword">catch</span> (SQLException e) {
+        e.printStackTrace();
+    }
+
+    <span class="keyword">return</span> data.toArray(<span class="keyword">new</span> Object[<span class="number">0</span>][]);
+}
+
+@Test(dataProvider = <span class="string">"dbData"</span>)
+<span class="keyword">public void</span> testWithDatabase(String username, String password, String expected) {
+    <span class="comment">// Test implementation</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Parameterized Query</span></div>
+                                <pre><code><span class="keyword">public</span> Object[][] getDataByEnvironment(String environment) {
+    List&lt;Object[]&gt; data = <span class="keyword">new</span> ArrayList&lt;&gt;();
+
+    <span class="keyword">try</span> {
+        Connection conn = DatabaseUtils.getConnection();
+        String query = <span class="string">"SELECT * FROM test_data WHERE environment = ?"</span>;
+
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(<span class="number">1</span>, environment);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        <span class="keyword">while</span> (rs.next()) {
+            data.add(<span class="keyword">new</span> Object[]{
+                rs.getString(<span class="string">"username"</span>),
+                rs.getString(<span class="string">"password"</span>),
+                rs.getString(<span class="string">"expected_result"</span>)
+            });
+        }
+
+        rs.close();
+        pstmt.close();
+    } <span class="keyword">catch</span> (SQLException e) {
+        e.printStackTrace();
+    }
+
+    <span class="keyword">return</span> data.toArray(<span class="keyword">new</span> Object[<span class="number">0</span>][]);
+}</code></pre>
+                            </div>
+
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Database Best Practices</h4>
+                                <ul>
+                                    <li>Use connection pooling for better performance</li>
+                                    <li>Always close connections in finally block or use try-with-resources</li>
+                                    <li>Use PreparedStatement to prevent SQL injection</li>
+                                    <li>Store credentials in config files, not in code</li>
+                                    <li>Use separate test database, not production</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Properties Files -->
+                    <section id="properties-files" class="chapter">
+                        <h2 class="chapter-title">Properties File Configuration</h2>
+                        <div class="chapter-content">
+                            <p>Properties files store configuration data and simple test parameters.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> config.properties</span></div>
+                                <pre><code><span class="comment"># Application Configuration</span>
+base.url=https://example.com
+browser=chrome
+timeout=10
+
+<span class="comment"># Test Credentials</span>
+valid.username=testuser
+valid.password=Test@123
+invalid.username=wronguser
+invalid.password=wrong</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Properties Reader</span></div>
+                                <pre><code><span class="keyword">import</span> java.io.FileInputStream;
+<span class="keyword">import</span> java.util.Properties;
+
+<span class="keyword">public class</span> <span class="class-name">ConfigReader</span> {
+    <span class="keyword">private static</span> Properties properties;
+
+    <span class="keyword">static</span> {
+        <span class="keyword">try</span> {
+            FileInputStream fis = <span class="keyword">new</span> FileInputStream(<span class="string">"./config/config.properties"</span>);
+            properties = <span class="keyword">new</span> Properties();
+            properties.load(fis);
+            fis.close();
+        } <span class="keyword">catch</span> (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    <span class="keyword">public static</span> String get(String key) {
+        <span class="keyword">return</span> properties.getProperty(key);
+    }
+
+    <span class="keyword">public static</span> String getBaseUrl() {
+        <span class="keyword">return</span> get(<span class="string">"base.url"</span>);
+    }
+
+    <span class="keyword">public static</span> String getBrowser() {
+        <span class="keyword">return</span> get(<span class="string">"browser"</span>);
+    }
+
+    <span class="keyword">public static int</span> getTimeout() {
+        <span class="keyword">return</span> Integer.parseInt(get(<span class="string">"timeout"</span>));
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Using Properties in Tests</span></div>
+                                <pre><code><span class="keyword">public class</span> <span class="class-name">LoginTest</span> <span class="keyword">extends</span> BaseTest {
+
+    @Test
+    <span class="keyword">public void</span> testValidLogin() {
+        String username = ConfigReader.get(<span class="string">"valid.username"</span>);
+        String password = ConfigReader.get(<span class="string">"valid.password"</span>);
+
+        loginPage.login(username, password);
+        Assert.assertTrue(homePage.isDisplayed());
+    }
+
+    @Test
+    <span class="keyword">public void</span> testInvalidLogin() {
+        String username = ConfigReader.get(<span class="string">"invalid.username"</span>);
+        String password = ConfigReader.get(<span class="string">"invalid.password"</span>);
+
+        loginPage.login(username, password);
+        Assert.assertTrue(loginPage.isErrorDisplayed());
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Environment-Specific Properties</span></div>
+                                <pre><code><span class="comment">// config-dev.properties</span>
+base.url=https://dev.example.com
+
+<span class="comment">// config-qa.properties</span>
+base.url=https://qa.example.com
+
+<span class="comment">// config-prod.properties</span>
+base.url=https://example.com</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Environment-Based Config Reader</span></div>
+                                <pre><code><span class="keyword">public class</span> <span class="class-name">ConfigReader</span> {
+    <span class="keyword">private static</span> Properties properties;
+
+    <span class="keyword">static</span> {
+        String env = System.getProperty(<span class="string">"env"</span>, <span class="string">"dev"</span>);
+        String configFile = <span class="string">"./config/config-"</span> + env + <span class="string">".properties"</span>;
+
+        <span class="keyword">try</span> {
+            FileInputStream fis = <span class="keyword">new</span> FileInputStream(configFile);
+            properties = <span class="keyword">new</span> Properties();
+            properties.load(fis);
+            fis.close();
+        } <span class="keyword">catch</span> (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    <span class="keyword">public static</span> String get(String key) {
+        <span class="keyword">return</span> properties.getProperty(key);
+    }
+}
+
+<span class="comment">// Run with: mvn test -Denv=qa</span></code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- TestNG Parameters -->
+                    <section id="testng-parameters" class="chapter">
+                        <h2 class="chapter-title">TestNG Parameters</h2>
+                        <div class="chapter-content">
+                            <p>TestNG allows passing parameters from testng.xml directly to test methods.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> testng.xml with Parameters</span></div>
+                                <pre><code><span class="keyword">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="keyword">&lt;!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd"&gt;</span>
+<span class="keyword">&lt;suite</span> name=<span class="string">"Data-Driven Suite"</span><span class="keyword">&gt;</span>
+
+    <span class="comment">&lt;!-- Suite-level parameters --&gt;</span>
+    <span class="keyword">&lt;parameter</span> name=<span class="string">"browser"</span> value=<span class="string">"chrome"</span><span class="keyword">/&gt;</span>
+    <span class="keyword">&lt;parameter</span> name=<span class="string">"baseUrl"</span> value=<span class="string">"https://example.com"</span><span class="keyword">/&gt;</span>
+
+    <span class="keyword">&lt;test</span> name=<span class="string">"Login Tests"</span><span class="keyword">&gt;</span>
+        <span class="comment">&lt;!-- Test-level parameters --&gt;</span>
+        <span class="keyword">&lt;parameter</span> name=<span class="string">"username"</span> value=<span class="string">"testuser"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;parameter</span> name=<span class="string">"password"</span> value=<span class="string">"Test@123"</span><span class="keyword">/&gt;</span>
+
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Using Parameters in Test</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.annotations.Parameters;
+
+<span class="keyword">public class</span> <span class="class-name">LoginTest</span> {
+
+    @Parameters({<span class="string">"browser"</span>, <span class="string">"baseUrl"</span>})
+    @BeforeClass
+    <span class="keyword">public void</span> setup(String browser, String baseUrl) {
+        <span class="keyword">if</span> (browser.equals(<span class="string">"chrome"</span>)) {
+            driver = <span class="keyword">new</span> ChromeDriver();
+        } <span class="keyword">else if</span> (browser.equals(<span class="string">"firefox"</span>)) {
+            driver = <span class="keyword">new</span> FirefoxDriver();
+        }
+        driver.get(baseUrl);
+    }
+
+    @Parameters({<span class="string">"username"</span>, <span class="string">"password"</span>})
+    @Test
+    <span class="keyword">public void</span> testLogin(String username, String password) {
+        driver.findElement(By.id(<span class="string">"username"</span>)).sendKeys(username);
+        driver.findElement(By.id(<span class="string">"password"</span>)).sendKeys(password);
+        driver.findElement(By.id(<span class="string">"loginBtn"</span>)).click();
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Optional Parameters</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.annotations.Optional;
+
+@Parameters({<span class="string">"browser"</span>})
+@BeforeClass
+<span class="keyword">public void</span> setup(@Optional(<span class="string">"chrome"</span>) String browser) {
+    <span class="comment">// Uses "chrome" if parameter not provided in testng.xml</span>
+    <span class="keyword">if</span> (browser.equals(<span class="string">"chrome"</span>)) {
+        driver = <span class="keyword">new</span> ChromeDriver();
+    } <span class="keyword">else if</span> (browser.equals(<span class="string">"firefox"</span>)) {
+        driver = <span class="keyword">new</span> FirefoxDriver();
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Cross-Browser Testing</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Cross Browser Suite"</span> parallel=<span class="string">"tests"</span> thread-count=<span class="string">"2"</span><span class="keyword">&gt;</span>
+
+    <span class="keyword">&lt;test</span> name=<span class="string">"Chrome Test"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;parameter</span> name=<span class="string">"browser"</span> value=<span class="string">"chrome"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+
+    <span class="keyword">&lt;test</span> name=<span class="string">"Firefox Test"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;parameter</span> name=<span class="string">"browser"</span> value=<span class="string">"firefox"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+
+    <span class="keyword">&lt;test</span> name=<span class="string">"Edge Test"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;parameter</span> name=<span class="string">"browser"</span> value=<span class="string">"edge"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="chapter">
+                        <h2 class="chapter-title">Best Practices</h2>
+                        <div class="chapter-content">
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-check-circle"></i> Data Management</h4>
+                                    <ul>
+                                        <li>Keep test data separate from test code</li>
+                                        <li>Use meaningful data names and comments</li>
+                                        <li>Version control your test data files</li>
+                                        <li>Create data for positive and negative scenarios</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-folder-tree"></i> File Organization</h4>
+                                    <ul>
+                                        <li>Use a dedicated testdata folder</li>
+                                        <li>Separate data by feature or module</li>
+                                        <li>Use descriptive file names</li>
+                                        <li>Create environment-specific data files</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-shield-alt"></i> Security</h4>
+                                    <ul>
+                                        <li>Never commit sensitive data to VCS</li>
+                                        <li>Use environment variables for credentials</li>
+                                        <li>Encrypt sensitive test data</li>
+                                        <li>Use .gitignore for config files</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-tachometer-alt"></i> Performance</h4>
+                                    <ul>
+                                        <li>Cache data for repeated reads</li>
+                                        <li>Close file/DB connections properly</li>
+                                        <li>Use lazy loading for large datasets</li>
+                                        <li>Parallel execution for independent data</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-folder-tree"></i> Recommended Project Structure</span></div>
+                                <pre><code>project/
+├── src/test/
+│   ├── java/
+│   │   ├── tests/
+│   │   │   └── LoginTest.java
+│   │   ├── dataproviders/
+│   │   │   ├── ExcelDataProvider.java
+│   │   │   ├── CSVDataProvider.java
+│   │   │   └── JSONDataProvider.java
+│   │   └── utils/
+│   │       ├── ExcelUtils.java
+│   │       ├── CSVUtils.java
+│   │       ├── JSONUtils.java
+│   │       └── ConfigReader.java
+│   └── resources/
+│       ├── testdata/
+│       │   ├── login_data.xlsx
+│       │   ├── user_data.csv
+│       │   └── api_data.json
+│       └── config/
+│           ├── config-dev.properties
+│           ├── config-qa.properties
+│           └── config-prod.properties</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-table"></i> Choosing the Right Data Source</span></div>
+                                <pre><code>Data Source    | Best For                      | Pros                    | Cons
+---------------|-------------------------------|-------------------------|------------------
+Excel          | Business users, complex data  | Familiar, multi-sheet   | Library required
+CSV            | Simple data, CI/CD            | Lightweight, VCS-friendly| No formatting
+JSON           | API data, nested structures   | Flexible, readable      | Complex parsing
+Database       | Dynamic data, large datasets  | Real-time, scalable     | Setup overhead
+Properties     | Config, simple key-value      | Built-in Java support   | Limited structure
+TestNG XML     | Static parameters             | No code change needed   | Not scalable</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-star"></i> Key Takeaways</h4>
+                                <ul>
+                                    <li>Choose data source based on data complexity and team skills</li>
+                                    <li>Excel works best when business users need to maintain test data</li>
+                                    <li>CSV is ideal for simple data and CI/CD pipelines</li>
+                                    <li>JSON excels at API testing and complex nested data</li>
+                                    <li>Database is best for large, dynamic, or shared datasets</li>
+                                    <li>Properties files work well for configuration and environment settings</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Next Steps -->
+                    <section id="next-steps" class="chapter">
+                        <h2 class="chapter-title">Next Steps</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-graduation-cap"></i> Continue Your Learning Journey</h4>
+                                <ul>
+                                    <li><strong>Selenium Grid</strong> - Parallel execution across multiple browsers and machines</li>
+                                    <li><strong>Extent Reports</strong> - Generate rich HTML reports with screenshots</li>
+                                    <li><strong>CI/CD Integration</strong> - Automate test execution with Jenkins or GitHub Actions</li>
+                                    <li><strong>BDD with Cucumber</strong> - Combine data-driven testing with Gherkin scenarios</li>
+                                    <li><strong>API Testing</strong> - Data-driven REST API testing with RestAssured</li>
+                                    <li><strong>Test Data Generation</strong> - Use Faker library for dynamic test data</li>
+                                </ul>
+                            </div>
+
+                            <div class="info-box success">
+                                <h4><i class="fas fa-book"></i> Prepare for Interviews</h4>
+                                <p>Data-driven testing is a common interview topic! Practice with our <a href="/interview-qna/automation/automations-set-1.html">Automation Interview Q&A</a> covering framework architecture, data handling, and real-world scenarios.</p>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-code"></i> Strengthen Your Java Skills</h4>
+                                <p>Working with files and databases requires solid Java fundamentals. Check out our <a href="/java/index.html">Java Tutorials</a> covering I/O operations, Collections, and more.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/selenium/selenium-page-object-model.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Page Object Model</span>
+                    </a>
+                    <a href="/interview-qna/automation/automations-set-1.html" class="nav-next">
+                        <span>Automation Interview Q&A</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
