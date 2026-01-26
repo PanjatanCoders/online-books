@@ -1382,3 +1382,208 @@
         font-size: 3rem;
     }
 }
+
+/* ===== About Section ===== */
+.about-section {
+    background: var(--bg-secondary);
+    padding: var(--spacing-3xl) var(--spacing-xl);
+}
+
+.about-container {
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+}
+
+/* Mission Statement */
+.about-mission {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: center;
+    margin-bottom: var(--spacing-3xl);
+    padding: var(--spacing-2xl);
+    background: var(--bg-card);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--border-color);
+}
+
+.about-mission-content h3 {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.about-mission-content h3 i {
+    color: var(--accent-primary);
+}
+
+.about-mission-content p {
+    font-size: var(--text-base);
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.about-mission-content strong {
+    color: var(--accent-primary);
+}
+
+.about-mission-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.about-highlight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-base);
+}
+
+.about-highlight:hover {
+    border-color: var(--accent-primary);
+    transform: translateX(5px);
+}
+
+.about-highlight i {
+    font-size: var(--text-xl);
+    color: var(--accent-primary);
+    width: 24px;
+}
+
+.about-highlight span {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Expertise Section */
+.expertise-section {
+    margin-top: var(--spacing-2xl);
+}
+
+.expertise-title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+}
+
+.expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.expertise-card {
+    background: var(--bg-card);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-base);
+}
+
+.expertise-card:hover {
+    border-color: var(--accent-primary);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.expertise-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.expertise-card-header i {
+    font-size: var(--text-2xl);
+    color: var(--accent-primary);
+}
+
+.expertise-card-header h4 {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.expertise-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+}
+
+.expertise-tags span {
+    display: inline-block;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: var(--text-xs);
+    color: var(--text-secondary);
+    transition: all var(--transition-base);
+}
+
+.expertise-card:hover .expertise-tags span {
+    border-color: rgba(102, 126, 234, 0.3);
+    color: var(--text-primary);
+}
+
+/* Homepage layout for About section */
+.homepage .about-section {
+    margin-left: var(--sidebar-width);
+}
+
+@media (max-width: 768px) {
+    .homepage .about-section {
+        margin-left: 0;
+    }
+
+    .about-mission {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xl);
+    }
+
+    .about-mission-highlights {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .about-highlight {
+        flex: 1;
+        min-width: 140px;
+    }
+
+    .expertise-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .about-section {
+        padding: var(--spacing-2xl) var(--spacing-md);
+    }
+
+    .about-mission {
+        padding: var(--spacing-lg);
+    }
+
+    .about-mission-highlights {
+        flex-direction: column;
+    }
+
+    .about-highlight {
+        min-width: 100%;
+    }
+}

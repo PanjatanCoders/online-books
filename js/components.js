@@ -192,7 +192,6 @@ const TechTokComponents = {
                         <ul class="footer-links">
                             <li><a href="/index.html"><i class="fas fa-home"></i> Home</a></li>
                             <li><a href="/index.html#about"><i class="fas fa-user"></i> About</a></li>
-                            <li><a href="/index.html#contact"><i class="fas fa-envelope"></i> Contact</a></li>
                         </ul>
                     </div>
                     <div class="footer-section">

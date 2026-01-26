@@ -7,7 +7,7 @@ const SITE_NAVIGATION = {
     brand: {
         name: 'GyanCode',
         logo: '/assets/images/logo.png',
-        tagline: 'Technical Portfolio & Learning Hub'
+        tagline: 'QA Learning Hub - Test Automation Tutorials & Interview Prep'
     },
 
     domains: [
@@ -324,8 +324,7 @@ const SITE_NAVIGATION = {
 
     quickLinks: [
         { name: 'Home', url: '/index.html', icon: 'fas fa-home' },
-        { name: 'About', url: '/index.html#about', icon: 'fas fa-user' },
-        { name: 'Contact', url: '/index.html#contact', icon: 'fas fa-envelope' }
+        { name: 'About', url: '/index.html#about', icon: 'fas fa-user' }
     ],
 
     social: [
