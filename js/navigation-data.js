@@ -267,6 +267,13 @@ const SITE_NAVIGATION = {
                             icon: 'fas fa-vial',
                             description: 'Annotations, Assertions, DataProvider & XML',
                             readTime: '30 min'
+                        },
+                        {
+                            title: 'Page Object Model',
+                            url: '/selenium/selenium-page-object-model.html',
+                            icon: 'fas fa-sitemap',
+                            description: 'Design patterns for test automation',
+                            readTime: '35 min'
                         }
                     ]
                 }
