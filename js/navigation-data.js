@@ -258,8 +258,15 @@ const SITE_NAVIGATION = {
                             title: 'Selenium Advanced Topics',
                             url: '/selenium/selenium-advanced-concepts.html',
                             icon: 'fas fa-book-open',
-                            description: 'Alerts, iFrames, JavaScript, File Upload/Donwload',
-                            readTime: '20 min'
+                            description: 'Alerts, iFrames, JavaScript, File Upload/Download',
+                            readTime: '25 min'
+                        },
+                        {
+                            title: 'Selenium with TestNG',
+                            url: '/selenium/selenium-testng-integration.html',
+                            icon: 'fas fa-vial',
+                            description: 'Annotations, Assertions, DataProvider & XML',
+                            readTime: '30 min'
                         }
                     ]
                 }

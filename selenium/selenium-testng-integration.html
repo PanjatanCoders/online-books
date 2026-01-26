@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete guide to integrating Selenium WebDriver with TestNG framework for structured test execution, assertions, annotations, and reporting.">
+    <title>Selenium with TestNG - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Selenium with TestNG</h1>
+                    <p class="article-subtitle">Structure your automation tests with TestNG framework</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 30 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                        <span><i class="fas fa-code"></i> Java</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc"></nav>
+
+                <div class="article-body">
+                    <!-- Introduction -->
+                    <section id="introduction" class="chapter">
+                        <h2 class="chapter-title">Introduction to TestNG</h2>
+                        <div class="chapter-content">
+                            <p>TestNG is a powerful testing framework inspired by JUnit and NUnit. It provides better test configuration, parallel execution, data-driven testing, and detailed reporting capabilities.</p>
+
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-list-check"></i> Annotations</h4>
+                                    <p>Powerful test lifecycle management</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-check-double"></i> Assertions</h4>
+                                    <p>Rich assertion methods for validation</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-database"></i> Data-Driven</h4>
+                                    <p>DataProvider for parameterized tests</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-arrows-split"></i> Parallel Execution</h4>
+                                    <p>Run tests concurrently for speed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Setup -->
+                    <section id="setup" class="chapter">
+                        <h2 class="chapter-title">Setup & Installation</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Maven Dependencies (pom.xml)</span></div>
+                                <pre><code><span class="comment">&lt;!-- TestNG --&gt;</span>
+<span class="keyword">&lt;dependency&gt;</span>
+    <span class="keyword">&lt;groupId&gt;</span>org.testng<span class="keyword">&lt;/groupId&gt;</span>
+    <span class="keyword">&lt;artifactId&gt;</span>testng<span class="keyword">&lt;/artifactId&gt;</span>
+    <span class="keyword">&lt;version&gt;</span>7.10.2<span class="keyword">&lt;/version&gt;</span>
+    <span class="keyword">&lt;scope&gt;</span>test<span class="keyword">&lt;/scope&gt;</span>
+<span class="keyword">&lt;/dependency&gt;</span>
+
+<span class="comment">&lt;!-- Selenium WebDriver --&gt;</span>
+<span class="keyword">&lt;dependency&gt;</span>
+    <span class="keyword">&lt;groupId&gt;</span>org.seleniumhq.selenium<span class="keyword">&lt;/groupId&gt;</span>
+    <span class="keyword">&lt;artifactId&gt;</span>selenium-java<span class="keyword">&lt;/artifactId&gt;</span>
+    <span class="keyword">&lt;version&gt;</span>4.27.0<span class="keyword">&lt;/version&gt;</span>
+<span class="keyword">&lt;/dependency&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Gradle Dependencies (build.gradle)</span></div>
+                                <pre><code>dependencies {
+    testImplementation <span class="string">'org.testng:testng:7.10.2'</span>
+    implementation <span class="string">'org.seleniumhq.selenium:selenium-java:4.27.0'</span>
+}</code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-folder-tree"></i> Project Structure</h4>
+                                <pre>src/
+├── test/
+│   ├── java/
+│   │   ├── tests/
+│   │   │   ├── LoginTest.java
+│   │   │   └── HomePageTest.java
+│   │   └── base/
+│   │       └── BaseTest.java
+│   └── resources/
+│       └── testng.xml</pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Annotations -->
+                    <section id="annotations" class="chapter">
+                        <h2 class="chapter-title">TestNG Annotations</h2>
+                        <div class="chapter-content">
+                            <p>Annotations define test execution flow and setup/teardown operations.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-table"></i> Annotation Hierarchy</span></div>
+                                <pre><code>Annotation          | Execution Order | Description
+--------------------+-----------------+--------------------------------
+@BeforeSuite        | 1              | Runs once before all tests
+@BeforeTest         | 2              | Runs before each test tag
+@BeforeClass        | 3              | Runs once before test class
+@BeforeMethod       | 4              | Runs before each @Test method
+@Test               | 5              | The actual test method
+@AfterMethod        | 6              | Runs after each @Test method
+@AfterClass         | 7              | Runs once after test class
+@AfterTest          | 8              | Runs after each test tag
+@AfterSuite         | 9              | Runs once after all tests</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Basic Test Class</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.annotations.*;
+<span class="keyword">import</span> org.openqa.selenium.WebDriver;
+<span class="keyword">import</span> org.openqa.selenium.chrome.ChromeDriver;
+
+<span class="keyword">public class</span> <span class="class-name">LoginTest</span> {
+    WebDriver driver;
+
+    @BeforeSuite
+    <span class="keyword">public void</span> beforeSuite() {
+        System.out.println(<span class="string">"Before Suite - Setup global config"</span>);
+    }
+
+    @BeforeClass
+    <span class="keyword">public void</span> setupClass() {
+        System.out.println(<span class="string">"Before Class - Initialize driver"</span>);
+        driver = <span class="keyword">new</span> ChromeDriver();
+    }
+
+    @BeforeMethod
+    <span class="keyword">public void</span> beforeMethod() {
+        System.out.println(<span class="string">"Before Method - Navigate to URL"</span>);
+        driver.get(<span class="string">"https://example.com"</span>);
+    }
+
+    @Test
+    <span class="keyword">public void</span> testLogin() {
+        System.out.println(<span class="string">"Executing test"</span>);
+        <span class="comment">// Test logic here</span>
+    }
+
+    @AfterMethod
+    <span class="keyword">public void</span> afterMethod() {
+        System.out.println(<span class="string">"After Method - Clear cookies"</span>);
+        driver.manage().deleteAllCookies();
+    }
+
+    @AfterClass
+    <span class="keyword">public void</span> tearDownClass() {
+        System.out.println(<span class="string">"After Class - Close driver"</span>);
+        driver.quit();
+    }
+
+    @AfterSuite
+    <span class="keyword">public void</span> afterSuite() {
+        System.out.println(<span class="string">"After Suite - Cleanup"</span>);
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Annotation Tips</h4>
+                                <ul>
+                                    <li>Use <code>@BeforeMethod</code> for common setup before each test</li>
+                                    <li>Use <code>@BeforeClass</code> for one-time setup like driver initialization</li>
+                                    <li>Use <code>@AfterMethod</code> for cleanup after each test</li>
+                                    <li>Use <code>@AfterClass</code> to close browser and release resources</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Test Methods -->
+                    <section id="test-methods" class="chapter">
+                        <h2 class="chapter-title">Writing Test Methods</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Simple Test</span></div>
+                                <pre><code>@Test
+<span class="keyword">public void</span> testPageTitle() {
+    driver.get(<span class="string">"https://www.google.com"</span>);
+    String title = driver.getTitle();
+    Assert.assertEquals(title, <span class="string">"Google"</span>);
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Test with Priority</span></div>
+                                <pre><code><span class="comment">// Tests execute in priority order (lower first)</span>
+@Test(priority = <span class="number">1</span>)
+<span class="keyword">public void</span> testLogin() {
+    <span class="comment">// Login test</span>
+}
+
+@Test(priority = <span class="number">2</span>)
+<span class="keyword">public void</span> testDashboard() {
+    <span class="comment">// Dashboard test - runs after login</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Test with Description</span></div>
+                                <pre><code>@Test(description = <span class="string">"Verify user can login with valid credentials"</span>)
+<span class="keyword">public void</span> testValidLogin() {
+    <span class="comment">// Test implementation</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Dependent Tests</span></div>
+                                <pre><code>@Test
+<span class="keyword">public void</span> testLogin() {
+    <span class="comment">// Login functionality</span>
+}
+
+@Test(dependsOnMethods = {<span class="string">"testLogin"</span>})
+<span class="keyword">public void</span> testAddToCart() {
+    <span class="comment">// Only runs if testLogin passes</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Enable/Disable Tests</span></div>
+                                <pre><code>@Test(enabled = <span class="keyword">false</span>)
+<span class="keyword">public void</span> testUnderDevelopment() {
+    <span class="comment">// This test will be skipped</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Timeout for Tests</span></div>
+                                <pre><code>@Test(timeOut = <span class="number">5000</span>) <span class="comment">// 5 seconds</span>
+<span class="keyword">public void</span> testPageLoad() {
+    driver.get(<span class="string">"https://example.com"</span>);
+    <span class="comment">// Fails if execution takes more than 5 seconds</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Expected Exceptions</span></div>
+                                <pre><code>@Test(expectedExceptions = NoSuchElementException.class)
+<span class="keyword">public void</span> testElementNotFound() {
+    driver.findElement(By.id(<span class="string">"nonExistent"</span>));
+    <span class="comment">// Test passes if NoSuchElementException is thrown</span>
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Assertions -->
+                    <section id="assertions" class="chapter">
+                        <h2 class="chapter-title">Assertions in TestNG</h2>
+                        <div class="chapter-content">
+                            <p>Assertions validate expected outcomes. TestNG provides both hard and soft assertions.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Hard Assertions</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.Assert;
+
+@Test
+<span class="keyword">public void</span> testAssertions() {
+    <span class="comment">// Equality</span>
+    Assert.assertEquals(actual, expected);
+    Assert.assertEquals(driver.getTitle(), <span class="string">"Expected Title"</span>);
+
+    <span class="comment">// Boolean</span>
+    Assert.assertTrue(condition);
+    Assert.assertFalse(condition);
+
+    <span class="comment">// Null checks</span>
+    Assert.assertNull(object);
+    Assert.assertNotNull(object);
+
+    <span class="comment">// With custom message</span>
+    Assert.assertEquals(actual, expected, <span class="string">"Values don't match!"</span>);
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Common Assertion Methods</span></div>
+                                <pre><code><span class="comment">// Compare values</span>
+Assert.assertEquals(actual, expected);
+Assert.assertNotEquals(actual, expected);
+
+<span class="comment">// Check conditions</span>
+Assert.assertTrue(element.isDisplayed());
+Assert.assertFalse(element.isEnabled());
+
+<span class="comment">// Check null/not null</span>
+Assert.assertNull(driver.findElement(By.id(<span class="string">"id"</span>)));
+Assert.assertNotNull(element);
+
+<span class="comment">// Fail test explicitly</span>
+Assert.fail(<span class="string">"Test failed due to timeout"</span>);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Soft Assertions</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.asserts.SoftAssert;
+
+@Test
+<span class="keyword">public void</span> testSoftAssertions() {
+    SoftAssert softAssert = <span class="keyword">new</span> SoftAssert();
+
+    <span class="comment">// These continue even if they fail</span>
+    softAssert.assertEquals(driver.getTitle(), <span class="string">"Title"</span>);
+    softAssert.assertTrue(<span class="keyword">false</span>, <span class="string">"This will fail but test continues"</span>);
+    softAssert.assertNotNull(<span class="keyword">null</span>, <span class="string">"Another failure"</span>);
+
+    <span class="comment">// Must call assertAll() to mark test as failed</span>
+    softAssert.assertAll();
+}</code></pre>
+                            </div>
+
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Hard vs Soft Assertions</h4>
+                                <ul>
+                                    <li><strong>Hard Assert:</strong> Stops execution immediately on failure</li>
+                                    <li><strong>Soft Assert:</strong> Continues execution, reports all failures at end</li>
+                                    <li>Use hard asserts for critical validations</li>
+                                    <li>Use soft asserts to collect multiple validation failures</li>
+                                    <li>Always call <code>assertAll()</code> with soft asserts</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Data Driven Testing -->
+                    <section id="data-provider" class="chapter">
+                        <h2 class="chapter-title">Data-Driven Testing</h2>
+                        <div class="chapter-content">
+                            <p>DataProvider allows running the same test with different data sets.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Basic DataProvider</span></div>
+                                <pre><code>@DataProvider(name = <span class="string">"loginData"</span>)
+<span class="keyword">public</span> Object[][] getLoginData() {
+    <span class="keyword">return new</span> Object[][] {
+        {<span class="string">"user1@test.com"</span>, <span class="string">"password123"</span>},
+        {<span class="string">"user2@test.com"</span>, <span class="string">"password456"</span>},
+        {<span class="string">"user3@test.com"</span>, <span class="string">"password789"</span>}
+    };
+}
+
+@Test(dataProvider = <span class="string">"loginData"</span>)
+<span class="keyword">public void</span> testLogin(String email, String password) {
+    driver.findElement(By.id(<span class="string">"email"</span>)).sendKeys(email);
+    driver.findElement(By.id(<span class="string">"password"</span>)).sendKeys(password);
+    driver.findElement(By.id(<span class="string">"loginBtn"</span>)).click();
+    
+    <span class="comment">// Add assertions</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> DataProvider from Excel</span></div>
+                                <pre><code><span class="keyword">import</span> org.apache.poi.ss.usermodel.*;
+<span class="keyword">import</span> java.io.FileInputStream;
+
+@DataProvider(name = <span class="string">"excelData"</span>)
+<span class="keyword">public</span> Object[][] getExcelData() <span class="keyword">throws</span> Exception {
+    String filePath = <span class="string">"./testdata/TestData.xlsx"</span>;
+    FileInputStream file = <span class="keyword">new</span> FileInputStream(filePath);
+    Workbook workbook = WorkbookFactory.create(file);
+    Sheet sheet = workbook.getSheetAt(<span class="number">0</span>);
+    
+    <span class="keyword">int</span> rowCount = sheet.getLastRowNum();
+    <span class="keyword">int</span> colCount = sheet.getRow(<span class="number">0</span>).getLastCellNum();
+    
+    Object[][] data = <span class="keyword">new</span> Object[rowCount][colCount];
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rowCount; i++) {
+        Row row = sheet.getRow(i + <span class="number">1</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; colCount; j++) {
+            data[i][j] = row.getCell(j).toString();
+        }
+    }
+    
+    workbook.close();
+    file.close();
+    <span class="keyword">return</span> data;
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> DataProvider with Method</span></div>
+                                <pre><code><span class="comment">// DataProvider in different class</span>
+<span class="keyword">public class</span> <span class="class-name">TestDataProvider</span> {
+    @DataProvider(name = <span class="string">"searchData"</span>)
+    <span class="keyword">public static</span> Object[][] getSearchData() {
+        <span class="keyword">return new</span> Object[][] {
+            {<span class="string">"Selenium"</span>},
+            {<span class="string">"TestNG"</span>},
+            {<span class="string">"Java"</span>}
+        };
+    }
+}
+
+<span class="comment">// Using DataProvider from different class</span>
+<span class="keyword">public class</span> <span class="class-name">SearchTest</span> {
+    @Test(dataProvider = <span class="string">"searchData"</span>, dataProviderClass = TestDataProvider.class)
+    <span class="keyword">public void</span> testSearch(String keyword) {
+        driver.findElement(By.name(<span class="string">"q"</span>)).sendKeys(keyword);
+        <span class="comment">// Add search logic</span>
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Parallel DataProvider</span></div>
+                                <pre><code>@DataProvider(name = <span class="string">"parallelData"</span>, parallel = <span class="keyword">true</span>)
+<span class="keyword">public</span> Object[][] getParallelData() {
+    <span class="keyword">return new</span> Object[][] {
+        {<span class="string">"Test1"</span>},
+        {<span class="string">"Test2"</span>},
+        {<span class="string">"Test3"</span>}
+    };
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-database"></i> DataProvider Best Practices</h4>
+                                <ul>
+                                    <li>Keep test data separate from test logic</li>
+                                    <li>Use meaningful DataProvider names</li>
+                                    <li>Store large datasets in external files (Excel, CSV, JSON)</li>
+                                    <li>Use parallel execution for independent data sets</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- TestNG XML -->
+                    <section id="testng-xml" class="chapter">
+                        <h2 class="chapter-title">TestNG XML Configuration</h2>
+                        <div class="chapter-content">
+                            <p>TestNG XML files define test suites, organize tests, and configure execution parameters.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Basic testng.xml</span></div>
+                                <pre><code><span class="keyword">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="keyword">&lt;!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd"&gt;</span>
+<span class="keyword">&lt;suite</span> name=<span class="string">"Test Suite"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;test</span> name=<span class="string">"Login Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Multiple Test Classes</span></div>
+                                <pre><code><span class="keyword">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="keyword">&lt;!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd"&gt;</span>
+<span class="keyword">&lt;suite</span> name=<span class="string">"Regression Suite"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;test</span> name=<span class="string">"All Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.HomePageTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.CheckoutTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Run Specific Methods</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Smoke Suite"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;test</span> name=<span class="string">"Smoke Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">&gt;</span>
+                <span class="keyword">&lt;methods&gt;</span>
+                    <span class="keyword">&lt;include</span> name=<span class="string">"testValidLogin"</span><span class="keyword">/&gt;</span>
+                    <span class="keyword">&lt;include</span> name=<span class="string">"testLogout"</span><span class="keyword">/&gt;</span>
+                <span class="keyword">&lt;/methods&gt;</span>
+            <span class="keyword">&lt;/class&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Package-Level Execution</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Package Suite"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;test</span> name=<span class="string">"Package Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;packages&gt;</span>
+            <span class="keyword">&lt;package</span> name=<span class="string">"tests.regression"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;package</span> name=<span class="string">"tests.smoke"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/packages&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Parallel Execution</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Parallel Suite"</span> parallel=<span class="string">"tests"</span> thread-count=<span class="string">"3"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;test</span> name=<span class="string">"Chrome Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;parameter</span> name=<span class="string">"browser"</span> value=<span class="string">"chrome"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+    
+    <span class="keyword">&lt;test</span> name=<span class="string">"Firefox Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;parameter</span> name=<span class="string">"browser"</span> value=<span class="string">"firefox"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span>
+
+<span class="comment">&lt;!-- Parallel options:
+     tests    - Run test tags in parallel
+     classes  - Run test classes in parallel
+     methods  - Run test methods in parallel
+--&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Parameters in XML</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Parameterized Suite"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;parameter</span> name=<span class="string">"url"</span> value=<span class="string">"https://example.com"</span><span class="keyword">/&gt;</span>
+    <span class="keyword">&lt;parameter</span> name=<span class="string">"browser"</span> value=<span class="string">"chrome"</span><span class="keyword">/&gt;</span>
+    
+    <span class="keyword">&lt;test</span> name=<span class="string">"Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Using Parameters in Test</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.annotations.Parameters;
+
+<span class="keyword">public class</span> <span class="class-name">LoginTest</span> {
+    WebDriver driver;
+    
+    @Parameters({<span class="string">"browser"</span>, <span class="string">"url"</span>})
+    @BeforeClass
+    <span class="keyword">public void</span> setup(String browser, String url) {
+        <span class="keyword">if</span> (browser.equalsIgnoreCase(<span class="string">"chrome"</span>)) {
+            driver = <span class="keyword">new</span> ChromeDriver();
+        } <span class="keyword">else if</span> (browser.equalsIgnoreCase(<span class="string">"firefox"</span>)) {
+            driver = <span class="keyword">new</span> FirefoxDriver();
+        }
+        driver.get(url);
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Groups in XML</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Group Suite"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;test</span> name=<span class="string">"Smoke Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;groups&gt;</span>
+            <span class="keyword">&lt;run&gt;</span>
+                <span class="keyword">&lt;include</span> name=<span class="string">"smoke"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;/run&gt;</span>
+        <span class="keyword">&lt;/groups&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.HomePageTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-info-circle"></i> XML Configuration Tips</h4>
+                                <ul>
+                                    <li>Create separate XML files for different test suites (smoke, regression)</li>
+                                    <li>Use parameters for environment-specific values</li>
+                                    <li>Configure parallel execution to reduce test execution time</li>
+                                    <li>Use groups to categorize and selectively run tests</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Groups -->
+                    <section id="groups" class="chapter">
+                        <h2 class="chapter-title">Test Groups</h2>
+                        <div class="chapter-content">
+                            <p>Groups allow you to categorize tests and run specific categories as needed.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Defining Groups</span></div>
+                                <pre><code><span class="keyword">public class</span> <span class="class-name">LoginTest</span> {
+    
+    @Test(groups = {<span class="string">"smoke"</span>, <span class="string">"regression"</span>})
+    <span class="keyword">public void</span> testValidLogin() {
+        <span class="comment">// Test logic</span>
+    }
+    
+    @Test(groups = {<span class="string">"regression"</span>})
+    <span class="keyword">public void</span> testInvalidLogin() {
+        <span class="comment">// Test logic</span>
+    }
+    
+    @Test(groups = {<span class="string">"smoke"</span>})
+    <span class="keyword">public void</span> testLogout() {
+        <span class="comment">// Test logic</span>
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Group Dependencies</span></div>
+                                <pre><code>@Test(groups = {<span class="string">"database"</span>})
+<span class="keyword">public void</span> testDatabaseConnection() {
+    <span class="comment">// Setup database</span>
+}
+
+@Test(groups = {<span class="string">"api"</span>}, dependsOnGroups = {<span class="string">"database"</span>})
+<span class="keyword">public void</span> testAPI() {
+    <span class="comment">// API tests that need database</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Class-Level Groups</span></div>
+                                <pre><code>@Test(groups = {<span class="string">"regression"</span>})
+<span class="keyword">public class</span> <span class="class-name">CheckoutTest</span> {
+    
+    @Test
+    <span class="keyword">public void</span> testAddToCart() {
+        <span class="comment">// All methods inherit "regression" group</span>
+    }
+    
+    @Test
+    <span class="keyword">public void</span> testCheckout() {
+        <span class="comment">// This is also in "regression" group</span>
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Running Groups Programmatically</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.TestNG;
+
+<span class="keyword">public class</span> <span class="class-name">TestRunner</span> {
+    <span class="keyword">public static void</span> main(String[] args) {
+        TestNG testng = <span class="keyword">new</span> TestNG();
+        testng.setTestClasses(<span class="keyword">new</span> Class[]{LoginTest.class});
+        testng.setGroups(<span class="string">"smoke"</span>);
+        testng.run();
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-tags"></i> Common Group Categories</h4>
+                                <ul>
+                                    <li><strong>smoke:</strong> Quick tests to verify basic functionality</li>
+                                    <li><strong>regression:</strong> Comprehensive tests for all features</li>
+                                    <li><strong>sanity:</strong> Tests after minor changes</li>
+                                    <li><strong>critical:</strong> High-priority test cases</li>
+                                    <li><strong>ui:</strong> User interface tests</li>
+                                    <li><strong>api:</strong> API integration tests</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Listeners -->
+                    <section id="listeners" class="chapter">
+                        <h2 class="chapter-title">TestNG Listeners</h2>
+                        <div class="chapter-content">
+                            <p>Listeners monitor test execution and perform actions at different stages like test start, success, failure, or skip.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> ITestListener Implementation</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.ITestListener;
+<span class="keyword">import</span> org.testng.ITestResult;
+
+<span class="keyword">public class</span> <span class="class-name">TestListener</span> <span class="keyword">implements</span> ITestListener {
+    
+    @Override
+    <span class="keyword">public void</span> onTestStart(ITestResult result) {
+        System.out.println(<span class="string">"Test Started: "</span> + result.getName());
+    }
+    
+    @Override
+    <span class="keyword">public void</span> onTestSuccess(ITestResult result) {
+        System.out.println(<span class="string">"Test Passed: "</span> + result.getName());
+    }
+    
+    @Override
+    <span class="keyword">public void</span> onTestFailure(ITestResult result) {
+        System.out.println(<span class="string">"Test Failed: "</span> + result.getName());
+        <span class="comment">// Capture screenshot on failure</span>
+        captureScreenshot(result.getName());
+    }
+    
+    @Override
+    <span class="keyword">public void</span> onTestSkipped(ITestResult result) {
+        System.out.println(<span class="string">"Test Skipped: "</span> + result.getName());
+    }
+    
+    <span class="keyword">private void</span> captureScreenshot(String testName) {
+        <span class="comment">// Screenshot logic here</span>
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Using Listener with Annotation</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.annotations.Listeners;
+
+@Listeners(TestListener.class)
+<span class="keyword">public class</span> <span class="class-name">LoginTest</span> {
+    
+    @Test
+    <span class="keyword">public void</span> testLogin() {
+        <span class="comment">// Test logic</span>
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Using Listener in XML</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Suite"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;listeners&gt;</span>
+        <span class="keyword">&lt;listener</span> class-name=<span class="string">"listeners.TestListener"</span><span class="keyword">/&gt;</span>
+    <span class="keyword">&lt;/listeners&gt;</span>
+    
+    <span class="keyword">&lt;test</span> name=<span class="string">"Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> IRetryAnalyzer for Failed Tests</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.IRetryAnalyzer;
+<span class="keyword">import</span> org.testng.ITestResult;
+
+<span class="keyword">public class</span> <span class="class-name">RetryAnalyzer</span> <span class="keyword">implements</span> IRetryAnalyzer {
+    <span class="keyword">private int</span> retryCount = <span class="number">0</span>;
+    <span class="keyword">private static final int</span> maxRetryCount = <span class="number">2</span>;
+    
+    @Override
+    <span class="keyword">public boolean</span> retry(ITestResult result) {
+        <span class="keyword">if</span> (retryCount &lt; maxRetryCount) {
+            retryCount++;
+            System.out.println(<span class="string">"Retrying "</span> + result.getName() + 
+                             <span class="string">" - Attempt "</span> + retryCount);
+            <span class="keyword">return true</span>;
+        }
+        <span class="keyword">return false</span>;
+    }
+}
+
+<span class="comment">// Using RetryAnalyzer</span>
+@Test(retryAnalyzer = RetryAnalyzer.class)
+<span class="keyword">public void</span> testFlaky() {
+    <span class="comment">// Test that might fail intermittently</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Custom Report Listener</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.IReporter;
+<span class="keyword">import</span> org.testng.ISuite;
+<span class="keyword">import</span> org.testng.xml.XmlSuite;
+
+<span class="keyword">public class</span> <span class="class-name">CustomReporter</span> <span class="keyword">implements</span> IReporter {
+    
+    @Override
+    <span class="keyword">public void</span> generateReport(List&lt;XmlSuite&gt; xmlSuites, 
+                                 List&lt;ISuite&gt; suites, 
+                                 String outputDirectory) {
+        <span class="comment">// Custom report generation logic</span>
+        System.out.println(<span class="string">"Generating custom report..."</span>);
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="info-box success">
+                                <h4><i class="fas fa-bell"></i> Listener Use Cases</h4>
+                                <ul>
+                                    <li>Capture screenshots on test failures</li>
+                                    <li>Log test execution details</li>
+                                    <li>Retry failed tests automatically</li>
+                                    <li>Generate custom reports</li>
+                                    <li>Send notifications (email, Slack)</li>
+                                    <li>Clean up resources after tests</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Parallel Execution -->
+                    <section id="parallel-execution" class="chapter">
+                        <h2 class="chapter-title">Parallel Test Execution</h2>
+                        <div class="chapter-content">
+                            <p>Run tests in parallel to reduce overall execution time.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Parallel at Test Level</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Parallel Suite"</span> parallel=<span class="string">"tests"</span> thread-count=<span class="string">"3"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;test</span> name=<span class="string">"Test1"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+    
+    <span class="keyword">&lt;test</span> name=<span class="string">"Test2"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.CheckoutTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Parallel at Class Level</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Parallel Suite"</span> parallel=<span class="string">"classes"</span> thread-count=<span class="string">"2"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;test</span> name=<span class="string">"All Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.HomePageTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.CheckoutTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Parallel at Method Level</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Parallel Suite"</span> parallel=<span class="string">"methods"</span> thread-count=<span class="string">"5"</span><span class="keyword">&gt;</span>
+    <span class="keyword">&lt;test</span> name=<span class="string">"All Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Thread-Safe Driver Setup</span></div>
+                                <pre><code><span class="keyword">public class</span> <span class="class-name">BaseTest</span> {
+    <span class="keyword">protected static</span> ThreadLocal&lt;WebDriver&gt; driver = <span class="keyword">new</span> ThreadLocal&lt;&gt;();
+    
+    <span class="keyword">public static</span> WebDriver getDriver() {
+        <span class="keyword">return</span> driver.get();
+    }
+    
+    @BeforeMethod
+    <span class="keyword">public void</span> setUp() {
+        WebDriver webDriver = <span class="keyword">new</span> ChromeDriver();
+        driver.set(webDriver);
+        getDriver().manage().window().maximize();
+    }
+    
+    @AfterMethod
+    <span class="keyword">public void</span> tearDown() {
+        <span class="keyword">if</span> (getDriver() != <span class="keyword">null</span>) {
+            getDriver().quit();
+            driver.remove();
+        }
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-table"></i> Parallel Modes</span></div>
+                                <pre><code>Mode        | Description                    | Thread Count
+------------+--------------------------------+------------------
+tests       | Runs test tags in parallel     | 2-5 recommended
+classes     | Runs test classes in parallel  | 3-10 recommended
+methods     | Runs test methods in parallel  | 5-20 recommended
+instances   | Runs instances in parallel     | Varies
+none        | No parallel execution          | 1</code></pre>
+                            </div>
+
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Parallel Execution Guidelines</h4>
+                                <ul>
+                                    <li>Use ThreadLocal for WebDriver to avoid conflicts</li>
+                                    <li>Ensure tests are independent and don't share state</li>
+                                    <li>Set appropriate thread count based on system resources</li>
+                                    <li>Avoid hardcoded waits; use dynamic waits</li>
+                                    <li>Test data should be unique for each thread</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Reporting -->
+                    <section id="reporting" class="chapter">
+                        <h2 class="chapter-title">Test Reporting</h2>
+                        <div class="chapter-content">
+                            <p>TestNG generates detailed HTML reports automatically. You can also integrate third-party reporting tools.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Default Reports Location</span></div>
+                                <pre><code>test-output/
+├── index.html          <span class="comment">// Main report</span>
+├── emailable-report.html  <span class="comment">// Email-friendly report</span>
+├── testng-results.xml  <span class="comment">// XML results</span>
+└── Suite/
+    ├── Test.html
+    └── Test.xml</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Extent Reports Integration</span></div>
+                                <pre><code><span class="comment">&lt;!-- Add Extent Reports dependency --&gt;</span>
+<span class="keyword">&lt;dependency&gt;</span>
+    <span class="keyword">&lt;groupId&gt;</span>com.aventstack<span class="keyword">&lt;/groupId&gt;</span>
+    <span class="keyword">&lt;artifactId&gt;</span>extentreports<span class="keyword">&lt;/artifactId&gt;</span>
+    <span class="keyword">&lt;version&gt;</span>5.1.2<span class="keyword">&lt;/version&gt;</span>
+<span class="keyword">&lt;/dependency&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Extent Reports Manager</span></div>
+                                <pre><code><span class="keyword">import</span> com.aventstack.extentreports.ExtentReports;
+<span class="keyword">import</span> com.aventstack.extentreports.ExtentTest;
+<span class="keyword">import</span> com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+<span class="keyword">public class</span> <span class="class-name">ExtentManager</span> {
+    <span class="keyword">private static</span> ExtentReports extent;
+    <span class="keyword">private static</span> ThreadLocal&lt;ExtentTest&gt; test = <span class="keyword">new</span> ThreadLocal&lt;&gt;();
+    
+    <span class="keyword">public static</span> ExtentReports createInstance() {
+        ExtentSparkReporter sparkReporter = 
+            <span class="keyword">new</span> ExtentSparkReporter(<span class="string">"./reports/ExtentReport.html"</span>);
+        extent = <span class="keyword">new</span> ExtentReports();
+        extent.attachReporter(sparkReporter);
+        <span class="keyword">return</span> extent;
+    }
+    
+    <span class="keyword">public static</span> ExtentTest getTest() {
+        <span class="keyword">return</span> test.get();
+    }
+    
+    <span class="keyword">public static void</span> setTest(ExtentTest extentTest) {
+        test.set(extentTest);
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Using Extent Reports in Tests</span></div>
+                                <pre><code><span class="keyword">public class</span> <span class="class-name">LoginTest</span> {
+    ExtentReports extent = ExtentManager.createInstance();
+    
+    @BeforeMethod
+    <span class="keyword">public void</span> setup() {
+        ExtentTest extentTest = extent.createTest(<span class="string">"Login Test"</span>);
+        ExtentManager.setTest(extentTest);
+    }
+    
+    @Test
+    <span class="keyword">public void</span> testLogin() {
+        ExtentManager.getTest().info(<span class="string">"Starting login test"</span>);
+        <span class="comment">// Test logic</span>
+        ExtentManager.getTest().pass(<span class="string">"Login successful"</span>);
+    }
+    
+    @AfterMethod
+    <span class="keyword">public void</span> tearDown() {
+        extent.flush();
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-chart-bar"></i> Report Features</h4>
+                                <ul>
+                                    <li>TestNG default reports show pass/fail/skip statistics</li>
+                                    <li>Extent Reports provide rich HTML reports with screenshots</li>
+                                    <li>Allure Reports offer interactive test execution dashboards</li>
+                                    <li>Reports can be integrated into CI/CD pipelines</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="chapter">
+                        <h2 class="chapter-title">Best Practices</h2>
+                        <div class="chapter-content">
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-check-circle"></i> Test Structure</h4>
+                                    <ul>
+                                        <li>Keep tests independent and isolated</li>
+                                        <li>One assertion per test when possible</li>
+                                        <li>Use descriptive test method names</li>
+                                        <li>Follow AAA pattern (Arrange, Act, Assert)</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-folder-tree"></i> Project Organization</h4>
+                                    <ul>
+                                        <li>Separate test data from test logic</li>
+                                        <li>Create a BaseTest class for common setup</li>
+                                        <li>Use Page Object Model for maintainability</li>
+                                        <li>Organize tests by feature or module</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-bug"></i> Error Handling</h4>
+                                    <ul>
+                                        <li>Capture screenshots on test failure</li>
+                                        <li>Use soft asserts for non-critical validations</li>
+                                        <li>Implement retry logic for flaky tests</li>
+                                        <li>Add meaningful error messages to assertions</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-tachometer-alt"></i> Performance</h4>
+                                    <ul>
+                                        <li>Use parallel execution wisely</li>
+                                        <li>Clean up resources in teardown methods</li>
+                                        <li>Avoid hardcoded waits; use explicit waits</li>
+                                        <li>Keep test suites focused and fast</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Complete Test Class Example</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.annotations.*;
+<span class="keyword">import</span> org.testng.Assert;
+<span class="keyword">import</span> org.openqa.selenium.WebDriver;
+<span class="keyword">import</span> org.openqa.selenium.chrome.ChromeDriver;
+<span class="keyword">import</span> org.openqa.selenium.By;
+
+<span class="keyword">public class</span> <span class="class-name">LoginTest</span> {
+    WebDriver driver;
+
+    @BeforeClass
+    <span class="keyword">public void</span> setup() {
+        driver = <span class="keyword">new</span> ChromeDriver();
+        driver.manage().window().maximize();
+    }
+
+    @BeforeMethod
+    <span class="keyword">public void</span> navigateToLogin() {
+        driver.get(<span class="string">"https://example.com/login"</span>);
+    }
+
+    @Test(priority = <span class="number">1</span>, description = <span class="string">"Verify login with valid credentials"</span>)
+    <span class="keyword">public void</span> testValidLogin() {
+        driver.findElement(By.id(<span class="string">"username"</span>)).sendKeys(<span class="string">"testuser"</span>);
+        driver.findElement(By.id(<span class="string">"password"</span>)).sendKeys(<span class="string">"password123"</span>);
+        driver.findElement(By.id(<span class="string">"loginBtn"</span>)).click();
+
+        Assert.assertTrue(driver.getCurrentUrl().contains(<span class="string">"dashboard"</span>),
+            <span class="string">"Login failed - Dashboard not displayed"</span>);
+    }
+
+    @Test(priority = <span class="number">2</span>, description = <span class="string">"Verify error message for invalid credentials"</span>)
+    <span class="keyword">public void</span> testInvalidLogin() {
+        driver.findElement(By.id(<span class="string">"username"</span>)).sendKeys(<span class="string">"wronguser"</span>);
+        driver.findElement(By.id(<span class="string">"password"</span>)).sendKeys(<span class="string">"wrongpass"</span>);
+        driver.findElement(By.id(<span class="string">"loginBtn"</span>)).click();
+
+        String errorMsg = driver.findElement(By.className(<span class="string">"error"</span>)).getText();
+        Assert.assertEquals(errorMsg, <span class="string">"Invalid credentials"</span>);
+    }
+
+    @AfterMethod
+    <span class="keyword">public void</span> clearSession() {
+        driver.manage().deleteAllCookies();
+    }
+
+    @AfterClass
+    <span class="keyword">public void</span> teardown() {
+        <span class="keyword">if</span> (driver != <span class="keyword">null</span>) {
+            driver.quit();
+        }
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-star"></i> Key Takeaways</h4>
+                                <ul>
+                                    <li>TestNG provides powerful test configuration with annotations</li>
+                                    <li>DataProvider enables data-driven testing with multiple data sets</li>
+                                    <li>TestNG XML allows flexible test suite configuration</li>
+                                    <li>Listeners enable custom actions like screenshots on failure</li>
+                                    <li>Parallel execution significantly reduces test execution time</li>
+                                    <li>Groups help organize and selectively run tests</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Next Steps -->
+                    <section id="next-steps" class="chapter">
+                        <h2 class="chapter-title">Next Steps</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-graduation-cap"></i> Continue Your Learning Journey</h4>
+                                <ul>
+                                    <li><strong>Page Object Model (POM)</strong> - Design pattern for maintainable test automation</li>
+                                    <li><strong>Data-Driven Testing</strong> - Parameterize tests with Excel, CSV or database</li>
+                                    <li><strong>Selenium Grid</strong> - Parallel execution across multiple browsers and machines</li>
+                                    <li><strong>Extent Reports</strong> - Generate rich HTML reports with screenshots</li>
+                                    <li><strong>CI/CD Integration</strong> - Automate test execution with Jenkins or GitHub Actions</li>
+                                    <li><strong>BDD with Cucumber</strong> - Behavior-driven development with TestNG</li>
+                                </ul>
+                            </div>
+
+                            <div class="info-box success">
+                                <h4><i class="fas fa-book"></i> Prepare for Interviews</h4>
+                                <p>Practice your TestNG and Selenium knowledge with our <a href="/interview-qna/automation/automations-set-1.html">Automation Interview Q&A</a> covering framework questions, annotations, assertions, and real-world scenarios asked in technical interviews.</p>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-code"></i> Strengthen Your Java Skills</h4>
+                                <p>TestNG with Selenium requires solid programming fundamentals. Check out our <a href="/java/index.html">Java Tutorials</a> covering OOP concepts, Collections, Exception Handling, and more.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/selenium/selenium-advanced-concepts.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Advanced Concepts</span>
+                    </a>
+                    <a href="/interview-qna/automation/automations-set-1.html" class="nav-next">
+                        <span>Automation Interview Q&A</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
