@@ -281,6 +281,13 @@ const SITE_NAVIGATION = {
                             icon: 'fas fa-file-excel',
                             description: 'Excel, CSV, JSON & Database integration',
                             readTime: '35 min'
+                        },
+                        {
+                            title: 'Selenium Grid',
+                            url: '/selenium/selenium-grid.html',
+                            icon: 'fas fa-server',
+                            description: 'Parallel execution across browsers',
+                            readTime: '40 min'
                         }
                     ]
                 }

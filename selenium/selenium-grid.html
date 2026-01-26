@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete guide to Selenium Grid for parallel test execution across multiple browsers, platforms, and machines. Learn Grid 4 architecture, Docker setup, and cloud integration.">
+    <title>Selenium Grid - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Selenium Grid</h1>
+                    <p class="article-subtitle">Parallel test execution across multiple browsers and machines</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 40 min read</span>
+                        <span><i class="fas fa-signal"></i> Advanced</span>
+                        <span><i class="fas fa-code"></i> Java</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc"></nav>
+
+                <div class="article-body">
+                    <!-- Introduction -->
+                    <section id="introduction" class="chapter">
+                        <h2 class="chapter-title">Introduction to Selenium Grid</h2>
+                        <div class="chapter-content">
+                            <p>Selenium Grid allows you to run tests on multiple machines and browsers simultaneously, dramatically reducing test execution time. It distributes test execution across different environments for cross-browser and cross-platform testing.</p>
+
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-bolt"></i> Parallel Execution</h4>
+                                    <p>Run multiple tests simultaneously across different nodes</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-globe"></i> Cross-Browser Testing</h4>
+                                    <p>Test on Chrome, Firefox, Edge, Safari in parallel</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-desktop"></i> Cross-Platform</h4>
+                                    <p>Execute tests on Windows, macOS, Linux simultaneously</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-expand-arrows-alt"></i> Scalability</h4>
+                                    <p>Add more nodes to handle increased test load</p>
+                                </div>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> When to Use Selenium Grid</h4>
+                                <ul>
+                                    <li>Large test suites that take too long to run sequentially</li>
+                                    <li>Cross-browser compatibility testing requirements</li>
+                                    <li>Testing on multiple OS platforms</li>
+                                    <li>CI/CD pipelines requiring fast feedback</li>
+                                    <li>Distributed team with shared test infrastructure</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Grid 4 Architecture -->
+                    <section id="architecture" class="chapter">
+                        <h2 class="chapter-title">Grid 4 Architecture</h2>
+                        <div class="chapter-content">
+                            <p>Selenium Grid 4 introduces a modern architecture with separate components for better scalability and flexibility.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-sitemap"></i> Grid 4 Components</span></div>
+                                <pre><code>┌─────────────────────────────────────────────────────────────┐
+│                        SELENIUM GRID                         │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│   ┌─────────┐    ┌─────────────┐    ┌──────────────────┐   │
+│   │ Router  │───▶│ Distributor │───▶│  Session Queue   │   │
+│   └─────────┘    └─────────────┘    └──────────────────┘   │
+│        │                                                     │
+│        │         ┌─────────────┐    ┌──────────────────┐   │
+│        └────────▶│ Session Map │    │    Event Bus     │   │
+│                  └─────────────┘    └──────────────────┘   │
+│                                                              │
+├─────────────────────────────────────────────────────────────┤
+│                          NODES                               │
+│  ┌──────────┐   ┌──────────┐   ┌──────────┐                │
+│  │  Node 1  │   │  Node 2  │   │  Node 3  │                │
+│  │ (Chrome) │   │ (Firefox)│   │  (Edge)  │                │
+│  └──────────┘   └──────────┘   └──────────┘                │
+└─────────────────────────────────────────────────────────────┘</code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-cubes"></i> Component Responsibilities</h4>
+                                <ul>
+                                    <li><strong>Router:</strong> Entry point that routes requests to appropriate components</li>
+                                    <li><strong>Distributor:</strong> Assigns new session requests to available nodes</li>
+                                    <li><strong>Session Map:</strong> Tracks active sessions and their node locations</li>
+                                    <li><strong>Session Queue:</strong> Holds pending session requests</li>
+                                    <li><strong>Event Bus:</strong> Communication backbone between components</li>
+                                    <li><strong>Node:</strong> Executes tests on actual browsers</li>
+                                </ul>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-layer-group"></i> Grid Modes</span></div>
+                                <pre><code>Mode          | Description                        | Use Case
+--------------|------------------------------------|--------------------------
+Standalone    | All components in single process   | Local development, small teams
+Hub & Node    | Traditional separate hub and nodes | Simple distributed setup
+Fully Distributed | Each component runs separately | Large-scale, cloud deployments</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Standalone Mode -->
+                    <section id="standalone" class="chapter">
+                        <h2 class="chapter-title">Standalone Mode Setup</h2>
+                        <div class="chapter-content">
+                            <p>Standalone mode is the simplest way to run Selenium Grid. All components run in a single process.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-download"></i> Download Selenium Server</span></div>
+                                <pre><code><span class="comment"># Download from official Selenium site</span>
+<span class="comment"># https://www.selenium.dev/downloads/</span>
+
+<span class="comment"># Or use curl</span>
+curl -O https://github.com/SeleniumHQ/selenium/releases/download/selenium-4.27.0/selenium-server-4.27.0.jar</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-terminal"></i> Start Standalone Grid</span></div>
+                                <pre><code><span class="comment"># Basic standalone start</span>
+java -jar selenium-server-4.27.0.jar standalone
+
+<span class="comment"># With specific port</span>
+java -jar selenium-server-4.27.0.jar standalone --port 4444
+
+<span class="comment"># With session timeout</span>
+java -jar selenium-server-4.27.0.jar standalone --session-timeout 300</code></pre>
+                            </div>
+
+                            <div class="info-box success">
+                                <h4><i class="fas fa-check-circle"></i> Grid Console</h4>
+                                <p>Access the Grid UI at <code>http://localhost:4444/ui</code> to view registered nodes, active sessions, and queue status.</p>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Connect to Standalone Grid</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.WebDriver;
+<span class="keyword">import</span> org.openqa.selenium.remote.RemoteWebDriver;
+<span class="keyword">import</span> org.openqa.selenium.chrome.ChromeOptions;
+<span class="keyword">import</span> java.net.URL;
+
+<span class="keyword">public class</span> <span class="class-name">GridTest</span> {
+    <span class="keyword">public static void</span> main(String[] args) <span class="keyword">throws</span> Exception {
+        ChromeOptions options = <span class="keyword">new</span> ChromeOptions();
+
+        <span class="comment">// Connect to Grid</span>
+        URL gridUrl = <span class="keyword">new</span> URL(<span class="string">"http://localhost:4444"</span>);
+        WebDriver driver = <span class="keyword">new</span> RemoteWebDriver(gridUrl, options);
+
+        driver.get(<span class="string">"https://example.com"</span>);
+        System.out.println(<span class="string">"Title: "</span> + driver.getTitle());
+
+        driver.quit();
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Hub and Node -->
+                    <section id="hub-node" class="chapter">
+                        <h2 class="chapter-title">Hub and Node Setup</h2>
+                        <div class="chapter-content">
+                            <p>Hub and Node mode separates the coordinator (Hub) from the test executors (Nodes), allowing distributed setup across multiple machines.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-server"></i> Start Hub</span></div>
+                                <pre><code><span class="comment"># Start the hub (on machine 1)</span>
+java -jar selenium-server-4.27.0.jar hub
+
+<span class="comment"># Hub starts on port 4444 by default</span>
+<span class="comment"># Console available at http://localhost:4444/ui</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-laptop"></i> Start Node</span></div>
+                                <pre><code><span class="comment"># Start node on same machine</span>
+java -jar selenium-server-4.27.0.jar node
+
+<span class="comment"># Start node on different machine (specify hub URL)</span>
+java -jar selenium-server-4.27.0.jar node --hub http://hub-ip:4444
+
+<span class="comment"># Node with specific browsers</span>
+java -jar selenium-server-4.27.0.jar node \
+  --hub http://hub-ip:4444 \
+  --max-sessions 5</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Node Configuration (node.toml)</span></div>
+                                <pre><code><span class="comment"># node.toml</span>
+[node]
+detect-drivers = <span class="keyword">true</span>
+max-sessions = <span class="number">5</span>
+
+[relay]
+url = <span class="string">"http://hub-ip:4444"</span>
+status-endpoint = <span class="string">"/status"</span>
+
+[[node.driver-configuration]]
+display-name = <span class="string">"Chrome"</span>
+stereotype = <span class="string">'{"browserName": "chrome", "platformName": "Windows 10"}'</span>
+max-sessions = <span class="number">3</span>
+
+[[node.driver-configuration]]
+display-name = <span class="string">"Firefox"</span>
+stereotype = <span class="string">'{"browserName": "firefox", "platformName": "Windows 10"}'</span>
+max-sessions = <span class="number">2</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-terminal"></i> Start Node with Config</span></div>
+                                <pre><code>java -jar selenium-server-4.27.0.jar node --config node.toml</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-network-wired"></i> Multi-Machine Setup Example</h4>
+                                <pre>
+Machine 1 (Hub):     192.168.1.100:4444
+Machine 2 (Node):    192.168.1.101 - Chrome, Firefox
+Machine 3 (Node):    192.168.1.102 - Edge, Safari
+Machine 4 (Node):    192.168.1.103 - Chrome (Linux)
+                                </pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- RemoteWebDriver -->
+                    <section id="remotewebdriver" class="chapter">
+                        <h2 class="chapter-title">Using RemoteWebDriver</h2>
+                        <div class="chapter-content">
+                            <p>RemoteWebDriver connects your tests to Selenium Grid, allowing test execution on remote browsers.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Basic RemoteWebDriver</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.WebDriver;
+<span class="keyword">import</span> org.openqa.selenium.remote.RemoteWebDriver;
+<span class="keyword">import</span> org.openqa.selenium.chrome.ChromeOptions;
+<span class="keyword">import</span> java.net.URL;
+
+<span class="keyword">public class</span> <span class="class-name">RemoteTest</span> {
+    WebDriver driver;
+
+    <span class="keyword">public void</span> setup() <span class="keyword">throws</span> Exception {
+        ChromeOptions options = <span class="keyword">new</span> ChromeOptions();
+
+        URL gridUrl = <span class="keyword">new</span> URL(<span class="string">"http://localhost:4444"</span>);
+        driver = <span class="keyword">new</span> RemoteWebDriver(gridUrl, options);
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Browser-Specific Options</span></div>
+                                <pre><code><span class="comment">// Chrome</span>
+ChromeOptions chromeOptions = <span class="keyword">new</span> ChromeOptions();
+chromeOptions.addArguments(<span class="string">"--headless"</span>);
+chromeOptions.addArguments(<span class="string">"--window-size=1920,1080"</span>);
+
+<span class="comment">// Firefox</span>
+FirefoxOptions firefoxOptions = <span class="keyword">new</span> FirefoxOptions();
+firefoxOptions.addArguments(<span class="string">"--headless"</span>);
+
+<span class="comment">// Edge</span>
+EdgeOptions edgeOptions = <span class="keyword">new</span> EdgeOptions();
+edgeOptions.addArguments(<span class="string">"--start-maximized"</span>);
+
+<span class="comment">// Create RemoteWebDriver with options</span>
+WebDriver driver = <span class="keyword">new</span> RemoteWebDriver(gridUrl, chromeOptions);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Platform-Specific Capabilities</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.Platform;
+<span class="keyword">import</span> org.openqa.selenium.remote.DesiredCapabilities;
+
+<span class="comment">// Request specific platform</span>
+ChromeOptions options = <span class="keyword">new</span> ChromeOptions();
+options.setPlatformName(<span class="string">"Windows 10"</span>);
+
+<span class="comment">// Or use DesiredCapabilities</span>
+DesiredCapabilities caps = <span class="keyword">new</span> DesiredCapabilities();
+caps.setBrowserName(<span class="string">"chrome"</span>);
+caps.setPlatform(Platform.WIN10);
+caps.setVersion(<span class="string">"latest"</span>);
+
+WebDriver driver = <span class="keyword">new</span> RemoteWebDriver(gridUrl, caps);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Complete BaseTest with Grid</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.WebDriver;
+<span class="keyword">import</span> org.openqa.selenium.remote.RemoteWebDriver;
+<span class="keyword">import</span> org.openqa.selenium.chrome.ChromeOptions;
+<span class="keyword">import</span> org.openqa.selenium.firefox.FirefoxOptions;
+<span class="keyword">import</span> org.testng.annotations.*;
+<span class="keyword">import</span> java.net.URL;
+
+<span class="keyword">public class</span> <span class="class-name">BaseTest</span> {
+    <span class="keyword">protected</span> WebDriver driver;
+    <span class="keyword">private static final</span> String GRID_URL = <span class="string">"http://localhost:4444"</span>;
+
+    @Parameters({<span class="string">"browser"</span>})
+    @BeforeMethod
+    <span class="keyword">public void</span> setup(@Optional(<span class="string">"chrome"</span>) String browser) <span class="keyword">throws</span> Exception {
+        URL gridUrl = <span class="keyword">new</span> URL(GRID_URL);
+
+        <span class="keyword">switch</span> (browser.toLowerCase()) {
+            <span class="keyword">case</span> <span class="string">"firefox"</span>:
+                FirefoxOptions ffOptions = <span class="keyword">new</span> FirefoxOptions();
+                driver = <span class="keyword">new</span> RemoteWebDriver(gridUrl, ffOptions);
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="string">"edge"</span>:
+                EdgeOptions edgeOptions = <span class="keyword">new</span> EdgeOptions();
+                driver = <span class="keyword">new</span> RemoteWebDriver(gridUrl, edgeOptions);
+                <span class="keyword">break</span>;
+            <span class="keyword">default</span>:
+                ChromeOptions chromeOptions = <span class="keyword">new</span> ChromeOptions();
+                driver = <span class="keyword">new</span> RemoteWebDriver(gridUrl, chromeOptions);
+        }
+
+        driver.manage().window().maximize();
+    }
+
+    @AfterMethod
+    <span class="keyword">public void</span> teardown() {
+        <span class="keyword">if</span> (driver != <span class="keyword">null</span>) {
+            driver.quit();
+        }
+    }
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Parallel Execution -->
+                    <section id="parallel-execution" class="chapter">
+                        <h2 class="chapter-title">Parallel Test Execution</h2>
+                        <div class="chapter-content">
+                            <p>TestNG enables parallel test execution with simple XML configuration.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Parallel by Methods</span></div>
+                                <pre><code><span class="keyword">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="keyword">&lt;!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd"&gt;</span>
+<span class="keyword">&lt;suite</span> name=<span class="string">"Parallel Suite"</span> parallel=<span class="string">"methods"</span> thread-count=<span class="string">"4"</span><span class="keyword">&gt;</span>
+
+    <span class="keyword">&lt;test</span> name=<span class="string">"All Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.SearchTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.CheckoutTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Parallel by Classes</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Parallel Suite"</span> parallel=<span class="string">"classes"</span> thread-count=<span class="string">"3"</span><span class="keyword">&gt;</span>
+    <span class="comment">&lt;!-- Each test class runs in separate thread --&gt;</span>
+    <span class="keyword">&lt;test</span> name=<span class="string">"All Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.SearchTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.CheckoutTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Cross-Browser Parallel Testing</span></div>
+                                <pre><code><span class="keyword">&lt;suite</span> name=<span class="string">"Cross Browser Suite"</span> parallel=<span class="string">"tests"</span> thread-count=<span class="string">"3"</span><span class="keyword">&gt;</span>
+
+    <span class="keyword">&lt;test</span> name=<span class="string">"Chrome Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;parameter</span> name=<span class="string">"browser"</span> value=<span class="string">"chrome"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.SearchTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+
+    <span class="keyword">&lt;test</span> name=<span class="string">"Firefox Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;parameter</span> name=<span class="string">"browser"</span> value=<span class="string">"firefox"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.SearchTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+
+    <span class="keyword">&lt;test</span> name=<span class="string">"Edge Tests"</span><span class="keyword">&gt;</span>
+        <span class="keyword">&lt;parameter</span> name=<span class="string">"browser"</span> value=<span class="string">"edge"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;classes&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.LoginTest"</span><span class="keyword">/&gt;</span>
+            <span class="keyword">&lt;class</span> name=<span class="string">"tests.SearchTest"</span><span class="keyword">/&gt;</span>
+        <span class="keyword">&lt;/classes&gt;</span>
+    <span class="keyword">&lt;/test&gt;</span>
+
+<span class="keyword">&lt;/suite&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Thread-Safe BaseTest</span></div>
+                                <pre><code><span class="keyword">public class</span> <span class="class-name">BaseTest</span> {
+    <span class="comment">// ThreadLocal ensures each thread has its own driver instance</span>
+    <span class="keyword">protected static</span> ThreadLocal&lt;WebDriver&gt; driverThread = <span class="keyword">new</span> ThreadLocal&lt;&gt;();
+    <span class="keyword">private static final</span> String GRID_URL = <span class="string">"http://localhost:4444"</span>;
+
+    <span class="keyword">public static</span> WebDriver getDriver() {
+        <span class="keyword">return</span> driverThread.get();
+    }
+
+    @Parameters({<span class="string">"browser"</span>})
+    @BeforeMethod
+    <span class="keyword">public void</span> setup(@Optional(<span class="string">"chrome"</span>) String browser) <span class="keyword">throws</span> Exception {
+        URL gridUrl = <span class="keyword">new</span> URL(GRID_URL);
+        WebDriver driver;
+
+        <span class="keyword">switch</span> (browser.toLowerCase()) {
+            <span class="keyword">case</span> <span class="string">"firefox"</span>:
+                driver = <span class="keyword">new</span> RemoteWebDriver(gridUrl, <span class="keyword">new</span> FirefoxOptions());
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="string">"edge"</span>:
+                driver = <span class="keyword">new</span> RemoteWebDriver(gridUrl, <span class="keyword">new</span> EdgeOptions());
+                <span class="keyword">break</span>;
+            <span class="keyword">default</span>:
+                driver = <span class="keyword">new</span> RemoteWebDriver(gridUrl, <span class="keyword">new</span> ChromeOptions());
+        }
+
+        driverThread.set(driver);
+        getDriver().manage().window().maximize();
+    }
+
+    @AfterMethod
+    <span class="keyword">public void</span> teardown() {
+        <span class="keyword">if</span> (getDriver() != <span class="keyword">null</span>) {
+            getDriver().quit();
+            driverThread.remove();
+        }
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-table"></i> Parallel Execution Modes</h4>
+                                <pre>
+Mode      | Description                           | Best For
+----------|---------------------------------------|------------------
+methods   | Each @Test method in parallel         | Independent tests
+classes   | Each test class in parallel           | Class-level setup
+tests     | Each &lt;test&gt; tag in parallel           | Browser-specific
+instances | Each class instance in parallel       | Data-driven tests
+                                </pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Docker Setup -->
+                    <section id="docker" class="chapter">
+                        <h2 class="chapter-title">Docker Setup</h2>
+                        <div class="chapter-content">
+                            <p>Docker provides the easiest way to set up Selenium Grid with consistent, reproducible environments.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-docker"></i> Docker Compose (docker-compose.yml)</span></div>
+                                <pre><code>version: <span class="string">"3"</span>
+services:
+  selenium-hub:
+    image: selenium/hub:4.27.0
+    container_name: selenium-hub
+    ports:
+      - <span class="string">"4442:4442"</span>
+      - <span class="string">"4443:4443"</span>
+      - <span class="string">"4444:4444"</span>
+
+  chrome:
+    image: selenium/node-chrome:4.27.0
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=4
+
+  firefox:
+    image: selenium/node-firefox:4.27.0
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=4
+
+  edge:
+    image: selenium/node-edge:4.27.0
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=4</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-terminal"></i> Start Docker Grid</span></div>
+                                <pre><code><span class="comment"># Start all containers</span>
+docker-compose up -d
+
+<span class="comment"># View running containers</span>
+docker-compose ps
+
+<span class="comment"># View logs</span>
+docker-compose logs -f
+
+<span class="comment"># Scale Chrome nodes</span>
+docker-compose up -d --scale chrome=3
+
+<span class="comment"># Stop and remove containers</span>
+docker-compose down</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-docker"></i> Dynamic Grid with Docker Compose</span></div>
+                                <pre><code>version: <span class="string">"3"</span>
+services:
+  selenium-hub:
+    image: selenium/hub:4.27.0
+    container_name: selenium-hub
+    ports:
+      - <span class="string">"4442:4442"</span>
+      - <span class="string">"4443:4443"</span>
+      - <span class="string">"4444:4444"</span>
+
+  chrome:
+    image: selenium/node-chrome:4.27.0
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    deploy:
+      replicas: <span class="number">3</span>  <span class="comment"># Run 3 Chrome instances</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-docker"></i> Video Recording with Docker</span></div>
+                                <pre><code>version: <span class="string">"3"</span>
+services:
+  chrome:
+    image: selenium/node-chrome:4.27.0
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+
+  chrome-video:
+    image: selenium/video:ffmpeg-6.1.1-20240621
+    volumes:
+      - ./videos:/videos
+    depends_on:
+      - chrome
+    environment:
+      - DISPLAY_CONTAINER_NAME=chrome
+      - SE_VIDEO_FILE_NAME=chrome_video.mp4</code></pre>
+                            </div>
+
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Docker Tips</h4>
+                                <ul>
+                                    <li>Always set <code>shm_size: 2gb</code> to prevent browser crashes</li>
+                                    <li>Use <code>--scale</code> to dynamically add more browser nodes</li>
+                                    <li>Mount volumes for video recordings and screenshots</li>
+                                    <li>Use <code>docker-compose logs</code> for debugging</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Cloud Providers -->
+                    <section id="cloud" class="chapter">
+                        <h2 class="chapter-title">Cloud Grid Providers</h2>
+                        <div class="chapter-content">
+                            <p>Cloud providers offer managed Selenium Grid infrastructure with extensive browser and platform coverage.</p>
+
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-cloud"></i> BrowserStack</h4>
+                                    <p>3000+ real browsers and devices</p>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-cloud"></i> Sauce Labs</h4>
+                                    <p>Comprehensive testing platform</p>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-cloud"></i> LambdaTest</h4>
+                                    <p>Fast, scalable cloud grid</p>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-cloud"></i> CrossBrowserTesting</h4>
+                                    <p>2000+ browser combinations</p>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> BrowserStack Integration</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.remote.RemoteWebDriver;
+<span class="keyword">import</span> org.openqa.selenium.MutableCapabilities;
+
+<span class="keyword">public class</span> <span class="class-name">BrowserStackTest</span> {
+    <span class="keyword">public static final</span> String USERNAME = System.getenv(<span class="string">"BROWSERSTACK_USERNAME"</span>);
+    <span class="keyword">public static final</span> String ACCESS_KEY = System.getenv(<span class="string">"BROWSERSTACK_ACCESS_KEY"</span>);
+    <span class="keyword">public static final</span> String URL = <span class="string">"https://"</span> + USERNAME + <span class="string">":"</span> + ACCESS_KEY +
+                                         <span class="string">"@hub-cloud.browserstack.com/wd/hub"</span>;
+
+    <span class="keyword">public void</span> setup() <span class="keyword">throws</span> Exception {
+        MutableCapabilities caps = <span class="keyword">new</span> MutableCapabilities();
+        caps.setCapability(<span class="string">"browserName"</span>, <span class="string">"Chrome"</span>);
+        caps.setCapability(<span class="string">"browserVersion"</span>, <span class="string">"latest"</span>);
+
+        HashMap&lt;String, Object&gt; bsOptions = <span class="keyword">new</span> HashMap&lt;&gt;();
+        bsOptions.put(<span class="string">"os"</span>, <span class="string">"Windows"</span>);
+        bsOptions.put(<span class="string">"osVersion"</span>, <span class="string">"11"</span>);
+        bsOptions.put(<span class="string">"projectName"</span>, <span class="string">"My Project"</span>);
+        bsOptions.put(<span class="string">"buildName"</span>, <span class="string">"Build 1.0"</span>);
+        caps.setCapability(<span class="string">"bstack:options"</span>, bsOptions);
+
+        WebDriver driver = <span class="keyword">new</span> RemoteWebDriver(<span class="keyword">new</span> URL(URL), caps);
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Sauce Labs Integration</span></div>
+                                <pre><code><span class="keyword">public class</span> <span class="class-name">SauceLabsTest</span> {
+    <span class="keyword">public static final</span> String USERNAME = System.getenv(<span class="string">"SAUCE_USERNAME"</span>);
+    <span class="keyword">public static final</span> String ACCESS_KEY = System.getenv(<span class="string">"SAUCE_ACCESS_KEY"</span>);
+    <span class="keyword">public static final</span> String URL = <span class="string">"https://"</span> + USERNAME + <span class="string">":"</span> + ACCESS_KEY +
+                                         <span class="string">"@ondemand.us-west-1.saucelabs.com:443/wd/hub"</span>;
+
+    <span class="keyword">public void</span> setup() <span class="keyword">throws</span> Exception {
+        MutableCapabilities caps = <span class="keyword">new</span> MutableCapabilities();
+        caps.setCapability(<span class="string">"browserName"</span>, <span class="string">"chrome"</span>);
+        caps.setCapability(<span class="string">"browserVersion"</span>, <span class="string">"latest"</span>);
+        caps.setCapability(<span class="string">"platformName"</span>, <span class="string">"Windows 11"</span>);
+
+        HashMap&lt;String, Object&gt; sauceOptions = <span class="keyword">new</span> HashMap&lt;&gt;();
+        sauceOptions.put(<span class="string">"name"</span>, <span class="string">"Test Name"</span>);
+        sauceOptions.put(<span class="string">"build"</span>, <span class="string">"Build 1.0"</span>);
+        caps.setCapability(<span class="string">"sauce:options"</span>, sauceOptions);
+
+        WebDriver driver = <span class="keyword">new</span> RemoteWebDriver(<span class="keyword">new</span> URL(URL), caps);
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> LambdaTest Integration</span></div>
+                                <pre><code><span class="keyword">public class</span> <span class="class-name">LambdaTestTest</span> {
+    <span class="keyword">public static final</span> String USERNAME = System.getenv(<span class="string">"LT_USERNAME"</span>);
+    <span class="keyword">public static final</span> String ACCESS_KEY = System.getenv(<span class="string">"LT_ACCESS_KEY"</span>);
+    <span class="keyword">public static final</span> String URL = <span class="string">"https://"</span> + USERNAME + <span class="string">":"</span> + ACCESS_KEY +
+                                         <span class="string">"@hub.lambdatest.com/wd/hub"</span>;
+
+    <span class="keyword">public void</span> setup() <span class="keyword">throws</span> Exception {
+        ChromeOptions options = <span class="keyword">new</span> ChromeOptions();
+        options.setPlatformName(<span class="string">"Windows 10"</span>);
+        options.setBrowserVersion(<span class="string">"latest"</span>);
+
+        HashMap&lt;String, Object&gt; ltOptions = <span class="keyword">new</span> HashMap&lt;&gt;();
+        ltOptions.put(<span class="string">"project"</span>, <span class="string">"My Project"</span>);
+        ltOptions.put(<span class="string">"build"</span>, <span class="string">"Build 1.0"</span>);
+        ltOptions.put(<span class="string">"name"</span>, <span class="string">"Test Name"</span>);
+        options.setCapability(<span class="string">"LT:Options"</span>, ltOptions);
+
+        WebDriver driver = <span class="keyword">new</span> RemoteWebDriver(<span class="keyword">new</span> URL(URL), options);
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-info-circle"></i> Cloud vs Self-Hosted Grid</h4>
+                                <ul>
+                                    <li><strong>Cloud Pros:</strong> No infrastructure maintenance, massive browser coverage, built-in reporting</li>
+                                    <li><strong>Cloud Cons:</strong> Cost at scale, network latency, data privacy concerns</li>
+                                    <li><strong>Self-Hosted Pros:</strong> Full control, no recurring costs, data stays internal</li>
+                                    <li><strong>Self-Hosted Cons:</strong> Infrastructure maintenance, limited browser versions</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Best Practices -->
+                    <section id="best-practices" class="chapter">
+                        <h2 class="chapter-title">Best Practices</h2>
+                        <div class="chapter-content">
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-check-circle"></i> Test Design</h4>
+                                    <ul>
+                                        <li>Make tests independent and atomic</li>
+                                        <li>Use ThreadLocal for driver management</li>
+                                        <li>Avoid static variables for test data</li>
+                                        <li>Clean up resources in teardown</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-server"></i> Grid Configuration</h4>
+                                    <ul>
+                                        <li>Set appropriate session timeouts</li>
+                                        <li>Configure max sessions per node</li>
+                                        <li>Monitor node health and availability</li>
+                                        <li>Use grid console for debugging</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-tachometer-alt"></i> Performance</h4>
+                                    <ul>
+                                        <li>Use headless mode when possible</li>
+                                        <li>Optimize test execution time</li>
+                                        <li>Balance thread count with resources</li>
+                                        <li>Use explicit waits, not implicit</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-shield-alt"></i> Reliability</h4>
+                                    <ul>
+                                        <li>Implement retry logic for flaky tests</li>
+                                        <li>Handle session creation failures</li>
+                                        <li>Add proper exception handling</li>
+                                        <li>Use health checks for grid status</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Retry Logic for Grid</span></div>
+                                <pre><code><span class="keyword">import</span> org.testng.IRetryAnalyzer;
+<span class="keyword">import</span> org.testng.ITestResult;
+
+<span class="keyword">public class</span> <span class="class-name">RetryAnalyzer</span> <span class="keyword">implements</span> IRetryAnalyzer {
+    <span class="keyword">private int</span> retryCount = <span class="number">0</span>;
+    <span class="keyword">private static final int</span> MAX_RETRY = <span class="number">2</span>;
+
+    @Override
+    <span class="keyword">public boolean</span> retry(ITestResult result) {
+        <span class="keyword">if</span> (retryCount &lt; MAX_RETRY) {
+            retryCount++;
+            <span class="keyword">return true</span>;
+        }
+        <span class="keyword">return false</span>;
+    }
+}
+
+<span class="comment">// Usage</span>
+@Test(retryAnalyzer = RetryAnalyzer.class)
+<span class="keyword">public void</span> testWithRetry() {
+    <span class="comment">// Test code</span>
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Grid Health Check</span></div>
+                                <pre><code><span class="keyword">import</span> java.net.HttpURLConnection;
+<span class="keyword">import</span> java.net.URL;
+
+<span class="keyword">public class</span> <span class="class-name">GridHealthCheck</span> {
+
+    <span class="keyword">public static boolean</span> isGridReady(String gridUrl) {
+        <span class="keyword">try</span> {
+            URL url = <span class="keyword">new</span> URL(gridUrl + <span class="string">"/status"</span>);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod(<span class="string">"GET"</span>);
+            conn.setConnectTimeout(<span class="number">5000</span>);
+
+            <span class="keyword">int</span> responseCode = conn.getResponseCode();
+            <span class="keyword">return</span> responseCode == <span class="number">200</span>;
+        } <span class="keyword">catch</span> (Exception e) {
+            <span class="keyword">return false</span>;
+        }
+    }
+
+    <span class="keyword">public static void</span> waitForGrid(String gridUrl, <span class="keyword">int</span> timeoutSeconds) {
+        <span class="keyword">long</span> endTime = System.currentTimeMillis() + (timeoutSeconds * <span class="number">1000</span>);
+
+        <span class="keyword">while</span> (System.currentTimeMillis() &lt; endTime) {
+            <span class="keyword">if</span> (isGridReady(gridUrl)) {
+                System.out.println(<span class="string">"Grid is ready!"</span>);
+                <span class="keyword">return</span>;
+            }
+            <span class="keyword">try</span> {
+                Thread.sleep(<span class="number">1000</span>);
+            } <span class="keyword">catch</span> (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        <span class="keyword">throw new</span> RuntimeException(<span class="string">"Grid not ready within timeout"</span>);
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-star"></i> Key Takeaways</h4>
+                                <ul>
+                                    <li>Selenium Grid enables parallel execution across browsers and platforms</li>
+                                    <li>Grid 4 offers standalone, hub-node, and fully distributed modes</li>
+                                    <li>Docker provides the easiest setup for consistent Grid environments</li>
+                                    <li>Use ThreadLocal for thread-safe parallel test execution</li>
+                                    <li>Cloud providers offer managed Grid with extensive browser coverage</li>
+                                    <li>Always implement proper cleanup and error handling</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Next Steps -->
+                    <section id="next-steps" class="chapter">
+                        <h2 class="chapter-title">Next Steps</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-graduation-cap"></i> Continue Your Learning Journey</h4>
+                                <ul>
+                                    <li><strong>CI/CD Integration</strong> - Integrate Grid with Jenkins, GitHub Actions, GitLab CI</li>
+                                    <li><strong>Extent Reports</strong> - Generate rich HTML reports with parallel test results</li>
+                                    <li><strong>Kubernetes</strong> - Deploy Grid on Kubernetes for auto-scaling</li>
+                                    <li><strong>Performance Testing</strong> - Combine with JMeter for load testing</li>
+                                    <li><strong>Mobile Testing</strong> - Extend to Appium Grid for mobile automation</li>
+                                </ul>
+                            </div>
+
+                            <div class="info-box success">
+                                <h4><i class="fas fa-book"></i> Prepare for Interviews</h4>
+                                <p>Selenium Grid is a popular interview topic! Practice with our <a href="/interview-qna/automation/automations-set-1.html">Automation Interview Q&A</a> covering distributed testing, parallel execution, and cloud integration questions.</p>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-code"></i> Strengthen Your Foundation</h4>
+                                <p>Review our previous tutorials on <a href="/selenium/selenium-page-object-model.html">Page Object Model</a> and <a href="/selenium/selenium-data-driven-testing.html">Data-Driven Testing</a> to build a complete automation framework with Grid.</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/selenium/selenium-data-driven-testing.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Data-Driven Testing</span>
+                    </a>
+                    <a href="/interview-qna/automation/automations-set-1.html" class="nav-next">
+                        <span>Automation Interview Q&A</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
