@@ -235,6 +235,30 @@ const SITE_NAVIGATION = {
             ]
         },
         {
+            id: 'selenium',
+            name: 'Selenium',
+            icon: 'fas fa-globe',
+            enabled: true,
+            description: 'Master browser automation with Selenium WebDriver',
+            indexUrl: '/selenium/index.html',
+            categories: [
+                {
+                    id: 'getting-started',
+                    name: 'Getting Started',
+                    icon: 'fas fa-rocket',
+                    tutorials: [
+                        {
+                            title: 'Selenium WebDriver Guide',
+                            url: '/selenium/selenium-webdriver-guide.html',
+                            icon: 'fas fa-book-open',
+                            description: 'Setup, Locators, Waits & Examples',
+                            readTime: '20 min'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             id: 'python',
             name: 'Python',
             icon: 'fab fa-python',

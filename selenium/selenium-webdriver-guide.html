@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete Selenium WebDriver 4.x guide covering setup, locators, waits, interactions, and best practices for browser automation.">
+    <title>Selenium WebDriver Guide - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Selenium WebDriver Guide</h1>
+                    <p class="article-subtitle">Master browser automation with Selenium WebDriver 4.x</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 20 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                        <span><i class="fas fa-code"></i> Java</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc"></nav>
+
+                <div class="article-body">
+                    <!-- Introduction -->
+                    <section id="introduction" class="chapter">
+                        <h2 class="chapter-title">Introduction & Features</h2>
+                        <div class="chapter-content">
+                            <p>Selenium WebDriver is a browser automation framework that allows you to write automated tests for web applications. Control browsers programmatically with real user interactions.</p>
+
+                            <div class="two-column-grid">
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-globe"></i> Cross-Browser Testing</h4>
+                                    <p>Chrome, Firefox, Edge, Safari support</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-code"></i> Multiple Languages</h4>
+                                    <p>Java, Python, C#, JavaScript</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-certificate"></i> W3C Standard</h4>
+                                    <p>Industry-standard protocol</p>
+                                </div>
+                                <div class="info-box success">
+                                    <h4><i class="fas fa-mouse-pointer"></i> Real Browser Control</h4>
+                                    <p>Actual user-like interactions</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Installation -->
+                    <section id="installation" class="chapter">
+                        <h2 class="chapter-title">Installation & Setup</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-list-ol"></i> Setup Steps</h4>
+                                <ol>
+                                    <li><strong>Add Dependency:</strong> Include Selenium WebDriver in your project</li>
+                                    <li><strong>Browser Setup:</strong> Install target browsers (Chrome, Firefox, Edge)</li>
+                                    <li><strong>Verify Setup:</strong> Run a simple test</li>
+                                </ol>
+                            </div>
+
+                            <div class="info-box success">
+                                <h4><i class="fas fa-magic"></i> Selenium Manager (Built-in)</h4>
+                                <p>Since Selenium 4.6+, <strong>Selenium Manager</strong> is built-in and automatically downloads and manages browser drivers. No need for WebDriverManager or manual driver setup!</p>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Maven Dependencies (pom.xml)</span></div>
+                                <pre><code><span class="comment">&lt;!-- Selenium WebDriver 4.x - That's all you need! --&gt;</span>
+<span class="keyword">&lt;dependency&gt;</span>
+    <span class="keyword">&lt;groupId&gt;</span>org.seleniumhq.selenium<span class="keyword">&lt;/groupId&gt;</span>
+    <span class="keyword">&lt;artifactId&gt;</span>selenium-java<span class="keyword">&lt;/artifactId&gt;</span>
+    <span class="keyword">&lt;version&gt;</span>4.27.0<span class="keyword">&lt;/version&gt;</span>
+<span class="keyword">&lt;/dependency&gt;</span></code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-file-code"></i> Gradle Dependencies (build.gradle)</span></div>
+                                <pre><code>dependencies {
+    implementation <span class="string">'org.seleniumhq.selenium:selenium-java:4.27.0'</span>
+}</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- First Test -->
+                    <section id="first-test" class="chapter">
+                        <h2 class="chapter-title">Your First WebDriver Test</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> FirstTest.java</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.WebDriver;
+<span class="keyword">import</span> org.openqa.selenium.chrome.ChromeDriver;
+
+<span class="keyword">public class</span> FirstTest {
+    <span class="keyword">public static void</span> main(String[] args) {
+        <span class="comment">// Create WebDriver instance - Selenium Manager handles driver automatically!</span>
+        WebDriver driver = <span class="keyword">new</span> ChromeDriver();
+
+        <span class="comment">// Navigate to URL</span>
+        driver.get(<span class="string">"https://www.google.com"</span>);
+
+        <span class="comment">// Get page title</span>
+        System.out.println(driver.getTitle());
+
+        <span class="comment">// Close browser</span>
+        driver.quit();
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-lightbulb"></i> Key Points</h4>
+                                <ul>
+                                    <li>Selenium Manager automatically downloads and manages browser drivers (Selenium 4.6+)</li>
+                                    <li>Just create the driver instance - no manual setup required</li>
+                                    <li>Always call <code>quit()</code> to close browser and end session</li>
+                                    <li>Use <code>close()</code> to close current window only</li>
+                                    <li>WebDriver is an interface; ChromeDriver is the implementation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Locators -->
+                    <section id="locators" class="chapter">
+                        <h2 class="chapter-title">Locators & Finding Elements</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-table"></i> Locator Types</span></div>
+                                <pre><code>Locator          | Method                  | Best For
+-----------------+-------------------------+---------------------------
+ID               | By.id()                 | Most reliable, fastest
+Name             | By.name()               | Form elements
+Class Name       | By.className()          | Single class attribute
+Tag Name         | By.tagName()            | HTML tag elements
+Link Text        | By.linkText()           | Exact anchor text
+Partial Link     | By.partialLinkText()    | Partial anchor text
+CSS Selector     | By.cssSelector()        | Fast, flexible patterns
+XPath            | By.xpath()              | Complex navigation</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Locator Examples</span></div>
+                                <pre><code><span class="comment">// By ID</span>
+WebElement element = driver.findElement(By.id(<span class="string">"username"</span>));
+
+<span class="comment">// By Name</span>
+WebElement input = driver.findElement(By.name(<span class="string">"email"</span>));
+
+<span class="comment">// By CSS Selector</span>
+WebElement button = driver.findElement(By.cssSelector(<span class="string">".btn-primary"</span>));
+
+<span class="comment">// By XPath</span>
+WebElement link = driver.findElement(By.xpath(<span class="string">"//a[@href='/login']"</span>));
+
+<span class="comment">// Find multiple elements</span>
+List&lt;WebElement&gt; links = driver.findElements(By.tagName(<span class="string">"a"</span>));</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fas fa-code"></i> CSS Selector Patterns</span></div>
+                                <pre><code><span class="comment">// ID selector</span>
+#username
+
+<span class="comment">// Class selector</span>
+.btn-primary
+
+<span class="comment">// Attribute selector</span>
+input[type='text']
+
+<span class="comment">// Descendant selector</span>
+div.container button
+
+<span class="comment">// Child selector</span>
+ul > li
+
+<span class="comment">// Multiple classes</span>
+.btn.btn-large</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-lightbulb"></i> Pro Tip</h4>
+                                <p>Prefer CSS selectors over XPath for better performance. Use XPath only when CSS cannot achieve the selection (like text-based or parent navigation).</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Interactions -->
+                    <section id="interactions" class="chapter">
+                        <h2 class="chapter-title">Element Interactions</h2>
+                        <div class="chapter-content">
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-mouse-pointer"></i> Basic Actions</h4>
+                                    <ul>
+                                        <li><code>click()</code> - Click element</li>
+                                        <li><code>sendKeys()</code> - Type text</li>
+                                        <li><code>clear()</code> - Clear input</li>
+                                        <li><code>submit()</code> - Submit form</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-info-circle"></i> Get Information</h4>
+                                    <ul>
+                                        <li><code>getText()</code> - Get text content</li>
+                                        <li><code>getAttribute()</code> - Get attribute</li>
+                                        <li><code>isDisplayed()</code> - Check visibility</li>
+                                        <li><code>isEnabled()</code> - Check enabled</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-compass"></i> Navigation</h4>
+                                    <ul>
+                                        <li><code>get()</code> - Navigate to URL</li>
+                                        <li><code>navigate().to()</code> - Navigate</li>
+                                        <li><code>navigate().back()</code> - Go back</li>
+                                        <li><code>navigate().forward()</code> - Go forward</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-window-restore"></i> Window Control</h4>
+                                    <ul>
+                                        <li><code>getWindowHandle()</code> - Get handle</li>
+                                        <li><code>switchTo()</code> - Switch context</li>
+                                        <li><code>close()</code> - Close window</li>
+                                        <li><code>quit()</code> - Quit browser</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Interaction Examples</span></div>
+                                <pre><code><span class="comment">// Click on element</span>
+driver.findElement(By.id(<span class="string">"submit-btn"</span>)).click();
+
+<span class="comment">// Type text</span>
+driver.findElement(By.name(<span class="string">"username"</span>)).sendKeys(<span class="string">"admin"</span>);
+
+<span class="comment">// Clear input field</span>
+WebElement input = driver.findElement(By.id(<span class="string">"search"</span>));
+input.clear();
+
+<span class="comment">// Get text from element</span>
+String text = driver.findElement(By.className(<span class="string">"heading"</span>)).getText();
+
+<span class="comment">// Check if element is visible</span>
+<span class="keyword">boolean</span> isVisible = driver.findElement(By.id(<span class="string">"alert"</span>)).isDisplayed();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Dropdown Handling</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.support.ui.Select;
+
+WebElement dropdown = driver.findElement(By.id(<span class="string">"country"</span>));
+Select select = <span class="keyword">new</span> Select(dropdown);
+
+<span class="comment">// Select by visible text</span>
+select.selectByVisibleText(<span class="string">"India"</span>);
+
+<span class="comment">// Select by value</span>
+select.selectByValue(<span class="string">"in"</span>);
+
+<span class="comment">// Select by index</span>
+select.selectByIndex(<span class="number">2</span>);</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Waits -->
+                    <section id="waits" class="chapter">
+                        <h2 class="chapter-title">Waits & Synchronization</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Implicit Wait</span></div>
+                                <pre><code><span class="keyword">import</span> java.time.Duration;
+
+<span class="comment">// Apply globally for all elements</span>
+driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(<span class="number">10</span>));</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Explicit Wait</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.support.ui.WebDriverWait;
+<span class="keyword">import</span> org.openqa.selenium.support.ui.ExpectedConditions;
+
+<span class="comment">// Wait for specific condition</span>
+WebDriverWait wait = <span class="keyword">new</span> WebDriverWait(driver, Duration.ofSeconds(<span class="number">10</span>));
+
+<span class="comment">// Wait for element to be clickable</span>
+WebElement element = wait.until(
+    ExpectedConditions.elementToBeClickable(By.id(<span class="string">"submit"</span>))
+);
+
+<span class="comment">// Wait for visibility</span>
+wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(<span class="string">"message"</span>)));
+
+<span class="comment">// Wait for presence</span>
+wait.until(ExpectedConditions.presenceOfElementLocated(By.className(<span class="string">"alert"</span>)));</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Fluent Wait</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.support.ui.FluentWait;
+
+Wait&lt;WebDriver&gt; fluentWait = <span class="keyword">new</span> FluentWait&lt;&gt;(driver)
+    .withTimeout(Duration.ofSeconds(<span class="number">30</span>))
+    .pollingEvery(Duration.ofSeconds(<span class="number">2</span>))
+    .ignoring(NoSuchElementException.class);</code></pre>
+                            </div>
+
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> Wait Best Practices</h4>
+                                <ul>
+                                    <li>Prefer Explicit Waits over Implicit Waits for better control</li>
+                                    <li>Avoid <code>Thread.sleep()</code> - use WebDriver waits instead</li>
+                                    <li>Use Fluent Wait when you need custom polling intervals</li>
+                                    <li>Don't mix Implicit and Explicit waits in the same test</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Quick Examples -->
+                    <section id="quick-examples" class="chapter">
+                        <h2 class="chapter-title">Quick Examples</h2>
+                        <div class="chapter-content">
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Login Automation</span></div>
+                                <pre><code>driver.get(<span class="string">"https://example.com/login"</span>);
+driver.findElement(By.id(<span class="string">"username"</span>)).sendKeys(<span class="string">"testuser"</span>);
+driver.findElement(By.id(<span class="string">"password"</span>)).sendKeys(<span class="string">"password123"</span>);
+driver.findElement(By.id(<span class="string">"login-btn"</span>)).click();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Form Filling</span></div>
+                                <pre><code><span class="comment">// Fill text fields</span>
+driver.findElement(By.name(<span class="string">"firstName"</span>)).sendKeys(<span class="string">"John"</span>);
+driver.findElement(By.name(<span class="string">"lastName"</span>)).sendKeys(<span class="string">"Doe"</span>);
+
+<span class="comment">// Select dropdown</span>
+Select country = <span class="keyword">new</span> Select(driver.findElement(By.id(<span class="string">"country"</span>)));
+country.selectByVisibleText(<span class="string">"United States"</span>);
+
+<span class="comment">// Check checkbox</span>
+driver.findElement(By.id(<span class="string">"terms"</span>)).click();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Window/Tab Handling</span></div>
+                                <pre><code><span class="comment">// Get current window handle</span>
+String mainWindow = driver.getWindowHandle();
+
+<span class="comment">// Get all window handles</span>
+Set&lt;String&gt; allWindows = driver.getWindowHandles();
+
+<span class="comment">// Switch to new window</span>
+<span class="keyword">for</span> (String window : allWindows) {
+    <span class="keyword">if</span> (!window.equals(mainWindow)) {
+        driver.switchTo().window(window);
+    }
+}
+
+<span class="comment">// Switch back to main window</span>
+driver.switchTo().window(mainWindow);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> iframe Handling</span></div>
+                                <pre><code><span class="comment">// Switch to iframe by index</span>
+driver.switchTo().frame(<span class="number">0</span>);
+
+<span class="comment">// Switch to iframe by name/id</span>
+driver.switchTo().frame(<span class="string">"frameName"</span>);
+
+<span class="comment">// Switch to iframe by WebElement</span>
+WebElement frameElement = driver.findElement(By.id(<span class="string">"myFrame"</span>));
+driver.switchTo().frame(frameElement);
+
+<span class="comment">// Switch back to main content</span>
+driver.switchTo().defaultContent();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Screenshot Capture</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.TakesScreenshot;
+<span class="keyword">import</span> org.openqa.selenium.OutputType;
+<span class="keyword">import</span> java.io.File;
+<span class="keyword">import</span> org.apache.commons.io.FileUtils;
+
+<span class="comment">// Capture screenshot</span>
+File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+FileUtils.copyFile(screenshot, <span class="keyword">new</span> File(<span class="string">"screenshot.png"</span>));</code></pre>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Next Steps -->
+                    <section id="next-steps" class="chapter">
+                        <h2 class="chapter-title">Next Steps</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-arrow-right"></i> Continue Learning</h4>
+                                <ul>
+                                    <li>Implement Page Object Model (POM) for better test structure</li>
+                                    <li>Integrate with TestNG or JUnit for test framework</li>
+                                    <li>Set up data-driven testing with Excel/CSV</li>
+                                    <li>Configure parallel test execution with Selenium Grid</li>
+                                    <li>Add reporting with Extent Reports or Allure</li>
+                                    <li>Implement CI/CD pipeline with Jenkins</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/selenium/index.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Selenium Home</span>
+                    </a>
+                    <a href="/java/index.html" class="nav-next">
+                        <span>Java Tutorials</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
