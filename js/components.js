@@ -62,19 +62,16 @@ const TechTokComponents = {
         sidebarContent += '<div class="sidebar-category">';
         sidebarContent += '<div class="sidebar-category-title">Domains</div>';
 
-        for (const domain of SITE_NAVIGATION.domains) {
+        // Only show enabled domains in sidebar
+        for (const domain of SITE_NAVIGATION.domains.filter(d => d.enabled)) {
             const isActive = currentDomain && currentDomain.id === domain.id;
-            const disabledClass = domain.enabled ? '' : 'disabled';
             const activeClass = isActive ? 'active' : '';
-            const badge = domain.enabled ? '' : '<span class="sidebar-nav-badge coming-soon">Soon</span>';
 
             sidebarContent += `
-                <a href="${domain.enabled ? domain.indexUrl : '#'}"
-                   class="sidebar-nav-item ${disabledClass} ${activeClass}"
-                   ${!domain.enabled ? 'aria-disabled="true"' : ''}>
+                <a href="${domain.indexUrl}"
+                   class="sidebar-nav-item ${activeClass}">
                     <i class="sidebar-nav-icon ${domain.icon}"></i>
                     <span class="sidebar-nav-text">${domain.name}</span>
-                    ${badge}
                 </a>
             `;
         }
