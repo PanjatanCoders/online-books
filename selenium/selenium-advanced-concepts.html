@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Advanced Selenium WebDriver concepts including alerts, frames, JavaScript executor, screenshots, file handling, and cookies.">
+    <title>Advanced Selenium WebDriver - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Advanced Selenium WebDriver</h1>
+                    <p class="article-subtitle">Master advanced automation techniques and browser interactions</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Advanced</span>
+                        <span><i class="fas fa-code"></i> Java</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc"></nav>
+
+                <div class="article-body">
+                    <!-- Alerts -->
+                    <section id="alerts" class="chapter">
+                        <h2 class="chapter-title">Handling Alerts & Popups</h2>
+                        <div class="chapter-content">
+                            <p>JavaScript alerts, confirmations, and prompts require special handling. WebDriver provides the Alert interface to interact with these dialogs.</p>
+
+                            <div class="two-column-grid">
+                                <div class="info-box">
+                                    <h4><i class="fas fa-exclamation-triangle"></i> Alert Types</h4>
+                                    <ul>
+                                        <li><strong>Alert:</strong> Simple message with OK button</li>
+                                        <li><strong>Confirm:</strong> OK and Cancel buttons</li>
+                                        <li><strong>Prompt:</strong> Input field with OK/Cancel</li>
+                                    </ul>
+                                </div>
+                                <div class="info-box">
+                                    <h4><i class="fas fa-mouse-pointer"></i> Alert Methods</h4>
+                                    <ul>
+                                        <li><code>accept()</code> - Click OK</li>
+                                        <li><code>dismiss()</code> - Click Cancel</li>
+                                        <li><code>getText()</code> - Get alert text</li>
+                                        <li><code>sendKeys()</code> - Type in prompt</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Simple Alert</span></div>
+                                <pre><code><span class="comment">// Switch to alert</span>
+Alert alert = driver.switchTo().alert();
+
+<span class="comment">// Get alert text</span>
+String alertText = alert.getText();
+System.out.println(alertText);
+
+<span class="comment">// Accept alert</span>
+alert.accept();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Confirmation Dialog</span></div>
+                                <pre><code><span class="comment">// Handle confirm dialog</span>
+Alert confirmAlert = driver.switchTo().alert();
+
+<span class="comment">// Click Cancel</span>
+confirmAlert.dismiss();
+
+<span class="comment">// OR Click OK</span>
+confirmAlert.accept();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Prompt Dialog</span></div>
+                                <pre><code><span class="comment">// Handle prompt</span>
+Alert promptAlert = driver.switchTo().alert();
+
+<span class="comment">// Type text in prompt</span>
+promptAlert.sendKeys(<span class="string">"John Doe"</span>);
+
+<span class="comment">// Submit</span>
+promptAlert.accept();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Wait for Alert</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.support.ui.ExpectedConditions;
+
+<span class="comment">// Wait for alert to appear</span>
+WebDriverWait wait = <span class="keyword">new</span> WebDriverWait(driver, Duration.ofSeconds(<span class="number">10</span>));
+wait.until(ExpectedConditions.alertIsPresent());
+
+Alert alert = driver.switchTo().alert();
+alert.accept();</code></pre>
+                            </div>
+
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-lightbulb"></i> Pro Tip</h4>
+                                <p>Always use explicit wait before switching to alert to avoid NoAlertPresentException. Modern web apps may have delayed alert rendering.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Frames -->
+                    <section id="frames" class="chapter">
+                        <h2 class="chapter-title">Working with Frames & iFrames</h2>
+                        <div class="chapter-content">
+                            <p>Frames and iFrames are separate HTML documents within a page. WebDriver needs to switch context to interact with elements inside frames.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Switch to Frame by Index</span></div>
+                                <pre><code><span class="comment">// Switch to first frame (index 0)</span>
+driver.switchTo().frame(<span class="number">0</span>);
+
+<span class="comment">// Interact with elements inside frame</span>
+driver.findElement(By.id(<span class="string">"username"</span>)).sendKeys(<span class="string">"admin"</span>);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Switch to Frame by Name/ID</span></div>
+                                <pre><code><span class="comment">// Switch by name attribute</span>
+driver.switchTo().frame(<span class="string">"frameName"</span>);
+
+<span class="comment">// Switch by id attribute</span>
+driver.switchTo().frame(<span class="string">"frameId"</span>);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Switch to Frame by WebElement</span></div>
+                                <pre><code><span class="comment">// Find frame element first</span>
+WebElement frameElement = driver.findElement(By.cssSelector(<span class="string">"iframe.content-frame"</span>));
+
+<span class="comment">// Switch to frame using WebElement</span>
+driver.switchTo().frame(frameElement);
+
+<span class="comment">// Perform actions inside frame</span>
+driver.findElement(By.id(<span class="string">"button"</span>)).click();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Nested Frames</span></div>
+                                <pre><code><span class="comment">// Switch to parent frame</span>
+driver.switchTo().frame(<span class="string">"parentFrame"</span>);
+
+<span class="comment">// Switch to child frame inside parent</span>
+driver.switchTo().frame(<span class="string">"childFrame"</span>);
+
+<span class="comment">// Interact with nested frame content</span>
+driver.findElement(By.id(<span class="string">"submit"</span>)).click();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Switch Back to Main Content</span></div>
+                                <pre><code><span class="comment">// Switch to default content (main page)</span>
+driver.switchTo().defaultContent();
+
+<span class="comment">// Switch to parent frame (one level up)</span>
+driver.switchTo().parentFrame();</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-info-circle"></i> Frame Switching Best Practices</h4>
+                                <ul>
+                                    <li>Always switch back to default content after frame operations</li>
+                                    <li>Use <code>parentFrame()</code> to go one level up in nested frames</li>
+                                    <li>Wait for frame to load before switching to it</li>
+                                    <li>Prefer switching by WebElement over index for stability</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- JavaScript Executor -->
+                    <section id="javascript-executor" class="chapter">
+                        <h2 class="chapter-title">JavaScript Executor</h2>
+                        <div class="chapter-content">
+                            <p>JavaScriptExecutor allows you to execute JavaScript code directly in the browser. Useful for handling complex scenarios that WebDriver can't handle natively.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Basic Setup</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.JavascriptExecutor;
+
+<span class="comment">// Cast WebDriver to JavascriptExecutor</span>
+JavascriptExecutor js = (JavascriptExecutor) driver;</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Click Hidden Element</span></div>
+                                <pre><code><span class="comment">// Click element not visible or not clickable</span>
+WebElement element = driver.findElement(By.id(<span class="string">"hiddenButton"</span>));
+js.executeScript(<span class="string">"arguments[0].click();"</span>, element);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Scroll Operations</span></div>
+                                <pre><code><span class="comment">// Scroll to bottom of page</span>
+js.executeScript(<span class="string">"window.scrollTo(0, document.body.scrollHeight);"</span>);
+
+<span class="comment">// Scroll to top</span>
+js.executeScript(<span class="string">"window.scrollTo(0, 0);"</span>);
+
+<span class="comment">// Scroll to specific element</span>
+WebElement element = driver.findElement(By.id(<span class="string">"section5"</span>));
+js.executeScript(<span class="string">"arguments[0].scrollIntoView(true);"</span>, element);
+
+<span class="comment">// Scroll by pixel amount</span>
+js.executeScript(<span class="string">"window.scrollBy(0, 500);"</span>);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Modify Element Properties</span></div>
+                                <pre><code><span class="comment">// Change element attribute</span>
+WebElement inputField = driver.findElement(By.id(<span class="string">"email"</span>));
+js.executeScript(<span class="string">"arguments[0].setAttribute('value', 'test@example.com');"</span>, inputField);
+
+<span class="comment">// Remove attribute</span>
+js.executeScript(<span class="string">"arguments[0].removeAttribute('disabled');"</span>, element);
+
+<span class="comment">// Change CSS style</span>
+js.executeScript(<span class="string">"arguments[0].style.border='3px solid red';"</span>, element);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Get Page Information</span></div>
+                                <pre><code><span class="comment">// Get page title</span>
+String title = (String) js.executeScript(<span class="string">"return document.title;"</span>);
+
+<span class="comment">// Get page URL</span>
+String url = (String) js.executeScript(<span class="string">"return document.URL;"</span>);
+
+<span class="comment">// Get page height</span>
+Long height = (Long) js.executeScript(<span class="string">"return document.body.scrollHeight;"</span>);
+
+<span class="comment">// Get inner text</span>
+String text = (String) js.executeScript(<span class="string">"return arguments[0].innerText;"</span>, element);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Generate Alerts</span></div>
+                                <pre><code><span class="comment">// Create custom alert</span>
+js.executeScript(<span class="string">"alert('This is a custom alert!');"</span>);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Handle Calendar/Date Picker</span></div>
+                                <pre><code><span class="comment">// Set date directly bypassing calendar UI</span>
+WebElement datePicker = driver.findElement(By.id(<span class="string">"dateInput"</span>));
+js.executeScript(<span class="string">"arguments[0].value='2024-12-31';"</span>, datePicker);</code></pre>
+                            </div>
+
+                            <div class="info-box success">
+                                <h4><i class="fas fa-star"></i> Common Use Cases</h4>
+                                <ul>
+                                    <li>Clicking elements that are covered by other elements</li>
+                                    <li>Scrolling to elements before interaction</li>
+                                    <li>Setting values in read-only fields</li>
+                                    <li>Handling date pickers and calendars</li>
+                                    <li>Highlighting elements during debugging</li>
+                                    <li>Getting computed styles and properties</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Screenshots -->
+                    <section id="screenshots" class="chapter">
+                        <h2 class="chapter-title">Taking Screenshots</h2>
+                        <div class="chapter-content">
+                            <p>Screenshots are essential for test reporting and debugging. Selenium provides multiple ways to capture screenshots at different levels.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Full Page Screenshot</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.TakesScreenshot;
+<span class="keyword">import</span> org.openqa.selenium.OutputType;
+<span class="keyword">import</span> org.apache.commons.io.FileUtils;
+<span class="keyword">import</span> java.io.File;
+
+<span class="comment">// Capture full page screenshot</span>
+TakesScreenshot ts = (TakesScreenshot) driver;
+File source = ts.getScreenshotAs(OutputType.FILE);
+File destination = <span class="keyword">new</span> File(<span class="string">"./screenshots/fullpage.png"</span>);
+FileUtils.copyFile(source, destination);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Element Screenshot (Selenium 4)</span></div>
+                                <pre><code><span class="comment">// Capture specific element</span>
+WebElement element = driver.findElement(By.id(<span class="string">"logo"</span>));
+File elementScreenshot = element.getScreenshotAs(OutputType.FILE);
+FileUtils.copyFile(elementScreenshot, <span class="keyword">new</span> File(<span class="string">"./screenshots/element.png"</span>));</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Screenshot with Timestamp</span></div>
+                                <pre><code><span class="keyword">import</span> java.text.SimpleDateFormat;
+<span class="keyword">import</span> java.util.Date;
+
+<span class="comment">// Create screenshot with timestamp</span>
+String timestamp = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd_HH-mm-ss"</span>).format(<span class="keyword">new</span> Date());
+String fileName = <span class="string">"screenshot_"</span> + timestamp + <span class="string">".png"</span>;
+
+File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+FileUtils.copyFile(screenshot, <span class="keyword">new</span> File(<span class="string">"./screenshots/"</span> + fileName));</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Screenshot as Base64 String</span></div>
+                                <pre><code><span class="comment">// Get screenshot as base64 (useful for reports)</span>
+String base64Screenshot = ((TakesScreenshot) driver)
+    .getScreenshotAs(OutputType.BASE64);
+
+<span class="comment">// Use in HTML reports</span>
+String imgTag = <span class="string">"&lt;img src='data:image/png;base64,"</span> + base64Screenshot + <span class="string">"'/&gt;"</span>;</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Screenshot on Test Failure</span></div>
+                                <pre><code><span class="keyword">public void</span> captureScreenshotOnFailure(String testName) {
+    <span class="keyword">try</span> {
+        File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        String filePath = <span class="string">"./screenshots/failed_"</span> + testName + <span class="string">".png"</span>;
+        FileUtils.copyFile(screenshot, <span class="keyword">new</span> File(filePath));
+        System.out.println(<span class="string">"Screenshot saved: "</span> + filePath);
+    } <span class="keyword">catch</span> (Exception e) {
+        System.out.println(<span class="string">"Failed to capture screenshot: "</span> + e.getMessage());
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-info-circle"></i> Screenshot Best Practices</h4>
+                                <ul>
+                                    <li>Always create screenshots directory before saving files</li>
+                                    <li>Use timestamps or test names to avoid overwriting</li>
+                                    <li>Capture screenshots on test failures for debugging</li>
+                                    <li>Consider element screenshots for faster performance</li>
+                                    <li>Use Base64 format for embedding in HTML reports</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- File Upload/Download -->
+                    <section id="file-handling" class="chapter">
+                        <h2 class="chapter-title">File Upload & Download</h2>
+                        <div class="chapter-content">
+                            <p>File handling is a common requirement in web automation. Learn how to upload files and verify downloads.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> File Upload (Direct)</span></div>
+                                <pre><code><span class="comment">// Upload file using sendKeys (for input type="file")</span>
+WebElement uploadElement = driver.findElement(By.id(<span class="string">"fileUpload"</span>));
+
+<span class="comment">// Provide absolute path to file</span>
+String filePath = System.getProperty(<span class="string">"user.dir"</span>) + <span class="string">"/testdata/sample.pdf"</span>;
+uploadElement.sendKeys(filePath);
+
+<span class="comment">// Click submit/upload button</span>
+driver.findElement(By.id(<span class="string">"submitBtn"</span>)).click();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> File Upload (Using Robot Class)</span></div>
+                                <pre><code><span class="keyword">import</span> java.awt.Robot;
+<span class="keyword">import</span> java.awt.Toolkit;
+<span class="keyword">import</span> java.awt.datatransfer.StringSelection;
+<span class="keyword">import</span> java.awt.event.KeyEvent;
+
+<span class="comment">// Click upload button to open file dialog</span>
+driver.findElement(By.id(<span class="string">"uploadBtn"</span>)).click();
+
+<span class="comment">// Copy file path to clipboard</span>
+StringSelection filePath = <span class="keyword">new</span> StringSelection(<span class="string">"C:\\testdata\\file.pdf"</span>);
+Toolkit.getDefaultToolkit().getSystemClipboard().setContents(filePath, <span class="keyword">null</span>);
+
+<span class="comment">// Paste and press Enter using Robot</span>
+Robot robot = <span class="keyword">new</span> Robot();
+robot.keyPress(KeyEvent.VK_CONTROL);
+robot.keyPress(KeyEvent.VK_V);
+robot.keyRelease(KeyEvent.VK_V);
+robot.keyRelease(KeyEvent.VK_CONTROL);
+robot.keyPress(KeyEvent.VK_ENTER);
+robot.keyRelease(KeyEvent.VK_ENTER);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Configure Download Directory</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.chrome.ChromeOptions;
+<span class="keyword">import</span> java.util.HashMap;
+
+<span class="comment">// Set download directory for Chrome</span>
+String downloadPath = System.getProperty(<span class="string">"user.dir"</span>) + <span class="string">"/downloads"</span>;
+
+HashMap&lt;String, Object&gt; prefs = <span class="keyword">new</span> HashMap&lt;&gt;();
+prefs.put(<span class="string">"download.default_directory"</span>, downloadPath);
+prefs.put(<span class="string">"download.prompt_for_download"</span>, <span class="keyword">false</span>);
+prefs.put(<span class="string">"plugins.always_open_pdf_externally"</span>, <span class="keyword">true</span>);
+
+ChromeOptions options = <span class="keyword">new</span> ChromeOptions();
+options.setExperimentalOption(<span class="string">"prefs"</span>, prefs);
+
+WebDriver driver = <span class="keyword">new</span> ChromeDriver(options);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Verify Downloaded File</span></div>
+                                <pre><code><span class="keyword">import</span> java.nio.file.Files;
+<span class="keyword">import</span> java.nio.file.Path;
+<span class="keyword">import</span> java.nio.file.Paths;
+
+<span class="keyword">public boolean</span> isFileDownloaded(String fileName, <span class="keyword">int</span> timeoutSeconds) {
+    String downloadPath = System.getProperty(<span class="string">"user.dir"</span>) + <span class="string">"/downloads"</span>;
+    Path filePath = Paths.get(downloadPath, fileName);
+    
+    <span class="keyword">int</span> waited = <span class="number">0</span>;
+    <span class="keyword">while</span> (waited &lt; timeoutSeconds) {
+        <span class="keyword">if</span> (Files.exists(filePath)) {
+            <span class="keyword">return true</span>;
+        }
+        <span class="keyword">try</span> {
+            Thread.sleep(<span class="number">1000</span>);
+        } <span class="keyword">catch</span> (InterruptedException e) {
+            e.printStackTrace();
+        }
+        waited++;
+    }
+    <span class="keyword">return false</span>;
+}</code></pre>
+                            </div>
+
+                            <div class="info-box warning">
+                                <h4><i class="fas fa-exclamation-triangle"></i> File Upload Notes</h4>
+                                <ul>
+                                    <li>Use <code>sendKeys()</code> for standard file input elements</li>
+                                    <li>Robot class requires active window focus (not headless)</li>
+                                    <li>Always use absolute file paths, not relative</li>
+                                    <li>Verify file exists before attempting upload</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Cookies -->
+                    <section id="cookies" class="chapter">
+                        <h2 class="chapter-title">Managing Cookies</h2>
+                        <div class="chapter-content">
+                            <p>Cookies store session data and user preferences. WebDriver provides methods to manage browser cookies programmatically.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Get All Cookies</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.Cookie;
+
+<span class="comment">// Get all cookies</span>
+Set&lt;Cookie&gt; cookies = driver.manage().getCookies();
+
+<span class="comment">// Print all cookies</span>
+<span class="keyword">for</span> (Cookie cookie : cookies) {
+    System.out.println(<span class="string">"Name: "</span> + cookie.getName());
+    System.out.println(<span class="string">"Value: "</span> + cookie.getValue());
+    System.out.println(<span class="string">"Domain: "</span> + cookie.getDomain());
+    System.out.println(<span class="string">"Path: "</span> + cookie.getPath());
+    System.out.println(<span class="string">"---"</span>);
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Get Specific Cookie</span></div>
+                                <pre><code><span class="comment">// Get cookie by name</span>
+Cookie sessionCookie = driver.manage().getCookieNamed(<span class="string">"sessionId"</span>);
+
+<span class="keyword">if</span> (sessionCookie != <span class="keyword">null</span>) {
+    System.out.println(<span class="string">"Session ID: "</span> + sessionCookie.getValue());
+}</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Add Cookie</span></div>
+                                <pre><code><span class="comment">// Create and add new cookie</span>
+Cookie newCookie = <span class="keyword">new</span> Cookie(<span class="string">"username"</span>, <span class="string">"testuser"</span>);
+driver.manage().addCookie(newCookie);
+
+<span class="comment">// Add cookie with more options</span>
+Cookie customCookie = <span class="keyword">new</span> Cookie.Builder(<span class="string">"token"</span>, <span class="string">"abc123xyz"</span>)
+    .domain(<span class="string">"example.com"</span>)
+    .path(<span class="string">"/"</span>)
+    .isSecure(<span class="keyword">true</span>)
+    .isHttpOnly(<span class="keyword">true</span>)
+    .build();
+driver.manage().addCookie(customCookie);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Delete Cookies</span></div>
+                                <pre><code><span class="comment">// Delete specific cookie</span>
+driver.manage().deleteCookieNamed(<span class="string">"sessionId"</span>);
+
+<span class="comment">// Delete cookie object</span>
+Cookie cookie = driver.manage().getCookieNamed(<span class="string">"username"</span>);
+driver.manage().deleteCookie(cookie);
+
+<span class="comment">// Delete all cookies</span>
+driver.manage().deleteAllCookies();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Save and Load Cookies</span></div>
+                                <pre><code><span class="keyword">import</span> java.io.*;
+
+<span class="comment">// Save cookies to file</span>
+<span class="keyword">public void</span> saveCookies(String filePath) {
+    <span class="keyword">try</span> (FileWriter file = <span class="keyword">new</span> FileWriter(filePath)) {
+        <span class="keyword">for</span> (Cookie cookie : driver.manage().getCookies()) {
+            file.write(cookie.getName() + <span class="string">";"</span> + cookie.getValue() + <span class="string">"\n"</span>);
+        }
+    } <span class="keyword">catch</span> (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+<span class="comment">// Load cookies from file</span>
+<span class="keyword">public void</span> loadCookies(String filePath) {
+    <span class="keyword">try</span> (BufferedReader reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> FileReader(filePath))) {
+        String line;
+        <span class="keyword">while</span> ((line = reader.readLine()) != <span class="keyword">null</span>) {
+            String[] parts = line.split(<span class="string">";"</span>);
+            Cookie cookie = <span class="keyword">new</span> Cookie(parts[<span class="number">0</span>], parts[<span class="number">1</span>]);
+            driver.manage().addCookie(cookie);
+        }
+    } <span class="keyword">catch</span> (IOException e) {
+        e.printStackTrace();
+    }
+}</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-cookie-bite"></i> Cookie Use Cases</h4>
+                                <ul>
+                                    <li>Skip login by injecting authentication cookies</li>
+                                    <li>Test session management and timeouts</li>
+                                    <li>Save user preferences across test runs</li>
+                                    <li>Verify cookie security attributes (HttpOnly, Secure)</li>
+                                    <li>Test GDPR cookie consent flows</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Browser Options -->
+                    <section id="browser-options" class="chapter">
+                        <h2 class="chapter-title">Browser Options & Capabilities</h2>
+                        <div class="chapter-content">
+                            <p>Customize browser behavior with options and capabilities for different browsers.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Chrome Options</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.chrome.ChromeOptions;
+
+ChromeOptions options = <span class="keyword">new</span> ChromeOptions();
+
+<span class="comment">// Add arguments</span>
+options.addArguments(<span class="string">"--start-maximized"</span>);
+options.addArguments(<span class="string">"--disable-notifications"</span>);
+options.addArguments(<span class="string">"--disable-popup-blocking"</span>);
+options.addArguments(<span class="string">"--incognito"</span>);
+
+<span class="comment">// Headless mode</span>
+options.addArguments(<span class="string">"--headless=new"</span>);
+
+<span class="comment">// Disable automation flags</span>
+options.setExperimentalOption(<span class="string">"excludeSwitches"</span>, 
+    Arrays.asList(<span class="string">"enable-automation"</span>));
+
+<span class="comment">// Set user agent</span>
+options.addArguments(<span class="string">"user-agent=Mozilla/5.0 Custom Agent"</span>);
+
+WebDriver driver = <span class="keyword">new</span> ChromeDriver(options);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Firefox Options</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.firefox.FirefoxOptions;
+<span class="keyword">import</span> org.openqa.selenium.firefox.FirefoxProfile;
+
+FirefoxOptions options = <span class="keyword">new</span> FirefoxOptions();
+
+<span class="comment">// Add arguments</span>
+options.addArguments(<span class="string">"--headless"</span>);
+options.addArguments(<span class="string">"--width=1920"</span>);
+options.addArguments(<span class="string">"--height=1080"</span>);
+
+<span class="comment">// Set Firefox profile preferences</span>
+FirefoxProfile profile = <span class="keyword">new</span> FirefoxProfile();
+profile.setPreference(<span class="string">"browser.download.folderList"</span>, <span class="number">2</span>);
+profile.setPreference(<span class="string">"browser.helperApps.neverAsk.saveToDisk"</span>, 
+    <span class="string">"application/pdf"</span>);
+options.setProfile(profile);
+
+WebDriver driver = <span class="keyword">new</span> FirefoxDriver(options);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Edge Options</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.edge.EdgeOptions;
+
+EdgeOptions options = <span class="keyword">new</span> EdgeOptions();
+
+<span class="comment">// Add arguments (similar to Chrome)</span>
+options.addArguments(<span class="string">"--start-maximized"</span>);
+options.addArguments(<span class="string">"--inprivate"</span>);
+options.addArguments(<span class="string">"--disable-extensions"</span>);
+
+WebDriver driver = <span class="keyword">new</span> EdgeDriver(options);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Common Chrome Arguments</span></div>
+                                <pre><code><span class="comment">// Performance & Testing</span>
+--start-maximized
+--disable-extensions
+--disable-gpu
+--no-sandbox
+--disable-dev-shm-usage
+
+<span class="comment">// Privacy & Security</span>
+--incognito
+--disable-notifications
+--disable-popup-blocking
+--disable-blink-features=AutomationControlled
+
+<span class="comment">// Window Size</span>
+--window-size=1920,1080
+--headless=new</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Mobile Emulation</span></div>
+                                <pre><code><span class="keyword">import</span> java.util.HashMap;
+
+<span class="comment">// Emulate mobile device</span>
+Map&lt;String, String&gt; mobileEmulation = <span class="keyword">new</span> HashMap&lt;&gt;();
+mobileEmulation.put(<span class="string">"deviceName"</span>, <span class="string">"iPhone 12 Pro"</span>);
+
+ChromeOptions options = <span class="keyword">new</span> ChromeOptions();
+options.setExperimentalOption(<span class="string">"mobileEmulation"</span>, mobileEmulation);
+
+WebDriver driver = <span class="keyword">new</span> ChromeDriver(options);</code></pre>
+                            </div>
+
+                            <div class="info-box success">
+                                <h4><i class="fas fa-rocket"></i> Performance Tips</h4>
+                                <ul>
+                                    <li>Use headless mode for faster execution in CI/CD</li>
+                                    <li>Disable unnecessary browser features (extensions, GPU)</li>
+                                    <li>Set appropriate page load and script timeouts</li>
+                                    <li>Use <code>--no-sandbox</code> in containerized environments</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Actions Class -->
+                    <section id="actions-class" class="chapter">
+                        <h2 class="chapter-title">Advanced User Actions</h2>
+                        <div class="chapter-content">
+                            <p>The Actions class enables complex user interactions like mouse hover, drag-and-drop, keyboard combinations, and more.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Mouse Hover</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.interactions.Actions;
+
+Actions actions = <span class="keyword">new</span> Actions(driver);
+
+<span class="comment">// Hover over element</span>
+WebElement menu = driver.findElement(By.id(<span class="string">"mainMenu"</span>));
+actions.moveToElement(menu).perform();
+
+<span class="comment">// Hover and click submenu</span>
+WebElement submenu = driver.findElement(By.id(<span class="string">"submenu"</span>));
+actions.moveToElement(menu)
+       .moveToElement(submenu)
+       .click()
+       .perform();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Drag and Drop</span></div>
+                                <pre><code><span class="comment">// Drag and drop element</span>
+WebElement source = driver.findElement(By.id(<span class="string">"draggable"</span>));
+WebElement target = driver.findElement(By.id(<span class="string">"droppable"</span>));
+
+actions.dragAndDrop(source, target).perform();
+
+<span class="comment">// Drag by offset</span>
+actions.dragAndDropBy(source, <span class="number">100</span>, <span class="number">200</span>).perform();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Right Click & Double Click</span></div>
+                                <pre><code><span class="comment">// Right click (context menu)</span>
+WebElement element = driver.findElement(By.id(<span class="string">"rightClickArea"</span>));
+actions.contextClick(element).perform();
+
+<span class="comment">// Double click</span>
+WebElement button = driver.findElement(By.id(<span class="string">"doubleClickBtn"</span>));
+actions.doubleClick(button).perform();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Keyboard Actions</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.Keys;
+
+<span class="comment">// Send keyboard shortcuts</span>
+actions.keyDown(Keys.CONTROL)
+       .sendKeys(<span class="string">"a"</span>)
+       .keyUp(Keys.CONTROL)
+       .perform();
+
+<span class="comment">// Copy and paste</span>
+WebElement source = driver.findElement(By.id(<span class="string">"source"</span>));
+WebElement target = driver.findElement(By.id(<span class="string">"target"</span>));
+
+source.click();
+actions.keyDown(Keys.CONTROL).sendKeys(<span class="string">"a"</span>).keyUp(Keys.CONTROL).perform();
+actions.keyDown(Keys.CONTROL).sendKeys(<span class="string">"c"</span>).keyUp(Keys.CONTROL).perform();
+target.click();
+actions.keyDown(Keys.CONTROL).sendKeys(<span class="string">"v"</span>).keyUp(Keys.CONTROL).perform();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Click and Hold</span></div>
+                                <pre><code><span class="comment">// Click and hold element</span>
+WebElement slider = driver.findElement(By.id(<span class="string">"slider"</span>));
+
+actions.clickAndHold(slider)
+       .moveByOffset(<span class="number">100</span>, <span class="number">0</span>)
+       .release()
+       .perform();</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Scroll to Element</span></div>
+                                <pre><code><span class="comment">// Scroll to element (Selenium 4)</span>
+WebElement element = driver.findElement(By.id(<span class="string">"footer"</span>));
+actions.scrollToElement(element).perform();
+
+<span class="comment">// Scroll by amount</span>
+actions.scrollByAmount(<span class="number">0</span>, <span class="number">500</span>).perform();</code></pre>
+                            </div>
+
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-info-circle"></i> Actions Best Practices</h4>
+                                <ul>
+                                    <li>Always call <code>perform()</code> to execute the action chain</li>
+                                    <li>Chain multiple actions for complex interactions</li>
+                                    <li>Use <code>pause()</code> between actions if needed</li>
+                                    <li>Combine with explicit waits for reliable execution</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Window & Tab Management -->
+                    <section id="window-management" class="chapter">
+                        <h2 class="chapter-title">Window & Tab Management</h2>
+                        <div class="chapter-content">
+                            <p>Handle multiple browser windows and tabs effectively during automation.</p>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Get Window Handles</span></div>
+                                <pre><code><span class="comment">// Get current window handle</span>
+String mainWindow = driver.getWindowHandle();
+System.out.println(<span class="string">"Main window: "</span> + mainWindow);
+
+<span class="comment">// Get all window handles</span>
+Set&lt;String&gt; allWindows = driver.getWindowHandles();
+System.out.println(<span class="string">"Total windows: "</span> + allWindows.size());</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Switch Between Windows</span></div>
+                                <pre><code><span class="comment">// Store main window</span>
+String mainWindow = driver.getWindowHandle();
+
+<span class="comment">// Click link that opens new window</span>
+driver.findElement(By.linkText(<span class="string">"Open New Window"</span>)).click();
+
+<span class="comment">// Switch to new window</span>
+<span class="keyword">for</span> (String windowHandle : driver.getWindowHandles()) {
+    <span class="keyword">if</span> (!windowHandle.equals(mainWindow)) {
+        driver.switchTo().window(windowHandle);
+        <span class="keyword">break</span>;
+    }
+}
+
+<span class="comment">// Perform actions in new window</span>
+System.out.println(<span class="string">"New window title: "</span> + driver.getTitle());
+
+<span class="comment">// Close current window</span>
+driver.close();
+
+<span class="comment">// Switch back to main window</span>
+driver.switchTo().window(mainWindow);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Open New Tab (Selenium 4)</span></div>
+                                <pre><code><span class="comment">// Open new tab</span>
+driver.switchTo().newWindow(WindowType.TAB);
+
+<span class="comment">// Open new window</span>
+driver.switchTo().newWindow(WindowType.WINDOW);
+
+<span class="comment">// Navigate in new tab</span>
+driver.get(<span class="string">"https://example.com"</span>);</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Manage Window Size & Position</span></div>
+                                <pre><code><span class="keyword">import</span> org.openqa.selenium.Dimension;
+<span class="keyword">import</span> org.openqa.selenium.Point;
+
+<span class="comment">// Maximize window</span>
+driver.manage().window().maximize();
+
+<span class="comment">// Fullscreen mode</span>
+driver.manage().window().fullscreen();
+
+<span class="comment">// Set window size</span>
+Dimension size = <span class="keyword">new</span> Dimension(<span class="number">1024</span>, <span class="number">768</span>);
+driver.manage().window().setSize(size);
+
+<span class="comment">// Set window position</span>
+Point position = <span class="keyword">new</span> Point(<span class="number">100</span>, <span class="number">100</span>);
+driver.manage().window().setPosition(position);
+
+<span class="comment">// Get current window size</span>
+Dimension currentSize = driver.manage().window().getSize();
+System.out.println(<span class="string">"Width: "</span> + currentSize.getWidth());
+System.out.println(<span class="string">"Height: "</span> + currentSize.getHeight());</code></pre>
+                            </div>
+
+                            <div class="code-block">
+                                <div class="code-header"><span><i class="fab fa-java"></i> Handle Multiple Tabs</span></div>
+                                <pre><code><span class="comment">// Store all window handles in ArrayList</span>
+ArrayList&lt;String&gt; tabs = <span class="keyword">new</span> ArrayList&lt;&gt;(driver.getWindowHandles());
+
+<span class="comment">// Switch to first tab</span>
+driver.switchTo().window(tabs.get(<span class="number">0</span>));
+
+<span class="comment">// Switch to second tab</span>
+driver.switchTo().window(tabs.get(<span class="number">1</span>));
+
+<span class="comment">// Close all except main tab</span>
+String mainTab = tabs.get(<span class="number">0</span>);
+<span class="keyword">for</span> (String tab : tabs) {
+    <span class="keyword">if</span> (!tab.equals(mainTab)) {
+        driver.switchTo().window(tab);
+        driver.close();
+    }
+}
+driver.switchTo().window(mainTab);</code></pre>
+                            </div>
+
+                            <div class="info-box">
+                                <h4><i class="fas fa-lightbulb"></i> Window Management Tips</h4>
+                                <ul>
+                                    <li>Always store the main window handle before opening new windows</li>
+                                    <li>Use <code>close()</code> to close current window, <code>quit()</code> to close all windows</li>
+                                    <li>Switch back to the main window after closing child windows</li>
+                                    <li>Use ArrayList for easier tab index management</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Next Steps -->
+                    <section id="next-steps" class="chapter">
+                        <h2 class="chapter-title">Next Steps</h2>
+                        <div class="chapter-content">
+                            <div class="highlight-box">
+                                <h4><i class="fas fa-arrow-right"></i> Continue Learning</h4>
+                                <ul>
+                                    <li>Integrate with TestNG/JUnit for structured test execution</li>
+                                    <li>Implement Page Object Model (POM) design pattern</li>
+                                    <li>Set up data-driven testing with external data sources</li>
+                                    <li>Configure Selenium Grid for parallel test execution</li>
+                                    <li>Add comprehensive reporting with Extent Reports</li>
+                                    <li>Integrate with CI/CD pipelines (Jenkins, GitHub Actions)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/selenium/webdriver-basics.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>WebDriver Basics</span>
+                    </a>
+                    <a href="/selenium/testng-integration.html" class="nav-next">
+                        <span>TestNG Integration</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

@@ -253,6 +253,13 @@ const SITE_NAVIGATION = {
                             icon: 'fas fa-book-open',
                             description: 'Setup, Locators, Waits & Examples',
                             readTime: '20 min'
+                        },
+                        {
+                            title: 'Selenium Advanced Topics',
+                            url: '/selenium/selenium-advanced-concepts.html',
+                            icon: 'fas fa-book-open',
+                            description: 'Alerts, iFrames, JavaScript, File Upload/Donwload',
+                            readTime: '20 min'
                         }
                     ]
                 }
