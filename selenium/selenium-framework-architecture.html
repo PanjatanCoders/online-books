@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build a complete Hybrid Test Automation Framework from scratch - Project structure, Driver Factory, Configuration Management, Utilities, Reporting, and CI/CD integration.">
+    <title>Hybrid Framework Architecture - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="reading-progress" id="reading-progress"></div>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main id="main-content" class="main-content">
+        <div class="content-wrapper">
+            <article class="article">
+                <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fas fa-cubes"></i> Framework Design
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 45 min read
+                        </span>
+                        <span class="article-level">
+                            <i class="fas fa-signal"></i> Advanced
+                        </span>
+                    </div>
+                    <h1 class="article-title">Hybrid Framework Architecture</h1>
+                    <p class="article-subtitle">
+                        Build an enterprise-grade test automation framework combining POM, Data-Driven, and BDD approaches with proper layered architecture.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: Introduction -->
+                    <section class="chapter" id="introduction">
+                        <h2 class="chapter-title"><i class="fas fa-book-open"></i> What is a Hybrid Framework?</h2>
+
+                        <p>
+                            A Hybrid Framework combines the strengths of multiple framework types - Page Object Model,
+                            Data-Driven, Keyword-Driven, and BDD - into a unified, scalable architecture.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-layer-group"></i> Framework Layers</h4>
+                            <ul>
+                                <li><strong>Configuration Layer</strong> - Environment settings, browser configs</li>
+                                <li><strong>Driver Layer</strong> - WebDriver management, browser factory</li>
+                                <li><strong>Page Layer</strong> - Page Objects with element locators</li>
+                                <li><strong>Utility Layer</strong> - Reusable helper methods</li>
+                                <li><strong>Test Layer</strong> - Test classes and data providers</li>
+                                <li><strong>Reporting Layer</strong> - Logs, screenshots, reports</li>
+                            </ul>
+                        </div>
+
+                        <h3>Complete Project Structure</h3>
+                        <pre><code class="language-text">automation-framework/
+├── src/
+│   ├── main/java/
+│   │   └── com/framework/
+│   │       ├── config/
+│   │       │   ├── ConfigReader.java
+│   │       │   └── DriverConfig.java
+│   │       ├── driver/
+│   │       │   ├── DriverFactory.java
+│   │       │   └── DriverManager.java
+│   │       ├── pages/
+│   │       │   ├── BasePage.java
+│   │       │   ├── LoginPage.java
+│   │       │   └── DashboardPage.java
+│   │       ├── utils/
+│   │       │   ├── WaitUtils.java
+│   │       │   ├── ElementUtils.java
+│   │       │   ├── ScreenshotUtils.java
+│   │       │   └── DateUtils.java
+│   │       └── constants/
+│   │           └── FrameworkConstants.java
+│   └── test/
+│       ├── java/
+│       │   └── com/tests/
+│       │       ├── base/
+│       │       │   └── BaseTest.java
+│       │       ├── login/
+│       │       │   └── LoginTests.java
+│       │       └── listeners/
+│       │           └── TestListener.java
+│       └── resources/
+│           ├── config/
+│           │   ├── config.properties
+│           │   └── config-qa.properties
+│           ├── testdata/
+│           │   └── testdata.json
+│           └── testng.xml
+├── reports/
+├── logs/
+├── screenshots/
+└── pom.xml</code></pre>
+                    </section>
+
+                    <!-- Chapter 2: Configuration Management -->
+                    <section class="chapter" id="configuration">
+                        <h2 class="chapter-title"><i class="fas fa-cog"></i> Configuration Management</h2>
+
+                        <h3>Framework Constants</h3>
+                        <p>Centralize all constants to avoid hardcoding:</p>
+
+                        <pre><code class="language-java">public final class FrameworkConstants {
+    private FrameworkConstants() {} // Prevent instantiation
+
+    // Paths
+    public static final String CONFIG_PATH = "src/test/resources/config/";
+    public static final String TESTDATA_PATH = "src/test/resources/testdata/";
+    public static final String SCREENSHOT_PATH = "screenshots/";
+    public static final String REPORT_PATH = "reports/";
+
+    // Timeouts
+    public static final int EXPLICIT_WAIT = 10;
+    public static final int PAGE_LOAD_TIMEOUT = 30;
+    public static final int IMPLICIT_WAIT = 0;
+
+    // Environment
+    public static final String ENV = System.getProperty("env", "qa");
+}</code></pre>
+
+                        <h3>Config Properties File</h3>
+                        <pre><code class="language-properties"># config.properties
+browser=chrome
+headless=false
+baseUrl=https://example.com
+
+# Timeouts
+explicitWait=10
+pageLoadTimeout=30
+
+# Reporting
+screenshotOnFailure=true
+videoRecording=false
+
+# Grid
+useGrid=false
+gridUrl=http://localhost:4444</code></pre>
+
+                        <h3>Configuration Reader</h3>
+                        <pre><code class="language-java">public class ConfigReader {
+    private static Properties properties;
+    private static final String CONFIG_FILE = FrameworkConstants.CONFIG_PATH + "config.properties";
+
+    static {
+        loadProperties();
+    }
+
+    private static void loadProperties() {
+        properties = new Properties();
+        try (InputStream input = new FileInputStream(CONFIG_FILE)) {
+            properties.load(input);
+        } catch (IOException e) {
+            throw new FrameworkException("Failed to load config: " + e.getMessage());
+        }
+
+        // Override with environment-specific config if exists
+        String env = FrameworkConstants.ENV;
+        String envConfigFile = FrameworkConstants.CONFIG_PATH + "config-" + env + ".properties";
+        if (new File(envConfigFile).exists()) {
+            try (InputStream input = new FileInputStream(envConfigFile)) {
+                properties.load(input);
+            } catch (IOException e) {
+                // Log warning but continue
+            }
+        }
+    }
+
+    public static String get(String key) {
+        // System property overrides config file
+        String systemProp = System.getProperty(key);
+        return systemProp != null ? systemProp : properties.getProperty(key);
+    }
+
+    public static String get(String key, String defaultValue) {
+        String value = get(key);
+        return value != null ? value : defaultValue;
+    }
+
+    public static int getInt(String key, int defaultValue) {
+        String value = get(key);
+        return value != null ? Integer.parseInt(value) : defaultValue;
+    }
+
+    public static boolean getBoolean(String key) {
+        return Boolean.parseBoolean(get(key));
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 3: Driver Management -->
+                    <section class="chapter" id="driver-management">
+                        <h2 class="chapter-title"><i class="fas fa-desktop"></i> Driver Management</h2>
+
+                        <h3>Driver Factory Pattern</h3>
+                        <p>Create drivers based on browser type with proper options:</p>
+
+                        <pre><code class="language-java">public class DriverFactory {
+
+    public static WebDriver createDriver(String browser) {
+        WebDriver driver;
+        boolean headless = ConfigReader.getBoolean("headless");
+
+        switch (browser.toLowerCase()) {
+            case "chrome":
+                driver = createChromeDriver(headless);
+                break;
+            case "firefox":
+                driver = createFirefoxDriver(headless);
+                break;
+            case "edge":
+                driver = createEdgeDriver(headless);
+                break;
+            default:
+                throw new FrameworkException("Unsupported browser: " + browser);
+        }
+
+        configureDriver(driver);
+        return driver;
+    }
+
+    private static WebDriver createChromeDriver(boolean headless) {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--start-maximized", "--disable-notifications");
+        if (headless) {
+            options.addArguments("--headless=new");
+        }
+        return new ChromeDriver(options);
+    }
+
+    private static WebDriver createFirefoxDriver(boolean headless) {
+        FirefoxOptions options = new FirefoxOptions();
+        if (headless) {
+            options.addArguments("--headless");
+        }
+        return new FirefoxDriver(options);
+    }
+
+    private static WebDriver createEdgeDriver(boolean headless) {
+        EdgeOptions options = new EdgeOptions();
+        if (headless) {
+            options.addArguments("--headless");
+        }
+        return new EdgeDriver(options);
+    }
+
+    private static void configureDriver(WebDriver driver) {
+        driver.manage().timeouts().pageLoadTimeout(
+            Duration.ofSeconds(ConfigReader.getInt("pageLoadTimeout", 30))
+        );
+        driver.manage().window().maximize();
+    }
+}</code></pre>
+
+                        <h3>Thread-Safe Driver Manager</h3>
+                        <p>Use ThreadLocal for parallel test execution:</p>
+
+                        <pre><code class="language-java">public class DriverManager {
+    private static final ThreadLocal&lt;WebDriver&gt; driverThreadLocal = new ThreadLocal&lt;&gt;();
+
+    private DriverManager() {}
+
+    public static void initDriver() {
+        if (driverThreadLocal.get() == null) {
+            String browser = ConfigReader.get("browser", "chrome");
+
+            WebDriver driver;
+            if (ConfigReader.getBoolean("useGrid")) {
+                driver = createRemoteDriver(browser);
+            } else {
+                driver = DriverFactory.createDriver(browser);
+            }
+            driverThreadLocal.set(driver);
+        }
+    }
+
+    public static WebDriver getDriver() {
+        WebDriver driver = driverThreadLocal.get();
+        if (driver == null) {
+            throw new FrameworkException("Driver not initialized. Call initDriver() first.");
+        }
+        return driver;
+    }
+
+    public static void quitDriver() {
+        WebDriver driver = driverThreadLocal.get();
+        if (driver != null) {
+            driver.quit();
+            driverThreadLocal.remove();
+        }
+    }
+
+    private static WebDriver createRemoteDriver(String browser) {
+        String gridUrl = ConfigReader.get("gridUrl");
+        try {
+            ChromeOptions options = new ChromeOptions(); // Simplified
+            return new RemoteWebDriver(new URL(gridUrl), options);
+        } catch (MalformedURLException e) {
+            throw new FrameworkException("Invalid Grid URL: " + gridUrl);
+        }
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 4: Page Layer -->
+                    <section class="chapter" id="page-layer">
+                        <h2 class="chapter-title"><i class="fas fa-file-code"></i> Page Object Layer</h2>
+
+                        <h3>Base Page with Common Methods</h3>
+                        <pre><code class="language-java">public abstract class BasePage {
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+
+    public BasePage() {
+        this.driver = DriverManager.getDriver();
+        this.wait = new WebDriverWait(driver,
+            Duration.ofSeconds(FrameworkConstants.EXPLICIT_WAIT));
+        PageFactory.initElements(driver, this);
+    }
+
+    // Wait utilities
+    protected WebElement waitForVisible(WebElement element) {
+        return wait.until(ExpectedConditions.visibilityOf(element));
+    }
+
+    protected WebElement waitForClickable(WebElement element) {
+        return wait.until(ExpectedConditions.elementToBeClickable(element));
+    }
+
+    protected void waitForInvisible(WebElement element) {
+        wait.until(ExpectedConditions.invisibilityOf(element));
+    }
+
+    // Action methods
+    protected void click(WebElement element) {
+        waitForClickable(element).click();
+    }
+
+    protected void type(WebElement element, String text) {
+        WebElement el = waitForVisible(element);
+        el.clear();
+        el.sendKeys(text);
+    }
+
+    protected String getText(WebElement element) {
+        return waitForVisible(element).getText();
+    }
+
+    protected void selectByText(WebElement element, String text) {
+        new Select(waitForVisible(element)).selectByVisibleText(text);
+    }
+
+    protected boolean isDisplayed(WebElement element) {
+        try {
+            return element.isDisplayed();
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
+            return false;
+        }
+    }
+
+    // Page navigation
+    protected void navigateTo(String url) {
+        driver.get(url);
+    }
+
+    public String getPageTitle() {
+        return driver.getTitle();
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
+    }
+}</code></pre>
+
+                        <h3>Page Object Implementation</h3>
+                        <pre><code class="language-java">public class LoginPage extends BasePage {
+
+    @FindBy(id = "username")
+    private WebElement usernameField;
+
+    @FindBy(id = "password")
+    private WebElement passwordField;
+
+    @FindBy(id = "login-btn")
+    private WebElement loginButton;
+
+    @FindBy(css = ".error-message")
+    private WebElement errorMessage;
+
+    @FindBy(css = ".loading-spinner")
+    private WebElement loadingSpinner;
+
+    public LoginPage open() {
+        navigateTo(ConfigReader.get("baseUrl") + "/login");
+        return this;
+    }
+
+    public LoginPage enterUsername(String username) {
+        type(usernameField, username);
+        return this;
+    }
+
+    public LoginPage enterPassword(String password) {
+        type(passwordField, password);
+        return this;
+    }
+
+    public DashboardPage clickLogin() {
+        click(loginButton);
+        waitForInvisible(loadingSpinner);
+        return new DashboardPage();
+    }
+
+    // Fluent method for complete login
+    public DashboardPage loginAs(String username, String password) {
+        return enterUsername(username)
+               .enterPassword(password)
+               .clickLogin();
+    }
+
+    public String getErrorMessage() {
+        return getText(errorMessage);
+    }
+
+    public boolean isErrorDisplayed() {
+        return isDisplayed(errorMessage);
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 5: Utility Classes -->
+                    <section class="chapter" id="utilities">
+                        <h2 class="chapter-title"><i class="fas fa-tools"></i> Utility Classes</h2>
+
+                        <h3>Screenshot Utility</h3>
+                        <pre><code class="language-java">public class ScreenshotUtils {
+
+    public static String capture(String testName) {
+        WebDriver driver = DriverManager.getDriver();
+        String timestamp = DateUtils.getTimestamp("yyyyMMdd_HHmmss");
+        String fileName = testName + "_" + timestamp + ".png";
+        String filePath = FrameworkConstants.SCREENSHOT_PATH + fileName;
+
+        try {
+            File srcFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            File destFile = new File(filePath);
+            destFile.getParentFile().mkdirs();
+            Files.copy(srcFile.toPath(), destFile.toPath());
+            return filePath;
+        } catch (IOException e) {
+            throw new FrameworkException("Failed to capture screenshot: " + e.getMessage());
+        }
+    }
+
+    public static byte[] captureAsBytes() {
+        return ((TakesScreenshot) DriverManager.getDriver())
+               .getScreenshotAs(OutputType.BYTES);
+    }
+
+    public static String captureAsBase64() {
+        return ((TakesScreenshot) DriverManager.getDriver())
+               .getScreenshotAs(OutputType.BASE64);
+    }
+}</code></pre>
+
+                        <h3>Wait Utility</h3>
+                        <pre><code class="language-java">public class WaitUtils {
+    private static WebDriverWait getWait(int seconds) {
+        return new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(seconds));
+    }
+
+    public static void waitForPageLoad() {
+        getWait(30).until(driver ->
+            ((JavascriptExecutor) driver)
+            .executeScript("return document.readyState").equals("complete")
+        );
+    }
+
+    public static void waitForAjax() {
+        getWait(30).until(driver ->
+            (Boolean) ((JavascriptExecutor) driver)
+            .executeScript("return jQuery.active == 0")
+        );
+    }
+
+    public static void waitForUrl(String urlContains) {
+        getWait(10).until(ExpectedConditions.urlContains(urlContains));
+    }
+
+    public static void waitForTextInElement(WebElement element, String text) {
+        getWait(10).until(ExpectedConditions.textToBePresentInElement(element, text));
+    }
+
+    public static void sleep(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+}</code></pre>
+
+                        <h3>JavaScript Utility</h3>
+                        <pre><code class="language-java">public class JSUtils {
+    private static JavascriptExecutor getJS() {
+        return (JavascriptExecutor) DriverManager.getDriver();
+    }
+
+    public static void click(WebElement element) {
+        getJS().executeScript("arguments[0].click();", element);
+    }
+
+    public static void scrollToElement(WebElement element) {
+        getJS().executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
+    }
+
+    public static void scrollToBottom() {
+        getJS().executeScript("window.scrollTo(0, document.body.scrollHeight);");
+    }
+
+    public static void highlight(WebElement element) {
+        getJS().executeScript(
+            "arguments[0].style.border='3px solid red';", element
+        );
+    }
+
+    public static void setAttribute(WebElement element, String attr, String value) {
+        getJS().executeScript(
+            "arguments[0].setAttribute(arguments[1], arguments[2]);",
+            element, attr, value
+        );
+    }
+
+    public static String getInnerText(WebElement element) {
+        return (String) getJS().executeScript("return arguments[0].innerText;", element);
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 6: Test Data Management -->
+                    <section class="chapter" id="test-data">
+                        <h2 class="chapter-title"><i class="fas fa-database"></i> Test Data Management</h2>
+
+                        <h3>JSON Test Data</h3>
+                        <pre><code class="language-json">{
+  "validUser": {
+    "username": "testuser",
+    "password": "Test@123",
+    "email": "test@example.com"
+  },
+  "invalidUser": {
+    "username": "invalid",
+    "password": "wrong"
+  },
+  "products": [
+    {"name": "Laptop", "price": 999.99},
+    {"name": "Mouse", "price": 29.99}
+  ]
+}</code></pre>
+
+                        <h3>Test Data Reader</h3>
+                        <pre><code class="language-java">public class TestDataReader {
+    private static JsonObject testData;
+
+    static {
+        loadTestData();
+    }
+
+    private static void loadTestData() {
+        String filePath = FrameworkConstants.TESTDATA_PATH + "testdata.json";
+        try (Reader reader = new FileReader(filePath)) {
+            testData = JsonParser.parseReader(reader).getAsJsonObject();
+        } catch (IOException e) {
+            throw new FrameworkException("Failed to load test data: " + e.getMessage());
+        }
+    }
+
+    public static String get(String path) {
+        // Supports nested paths like "validUser.username"
+        String[] keys = path.split("\\.");
+        JsonElement element = testData;
+
+        for (String key : keys) {
+            if (element.isJsonObject()) {
+                element = element.getAsJsonObject().get(key);
+            } else if (element.isJsonArray() && key.matches("\\d+")) {
+                element = element.getAsJsonArray().get(Integer.parseInt(key));
+            }
+        }
+        return element.getAsString();
+    }
+
+    public static &lt;T&gt; T getObject(String key, Class&lt;T&gt; clazz) {
+        Gson gson = new Gson();
+        return gson.fromJson(testData.get(key), clazz);
+    }
+
+    public static List&lt;Map&lt;String, Object&gt;&gt; getList(String key) {
+        Gson gson = new Gson();
+        Type type = new TypeToken&lt;List&lt;Map&lt;String, Object&gt;&gt;&gt;(){}.getType();
+        return gson.fromJson(testData.get(key), type);
+    }
+}</code></pre>
+
+                        <h3>Data Provider Pattern</h3>
+                        <pre><code class="language-java">public class TestDataProvider {
+
+    @DataProvider(name = "loginData")
+    public static Object[][] getLoginData() {
+        return new Object[][] {
+            {TestDataReader.get("validUser.username"),
+             TestDataReader.get("validUser.password"), true},
+            {TestDataReader.get("invalidUser.username"),
+             TestDataReader.get("invalidUser.password"), false}
+        };
+    }
+
+    @DataProvider(name = "loginDataFromJson", parallel = true)
+    public static Object[][] getLoginDataFromJson() {
+        List&lt;Map&lt;String, Object&gt;&gt; users = TestDataReader.getList("users");
+        Object[][] data = new Object[users.size()][3];
+
+        for (int i = 0; i < users.size(); i++) {
+            Map&lt;String, Object&gt; user = users.get(i);
+            data[i][0] = user.get("username");
+            data[i][1] = user.get("password");
+            data[i][2] = user.get("expectedResult");
+        }
+        return data;
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: Test Layer -->
+                    <section class="chapter" id="test-layer">
+                        <h2 class="chapter-title"><i class="fas fa-vial"></i> Test Layer</h2>
+
+                        <h3>Base Test Class</h3>
+                        <pre><code class="language-java">public class BaseTest {
+    protected LoginPage loginPage;
+    protected DashboardPage dashboardPage;
+
+    @BeforeMethod
+    public void setUp(Method method) {
+        DriverManager.initDriver();
+        Log.info("Starting test: " + method.getName());
+    }
+
+    @AfterMethod
+    public void tearDown(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            Log.error("Test failed: " + result.getName());
+            if (ConfigReader.getBoolean("screenshotOnFailure")) {
+                String path = ScreenshotUtils.capture(result.getName());
+                Log.info("Screenshot saved: " + path);
+            }
+        }
+        DriverManager.quitDriver();
+    }
+
+    @BeforeSuite
+    public void suiteSetup() {
+        // Clean up old reports/screenshots
+        FileUtils.cleanDirectory(FrameworkConstants.SCREENSHOT_PATH);
+        Log.info("Test suite started");
+    }
+
+    @AfterSuite
+    public void suiteTeardown() {
+        Log.info("Test suite completed");
+    }
+}</code></pre>
+
+                        <h3>Test Class Implementation</h3>
+                        <pre><code class="language-java">@Listeners(TestListener.class)
+public class LoginTests extends BaseTest {
+
+    @BeforeMethod
+    public void navigateToLogin() {
+        loginPage = new LoginPage().open();
+    }
+
+    @Test(description = "Verify successful login with valid credentials")
+    public void testValidLogin() {
+        dashboardPage = loginPage.loginAs(
+            TestDataReader.get("validUser.username"),
+            TestDataReader.get("validUser.password")
+        );
+
+        Assert.assertTrue(dashboardPage.isWelcomeDisplayed(),
+            "Dashboard should display welcome message");
+        Assert.assertEquals(dashboardPage.getLoggedInUser(),
+            TestDataReader.get("validUser.username"));
+    }
+
+    @Test(description = "Verify error message for invalid credentials")
+    public void testInvalidLogin() {
+        loginPage.enterUsername("invalid")
+                 .enterPassword("wrong");
+        loginPage.clickLoginExpectingFailure();
+
+        Assert.assertTrue(loginPage.isErrorDisplayed(),
+            "Error message should be displayed");
+        Assert.assertEquals(loginPage.getErrorMessage(),
+            "Invalid username or password");
+    }
+
+    @Test(dataProvider = "loginData", dataProviderClass = TestDataProvider.class)
+    public void testLoginWithDataProvider(String username, String password, boolean shouldPass) {
+        loginPage.enterUsername(username)
+                 .enterPassword(password);
+
+        if (shouldPass) {
+            dashboardPage = loginPage.clickLogin();
+            Assert.assertTrue(dashboardPage.isWelcomeDisplayed());
+        } else {
+            loginPage.clickLoginExpectingFailure();
+            Assert.assertTrue(loginPage.isErrorDisplayed());
+        }
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 8: Logging -->
+                    <section class="chapter" id="logging">
+                        <h2 class="chapter-title"><i class="fas fa-file-alt"></i> Logging</h2>
+
+                        <h3>Log4j2 Configuration</h3>
+                        <pre><code class="language-xml">&lt;!-- log4j2.xml --&gt;
+&lt;Configuration status="WARN"&gt;
+    &lt;Properties&gt;
+        &lt;Property name="logPath"&gt;logs&lt;/Property&gt;
+        &lt;Property name="pattern"&gt;%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n&lt;/Property&gt;
+    &lt;/Properties&gt;
+
+    &lt;Appenders&gt;
+        &lt;Console name="Console" target="SYSTEM_OUT"&gt;
+            &lt;PatternLayout pattern="${pattern}"/&gt;
+        &lt;/Console&gt;
+        &lt;RollingFile name="File" fileName="${logPath}/automation.log"
+                     filePattern="${logPath}/automation-%d{yyyy-MM-dd}.log"&gt;
+            &lt;PatternLayout pattern="${pattern}"/&gt;
+            &lt;Policies&gt;
+                &lt;TimeBasedTriggeringPolicy/&gt;
+            &lt;/Policies&gt;
+        &lt;/RollingFile&gt;
+    &lt;/Appenders&gt;
+
+    &lt;Loggers&gt;
+        &lt;Root level="info"&gt;
+            &lt;AppenderRef ref="Console"/&gt;
+            &lt;AppenderRef ref="File"/&gt;
+        &lt;/Root&gt;
+    &lt;/Loggers&gt;
+&lt;/Configuration&gt;</code></pre>
+
+                        <h3>Log Utility Wrapper</h3>
+                        <pre><code class="language-java">public class Log {
+    private static final Logger logger = LogManager.getLogger(Log.class);
+
+    public static void info(String message) {
+        logger.info(message);
+    }
+
+    public static void debug(String message) {
+        logger.debug(message);
+    }
+
+    public static void warn(String message) {
+        logger.warn(message);
+    }
+
+    public static void error(String message) {
+        logger.error(message);
+    }
+
+    public static void error(String message, Throwable t) {
+        logger.error(message, t);
+    }
+
+    // Test lifecycle logging
+    public static void startTest(String testName) {
+        logger.info("========== STARTING TEST: {} ==========", testName);
+    }
+
+    public static void endTest(String testName, String status) {
+        logger.info("========== TEST {}: {} ==========", testName, status);
+    }
+
+    public static void step(String stepDescription) {
+        logger.info("STEP: {}", stepDescription);
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 9: Test Listeners -->
+                    <section class="chapter" id="listeners">
+                        <h2 class="chapter-title"><i class="fas fa-broadcast-tower"></i> Test Listeners</h2>
+
+                        <h3>TestNG Listener</h3>
+                        <pre><code class="language-java">public class TestListener implements ITestListener, ISuiteListener {
+
+    @Override
+    public void onStart(ISuite suite) {
+        Log.info("Suite started: " + suite.getName());
+    }
+
+    @Override
+    public void onFinish(ISuite suite) {
+        Log.info("Suite finished: " + suite.getName());
+    }
+
+    @Override
+    public void onTestStart(ITestResult result) {
+        Log.startTest(result.getName());
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult result) {
+        Log.endTest(result.getName(), "PASSED");
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+        Log.error("Test failed: " + result.getThrowable().getMessage());
+
+        // Capture screenshot
+        String screenshotPath = ScreenshotUtils.capture(result.getName());
+        Log.info("Screenshot: " + screenshotPath);
+
+        // Attach to report (if using Allure)
+        attachScreenshot(result.getName());
+
+        Log.endTest(result.getName(), "FAILED");
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult result) {
+        Log.warn("Test skipped: " + result.getName());
+        Log.endTest(result.getName(), "SKIPPED");
+    }
+
+    private void attachScreenshot(String name) {
+        try {
+            Allure.addAttachment(name, new ByteArrayInputStream(
+                ScreenshotUtils.captureAsBytes()
+            ));
+        } catch (Exception e) {
+            Log.warn("Could not attach screenshot to report");
+        }
+    }
+}</code></pre>
+
+                        <h3>Retry Analyzer</h3>
+                        <pre><code class="language-java">public class RetryAnalyzer implements IRetryAnalyzer {
+    private int retryCount = 0;
+    private static final int MAX_RETRY = 2;
+
+    @Override
+    public boolean retry(ITestResult result) {
+        if (retryCount < MAX_RETRY) {
+            retryCount++;
+            Log.info("Retrying test: " + result.getName() + " (Attempt " + retryCount + ")");
+            return true;
+        }
+        return false;
+    }
+}
+
+// Usage: @Test(retryAnalyzer = RetryAnalyzer.class)</code></pre>
+                    </section>
+
+                    <!-- Chapter 10: Reporting -->
+                    <section class="chapter" id="reporting">
+                        <h2 class="chapter-title"><i class="fas fa-chart-pie"></i> Reporting Integration</h2>
+
+                        <h3>Extent Reports Setup</h3>
+                        <pre><code class="language-java">public class ExtentManager {
+    private static ExtentReports extent;
+    private static ThreadLocal&lt;ExtentTest&gt; test = new ThreadLocal&lt;&gt;();
+
+    public static ExtentReports getInstance() {
+        if (extent == null) {
+            String reportPath = FrameworkConstants.REPORT_PATH + "ExtentReport.html";
+            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath);
+            spark.config().setTheme(Theme.DARK);
+            spark.config().setDocumentTitle("Automation Report");
+            spark.config().setReportName("Test Execution Report");
+
+            extent = new ExtentReports();
+            extent.attachReporter(spark);
+            extent.setSystemInfo("Environment", FrameworkConstants.ENV);
+            extent.setSystemInfo("Browser", ConfigReader.get("browser"));
+        }
+        return extent;
+    }
+
+    public static ExtentTest createTest(String name, String description) {
+        ExtentTest extentTest = getInstance().createTest(name, description);
+        test.set(extentTest);
+        return extentTest;
+    }
+
+    public static ExtentTest getTest() {
+        return test.get();
+    }
+
+    public static void flush() {
+        if (extent != null) {
+            extent.flush();
+        }
+    }
+
+    public static void logPass(String message) {
+        getTest().pass(message);
+    }
+
+    public static void logFail(String message) {
+        getTest().fail(message);
+    }
+
+    public static void logInfo(String message) {
+        getTest().info(message);
+    }
+
+    public static void attachScreenshot() {
+        getTest().addScreenCaptureFromBase64String(
+            ScreenshotUtils.captureAsBase64(), "Screenshot"
+        );
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 11: CI/CD Integration -->
+                    <section class="chapter" id="cicd">
+                        <h2 class="chapter-title"><i class="fas fa-infinity"></i> CI/CD Integration</h2>
+
+                        <h3>Maven Configuration</h3>
+                        <pre><code class="language-xml">&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.2.2&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;suiteXmlFiles&gt;
+                    &lt;suiteXmlFile&gt;src/test/resources/testng.xml&lt;/suiteXmlFile&gt;
+                &lt;/suiteXmlFiles&gt;
+                &lt;systemPropertyVariables&gt;
+                    &lt;browser&gt;${browser}&lt;/browser&gt;
+                    &lt;env&gt;${env}&lt;/env&gt;
+                &lt;/systemPropertyVariables&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+
+                        <h3>GitHub Actions Workflow</h3>
+                        <pre><code class="language-yaml">name: Automation Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+
+      - name: Run Tests
+        run: mvn test -Dbrowser=chrome -Dheadless=true -Denv=qa
+
+      - name: Upload Reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: |
+            reports/
+            screenshots/
+            target/surefire-reports/</code></pre>
+
+                        <h3>Jenkins Pipeline</h3>
+                        <pre><code class="language-groovy">pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'Browser')
+        choice(name: 'ENV', choices: ['qa', 'staging', 'prod'], description: 'Environment')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh "mvn test -Dbrowser=${params.BROWSER} -Denv=${params.ENV} -Dheadless=true"
+            }
+        }
+    }
+
+    post {
+        always {
+            publishHTML(target: [
+                reportDir: 'reports',
+                reportFiles: 'ExtentReport.html',
+                reportName: 'Test Report'
+            ])
+            archiveArtifacts artifacts: 'screenshots/**/*', allowEmptyArchive: true
+        }
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 12: Best Practices -->
+                    <section class="chapter" id="best-practices">
+                        <h2 class="chapter-title"><i class="fas fa-star"></i> Best Practices</h2>
+
+                        <div class="two-column-grid">
+                            <div class="info-box info-box-success">
+                                <h4><i class="fas fa-check-circle"></i> Do</h4>
+                                <ul>
+                                    <li>Use meaningful naming conventions</li>
+                                    <li>Keep tests independent and atomic</li>
+                                    <li>Externalize test data and configs</li>
+                                    <li>Implement proper logging</li>
+                                    <li>Use explicit waits, never Thread.sleep</li>
+                                    <li>Clean up test data after execution</li>
+                                    <li>Version control everything</li>
+                                    <li>Document public methods</li>
+                                </ul>
+                            </div>
+                            <div class="info-box info-box-danger">
+                                <h4><i class="fas fa-times-circle"></i> Avoid</h4>
+                                <ul>
+                                    <li>Hardcoding values in tests</li>
+                                    <li>Tests depending on other tests</li>
+                                    <li>Ignoring flaky tests</li>
+                                    <li>Over-engineering for edge cases</li>
+                                    <li>Mixing test logic with page logic</li>
+                                    <li>Skipping code reviews</li>
+                                    <li>Large monolithic page objects</li>
+                                    <li>Committing sensitive data</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Framework Checklist</h3>
+                        <div class="info-box">
+                            <h4><i class="fas fa-clipboard-check"></i> Essential Components</h4>
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Component</th>
+                                        <th>Purpose</th>
+                                        <th>Priority</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>Driver Factory</td><td>Browser initialization</td><td>Must Have</td></tr>
+                                    <tr><td>Config Reader</td><td>Environment settings</td><td>Must Have</td></tr>
+                                    <tr><td>Base Page</td><td>Common page methods</td><td>Must Have</td></tr>
+                                    <tr><td>Wait Utils</td><td>Synchronization</td><td>Must Have</td></tr>
+                                    <tr><td>Screenshot Utils</td><td>Failure evidence</td><td>Must Have</td></tr>
+                                    <tr><td>Logging</td><td>Debugging & audit</td><td>Must Have</td></tr>
+                                    <tr><td>Reporting</td><td>Results visualization</td><td>Should Have</td></tr>
+                                    <tr><td>Retry Mechanism</td><td>Flaky test handling</td><td>Should Have</td></tr>
+                                    <tr><td>Data Providers</td><td>Data-driven testing</td><td>Should Have</td></tr>
+                                    <tr><td>CI/CD Pipeline</td><td>Automation</td><td>Should Have</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Next Steps -->
+                    <section class="chapter" id="next-steps">
+                        <h2 class="chapter-title"><i class="fas fa-arrow-right"></i> Next Steps</h2>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-road"></i> Extend Your Framework</h4>
+                            <ul>
+                                <li><strong>API Integration</strong> - Add Rest Assured for API testing</li>
+                                <li><strong>Database Validation</strong> - JDBC utilities for data verification</li>
+                                <li><strong>Visual Testing</strong> - Integrate Applitools or Percy</li>
+                                <li><strong>Performance Metrics</strong> - Capture browser performance data</li>
+                                <li><strong>Docker Support</strong> - Containerize test execution</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-book"></i> Interview Preparation</h4>
+                            <p>Framework architecture is a key interview topic. Practice explaining your design decisions with our <a href="/interview-qna/automation/automations-set-1.html">Automation Interview Q&A</a>.</p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/selenium/selenium-cucumber-bdd.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Cucumber BDD</span>
+                    </a>
+                    <a href="/interview-qna/automation/automations-set-1.html" class="nav-next">
+                        <span>Automation Interview Q&A</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

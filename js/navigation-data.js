@@ -295,6 +295,13 @@ const SITE_NAVIGATION = {
                             icon: 'fas fa-leaf',
                             description: 'Behavior-Driven Development with Gherkin',
                             readTime: '35 min'
+                        },
+                        {
+                            title: 'Hybrid Framework Architecture',
+                            url: '/selenium/selenium-framework-architecture.html',
+                            icon: 'fas fa-cubes',
+                            description: 'Enterprise-grade framework from scratch',
+                            readTime: '45 min'
                         }
                     ]
                 }
