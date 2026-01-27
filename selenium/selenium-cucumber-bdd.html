@@ -21,33 +21,26 @@
 
 <body>
     <a href="#main-content" class="skip-link">Skip to main content</a>
-    <div class="reading-progress" id="reading-progress"></div>
     <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
 
-    <main id="main-content" class="main-content">
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
         <div class="content-wrapper">
-            <article class="article">
-                <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <nav class="breadcrumb" id="breadcrumb"></nav>
 
+            <article class="article-container">
                 <header class="article-header">
-                    <div class="article-meta">
-                        <span class="article-category">
-                            <i class="fas fa-leaf"></i> Cucumber BDD
-                        </span>
-                        <span class="article-reading-time">
-                            <i class="fas fa-clock"></i> 35 min read
-                        </span>
-                        <span class="article-level">
-                            <i class="fas fa-signal"></i> Intermediate
-                        </span>
-                    </div>
                     <h1 class="article-title">Cucumber BDD with Selenium</h1>
-                    <p class="article-subtitle">
-                        Master Behavior-Driven Development with Cucumber and Selenium WebDriver for readable, maintainable test automation.
-                    </p>
+                    <p class="article-subtitle">Master Behavior-Driven Development with Cucumber and Selenium WebDriver for readable, maintainable test automation.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 35 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                        <span><i class="fas fa-leaf"></i> BDD</span>
+                    </div>
                 </header>
 
-                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+                <nav class="toc" id="toc"></nav>
 
                 <div class="article-body">
 
@@ -808,4 +801,3 @@ Scenario: Successful login
 </body>
 
 </html>
-</code></pre>
