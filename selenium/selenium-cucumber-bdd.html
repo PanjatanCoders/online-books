@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn Cucumber BDD with Selenium WebDriver - Feature files, Step Definitions, Hooks, Data Tables, Scenario Outline, and best practices for behavior-driven testing.">
+    <title>Cucumber BDD with Selenium - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div class="reading-progress" id="reading-progress"></div>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <main id="main-content" class="main-content">
+        <div class="content-wrapper">
+            <article class="article">
+                <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fas fa-leaf"></i> Cucumber BDD
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 35 min read
+                        </span>
+                        <span class="article-level">
+                            <i class="fas fa-signal"></i> Intermediate
+                        </span>
+                    </div>
+                    <h1 class="article-title">Cucumber BDD with Selenium</h1>
+                    <p class="article-subtitle">
+                        Master Behavior-Driven Development with Cucumber and Selenium WebDriver for readable, maintainable test automation.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: Introduction to BDD -->
+                    <section class="chapter" id="introduction">
+                        <h2 class="chapter-title"><i class="fas fa-book-open"></i> Introduction to BDD</h2>
+
+                        <h3>What is Behavior-Driven Development?</h3>
+                        <p>
+                            BDD bridges the gap between business stakeholders and technical teams by using a common language
+                            to describe application behavior. Cucumber implements BDD using <strong>Gherkin</strong> syntax.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Why BDD?</h4>
+                            <ul>
+                                <li><strong>Living Documentation</strong> - Tests serve as up-to-date specifications</li>
+                                <li><strong>Collaboration</strong> - Business, QA, and Dev speak the same language</li>
+                                <li><strong>Clarity</strong> - Plain English scenarios everyone understands</li>
+                                <li><strong>Reusability</strong> - Step definitions can be shared across scenarios</li>
+                            </ul>
+                        </div>
+
+                        <h3>Project Setup</h3>
+                        <p>Add these dependencies to your <code>pom.xml</code>:</p>
+
+                        <pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;!-- Cucumber --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+        &lt;artifactId&gt;cucumber-java&lt;/artifactId&gt;
+        &lt;version&gt;7.15.0&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+        &lt;artifactId&gt;cucumber-testng&lt;/artifactId&gt;
+        &lt;version&gt;7.15.0&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- Selenium --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.seleniumhq.selenium&lt;/groupId&gt;
+        &lt;artifactId&gt;selenium-java&lt;/artifactId&gt;
+        &lt;version&gt;4.16.0&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+
+                        <h3>Project Structure</h3>
+                        <pre><code class="language-text">src/test/
+├── java/
+│   ├── runners/
+│   │   └── TestRunner.java
+│   ├── stepdefinitions/
+│   │   ├── LoginSteps.java
+│   │   └── Hooks.java
+│   └── pages/
+│       └── LoginPage.java
+└── resources/
+    └── features/
+        └── login.feature</code></pre>
+                    </section>
+
+                    <!-- Chapter 2: Gherkin Syntax -->
+                    <section class="chapter" id="gherkin-syntax">
+                        <h2 class="chapter-title"><i class="fas fa-code"></i> Gherkin Syntax</h2>
+
+                        <h3>Feature File Basics</h3>
+                        <p>Feature files use <code>.feature</code> extension and contain scenarios written in Gherkin:</p>
+
+                        <pre><code class="language-gherkin">Feature: User Login
+  As a registered user
+  I want to login to my account
+  So that I can access my dashboard
+
+  @smoke @login
+  Scenario: Successful login with valid credentials
+    Given I am on the login page
+    When I enter username "testuser"
+    And I enter password "password123"
+    And I click the login button
+    Then I should see the dashboard
+    And the welcome message should contain "testuser"</code></pre>
+
+                        <h3>Gherkin Keywords</h3>
+                        <div class="info-box">
+                            <h4><i class="fas fa-key"></i> Keywords Reference</h4>
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Keyword</th>
+                                        <th>Purpose</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>Feature</code></td><td>Describes the feature being tested</td></tr>
+                                    <tr><td><code>Scenario</code></td><td>A single test case</td></tr>
+                                    <tr><td><code>Given</code></td><td>Preconditions (setup)</td></tr>
+                                    <tr><td><code>When</code></td><td>Actions performed</td></tr>
+                                    <tr><td><code>Then</code></td><td>Expected outcomes</td></tr>
+                                    <tr><td><code>And/But</code></td><td>Additional steps</td></tr>
+                                    <tr><td><code>Background</code></td><td>Common steps for all scenarios</td></tr>
+                                    <tr><td><code>@tag</code></td><td>Tags for filtering/grouping</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Background - Common Setup</h3>
+                        <p>Use <code>Background</code> for steps that repeat in every scenario:</p>
+
+                        <pre><code class="language-gherkin">Feature: Shopping Cart
+
+  Background:
+    Given I am logged in as a customer
+    And I have an empty cart
+
+  Scenario: Add single item to cart
+    When I add "Laptop" to the cart
+    Then the cart should contain 1 item
+
+  Scenario: Add multiple items to cart
+    When I add "Laptop" to the cart
+    And I add "Mouse" to the cart
+    Then the cart should contain 2 items</code></pre>
+                    </section>
+
+                    <!-- Chapter 3: Step Definitions -->
+                    <section class="chapter" id="step-definitions">
+                        <h2 class="chapter-title"><i class="fas fa-cogs"></i> Step Definitions</h2>
+
+                        <h3>Basic Step Definition</h3>
+                        <p>Step definitions map Gherkin steps to Java code:</p>
+
+                        <pre><code class="language-java">public class LoginSteps {
+    private WebDriver driver;
+    private LoginPage loginPage;
+
+    @Given("I am on the login page")
+    public void iAmOnTheLoginPage() {
+        driver = DriverManager.getDriver();
+        driver.get("https://example.com/login");
+        loginPage = new LoginPage(driver);
+    }
+
+    @When("I enter username {string}")
+    public void iEnterUsername(String username) {
+        loginPage.enterUsername(username);
+    }
+
+    @When("I enter password {string}")
+    public void iEnterPassword(String password) {
+        loginPage.enterPassword(password);
+    }
+
+    @When("I click the login button")
+    public void iClickTheLoginButton() {
+        loginPage.clickLogin();
+    }
+
+    @Then("I should see the dashboard")
+    public void iShouldSeeTheDashboard() {
+        Assert.assertTrue(loginPage.isDashboardDisplayed());
+    }
+}</code></pre>
+
+                        <h3>Cucumber Expressions</h3>
+                        <p>Cucumber 7+ uses Cucumber Expressions (simpler than regex):</p>
+
+                        <pre><code class="language-java">// String parameter
+@When("I search for {string}")
+public void searchFor(String query) { }
+
+// Integer parameter
+@Then("I should see {int} results")
+public void verifyResults(int count) { }
+
+// Word (no quotes needed)
+@Given("I am on the {word} page")
+public void navigateToPage(String pageName) { }
+
+// Optional text
+@When("I click (the )login button")
+public void clickLogin() { }
+
+// Alternative text
+@When("I add/remove the item")
+public void modifyCart() { }</code></pre>
+
+                        <h3>Custom Parameter Types</h3>
+                        <pre><code class="language-java">@ParameterType("enabled|disabled")
+public Boolean status(String status) {
+    return "enabled".equals(status);
+}
+
+// Usage in step
+@Then("the feature should be {status}")
+public void verifyFeatureStatus(Boolean isEnabled) {
+    Assert.assertEquals(isEnabled, feature.isEnabled());
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 4: Hooks -->
+                    <section class="chapter" id="hooks">
+                        <h2 class="chapter-title"><i class="fas fa-anchor"></i> Hooks</h2>
+
+                        <h3>Setup and Teardown</h3>
+                        <p>Hooks run before/after scenarios for setup and cleanup:</p>
+
+                        <pre><code class="language-java">public class Hooks {
+
+    @Before
+    public void setUp(Scenario scenario) {
+        System.out.println("Starting: " + scenario.getName());
+        DriverManager.initDriver();
+    }
+
+    @After
+    public void tearDown(Scenario scenario) {
+        // Capture screenshot on failure
+        if (scenario.isFailed()) {
+            byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver())
+                .getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", "failure-screenshot");
+        }
+        DriverManager.quitDriver();
+    }
+}</code></pre>
+
+                        <h3>Hook Types and Order</h3>
+                        <pre><code class="language-java">@BeforeAll   // Runs once before all scenarios
+public static void globalSetup() {
+    // Database setup, test data preparation
+}
+
+@AfterAll    // Runs once after all scenarios
+public static void globalTeardown() {
+    // Cleanup resources
+}
+
+@Before(order = 1)  // Lower order runs first
+public void firstSetup() { }
+
+@Before(order = 2)
+public void secondSetup() { }
+
+@Before("@database")  // Conditional hook - only for tagged scenarios
+public void setupDatabase() { }
+
+@BeforeStep
+public void beforeEachStep() { }
+
+@AfterStep
+public void afterEachStep(Scenario scenario) {
+    // Useful for detailed logging
+}</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Hook Order</h4>
+                            <p>Execution order: <code>@BeforeAll</code> → <code>@Before</code> → <code>@BeforeStep</code> → Step → <code>@AfterStep</code> → <code>@After</code> → <code>@AfterAll</code></p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 5: Data Tables -->
+                    <section class="chapter" id="data-tables">
+                        <h2 class="chapter-title"><i class="fas fa-table"></i> Data Tables</h2>
+
+                        <h3>Simple Data Table</h3>
+                        <pre><code class="language-gherkin">Scenario: Fill registration form
+  When I fill in the registration form:
+    | field     | value              |
+    | firstName | John               |
+    | lastName  | Doe                |
+    | email     | john@example.com   |
+    | phone     | 1234567890         |
+  Then the form should be submitted successfully</code></pre>
+
+                        <pre><code class="language-java">@When("I fill in the registration form:")
+public void fillRegistrationForm(DataTable dataTable) {
+    Map&lt;String, String&gt; data = dataTable.asMap(String.class, String.class);
+
+    registrationPage.enterFirstName(data.get("firstName"));
+    registrationPage.enterLastName(data.get("lastName"));
+    registrationPage.enterEmail(data.get("email"));
+    registrationPage.enterPhone(data.get("phone"));
+}</code></pre>
+
+                        <h3>List of Maps (Multiple Records)</h3>
+                        <pre><code class="language-gherkin">Scenario: Add multiple users
+  When I create the following users:
+    | username | email              | role    |
+    | john     | john@test.com      | admin   |
+    | jane     | jane@test.com      | user    |
+    | bob      | bob@test.com       | viewer  |</code></pre>
+
+                        <pre><code class="language-java">@When("I create the following users:")
+public void createUsers(DataTable dataTable) {
+    List&lt;Map&lt;String, String&gt;&gt; users = dataTable.asMaps();
+
+    for (Map&lt;String, String&gt; user : users) {
+        userService.createUser(
+            user.get("username"),
+            user.get("email"),
+            user.get("role")
+        );
+    }
+}</code></pre>
+
+                        <h3>Transform to Custom Objects</h3>
+                        <pre><code class="language-java">// Using DataTableType transformer
+@DataTableType
+public User userEntry(Map&lt;String, String&gt; entry) {
+    return new User(
+        entry.get("username"),
+        entry.get("email"),
+        entry.get("role")
+    );
+}
+
+@When("I create the following users:")
+public void createUsers(List&lt;User&gt; users) {
+    users.forEach(userService::createUser);
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 6: Scenario Outline -->
+                    <section class="chapter" id="scenario-outline">
+                        <h2 class="chapter-title"><i class="fas fa-copy"></i> Scenario Outline</h2>
+
+                        <h3>Data-Driven Testing</h3>
+                        <p>Run the same scenario with different data sets:</p>
+
+                        <pre><code class="language-gherkin">Feature: Login Validation
+
+  @regression
+  Scenario Outline: Login with different credentials
+    Given I am on the login page
+    When I enter username "&lt;username&gt;"
+    And I enter password "&lt;password&gt;"
+    And I click the login button
+    Then I should see "&lt;message&gt;"
+
+    Examples:
+      | username    | password    | message              |
+      | validuser   | validpass   | Welcome              |
+      | invaliduser | validpass   | Invalid credentials  |
+      | validuser   | wrongpass   | Invalid credentials  |
+      |             | validpass   | Username required    |
+      | validuser   |             | Password required    |</code></pre>
+
+                        <h3>Multiple Example Tables</h3>
+                        <pre><code class="language-gherkin">Scenario Outline: User permissions by role
+    Given I am logged in as a "&lt;role&gt;"
+    When I try to access "&lt;page&gt;"
+    Then access should be "&lt;access&gt;"
+
+    @admin-tests
+    Examples: Admin Access
+      | role  | page          | access  |
+      | admin | settings      | granted |
+      | admin | user-mgmt     | granted |
+      | admin | reports       | granted |
+
+    @user-tests
+    Examples: Regular User Access
+      | role | page          | access  |
+      | user | settings      | denied  |
+      | user | user-mgmt     | denied  |
+      | user | reports       | granted |</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: Test Runner -->
+                    <section class="chapter" id="test-runner">
+                        <h2 class="chapter-title"><i class="fas fa-play"></i> Test Runner Configuration</h2>
+
+                        <h3>TestNG Runner</h3>
+                        <pre><code class="language-java">@CucumberOptions(
+    features = "src/test/resources/features",
+    glue = {"stepdefinitions", "hooks"},
+    plugin = {
+        "pretty",
+        "html:target/cucumber-reports/cucumber.html",
+        "json:target/cucumber-reports/cucumber.json",
+        "junit:target/cucumber-reports/cucumber.xml",
+        "rerun:target/failed-scenarios.txt"
+    },
+    tags = "@smoke and not @skip",
+    monochrome = true,
+    dryRun = false
+)
+public class TestRunner extends AbstractTestNGCucumberTests {
+
+    @Override
+    @DataProvider(parallel = true)
+    public Object[][] scenarios() {
+        return super.scenarios();
+    }
+}</code></pre>
+
+                        <h3>Runner Options Explained</h3>
+                        <div class="info-box">
+                            <h4><i class="fas fa-sliders-h"></i> CucumberOptions</h4>
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Option</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><code>features</code></td><td>Path to feature files</td></tr>
+                                    <tr><td><code>glue</code></td><td>Packages containing step definitions</td></tr>
+                                    <tr><td><code>plugin</code></td><td>Report formatters</td></tr>
+                                    <tr><td><code>tags</code></td><td>Filter scenarios by tags</td></tr>
+                                    <tr><td><code>dryRun</code></td><td>Check step mappings without execution</td></tr>
+                                    <tr><td><code>monochrome</code></td><td>Clean console output</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3>Tag Expressions</h3>
+                        <pre><code class="language-java">// Single tag
+tags = "@smoke"
+
+// Multiple tags (AND)
+tags = "@smoke and @login"
+
+// Either tag (OR)
+tags = "@smoke or @regression"
+
+// Exclude tag
+tags = "not @wip"
+
+// Complex expression
+tags = "(@smoke or @regression) and not @skip"</code></pre>
+
+                        <h3>Running from Command Line</h3>
+                        <pre><code class="language-bash"># Run all tests
+mvn test
+
+# Run specific tags
+mvn test -Dcucumber.filter.tags="@smoke"
+
+# Run with specific feature
+mvn test -Dcucumber.features="src/test/resources/features/login.feature"
+
+# Rerun failed scenarios
+mvn test -Dcucumber.features="@target/failed-scenarios.txt"</code></pre>
+                    </section>
+
+                    <!-- Chapter 8: Page Object Integration -->
+                    <section class="chapter" id="page-objects">
+                        <h2 class="chapter-title"><i class="fas fa-layer-group"></i> Page Object Integration</h2>
+
+                        <h3>Combining POM with Cucumber</h3>
+                        <p>Keep step definitions thin by delegating to Page Objects:</p>
+
+                        <pre><code class="language-java">// Page Object
+public class LoginPage extends BasePage {
+    @FindBy(id = "username") private WebElement usernameField;
+    @FindBy(id = "password") private WebElement passwordField;
+    @FindBy(id = "login-btn") private WebElement loginButton;
+    @FindBy(css = ".error-message") private WebElement errorMessage;
+
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
+
+    public void login(String username, String password) {
+        type(usernameField, username);
+        type(passwordField, password);
+        click(loginButton);
+    }
+
+    public String getErrorMessage() {
+        return getText(errorMessage);
+    }
+}</code></pre>
+
+                        <pre><code class="language-java">// Step Definition - Clean and focused
+public class LoginSteps {
+    private LoginPage loginPage;
+    private DashboardPage dashboardPage;
+
+    @Given("I am on the login page")
+    public void navigateToLogin() {
+        DriverManager.getDriver().get(ConfigReader.getUrl("login"));
+        loginPage = new LoginPage(DriverManager.getDriver());
+    }
+
+    @When("I login with {string} and {string}")
+    public void performLogin(String username, String password) {
+        loginPage.login(username, password);
+        dashboardPage = new DashboardPage(DriverManager.getDriver());
+    }
+
+    @Then("I should see error {string}")
+    public void verifyError(String expectedError) {
+        Assert.assertEquals(expectedError, loginPage.getErrorMessage());
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 9: Sharing State -->
+                    <section class="chapter" id="sharing-state">
+                        <h2 class="chapter-title"><i class="fas fa-share-alt"></i> Sharing State Between Steps</h2>
+
+                        <h3>Using Dependency Injection</h3>
+                        <p>Share data between step definition classes using PicoContainer:</p>
+
+                        <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+    &lt;artifactId&gt;cucumber-picocontainer&lt;/artifactId&gt;
+    &lt;version&gt;7.15.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+
+                        <pre><code class="language-java">// Shared context class
+public class TestContext {
+    private WebDriver driver;
+    private Scenario scenario;
+    private Map&lt;String, Object&gt; scenarioData = new HashMap&lt;&gt;();
+
+    public WebDriver getDriver() {
+        if (driver == null) {
+            driver = DriverFactory.createDriver();
+        }
+        return driver;
+    }
+
+    public void setData(String key, Object value) {
+        scenarioData.put(key, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    public &lt;T&gt; T getData(String key) {
+        return (T) scenarioData.get(key);
+    }
+
+    public void quitDriver() {
+        if (driver != null) {
+            driver.quit();
+            driver = null;
+        }
+    }
+}</code></pre>
+
+                        <pre><code class="language-java">// Step definitions receive shared context via constructor
+public class LoginSteps {
+    private final TestContext context;
+    private LoginPage loginPage;
+
+    public LoginSteps(TestContext context) {
+        this.context = context;
+    }
+
+    @When("I login as {string}")
+    public void loginAs(String userType) {
+        loginPage = new LoginPage(context.getDriver());
+        User user = TestDataFactory.getUser(userType);
+        loginPage.login(user.getUsername(), user.getPassword());
+        context.setData("currentUser", user);
+    }
+}
+
+public class DashboardSteps {
+    private final TestContext context;
+
+    public DashboardSteps(TestContext context) {
+        this.context = context;
+    }
+
+    @Then("the welcome message should display my name")
+    public void verifyWelcomeMessage() {
+        User user = context.getData("currentUser");
+        DashboardPage dashboard = new DashboardPage(context.getDriver());
+        Assert.assertTrue(dashboard.getWelcomeMessage().contains(user.getName()));
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 10: Reporting -->
+                    <section class="chapter" id="reporting">
+                        <h2 class="chapter-title"><i class="fas fa-chart-bar"></i> Reporting</h2>
+
+                        <h3>Built-in Reports</h3>
+                        <pre><code class="language-java">plugin = {
+    "pretty",                                    // Console output
+    "html:target/cucumber-reports.html",         // HTML report
+    "json:target/cucumber.json",                 // JSON for tools
+    "junit:target/cucumber.xml",                 // JUnit XML
+    "timeline:target/timeline"                   // Timeline report
+}</code></pre>
+
+                        <h3>Allure Integration</h3>
+                        <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;io.qameta.allure&lt;/groupId&gt;
+    &lt;artifactId&gt;allure-cucumber7-jvm&lt;/artifactId&gt;
+    &lt;version&gt;2.25.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+
+                        <pre><code class="language-java">@CucumberOptions(
+    plugin = {"io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"}
+)
+
+// Add details in steps
+@When("I search for {string}")
+@Step("Searching for: {query}")
+public void search(@Param("query") String query) {
+    Allure.addAttachment("Search Query", query);
+    searchPage.search(query);
+}</code></pre>
+
+                        <h3>Extent Reports</h3>
+                        <pre><code class="language-java">// In Hooks class
+private static ExtentReports extent;
+private static ExtentTest feature;
+private ExtentTest scenario;
+
+@BeforeAll
+public static void initReport() {
+    extent = new ExtentReports();
+    extent.attachReporter(new ExtentSparkReporter("reports/extent-report.html"));
+}
+
+@Before
+public void beforeScenario(Scenario scenario) {
+    this.scenario = extent.createTest(scenario.getName());
+    scenario.getSourceTagNames().forEach(tag -> this.scenario.assignCategory(tag));
+}
+
+@AfterStep
+public void afterStep(Scenario scenario) {
+    if (scenario.isFailed()) {
+        this.scenario.fail("Step failed");
+    }
+}
+
+@AfterAll
+public static void flushReport() {
+    extent.flush();
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 11: Best Practices -->
+                    <section class="chapter" id="best-practices">
+                        <h2 class="chapter-title"><i class="fas fa-star"></i> Best Practices</h2>
+
+                        <div class="two-column-grid">
+                            <div class="info-box info-box-success">
+                                <h4><i class="fas fa-check-circle"></i> Do</h4>
+                                <ul>
+                                    <li>Write scenarios from user perspective</li>
+                                    <li>Keep scenarios independent</li>
+                                    <li>Use meaningful tag names</li>
+                                    <li>One assertion per Then step</li>
+                                    <li>Reuse step definitions</li>
+                                    <li>Keep step definitions thin</li>
+                                    <li>Use Background for common setup</li>
+                                    <li>Write declarative steps (what, not how)</li>
+                                </ul>
+                            </div>
+                            <div class="info-box info-box-danger">
+                                <h4><i class="fas fa-times-circle"></i> Avoid</h4>
+                                <ul>
+                                    <li>UI details in feature files</li>
+                                    <li>Scenarios longer than 10 steps</li>
+                                    <li>Coupling scenarios together</li>
+                                    <li>Technical jargon in Gherkin</li>
+                                    <li>Too many Scenario Outlines</li>
+                                    <li>Business logic in step definitions</li>
+                                    <li>Hard-coded test data</li>
+                                    <li>Imperative steps (click, type)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Good vs Bad Scenarios</h3>
+                        <div class="info-box info-box-danger">
+                            <h4><i class="fas fa-thumbs-down"></i> Bad - Imperative Style</h4>
+                            <pre><code class="language-gherkin"># Too detailed, hard to maintain
+Scenario: Login
+  Given I open browser
+  And I navigate to "https://app.com/login"
+  And I wait for page to load
+  When I click on username field
+  And I type "testuser"
+  And I click on password field
+  And I type "password123"
+  And I click login button
+  Then I should see element with id "dashboard"</code></pre>
+                        </div>
+
+                        <div class="info-box info-box-success">
+                            <h4><i class="fas fa-thumbs-up"></i> Good - Declarative Style</h4>
+                            <pre><code class="language-gherkin"># Business-focused, readable
+Scenario: Successful login
+  Given I am a registered user
+  When I login with valid credentials
+  Then I should see my dashboard</code></pre>
+                        </div>
+
+                        <h3>Feature File Organization</h3>
+                        <pre><code class="language-text">features/
+├── authentication/
+│   ├── login.feature
+│   ├── logout.feature
+│   └── password-reset.feature
+├── shopping/
+│   ├── cart.feature
+│   ├── checkout.feature
+│   └── product-search.feature
+└── user-management/
+    ├── profile.feature
+    └── settings.feature</code></pre>
+                    </section>
+
+                    <!-- Next Steps -->
+                    <section class="chapter" id="next-steps">
+                        <h2 class="chapter-title"><i class="fas fa-arrow-right"></i> Next Steps</h2>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-road"></i> Continue Your Learning</h4>
+                            <ul>
+                                <li><strong>Page Object Model</strong> - Structure your test automation</li>
+                                <li><strong>Data-Driven Testing</strong> - External test data management</li>
+                                <li><strong>CI/CD Integration</strong> - Run Cucumber tests in pipelines</li>
+                                <li><strong>API Testing with Cucumber</strong> - BDD for REST APIs</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-book"></i> Interview Preparation</h4>
+                            <p>Cucumber BDD is frequently asked in automation interviews. Practice with our <a href="/interview-qna/automation/automations-set-1.html">Automation Interview Q&A</a> covering framework design and BDD concepts.</p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/selenium/selenium-grid.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Selenium Grid</span>
+                    </a>
+                    <a href="/interview-qna/automation/automations-set-1.html" class="nav-next">
+                        <span>Automation Interview Q&A</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
+</code></pre>

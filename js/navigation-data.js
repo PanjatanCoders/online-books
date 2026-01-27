@@ -288,6 +288,13 @@ const SITE_NAVIGATION = {
                             icon: 'fas fa-server',
                             description: 'Parallel execution across browsers',
                             readTime: '40 min'
+                        },
+                        {
+                            title: 'Cucumber BDD',
+                            url: '/selenium/selenium-cucumber-bdd.html',
+                            icon: 'fas fa-leaf',
+                            description: 'Behavior-Driven Development with Gherkin',
+                            readTime: '35 min'
                         }
                     ]
                 }
