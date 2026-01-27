@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn REST API testing with Rest Assured - Setup, GET/POST requests, JSON parsing, and response validation with practical examples.">
+    <title>Rest Assured Basics - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fas fa-exchange-alt"></i> API Testing
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 25 min read
+                        </span>
+                        <span class="article-level">
+                            <i class="fas fa-signal"></i> Beginner
+                        </span>
+                    </div>
+                    <h1 class="article-title">Rest Assured Basics</h1>
+                    <p class="article-subtitle">
+                        Get started with API automation using Rest Assured - the most popular Java library for testing RESTful web services.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: Introduction -->
+                    <section class="chapter" id="introduction">
+                        <h2 class="chapter-title"><i class="fas fa-book-open"></i> What is Rest Assured?</h2>
+
+                        <p>
+                            Rest Assured is a Java-based library that simplifies testing and validating REST APIs.
+                            It provides a domain-specific language (DSL) for writing powerful, readable tests.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-star"></i> Why Rest Assured?</h4>
+                            <ul>
+                                <li><strong>BDD Syntax</strong> - given().when().then() pattern</li>
+                                <li><strong>No boilerplate</strong> - No manual HTTP connection handling</li>
+                                <li><strong>Built-in validation</strong> - JsonPath, XmlPath support</li>
+                                <li><strong>Seamless integration</strong> - Works with TestNG, JUnit, Maven</li>
+                                <li><strong>Rich assertions</strong> - Hamcrest matchers support</li>
+                            </ul>
+                        </div>
+
+                        <h3>Understanding REST APIs</h3>
+                        <p>REST (Representational State Transfer) APIs communicate using HTTP methods:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Purpose</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>GET</code></td>
+                                    <td>Retrieve data</td>
+                                    <td>Get user details</td>
+                                </tr>
+                                <tr>
+                                    <td><code>POST</code></td>
+                                    <td>Create new resource</td>
+                                    <td>Create new user</td>
+                                </tr>
+                                <tr>
+                                    <td><code>PUT</code></td>
+                                    <td>Update entire resource</td>
+                                    <td>Update user profile</td>
+                                </tr>
+                                <tr>
+                                    <td><code>PATCH</code></td>
+                                    <td>Partial update</td>
+                                    <td>Update user email only</td>
+                                </tr>
+                                <tr>
+                                    <td><code>DELETE</code></td>
+                                    <td>Remove resource</td>
+                                    <td>Delete user account</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 2: Project Setup -->
+                    <section class="chapter" id="setup">
+                        <h2 class="chapter-title"><i class="fas fa-cog"></i> Project Setup</h2>
+
+                        <h3>Maven Dependencies</h3>
+                        <p>Add these dependencies to your <code>pom.xml</code>:</p>
+
+                        <pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;!-- Rest Assured --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.rest-assured&lt;/groupId&gt;
+        &lt;artifactId&gt;rest-assured&lt;/artifactId&gt;
+        &lt;version&gt;5.4.0&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- JSON Schema Validation --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.rest-assured&lt;/groupId&gt;
+        &lt;artifactId&gt;json-schema-validator&lt;/artifactId&gt;
+        &lt;version&gt;5.4.0&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- TestNG --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.testng&lt;/groupId&gt;
+        &lt;artifactId&gt;testng&lt;/artifactId&gt;
+        &lt;version&gt;7.9.0&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- Jackson for JSON serialization --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+        &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+        &lt;version&gt;2.16.0&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre>
+
+                        <h3>Static Imports</h3>
+                        <p>Add these imports to use Rest Assured's fluent API:</p>
+
+                        <pre><code class="language-java">import static io.restassured.RestAssured.*;
+import static io.restassured.matcher.RestAssuredMatchers.*;
+import static org.hamcrest.Matchers.*;</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> Practice API</h4>
+                            <p>We'll use <strong>https://reqres.in</strong> - a free hosted REST API for testing. No authentication required for basic endpoints.</p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 3: First GET Request -->
+                    <section class="chapter" id="get-request">
+                        <h2 class="chapter-title"><i class="fas fa-download"></i> Your First GET Request</h2>
+
+                        <h3>Basic GET Request</h3>
+                        <p>The simplest way to make a GET request:</p>
+
+                        <pre><code class="language-java">@Test
+public void getListOfUsers() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users?page=2")
+    .then()
+        .statusCode(200)
+        .body("page", equalTo(2))
+        .body("data.size()", greaterThan(0));
+}</code></pre>
+
+                        <h3>Understanding the BDD Pattern</h3>
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-layer-group"></i> Given-When-Then</h4>
+                            <ul>
+                                <li><strong>given()</strong> - Set up request (headers, params, body, auth)</li>
+                                <li><strong>when()</strong> - Execute HTTP method (GET, POST, etc.)</li>
+                                <li><strong>then()</strong> - Validate response (status, body, headers)</li>
+                            </ul>
+                        </div>
+
+                        <h3>GET with Path Parameters</h3>
+                        <pre><code class="language-java">@Test
+public void getSingleUser() {
+    int userId = 2;
+
+    given()
+        .baseUri("https://reqres.in")
+        .pathParam("id", userId)
+    .when()
+        .get("/api/users/{id}")
+    .then()
+        .statusCode(200)
+        .body("data.id", equalTo(userId))
+        .body("data.email", containsString("@"));
+}</code></pre>
+
+                        <h3>GET with Query Parameters</h3>
+                        <pre><code class="language-java">@Test
+public void getUsersWithQueryParams() {
+    given()
+        .baseUri("https://reqres.in")
+        .queryParam("page", 1)
+        .queryParam("per_page", 5)
+    .when()
+        .get("/api/users")
+    .then()
+        .statusCode(200)
+        .body("per_page", equalTo(5))
+        .body("data", hasSize(lessThanOrEqualTo(5)));
+}</code></pre>
+
+                        <h3>Extracting Response Data</h3>
+                        <pre><code class="language-java">@Test
+public void extractResponseData() {
+    Response response = given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users/2")
+    .then()
+        .extract().response();
+
+    // Extract specific values
+    String email = response.jsonPath().getString("data.email");
+    int id = response.jsonPath().getInt("data.id");
+    String firstName = response.path("data.first_name");
+
+    System.out.println("User: " + firstName + " (" + email + ")");
+
+    // Get entire response as String
+    String responseBody = response.asString();
+
+    // Get status code
+    int statusCode = response.getStatusCode();
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 4: POST Request -->
+                    <section class="chapter" id="post-request">
+                        <h2 class="chapter-title"><i class="fas fa-upload"></i> POST Request with JSON</h2>
+
+                        <h3>POST with JSON String</h3>
+                        <pre><code class="language-java">@Test
+public void createUserWithJsonString() {
+    String requestBody = """
+        {
+            "name": "John Doe",
+            "job": "QA Engineer"
+        }
+        """;
+
+    given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body(requestBody)
+    .when()
+        .post("/api/users")
+    .then()
+        .statusCode(201)
+        .body("name", equalTo("John Doe"))
+        .body("job", equalTo("QA Engineer"))
+        .body("id", notNullValue())
+        .body("createdAt", notNullValue());
+}</code></pre>
+
+                        <h3>POST with HashMap</h3>
+                        <pre><code class="language-java">@Test
+public void createUserWithMap() {
+    Map&lt;String, Object&gt; requestBody = new HashMap&lt;&gt;();
+    requestBody.put("name", "Jane Smith");
+    requestBody.put("job", "Developer");
+
+    given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body(requestBody)
+    .when()
+        .post("/api/users")
+    .then()
+        .statusCode(201)
+        .body("name", equalTo("Jane Smith"));
+}</code></pre>
+
+                        <h3>POST with POJO (Recommended)</h3>
+                        <p>Create a model class for cleaner, type-safe code:</p>
+
+                        <pre><code class="language-java">// User.java - POJO class
+public class User {
+    private String name;
+    private String job;
+
+    public User() {}
+
+    public User(String name, String job) {
+        this.name = name;
+        this.job = job;
+    }
+
+    // Getters and Setters
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    public String getJob() { return job; }
+    public void setJob(String job) { this.job = job; }
+}</code></pre>
+
+                        <pre><code class="language-java">@Test
+public void createUserWithPojo() {
+    User user = new User("Alex Brown", "Automation Lead");
+
+    given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body(user)  // Automatically serialized to JSON
+    .when()
+        .post("/api/users")
+    .then()
+        .statusCode(201)
+        .body("name", equalTo("Alex Brown"));
+}</code></pre>
+
+                        <h3>Deserialize Response to POJO</h3>
+                        <pre><code class="language-java">@Test
+public void deserializeResponse() {
+    User createdUser = given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body(new User("Test User", "Tester"))
+    .when()
+        .post("/api/users")
+    .then()
+        .statusCode(201)
+        .extract()
+        .as(User.class);  // Deserialize to POJO
+
+    Assert.assertEquals(createdUser.getName(), "Test User");
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 5: Response Validation -->
+                    <section class="chapter" id="validation">
+                        <h2 class="chapter-title"><i class="fas fa-check-circle"></i> Response Validation</h2>
+
+                        <h3>Status Code Validation</h3>
+                        <pre><code class="language-java">@Test
+public void validateStatusCodes() {
+    // Exact match
+    given().get("https://reqres.in/api/users/2")
+        .then().statusCode(200);
+
+    // Using Hamcrest matchers
+    given().get("https://reqres.in/api/users/2")
+        .then().statusCode(is(200));
+
+    // Range check
+    given().get("https://reqres.in/api/users/2")
+        .then().statusCode(both(greaterThanOrEqualTo(200))
+                          .and(lessThan(300)));
+}</code></pre>
+
+                        <h3>Header Validation</h3>
+                        <pre><code class="language-java">@Test
+public void validateHeaders() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users")
+    .then()
+        .header("Content-Type", containsString("application/json"))
+        .header("Connection", equalTo("keep-alive"));
+}</code></pre>
+
+                        <h3>JSON Body Validation with JsonPath</h3>
+                        <pre><code class="language-java">@Test
+public void validateJsonBody() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users/2")
+    .then()
+        .statusCode(200)
+        // Simple field validation
+        .body("data.id", equalTo(2))
+        .body("data.email", endsWith("@reqres.in"))
+        .body("data.first_name", not(emptyString()))
+
+        // Nested object validation
+        .body("support.url", containsString("reqres"))
+
+        // Check field exists
+        .body("data", hasKey("avatar"));
+}</code></pre>
+
+                        <h3>Array Validation</h3>
+                        <pre><code class="language-java">@Test
+public void validateArrayResponse() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users?page=1")
+    .then()
+        .statusCode(200)
+        // Array size
+        .body("data.size()", greaterThan(0))
+        .body("data", hasSize(6))
+
+        // All items match condition
+        .body("data.id", everyItem(greaterThan(0)))
+        .body("data.email", everyItem(containsString("@")))
+
+        // Check specific item
+        .body("data[0].id", equalTo(1))
+
+        // Find item in array
+        .body("data.find { it.id == 1 }.email", notNullValue());
+}</code></pre>
+
+                        <h3>Response Time Validation</h3>
+                        <pre><code class="language-java">@Test
+public void validateResponseTime() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users")
+    .then()
+        .time(lessThan(2000L)); // Response time < 2 seconds
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 6: Logging -->
+                    <section class="chapter" id="logging">
+                        <h2 class="chapter-title"><i class="fas fa-terminal"></i> Logging & Debugging</h2>
+
+                        <h3>Request and Response Logging</h3>
+                        <pre><code class="language-java">@Test
+public void loggingExample() {
+    given()
+        .baseUri("https://reqres.in")
+        .log().all()  // Log entire request
+    .when()
+        .get("/api/users/2")
+    .then()
+        .log().all()  // Log entire response
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Selective Logging</h3>
+                        <pre><code class="language-java">@Test
+public void selectiveLogging() {
+    given()
+        .baseUri("https://reqres.in")
+        .log().uri()        // Log only URI
+        .log().method()     // Log HTTP method
+        .log().headers()    // Log headers
+    .when()
+        .get("/api/users/2")
+    .then()
+        .log().status()     // Log status line
+        .log().body()       // Log response body
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Log on Failure Only</h3>
+                        <pre><code class="language-java">@Test
+public void logOnlyOnFailure() {
+    given()
+        .baseUri("https://reqres.in")
+        .log().ifValidationFails()  // Log request if validation fails
+    .when()
+        .get("/api/users/2")
+    .then()
+        .log().ifValidationFails()  // Log response if validation fails
+        .statusCode(200);
+}</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> Best Practice</h4>
+                            <p>Use <code>log().ifValidationFails()</code> in your test suite to keep logs clean while still capturing details when tests fail.</p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 7: Configuration -->
+                    <section class="chapter" id="configuration">
+                        <h2 class="chapter-title"><i class="fas fa-sliders-h"></i> Global Configuration</h2>
+
+                        <h3>Setting Base URI and Path</h3>
+                        <pre><code class="language-java">public class BaseTest {
+
+    @BeforeClass
+    public void setup() {
+        // Set base URI for all requests
+        RestAssured.baseURI = "https://reqres.in";
+        RestAssured.basePath = "/api";
+
+        // Default content type
+        RestAssured.requestSpecification = given()
+            .contentType(ContentType.JSON)
+            .accept(ContentType.JSON);
+    }
+
+    @AfterClass
+    public void teardown() {
+        RestAssured.reset(); // Reset to defaults
+    }
+}</code></pre>
+
+                        <h3>Request Specification</h3>
+                        <p>Create reusable request specifications:</p>
+
+                        <pre><code class="language-java">public class ApiSpecs {
+
+    public static RequestSpecification getDefaultSpec() {
+        return new RequestSpecBuilder()
+            .setBaseUri("https://reqres.in")
+            .setBasePath("/api")
+            .setContentType(ContentType.JSON)
+            .addHeader("Accept", "application/json")
+            .log(LogDetail.ALL)
+            .build();
+    }
+}
+
+// Usage in tests
+@Test
+public void testWithSpec() {
+    given()
+        .spec(ApiSpecs.getDefaultSpec())
+    .when()
+        .get("/users/2")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Response Specification</h3>
+                        <pre><code class="language-java">public static ResponseSpecification getSuccessSpec() {
+    return new ResponseSpecBuilder()
+        .expectStatusCode(200)
+        .expectContentType(ContentType.JSON)
+        .expectResponseTime(lessThan(3000L))
+        .build();
+}
+
+// Usage
+@Test
+public void testWithResponseSpec() {
+    given()
+        .spec(ApiSpecs.getDefaultSpec())
+    .when()
+        .get("/users/2")
+    .then()
+        .spec(getSuccessSpec())
+        .body("data.id", equalTo(2));
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 8: Best Practices -->
+                    <section class="chapter" id="best-practices">
+                        <h2 class="chapter-title"><i class="fas fa-trophy"></i> Best Practices</h2>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-check-circle"></i> API Testing Best Practices</h4>
+                            <ul>
+                                <li><strong>Use POJOs</strong> - Type-safe request/response handling</li>
+                                <li><strong>Request Specs</strong> - Centralize common configurations</li>
+                                <li><strong>Avoid hardcoding</strong> - Use config files for URLs, credentials</li>
+                                <li><strong>Clean test data</strong> - Create and delete test data in tests</li>
+                                <li><strong>Independent tests</strong> - Each test should be self-contained</li>
+                                <li><strong>Meaningful assertions</strong> - Validate business-critical fields</li>
+                                <li><strong>Error handling</strong> - Test error scenarios (4xx, 5xx)</li>
+                            </ul>
+                        </div>
+
+                        <h3>Complete Test Example</h3>
+                        <pre><code class="language-java">public class UserApiTest {
+
+    private static RequestSpecification requestSpec;
+
+    @BeforeClass
+    public static void setup() {
+        requestSpec = new RequestSpecBuilder()
+            .setBaseUri("https://reqres.in")
+            .setBasePath("/api")
+            .setContentType(ContentType.JSON)
+            .log(LogDetail.URI)
+            .build();
+    }
+
+    @Test
+    public void testCreateAndVerifyUser() {
+        // Create user
+        User newUser = new User("Integration Test", "SDET");
+
+        String userId = given()
+            .spec(requestSpec)
+            .body(newUser)
+        .when()
+            .post("/users")
+        .then()
+            .statusCode(201)
+            .body("name", equalTo(newUser.getName()))
+            .extract()
+            .path("id");
+
+        Assert.assertNotNull(userId, "User ID should not be null");
+    }
+
+    @Test
+    public void testGetNonExistentUser() {
+        given()
+            .spec(requestSpec)
+        .when()
+            .get("/users/999")
+        .then()
+            .statusCode(404);
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-arrow-right"></i> Next Steps</h4>
+                            <p>Now that you understand the basics, proceed to <a href="/api-testing/rest-assured-request-response.html">Request & Response</a> to learn advanced HTTP methods, headers, and JsonPath expressions.</p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/api-testing/index.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>API Testing Home</span>
+                    </a>
+                    <a href="/api-testing/rest-assured-request-response.html" class="nav-next">
+                        <span>Request & Response</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

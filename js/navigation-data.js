@@ -308,6 +308,51 @@ const SITE_NAVIGATION = {
             ]
         },
         {
+            id: 'api-testing',
+            name: 'API Testing',
+            icon: 'fas fa-exchange-alt',
+            enabled: true,
+            description: 'Master REST API testing with Rest Assured and Java',
+            indexUrl: '/api-testing/index.html',
+            categories: [
+                {
+                    id: 'rest-assured',
+                    name: 'Rest Assured',
+                    icon: 'fas fa-vial',
+                    tutorials: [
+                        {
+                            title: 'Rest Assured Basics',
+                            url: '/api-testing/rest-assured-basics.html',
+                            icon: 'fas fa-play-circle',
+                            description: 'Setup, GET/POST requests, JSON parsing',
+                            readTime: '25 min'
+                        },
+                        {
+                            title: 'Request & Response',
+                            url: '/api-testing/rest-assured-request-response.html',
+                            icon: 'fas fa-arrows-alt-h',
+                            description: 'HTTP methods, headers, validation, JsonPath',
+                            readTime: '30 min'
+                        },
+                        {
+                            title: 'Authentication',
+                            url: '/api-testing/rest-assured-authentication.html',
+                            icon: 'fas fa-lock',
+                            description: 'Basic Auth, OAuth2, API Keys, Bearer tokens',
+                            readTime: '25 min'
+                        },
+                        {
+                            title: 'API Framework Design',
+                            url: '/api-testing/rest-assured-framework.html',
+                            icon: 'fas fa-cubes',
+                            description: 'Building scalable API automation framework',
+                            readTime: '35 min'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             id: 'python',
             name: 'Python',
             icon: 'fab fa-python',

@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build a scalable API automation framework with Rest Assured - Project structure, configuration management, utilities, reporting, and CI/CD integration.">
+    <title>API Framework Design - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fas fa-exchange-alt"></i> API Testing
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 35 min read
+                        </span>
+                        <span class="article-level">
+                            <i class="fas fa-signal"></i> Advanced
+                        </span>
+                    </div>
+                    <h1 class="article-title">API Framework Design</h1>
+                    <p class="article-subtitle">
+                        Build an enterprise-grade API automation framework with proper architecture, reusability, and maintainability.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: Project Structure -->
+                    <section class="chapter" id="structure">
+                        <h2 class="chapter-title"><i class="fas fa-folder-tree"></i> Project Structure</h2>
+
+                        <p>A well-organized project structure ensures maintainability and scalability.</p>
+
+                        <pre><code class="language-text">api-automation-framework/
+├── src/
+│   ├── main/java/
+│   │   └── com/framework/
+│   │       ├── config/
+│   │       │   ├── ConfigReader.java
+│   │       │   └── Environment.java
+│   │       ├── constants/
+│   │       │   └── Endpoints.java
+│   │       ├── models/
+│   │       │   ├── request/
+│   │       │   │   └── UserRequest.java
+│   │       │   └── response/
+│   │       │       └── UserResponse.java
+│   │       ├── specs/
+│   │       │   └── RequestSpecs.java
+│   │       └── utils/
+│   │           ├── AuthManager.java
+│   │           ├── DataGenerator.java
+│   │           └── JsonUtils.java
+│   └── test/
+│       ├── java/
+│       │   └── com/tests/
+│       │       ├── base/
+│       │       │   └── BaseTest.java
+│       │       ├── users/
+│       │       │   └── UserApiTests.java
+│       │       └── auth/
+│       │           └── AuthTests.java
+│       └── resources/
+│           ├── config/
+│           │   ├── config.properties
+│           │   ├── qa.properties
+│           │   └── prod.properties
+│           ├── schemas/
+│           │   └── user-schema.json
+│           └── testdata/
+│               └── users.json
+├── pom.xml
+└── testng.xml</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-layer-group"></i> Framework Layers</h4>
+                            <ul>
+                                <li><strong>Config</strong> - Environment settings, properties</li>
+                                <li><strong>Models</strong> - POJOs for request/response</li>
+                                <li><strong>Specs</strong> - Reusable request specifications</li>
+                                <li><strong>Utils</strong> - Helper classes for auth, data generation</li>
+                                <li><strong>Tests</strong> - Actual test classes organized by feature</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2: Configuration -->
+                    <section class="chapter" id="configuration">
+                        <h2 class="chapter-title"><i class="fas fa-cog"></i> Configuration Management</h2>
+
+                        <h3>Properties File</h3>
+                        <p>Create <code>src/test/resources/config/config.properties</code>:</p>
+
+                        <pre><code class="language-properties"># Base Configuration
+base.uri=https://reqres.in
+base.path=/api
+
+# Timeouts
+connection.timeout=10000
+socket.timeout=10000
+
+# Logging
+log.request=true
+log.response=true
+
+# Auth
+auth.username=testuser
+auth.password=testpass</code></pre>
+
+                        <h3>Environment-specific Config</h3>
+                        <p><code>qa.properties</code>:</p>
+                        <pre><code class="language-properties">base.uri=https://qa-api.example.com
+auth.username=qa_user</code></pre>
+
+                        <h3>ConfigReader Class</h3>
+                        <pre><code class="language-java">public class ConfigReader {
+
+    private static final Properties properties = new Properties();
+    private static final String ENV = System.getProperty("env", "config");
+
+    static {
+        loadProperties();
+    }
+
+    private static void loadProperties() {
+        try {
+            // Load default config
+            String defaultPath = "config/config.properties";
+            InputStream defaultStream = ConfigReader.class.getClassLoader()
+                .getResourceAsStream(defaultPath);
+            properties.load(defaultStream);
+
+            // Override with environment-specific config
+            if (!ENV.equals("config")) {
+                String envPath = "config/" + ENV + ".properties";
+                InputStream envStream = ConfigReader.class.getClassLoader()
+                    .getResourceAsStream(envPath);
+                if (envStream != null) {
+                    properties.load(envStream);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load config", e);
+        }
+    }
+
+    public static String get(String key) {
+        return properties.getProperty(key);
+    }
+
+    public static String getBaseUri() {
+        return get("base.uri");
+    }
+
+    public static String getBasePath() {
+        return get("base.path");
+    }
+
+    public static int getConnectionTimeout() {
+        return Integer.parseInt(get("connection.timeout"));
+    }
+
+    public static boolean logRequest() {
+        return Boolean.parseBoolean(get("log.request"));
+    }
+}</code></pre>
+
+                        <h3>Running with Different Environments</h3>
+                        <pre><code class="language-bash"># Run with QA config
+mvn test -Denv=qa
+
+# Run with Production config
+mvn test -Denv=prod</code></pre>
+                    </section>
+
+                    <!-- Chapter 3: Constants -->
+                    <section class="chapter" id="constants">
+                        <h2 class="chapter-title"><i class="fas fa-bookmark"></i> Endpoint Constants</h2>
+
+                        <h3>Endpoints Class</h3>
+                        <pre><code class="language-java">public final class Endpoints {
+
+    private Endpoints() {} // Prevent instantiation
+
+    // User endpoints
+    public static final String USERS = "/users";
+    public static final String USER_BY_ID = "/users/{id}";
+    public static final String USER_AVATAR = "/users/{id}/avatar";
+
+    // Auth endpoints
+    public static final String LOGIN = "/login";
+    public static final String REGISTER = "/register";
+    public static final String LOGOUT = "/logout";
+
+    // Resource endpoints
+    public static final String RESOURCES = "/unknown";
+    public static final String RESOURCE_BY_ID = "/unknown/{id}";
+}</code></pre>
+
+                        <h3>HTTP Status Codes</h3>
+                        <pre><code class="language-java">public final class StatusCodes {
+
+    private StatusCodes() {}
+
+    public static final int OK = 200;
+    public static final int CREATED = 201;
+    public static final int NO_CONTENT = 204;
+    public static final int BAD_REQUEST = 400;
+    public static final int UNAUTHORIZED = 401;
+    public static final int FORBIDDEN = 403;
+    public static final int NOT_FOUND = 404;
+    public static final int SERVER_ERROR = 500;
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 4: Models -->
+                    <section class="chapter" id="models">
+                        <h2 class="chapter-title"><i class="fas fa-cube"></i> POJO Models</h2>
+
+                        <h3>Request Models</h3>
+                        <pre><code class="language-java">// CreateUserRequest.java
+public class CreateUserRequest {
+    private String name;
+    private String job;
+
+    // Builder pattern for clean instantiation
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private final CreateUserRequest request = new CreateUserRequest();
+
+        public Builder name(String name) {
+            request.name = name;
+            return this;
+        }
+
+        public Builder job(String job) {
+            request.job = job;
+            return this;
+        }
+
+        public CreateUserRequest build() {
+            return request;
+        }
+    }
+
+    // Getters
+    public String getName() { return name; }
+    public String getJob() { return job; }
+}</code></pre>
+
+                        <h3>Response Models</h3>
+                        <pre><code class="language-java">// UserResponse.java
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UserResponse {
+    private UserData data;
+    private Support support;
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class UserData {
+        private int id;
+        private String email;
+        @JsonProperty("first_name")
+        private String firstName;
+        @JsonProperty("last_name")
+        private String lastName;
+        private String avatar;
+
+        // Getters and setters
+        public int getId() { return id; }
+        public String getEmail() { return email; }
+        public String getFirstName() { return firstName; }
+        public String getLastName() { return lastName; }
+        public String getAvatar() { return avatar; }
+    }
+
+    public static class Support {
+        private String url;
+        private String text;
+
+        public String getUrl() { return url; }
+        public String getText() { return text; }
+    }
+
+    public UserData getData() { return data; }
+    public Support getSupport() { return support; }
+}</code></pre>
+
+                        <h3>Generic List Response</h3>
+                        <pre><code class="language-java">// ListResponse.java - Handles paginated responses
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ListResponse&lt;T&gt; {
+    private int page;
+    @JsonProperty("per_page")
+    private int perPage;
+    private int total;
+    @JsonProperty("total_pages")
+    private int totalPages;
+    private List&lt;T&gt; data;
+
+    // Getters
+    public int getPage() { return page; }
+    public int getPerPage() { return perPage; }
+    public int getTotal() { return total; }
+    public int getTotalPages() { return totalPages; }
+    public List&lt;T&gt; getData() { return data; }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 5: Request Specifications -->
+                    <section class="chapter" id="specs">
+                        <h2 class="chapter-title"><i class="fas fa-file-signature"></i> Request Specifications</h2>
+
+                        <h3>RequestSpecs Factory</h3>
+                        <pre><code class="language-java">public class RequestSpecs {
+
+    public static RequestSpecification getDefaultSpec() {
+        RequestSpecBuilder builder = new RequestSpecBuilder()
+            .setBaseUri(ConfigReader.getBaseUri())
+            .setBasePath(ConfigReader.getBasePath())
+            .setContentType(ContentType.JSON)
+            .setAccept(ContentType.JSON);
+
+        if (ConfigReader.logRequest()) {
+            builder.log(LogDetail.ALL);
+        }
+
+        return builder.build();
+    }
+
+    public static RequestSpecification getAuthenticatedSpec(String token) {
+        return new RequestSpecBuilder()
+            .addRequestSpecification(getDefaultSpec())
+            .addHeader("Authorization", "Bearer " + token)
+            .build();
+    }
+
+    public static RequestSpecification getFormSpec() {
+        return new RequestSpecBuilder()
+            .setBaseUri(ConfigReader.getBaseUri())
+            .setBasePath(ConfigReader.getBasePath())
+            .setContentType(ContentType.URLENC)
+            .build();
+    }
+
+    public static RequestSpecification getMultipartSpec() {
+        return new RequestSpecBuilder()
+            .setBaseUri(ConfigReader.getBaseUri())
+            .setBasePath(ConfigReader.getBasePath())
+            .setContentType("multipart/form-data")
+            .build();
+    }
+}</code></pre>
+
+                        <h3>Response Specifications</h3>
+                        <pre><code class="language-java">public class ResponseSpecs {
+
+    public static ResponseSpecification successSpec() {
+        return new ResponseSpecBuilder()
+            .expectStatusCode(StatusCodes.OK)
+            .expectContentType(ContentType.JSON)
+            .build();
+    }
+
+    public static ResponseSpecification createdSpec() {
+        return new ResponseSpecBuilder()
+            .expectStatusCode(StatusCodes.CREATED)
+            .expectContentType(ContentType.JSON)
+            .build();
+    }
+
+    public static ResponseSpecification notFoundSpec() {
+        return new ResponseSpecBuilder()
+            .expectStatusCode(StatusCodes.NOT_FOUND)
+            .build();
+    }
+
+    public static ResponseSpecification unauthorizedSpec() {
+        return new ResponseSpecBuilder()
+            .expectStatusCode(StatusCodes.UNAUTHORIZED)
+            .build();
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 6: Base Test -->
+                    <section class="chapter" id="base-test">
+                        <h2 class="chapter-title"><i class="fas fa-vial"></i> Base Test Class</h2>
+
+                        <pre><code class="language-java">public class BaseTest {
+
+    protected RequestSpecification requestSpec;
+    protected String authToken;
+
+    @BeforeClass(alwaysRun = true)
+    public void globalSetup() {
+        // Configure Rest Assured defaults
+        RestAssured.baseURI = ConfigReader.getBaseUri();
+        RestAssured.basePath = ConfigReader.getBasePath();
+
+        // Setup default request spec
+        requestSpec = RequestSpecs.getDefaultSpec();
+
+        // Enable logging on validation failure
+        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
+    }
+
+    @BeforeMethod
+    public void testSetup(Method method) {
+        System.out.println("Starting: " + method.getName());
+    }
+
+    @AfterMethod
+    public void testTeardown(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            System.out.println("Test Failed: " + result.getName());
+        }
+    }
+
+    @AfterClass(alwaysRun = true)
+    public void globalTeardown() {
+        RestAssured.reset();
+    }
+
+    // Helper methods
+    protected Response sendGet(String endpoint) {
+        return given()
+            .spec(requestSpec)
+        .when()
+            .get(endpoint);
+    }
+
+    protected Response sendPost(String endpoint, Object body) {
+        return given()
+            .spec(requestSpec)
+            .body(body)
+        .when()
+            .post(endpoint);
+    }
+
+    protected Response sendPut(String endpoint, Object body) {
+        return given()
+            .spec(requestSpec)
+            .body(body)
+        .when()
+            .put(endpoint);
+    }
+
+    protected Response sendDelete(String endpoint) {
+        return given()
+            .spec(requestSpec)
+        .when()
+            .delete(endpoint);
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: Utilities -->
+                    <section class="chapter" id="utilities">
+                        <h2 class="chapter-title"><i class="fas fa-tools"></i> Utility Classes</h2>
+
+                        <h3>AuthManager</h3>
+                        <pre><code class="language-java">public class AuthManager {
+
+    private static String cachedToken;
+    private static long tokenExpiry;
+
+    public static String getToken() {
+        if (cachedToken == null || isTokenExpired()) {
+            cachedToken = fetchNewToken();
+            tokenExpiry = System.currentTimeMillis() + 3600000; // 1 hour
+        }
+        return cachedToken;
+    }
+
+    private static boolean isTokenExpired() {
+        return System.currentTimeMillis() >= tokenExpiry - 60000;
+    }
+
+    private static String fetchNewToken() {
+        return given()
+            .spec(RequestSpecs.getFormSpec())
+            .formParam("email", ConfigReader.get("auth.username"))
+            .formParam("password", ConfigReader.get("auth.password"))
+        .when()
+            .post(Endpoints.LOGIN)
+        .then()
+            .statusCode(StatusCodes.OK)
+            .extract().path("token");
+    }
+
+    public static void clearToken() {
+        cachedToken = null;
+        tokenExpiry = 0;
+    }
+}</code></pre>
+
+                        <h3>DataGenerator</h3>
+                        <pre><code class="language-java">public class DataGenerator {
+
+    private static final Faker faker = new Faker();
+
+    public static CreateUserRequest randomUser() {
+        return CreateUserRequest.builder()
+            .name(faker.name().fullName())
+            .job(faker.job().title())
+            .build();
+    }
+
+    public static String randomEmail() {
+        return faker.internet().emailAddress();
+    }
+
+    public static String randomName() {
+        return faker.name().fullName();
+    }
+
+    public static Map&lt;String, Object&gt; randomUserMap() {
+        Map&lt;String, Object&gt; user = new HashMap&lt;&gt;();
+        user.put("name", randomName());
+        user.put("job", faker.job().title());
+        return user;
+    }
+}</code></pre>
+
+                        <h3>JsonUtils</h3>
+                        <pre><code class="language-java">public class JsonUtils {
+
+    private static final ObjectMapper mapper = new ObjectMapper()
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+    public static &lt;T&gt; T fromJson(String json, Class&lt;T&gt; clazz) {
+        try {
+            return mapper.readValue(json, clazz);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to parse JSON", e);
+        }
+    }
+
+    public static String toJson(Object object) {
+        try {
+            return mapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Failed to convert to JSON", e);
+        }
+    }
+
+    public static String readJsonFile(String filePath) {
+        try {
+            return new String(Files.readAllBytes(Paths.get(filePath)));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read file: " + filePath, e);
+        }
+    }
+
+    public static &lt;T&gt; T readJsonFileAs(String filePath, Class&lt;T&gt; clazz) {
+        String json = readJsonFile(filePath);
+        return fromJson(json, clazz);
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 8: Test Examples -->
+                    <section class="chapter" id="test-examples">
+                        <h2 class="chapter-title"><i class="fas fa-code"></i> Complete Test Examples</h2>
+
+                        <h3>User API Tests</h3>
+                        <pre><code class="language-java">public class UserApiTests extends BaseTest {
+
+    @Test(description = "Verify user creation")
+    public void testCreateUser() {
+        CreateUserRequest user = DataGenerator.randomUser();
+
+        sendPost(Endpoints.USERS, user)
+            .then()
+            .spec(ResponseSpecs.createdSpec())
+            .body("name", equalTo(user.getName()))
+            .body("job", equalTo(user.getJob()))
+            .body("id", notNullValue())
+            .body("createdAt", notNullValue());
+    }
+
+    @Test(description = "Verify get single user")
+    public void testGetUser() {
+        int userId = 2;
+
+        UserResponse response = given()
+            .spec(requestSpec)
+            .pathParam("id", userId)
+        .when()
+            .get(Endpoints.USER_BY_ID)
+        .then()
+            .spec(ResponseSpecs.successSpec())
+            .extract().as(UserResponse.class);
+
+        Assert.assertEquals(response.getData().getId(), userId);
+        Assert.assertNotNull(response.getData().getEmail());
+    }
+
+    @Test(description = "Verify user list pagination")
+    public void testGetUsersList() {
+        given()
+            .spec(requestSpec)
+            .queryParam("page", 1)
+            .queryParam("per_page", 5)
+        .when()
+            .get(Endpoints.USERS)
+        .then()
+            .spec(ResponseSpecs.successSpec())
+            .body("page", equalTo(1))
+            .body("per_page", equalTo(5))
+            .body("data.size()", lessThanOrEqualTo(5))
+            .body("data.id", everyItem(greaterThan(0)));
+    }
+
+    @Test(description = "Verify update user")
+    public void testUpdateUser() {
+        CreateUserRequest updatedUser = CreateUserRequest.builder()
+            .name("Updated Name")
+            .job("Senior Engineer")
+            .build();
+
+        given()
+            .spec(requestSpec)
+            .pathParam("id", 2)
+            .body(updatedUser)
+        .when()
+            .put(Endpoints.USER_BY_ID)
+        .then()
+            .spec(ResponseSpecs.successSpec())
+            .body("name", equalTo("Updated Name"))
+            .body("updatedAt", notNullValue());
+    }
+
+    @Test(description = "Verify delete user")
+    public void testDeleteUser() {
+        given()
+            .spec(requestSpec)
+            .pathParam("id", 2)
+        .when()
+            .delete(Endpoints.USER_BY_ID)
+        .then()
+            .statusCode(StatusCodes.NO_CONTENT);
+    }
+
+    @Test(description = "Verify user not found")
+    public void testUserNotFound() {
+        given()
+            .spec(requestSpec)
+            .pathParam("id", 9999)
+        .when()
+            .get(Endpoints.USER_BY_ID)
+        .then()
+            .spec(ResponseSpecs.notFoundSpec());
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 9: Reporting -->
+                    <section class="chapter" id="reporting">
+                        <h2 class="chapter-title"><i class="fas fa-chart-bar"></i> Reporting Integration</h2>
+
+                        <h3>Extent Reports Setup</h3>
+                        <pre><code class="language-java">public class ExtentReportListener implements ITestListener {
+
+    private static ExtentReports extent;
+    private static ThreadLocal&lt;ExtentTest&gt; test = new ThreadLocal&lt;&gt;();
+
+    @Override
+    public void onStart(ITestContext context) {
+        extent = new ExtentReports();
+        ExtentSparkReporter spark = new ExtentSparkReporter("reports/extent-report.html");
+        spark.config().setTheme(Theme.DARK);
+        spark.config().setDocumentTitle("API Test Report");
+        spark.config().setReportName("Rest Assured Tests");
+        extent.attachReporter(spark);
+    }
+
+    @Override
+    public void onTestStart(ITestResult result) {
+        ExtentTest extentTest = extent.createTest(result.getMethod().getMethodName(),
+            result.getMethod().getDescription());
+        test.set(extentTest);
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult result) {
+        test.get().pass("Test passed");
+    }
+
+    @Override
+    public void onTestFailure(ITestResult result) {
+        test.get().fail(result.getThrowable());
+    }
+
+    @Override
+    public void onFinish(ITestContext context) {
+        extent.flush();
+    }
+}</code></pre>
+
+                        <h3>Allure Reports</h3>
+                        <p>Add dependency and use annotations:</p>
+
+                        <pre><code class="language-java">@Epic("User Management")
+@Feature("User API")
+public class UserApiTests extends BaseTest {
+
+    @Test
+    @Story("Create User")
+    @Description("Verify user can be created successfully")
+    @Severity(SeverityLevel.CRITICAL)
+    public void testCreateUser() {
+        CreateUserRequest user = DataGenerator.randomUser();
+
+        Response response = sendPost(Endpoints.USERS, user);
+
+        Allure.step("Verify status code is 201", () -> {
+            response.then().statusCode(StatusCodes.CREATED);
+        });
+
+        Allure.step("Verify response contains user name", () -> {
+            response.then().body("name", equalTo(user.getName()));
+        });
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 10: CI/CD -->
+                    <section class="chapter" id="cicd">
+                        <h2 class="chapter-title"><i class="fas fa-rocket"></i> CI/CD Integration</h2>
+
+                        <h3>Maven POM Configuration</h3>
+                        <pre><code class="language-xml">&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.2.2&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;suiteXmlFiles&gt;
+                    &lt;suiteXmlFile&gt;testng.xml&lt;/suiteXmlFile&gt;
+                &lt;/suiteXmlFiles&gt;
+                &lt;systemPropertyVariables&gt;
+                    &lt;env&gt;${env}&lt;/env&gt;
+                &lt;/systemPropertyVariables&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+
+                        <h3>GitHub Actions Workflow</h3>
+                        <pre><code class="language-yaml">name: API Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run API Tests
+        run: mvn test -Denv=qa
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-report
+          path: target/surefire-reports/
+
+      - name: Publish Allure Report
+        uses: simple-elf/allure-report-action@v1.7
+        if: always()
+        with:
+          allure_results: target/allure-results</code></pre>
+
+                        <h3>Jenkins Pipeline</h3>
+                        <pre><code class="language-groovy">pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'ENV', choices: ['qa', 'staging', 'prod'], description: 'Environment')
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/your-repo/api-tests.git'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh "mvn clean test -Denv=${params.ENV}"
+            }
+        }
+
+        stage('Publish Report') {
+            steps {
+                allure includeProperties: false,
+                       jdk: '',
+                       results: [[path: 'target/allure-results']]
+            }
+        }
+    }
+
+    post {
+        always {
+            junit 'target/surefire-reports/*.xml'
+        }
+        failure {
+            mail to: 'team@example.com',
+                 subject: "API Tests Failed - ${env.JOB_NAME}",
+                 body: "Check: ${env.BUILD_URL}"
+        }
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 11: Best Practices -->
+                    <section class="chapter" id="best-practices">
+                        <h2 class="chapter-title"><i class="fas fa-trophy"></i> Best Practices</h2>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-check-circle"></i> Framework Best Practices</h4>
+                            <ul>
+                                <li><strong>Separation of concerns</strong> - Keep config, models, utils, and tests separate</li>
+                                <li><strong>Use POJOs</strong> - Type-safe request/response handling</li>
+                                <li><strong>Centralize configuration</strong> - Single source for URLs, credentials</li>
+                                <li><strong>Reusable specs</strong> - Create specs for common patterns</li>
+                                <li><strong>Data generation</strong> - Use Faker for dynamic test data</li>
+                                <li><strong>Independent tests</strong> - Each test should setup its own data</li>
+                                <li><strong>Meaningful names</strong> - Test methods should describe what they verify</li>
+                                <li><strong>Proper assertions</strong> - Validate status, headers, and body</li>
+                            </ul>
+                        </div>
+
+                        <h3>Test Data Management</h3>
+                        <pre><code class="language-java">// Use @DataProvider for data-driven tests
+@DataProvider(name = "validUsers")
+public Object[][] validUsers() {
+    return new Object[][] {
+        {"John", "Engineer"},
+        {"Jane", "Manager"},
+        {"Bob", "Developer"}
+    };
+}
+
+@Test(dataProvider = "validUsers")
+public void testCreateMultipleUsers(String name, String job) {
+    CreateUserRequest user = CreateUserRequest.builder()
+        .name(name)
+        .job(job)
+        .build();
+
+    sendPost(Endpoints.USERS, user)
+        .then()
+        .statusCode(StatusCodes.CREATED)
+        .body("name", equalTo(name));
+}</code></pre>
+
+                        <h3>Error Handling</h3>
+                        <pre><code class="language-java">// Custom assertions for common validations
+public class ApiAssertions {
+
+    public static void assertSuccessResponse(Response response) {
+        int statusCode = response.getStatusCode();
+        Assert.assertTrue(statusCode >= 200 && statusCode < 300,
+            "Expected success status but got: " + statusCode);
+    }
+
+    public static void assertErrorMessage(Response response, String expectedMessage) {
+        response.then()
+            .body("error", equalTo(expectedMessage));
+    }
+
+    public static void assertFieldNotEmpty(Response response, String field) {
+        String value = response.path(field);
+        Assert.assertNotNull(value, field + " should not be null");
+        Assert.assertFalse(value.isEmpty(), field + " should not be empty");
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What's Next?</h4>
+                            <p>You now have a complete API automation framework. Practice by implementing tests for a real API. Check out our <a href="/interview-qna/automation/automations-set-1.html">Automation Interview Q&A</a> for common API testing interview questions.</p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/api-testing/rest-assured-authentication.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Authentication</span>
+                    </a>
+                    <a href="/interview-qna/automation/automations-set-1.html" class="nav-next">
+                        <span>Automation Interview Q&A</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn API authentication in Rest Assured - Basic Auth, OAuth 2.0, API Keys, Bearer tokens, and JWT with practical examples.">
+    <title>API Authentication - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fas fa-exchange-alt"></i> API Testing
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 25 min read
+                        </span>
+                        <span class="article-level">
+                            <i class="fas fa-signal"></i> Intermediate
+                        </span>
+                    </div>
+                    <h1 class="article-title">API Authentication</h1>
+                    <p class="article-subtitle">
+                        Master different authentication mechanisms - Basic Auth, OAuth 2.0, API Keys, and JWT tokens in Rest Assured.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: Overview -->
+                    <section class="chapter" id="overview">
+                        <h2 class="chapter-title"><i class="fas fa-shield-alt"></i> Authentication Overview</h2>
+
+                        <p>
+                            API authentication verifies the identity of the client making requests. Different APIs use different authentication mechanisms based on security requirements.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-key"></i> Common Authentication Types</h4>
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>How It Works</th>
+                                        <th>Use Case</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Basic Auth</strong></td>
+                                        <td>Username:password in header</td>
+                                        <td>Internal APIs, simple auth</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>API Key</strong></td>
+                                        <td>Key in header or query param</td>
+                                        <td>Public APIs, rate limiting</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Bearer Token</strong></td>
+                                        <td>Token in Authorization header</td>
+                                        <td>OAuth, JWT-based systems</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>OAuth 2.0</strong></td>
+                                        <td>Token-based delegated auth</td>
+                                        <td>Third-party integrations</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2: Basic Authentication -->
+                    <section class="chapter" id="basic-auth">
+                        <h2 class="chapter-title"><i class="fas fa-user-lock"></i> Basic Authentication</h2>
+
+                        <p>
+                            Basic Auth sends credentials as Base64-encoded <code>username:password</code> in the Authorization header.
+                        </p>
+
+                        <h3>Using Rest Assured's Built-in Support</h3>
+                        <pre><code class="language-java">@Test
+public void basicAuthTest() {
+    given()
+        .auth().basic("username", "password")
+    .when()
+        .get("https://api.example.com/protected")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Preemptive Basic Auth</h3>
+                        <p>Sends credentials in the first request without waiting for 401 challenge:</p>
+
+                        <pre><code class="language-java">@Test
+public void preemptiveBasicAuth() {
+    given()
+        .auth().preemptive().basic("username", "password")
+    .when()
+        .get("https://api.example.com/protected")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> Preemptive vs Challenged</h4>
+                            <ul>
+                                <li><strong>Challenged</strong> - Waits for 401, then sends credentials (two requests)</li>
+                                <li><strong>Preemptive</strong> - Sends credentials immediately (one request, preferred)</li>
+                            </ul>
+                        </div>
+
+                        <h3>Manual Basic Auth Header</h3>
+                        <pre><code class="language-java">@Test
+public void manualBasicAuth() {
+    String credentials = "username:password";
+    String encodedAuth = Base64.getEncoder()
+        .encodeToString(credentials.getBytes());
+
+    given()
+        .header("Authorization", "Basic " + encodedAuth)
+    .when()
+        .get("https://api.example.com/protected")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Practical Example: Postman Echo</h3>
+                        <pre><code class="language-java">@Test
+public void testPostmanEchoBasicAuth() {
+    given()
+        .auth().preemptive().basic("postman", "password")
+    .when()
+        .get("https://postman-echo.com/basic-auth")
+    .then()
+        .statusCode(200)
+        .body("authenticated", equalTo(true));
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 3: API Keys -->
+                    <section class="chapter" id="api-keys">
+                        <h2 class="chapter-title"><i class="fas fa-key"></i> API Key Authentication</h2>
+
+                        <p>API keys are simple tokens that identify the calling application. They can be sent as headers or query parameters.</p>
+
+                        <h3>API Key in Header</h3>
+                        <pre><code class="language-java">@Test
+public void apiKeyInHeader() {
+    String apiKey = "your-api-key-here";
+
+    given()
+        .header("X-API-Key", apiKey)
+        // Or common variations:
+        // .header("Api-Key", apiKey)
+        // .header("Authorization", "ApiKey " + apiKey)
+    .when()
+        .get("https://api.example.com/data")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>API Key in Query Parameter</h3>
+                        <pre><code class="language-java">@Test
+public void apiKeyInQueryParam() {
+    String apiKey = "your-api-key-here";
+
+    given()
+        .queryParam("api_key", apiKey)
+        // Or: .queryParam("apikey", apiKey)
+    .when()
+        .get("https://api.example.com/data")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Real-World Example: Weather API</h3>
+                        <pre><code class="language-java">public class WeatherApiTest {
+    private static final String API_KEY = System.getenv("WEATHER_API_KEY");
+    private static final String BASE_URI = "https://api.openweathermap.org";
+
+    @Test
+    public void getCurrentWeather() {
+        given()
+            .baseUri(BASE_URI)
+            .queryParam("q", "London")
+            .queryParam("appid", API_KEY)
+            .queryParam("units", "metric")
+        .when()
+            .get("/data/2.5/weather")
+        .then()
+            .statusCode(200)
+            .body("name", equalTo("London"))
+            .body("main.temp", notNullValue());
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Security Best Practice</h4>
+                            <p>Never hardcode API keys in source code. Use environment variables or secure configuration management.</p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 4: Bearer Token -->
+                    <section class="chapter" id="bearer-token">
+                        <h2 class="chapter-title"><i class="fas fa-ticket-alt"></i> Bearer Token / JWT</h2>
+
+                        <p>Bearer tokens are sent in the Authorization header with the "Bearer" prefix. JWT (JSON Web Tokens) are a common format.</p>
+
+                        <h3>Using Bearer Token</h3>
+                        <pre><code class="language-java">@Test
+public void bearerTokenAuth() {
+    String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...";
+
+    given()
+        .auth().oauth2(token)  // Shorthand for Bearer token
+    .when()
+        .get("https://api.example.com/user/profile")
+    .then()
+        .statusCode(200);
+}
+
+// Equivalent manual approach
+@Test
+public void manualBearerToken() {
+    String token = "your-jwt-token";
+
+    given()
+        .header("Authorization", "Bearer " + token)
+    .when()
+        .get("https://api.example.com/user/profile")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Login and Use Token</h3>
+                        <pre><code class="language-java">public class TokenAuthTest {
+
+    private String authToken;
+
+    @BeforeClass
+    public void login() {
+        // Step 1: Login and get token
+        authToken = given()
+            .contentType(ContentType.JSON)
+            .body(Map.of(
+                "email", "eve.holt@reqres.in",
+                "password", "cityslicka"
+            ))
+        .when()
+            .post("https://reqres.in/api/login")
+        .then()
+            .statusCode(200)
+            .extract().path("token");
+
+        System.out.println("Token: " + authToken);
+    }
+
+    @Test
+    public void accessProtectedResource() {
+        given()
+            .auth().oauth2(authToken)
+        .when()
+            .get("https://api.example.com/protected")
+        .then()
+            .statusCode(200);
+    }
+}</code></pre>
+
+                        <h3>Reusable Request Spec with Token</h3>
+                        <pre><code class="language-java">public class AuthenticatedApiTest {
+
+    private static RequestSpecification authSpec;
+
+    @BeforeClass
+    public static void setupAuth() {
+        String token = getAuthToken();
+
+        authSpec = new RequestSpecBuilder()
+            .setBaseUri("https://api.example.com")
+            .addHeader("Authorization", "Bearer " + token)
+            .setContentType(ContentType.JSON)
+            .build();
+    }
+
+    private static String getAuthToken() {
+        return given()
+            .contentType(ContentType.JSON)
+            .body(Map.of("username", "testuser", "password", "secret"))
+        .when()
+            .post("https://api.example.com/auth/login")
+        .then()
+            .extract().path("accessToken");
+    }
+
+    @Test
+    public void testGetUserProfile() {
+        given()
+            .spec(authSpec)
+        .when()
+            .get("/user/profile")
+        .then()
+            .statusCode(200)
+            .body("username", equalTo("testuser"));
+    }
+
+    @Test
+    public void testUpdateProfile() {
+        given()
+            .spec(authSpec)
+            .body(Map.of("displayName", "Test User"))
+        .when()
+            .patch("/user/profile")
+        .then()
+            .statusCode(200);
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 5: OAuth 2.0 -->
+                    <section class="chapter" id="oauth2">
+                        <h2 class="chapter-title"><i class="fas fa-handshake"></i> OAuth 2.0</h2>
+
+                        <p>OAuth 2.0 is an authorization framework that enables secure delegated access. Common flows include Client Credentials and Authorization Code.</p>
+
+                        <h3>Client Credentials Flow</h3>
+                        <p>Used for machine-to-machine authentication (no user interaction):</p>
+
+                        <pre><code class="language-java">public class OAuth2ClientCredentialsTest {
+
+    private static final String TOKEN_URL = "https://auth.example.com/oauth/token";
+    private static final String CLIENT_ID = System.getenv("CLIENT_ID");
+    private static final String CLIENT_SECRET = System.getenv("CLIENT_SECRET");
+
+    private String accessToken;
+
+    @BeforeClass
+    public void getAccessToken() {
+        accessToken = given()
+            .contentType(ContentType.URLENC)
+            .formParam("grant_type", "client_credentials")
+            .formParam("client_id", CLIENT_ID)
+            .formParam("client_secret", CLIENT_SECRET)
+            .formParam("scope", "read write")
+        .when()
+            .post(TOKEN_URL)
+        .then()
+            .statusCode(200)
+            .extract().path("access_token");
+    }
+
+    @Test
+    public void testApiWithOAuthToken() {
+        given()
+            .auth().oauth2(accessToken)
+        .when()
+            .get("https://api.example.com/resources")
+        .then()
+            .statusCode(200);
+    }
+}</code></pre>
+
+                        <h3>OAuth 2.0 with Basic Auth for Token</h3>
+                        <p>Some APIs require client credentials as Basic Auth when requesting tokens:</p>
+
+                        <pre><code class="language-java">@BeforeClass
+public void getTokenWithBasicAuth() {
+    String clientId = "your-client-id";
+    String clientSecret = "your-client-secret";
+
+    accessToken = given()
+        .auth().preemptive().basic(clientId, clientSecret)
+        .contentType(ContentType.URLENC)
+        .formParam("grant_type", "client_credentials")
+    .when()
+        .post("https://auth.example.com/token")
+    .then()
+        .statusCode(200)
+        .extract().path("access_token");
+}</code></pre>
+
+                        <h3>Token Refresh Pattern</h3>
+                        <pre><code class="language-java">public class TokenManager {
+    private String accessToken;
+    private String refreshToken;
+    private long expiresAt;
+
+    public String getValidToken() {
+        if (isTokenExpired()) {
+            refreshAccessToken();
+        }
+        return accessToken;
+    }
+
+    private boolean isTokenExpired() {
+        return System.currentTimeMillis() >= expiresAt - 60000; // 1 min buffer
+    }
+
+    private void refreshAccessToken() {
+        Response response = given()
+            .contentType(ContentType.URLENC)
+            .formParam("grant_type", "refresh_token")
+            .formParam("refresh_token", refreshToken)
+            .formParam("client_id", "your-client-id")
+        .when()
+            .post("https://auth.example.com/token")
+        .then()
+            .statusCode(200)
+            .extract().response();
+
+        accessToken = response.path("access_token");
+        refreshToken = response.path("refresh_token");
+        int expiresIn = response.path("expires_in");
+        expiresAt = System.currentTimeMillis() + (expiresIn * 1000L);
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 6: Digest Authentication -->
+                    <section class="chapter" id="digest-auth">
+                        <h2 class="chapter-title"><i class="fas fa-fingerprint"></i> Digest Authentication</h2>
+
+                        <p>Digest auth is more secure than Basic auth as it doesn't send the password in plain text.</p>
+
+                        <pre><code class="language-java">@Test
+public void digestAuthTest() {
+    given()
+        .auth().digest("username", "password")
+    .when()
+        .get("https://api.example.com/digest-protected")
+    .then()
+        .statusCode(200);
+}
+
+// Practical example with Postman Echo
+@Test
+public void postmanEchoDigestAuth() {
+    given()
+        .auth().digest("postman", "password")
+    .when()
+        .get("https://postman-echo.com/digest-auth")
+    .then()
+        .statusCode(200)
+        .body("authenticated", equalTo(true));
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: Custom Authentication -->
+                    <section class="chapter" id="custom-auth">
+                        <h2 class="chapter-title"><i class="fas fa-cogs"></i> Custom Authentication</h2>
+
+                        <h3>HMAC Signature Authentication</h3>
+                        <p>Some APIs require signed requests using HMAC:</p>
+
+                        <pre><code class="language-java">public class HmacAuthTest {
+
+    private static final String API_KEY = "your-api-key";
+    private static final String SECRET_KEY = "your-secret-key";
+
+    @Test
+    public void hmacSignedRequest() {
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        String method = "GET";
+        String path = "/api/account";
+
+        // Create signature
+        String signatureData = timestamp + method + path;
+        String signature = generateHmacSignature(signatureData, SECRET_KEY);
+
+        given()
+            .header("X-API-Key", API_KEY)
+            .header("X-Timestamp", timestamp)
+            .header("X-Signature", signature)
+        .when()
+            .get("https://api.example.com" + path)
+        .then()
+            .statusCode(200);
+    }
+
+    private String generateHmacSignature(String data, String secret) {
+        try {
+            Mac mac = Mac.getInstance("HmacSHA256");
+            SecretKeySpec keySpec = new SecretKeySpec(
+                secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
+            mac.init(keySpec);
+            byte[] hash = mac.doFinal(data.getBytes(StandardCharsets.UTF_8));
+            return Base64.getEncoder().encodeToString(hash);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to generate HMAC", e);
+        }
+    }
+}</code></pre>
+
+                        <h3>Request Filter for Auth</h3>
+                        <p>Add authentication to all requests using filters:</p>
+
+                        <pre><code class="language-java">public class AuthFilter implements Filter {
+    private final String apiKey;
+
+    public AuthFilter(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    @Override
+    public Response filter(FilterableRequestSpecification requestSpec,
+                          FilterableResponseSpecification responseSpec,
+                          FilterContext ctx) {
+        // Add auth header to every request
+        requestSpec.header("X-API-Key", apiKey);
+        return ctx.next(requestSpec, responseSpec);
+    }
+}
+
+// Usage
+@Test
+public void testWithAuthFilter() {
+    given()
+        .filter(new AuthFilter("my-api-key"))
+    .when()
+        .get("https://api.example.com/data")
+    .then()
+        .statusCode(200);
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 8: Testing Auth Scenarios -->
+                    <section class="chapter" id="testing-scenarios">
+                        <h2 class="chapter-title"><i class="fas fa-vial"></i> Testing Auth Scenarios</h2>
+
+                        <h3>Test Unauthorized Access</h3>
+                        <pre><code class="language-java">@Test
+public void testUnauthorizedWithoutToken() {
+    given()
+        // No auth provided
+    .when()
+        .get("https://api.example.com/protected")
+    .then()
+        .statusCode(401)
+        .body("error", equalTo("Unauthorized"));
+}
+
+@Test
+public void testUnauthorizedWithInvalidToken() {
+    given()
+        .auth().oauth2("invalid-token")
+    .when()
+        .get("https://api.example.com/protected")
+    .then()
+        .statusCode(401);
+}
+
+@Test
+public void testExpiredToken() {
+    String expiredToken = "eyJ...expired...";
+
+    given()
+        .auth().oauth2(expiredToken)
+    .when()
+        .get("https://api.example.com/protected")
+    .then()
+        .statusCode(401)
+        .body("error", containsString("expired"));
+}</code></pre>
+
+                        <h3>Test Forbidden Access (Authorization)</h3>
+                        <pre><code class="language-java">@Test
+public void testForbiddenWithInsufficientPermissions() {
+    String userToken = getUserToken();  // Regular user token
+
+    given()
+        .auth().oauth2(userToken)
+    .when()
+        .get("https://api.example.com/admin/users")  // Admin-only endpoint
+    .then()
+        .statusCode(403)
+        .body("error", containsString("Forbidden"));
+}
+
+@Test
+public void testAdminAccess() {
+    String adminToken = getAdminToken();
+
+    given()
+        .auth().oauth2(adminToken)
+    .when()
+        .get("https://api.example.com/admin/users")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Complete Auth Test Suite</h3>
+                        <pre><code class="language-java">public class AuthenticationTests {
+
+    @Test(groups = "auth")
+    public void testSuccessfulLogin() {
+        given()
+            .contentType(ContentType.JSON)
+            .body(Map.of(
+                "email", "eve.holt@reqres.in",
+                "password", "cityslicka"
+            ))
+        .when()
+            .post("https://reqres.in/api/login")
+        .then()
+            .statusCode(200)
+            .body("token", notNullValue())
+            .body("token", matchesPattern("[A-Za-z0-9]+"));
+    }
+
+    @Test(groups = "auth")
+    public void testLoginWithMissingPassword() {
+        given()
+            .contentType(ContentType.JSON)
+            .body(Map.of("email", "eve.holt@reqres.in"))
+        .when()
+            .post("https://reqres.in/api/login")
+        .then()
+            .statusCode(400)
+            .body("error", equalTo("Missing password"));
+    }
+
+    @Test(groups = "auth")
+    public void testLoginWithInvalidCredentials() {
+        given()
+            .contentType(ContentType.JSON)
+            .body(Map.of(
+                "email", "invalid@example.com",
+                "password", "wrongpassword"
+            ))
+        .when()
+            .post("https://reqres.in/api/login")
+        .then()
+            .statusCode(400)
+            .body("error", notNullValue());
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-arrow-right"></i> Next Steps</h4>
+                            <p>Now that you understand authentication, learn how to build a complete <a href="/api-testing/rest-assured-framework.html">API Framework Design</a> with proper architecture, utilities, and reporting.</p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/api-testing/rest-assured-request-response.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Request & Response</span>
+                    </a>
+                    <a href="/api-testing/rest-assured-framework.html" class="nav-next">
+                        <span>API Framework Design</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

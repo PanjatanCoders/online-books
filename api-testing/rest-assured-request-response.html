@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master HTTP methods, headers, query parameters, JsonPath expressions, and response validation in Rest Assured with practical examples.">
+    <title>Request & Response Handling - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fas fa-exchange-alt"></i> API Testing
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 30 min read
+                        </span>
+                        <span class="article-level">
+                            <i class="fas fa-signal"></i> Intermediate
+                        </span>
+                    </div>
+                    <h1 class="article-title">Request & Response Handling</h1>
+                    <p class="article-subtitle">
+                        Deep dive into HTTP methods, headers, parameters, and advanced response validation with JsonPath.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: HTTP Methods -->
+                    <section class="chapter" id="http-methods">
+                        <h2 class="chapter-title"><i class="fas fa-exchange-alt"></i> HTTP Methods</h2>
+
+                        <h3>PUT - Full Update</h3>
+                        <p>PUT replaces the entire resource with the provided data:</p>
+
+                        <pre><code class="language-java">@Test
+public void updateUserWithPut() {
+    Map&lt;String, String&gt; updatedUser = new HashMap&lt;&gt;();
+    updatedUser.put("name", "Updated Name");
+    updatedUser.put("job", "Senior Engineer");
+
+    given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body(updatedUser)
+    .when()
+        .put("/api/users/2")
+    .then()
+        .statusCode(200)
+        .body("name", equalTo("Updated Name"))
+        .body("job", equalTo("Senior Engineer"))
+        .body("updatedAt", notNullValue());
+}</code></pre>
+
+                        <h3>PATCH - Partial Update</h3>
+                        <p>PATCH updates only the specified fields:</p>
+
+                        <pre><code class="language-java">@Test
+public void partialUpdateWithPatch() {
+    // Only updating the job field
+    String patchBody = """
+        {
+            "job": "Tech Lead"
+        }
+        """;
+
+    given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body(patchBody)
+    .when()
+        .patch("/api/users/2")
+    .then()
+        .statusCode(200)
+        .body("job", equalTo("Tech Lead"))
+        .body("updatedAt", notNullValue());
+}</code></pre>
+
+                        <h3>DELETE - Remove Resource</h3>
+                        <pre><code class="language-java">@Test
+public void deleteUser() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .delete("/api/users/2")
+    .then()
+        .statusCode(204);  // No content on successful delete
+}
+
+@Test
+public void verifyDeletedResourceNotFound() {
+    // Delete the resource
+    given().delete("https://reqres.in/api/users/999");
+
+    // Verify it's gone (depends on API implementation)
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users/999")
+    .then()
+        .statusCode(404);
+}</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> PUT vs PATCH</h4>
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>PUT</th>
+                                        <th>PATCH</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Replaces entire resource</td>
+                                        <td>Updates specified fields only</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Must send all fields</td>
+                                        <td>Send only changed fields</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Idempotent</td>
+                                        <td>Not necessarily idempotent</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2: Headers -->
+                    <section class="chapter" id="headers">
+                        <h2 class="chapter-title"><i class="fas fa-heading"></i> Working with Headers</h2>
+
+                        <h3>Setting Request Headers</h3>
+                        <pre><code class="language-java">@Test
+public void setRequestHeaders() {
+    given()
+        .baseUri("https://reqres.in")
+        // Single header
+        .header("Accept", "application/json")
+        .header("X-Custom-Header", "CustomValue")
+
+        // Content-Type shorthand
+        .contentType(ContentType.JSON)
+        .accept(ContentType.JSON)
+    .when()
+        .get("/api/users")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Multiple Headers</h3>
+                        <pre><code class="language-java">@Test
+public void setMultipleHeaders() {
+    // Using Headers object
+    Headers headers = new Headers(
+        new Header("Accept", "application/json"),
+        new Header("X-Request-ID", UUID.randomUUID().toString()),
+        new Header("X-Client-Version", "1.0.0")
+    );
+
+    given()
+        .baseUri("https://reqres.in")
+        .headers(headers)
+    .when()
+        .get("/api/users")
+    .then()
+        .statusCode(200);
+}
+
+@Test
+public void headersFromMap() {
+    Map&lt;String, String&gt; headerMap = new HashMap&lt;&gt;();
+    headerMap.put("Accept", "application/json");
+    headerMap.put("X-Api-Version", "v2");
+
+    given()
+        .headers(headerMap)
+    .when()
+        .get("https://reqres.in/api/users")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Validating Response Headers</h3>
+                        <pre><code class="language-java">@Test
+public void validateResponseHeaders() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users")
+    .then()
+        .statusCode(200)
+        // Exact match
+        .header("Content-Type", "application/json; charset=utf-8")
+
+        // Partial match
+        .header("Content-Type", containsString("application/json"))
+
+        // Check header exists
+        .header("Date", notNullValue())
+
+        // Multiple header validations
+        .headers("Content-Type", containsString("json"),
+                 "Transfer-Encoding", equalTo("chunked"));
+}
+
+@Test
+public void extractHeaders() {
+    Response response = given()
+        .get("https://reqres.in/api/users")
+    .then()
+        .extract().response();
+
+    // Get single header
+    String contentType = response.getHeader("Content-Type");
+
+    // Get all headers
+    Headers allHeaders = response.getHeaders();
+    for (Header header : allHeaders) {
+        System.out.println(header.getName() + ": " + header.getValue());
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 3: Parameters -->
+                    <section class="chapter" id="parameters">
+                        <h2 class="chapter-title"><i class="fas fa-sliders-h"></i> Query & Path Parameters</h2>
+
+                        <h3>Query Parameters</h3>
+                        <p>Query params appear after <code>?</code> in URL: <code>/users?page=1&per_page=5</code></p>
+
+                        <pre><code class="language-java">@Test
+public void queryParameters() {
+    given()
+        .baseUri("https://reqres.in")
+        // Individual params
+        .queryParam("page", 2)
+        .queryParam("per_page", 3)
+    .when()
+        .get("/api/users")
+    .then()
+        .statusCode(200)
+        .body("page", equalTo(2))
+        .body("per_page", equalTo(3));
+}
+
+@Test
+public void multipleQueryParamsFromMap() {
+    Map&lt;String, Object&gt; params = new HashMap&lt;&gt;();
+    params.put("page", 1);
+    params.put("per_page", 10);
+
+    given()
+        .baseUri("https://reqres.in")
+        .queryParams(params)
+    .when()
+        .get("/api/users")
+    .then()
+        .statusCode(200);
+}
+
+@Test
+public void multiValueQueryParam() {
+    // For APIs that accept: /search?tag=java&tag=selenium
+    given()
+        .baseUri("https://api.example.com")
+        .queryParam("tag", "java", "selenium", "testing")
+    .when()
+        .get("/search")
+    .then()
+        .statusCode(200);
+}</code></pre>
+
+                        <h3>Path Parameters</h3>
+                        <p>Path params are part of the URL path: <code>/users/{id}</code></p>
+
+                        <pre><code class="language-java">@Test
+public void pathParameters() {
+    int userId = 5;
+
+    given()
+        .baseUri("https://reqres.in")
+        .pathParam("id", userId)
+    .when()
+        .get("/api/users/{id}")
+    .then()
+        .statusCode(200)
+        .body("data.id", equalTo(userId));
+}
+
+@Test
+public void multiplePathParams() {
+    given()
+        .baseUri("https://api.example.com")
+        .pathParam("orgId", "acme-corp")
+        .pathParam("userId", 123)
+    .when()
+        .get("/organizations/{orgId}/users/{userId}")
+    .then()
+        .statusCode(200);
+}
+
+@Test
+public void pathParamsFromMap() {
+    Map&lt;String, Object&gt; pathParams = new HashMap&lt;&gt;();
+    pathParams.put("version", "v2");
+    pathParams.put("resource", "users");
+    pathParams.put("id", 42);
+
+    given()
+        .pathParams(pathParams)
+    .when()
+        .get("https://api.example.com/{version}/{resource}/{id}")
+    .then()
+        .statusCode(200);
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 4: Request Body -->
+                    <section class="chapter" id="request-body">
+                        <h2 class="chapter-title"><i class="fas fa-file-code"></i> Request Body Types</h2>
+
+                        <h3>JSON Body</h3>
+                        <pre><code class="language-java">@Test
+public void jsonRequestBody() {
+    // Using JSON string (Java 15+ text blocks)
+    String jsonBody = """
+        {
+            "name": "Test User",
+            "email": "test@example.com",
+            "address": {
+                "street": "123 Main St",
+                "city": "Boston"
+            },
+            "tags": ["premium", "verified"]
+        }
+        """;
+
+    given()
+        .contentType(ContentType.JSON)
+        .body(jsonBody)
+    .when()
+        .post("https://api.example.com/users")
+    .then()
+        .statusCode(201);
+}</code></pre>
+
+                        <h3>Form Data</h3>
+                        <pre><code class="language-java">@Test
+public void formDataRequest() {
+    given()
+        .contentType(ContentType.URLENC)  // application/x-www-form-urlencoded
+        .formParam("username", "testuser")
+        .formParam("password", "secret123")
+    .when()
+        .post("https://api.example.com/login")
+    .then()
+        .statusCode(200);
+}
+
+@Test
+public void multipartFormData() {
+    given()
+        .multiPart("file", new File("test-data/document.pdf"))
+        .multiPart("description", "Test document")
+        .multiPart("category", "reports")
+    .when()
+        .post("https://api.example.com/upload")
+    .then()
+        .statusCode(201);
+}</code></pre>
+
+                        <h3>Nested JSON with POJO</h3>
+                        <pre><code class="language-java">// Address.java
+public class Address {
+    private String street;
+    private String city;
+    private String zipCode;
+    // Constructors, getters, setters
+}
+
+// UserRequest.java
+public class UserRequest {
+    private String name;
+    private String email;
+    private Address address;
+    private List&lt;String&gt; roles;
+    // Constructors, getters, setters
+}
+
+@Test
+public void nestedJsonWithPojo() {
+    Address address = new Address("456 Oak Ave", "Seattle", "98101");
+
+    UserRequest user = new UserRequest();
+    user.setName("Jane Doe");
+    user.setEmail("jane@example.com");
+    user.setAddress(address);
+    user.setRoles(Arrays.asList("admin", "user"));
+
+    given()
+        .contentType(ContentType.JSON)
+        .body(user)  // Serialized to nested JSON
+    .when()
+        .post("https://api.example.com/users")
+    .then()
+        .statusCode(201);
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 5: JsonPath -->
+                    <section class="chapter" id="jsonpath">
+                        <h2 class="chapter-title"><i class="fas fa-search"></i> JsonPath Expressions</h2>
+
+                        <p>JsonPath is a query language for JSON, similar to XPath for XML.</p>
+
+                        <h3>Sample Response</h3>
+                        <pre><code class="language-json">{
+    "page": 1,
+    "total": 12,
+    "data": [
+        {
+            "id": 1,
+            "email": "george@reqres.in",
+            "first_name": "George",
+            "last_name": "Bluth",
+            "avatar": "https://reqres.in/img/faces/1-image.jpg"
+        },
+        {
+            "id": 2,
+            "email": "janet@reqres.in",
+            "first_name": "Janet",
+            "last_name": "Weaver",
+            "avatar": "https://reqres.in/img/faces/2-image.jpg"
+        }
+    ],
+    "support": {
+        "url": "https://reqres.in",
+        "text": "Support message"
+    }
+}</code></pre>
+
+                        <h3>JsonPath Syntax</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Expression</th>
+                                    <th>Description</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>page</code></td>
+                                    <td>Root level field</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td><code>data[0].email</code></td>
+                                    <td>First array element's email</td>
+                                    <td>"george@reqres.in"</td>
+                                </tr>
+                                <tr>
+                                    <td><code>data[-1].id</code></td>
+                                    <td>Last array element's id</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td><code>data.id</code></td>
+                                    <td>All ids from array</td>
+                                    <td>[1, 2]</td>
+                                </tr>
+                                <tr>
+                                    <td><code>data.size()</code></td>
+                                    <td>Array size</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td><code>support.url</code></td>
+                                    <td>Nested object field</td>
+                                    <td>"https://reqres.in"</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>JsonPath in Validations</h3>
+                        <pre><code class="language-java">@Test
+public void jsonPathValidations() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users?page=1")
+    .then()
+        .statusCode(200)
+
+        // Simple field
+        .body("page", equalTo(1))
+
+        // Array element by index
+        .body("data[0].id", equalTo(1))
+        .body("data[0].email", equalTo("george.bluth@reqres.in"))
+
+        // Array operations
+        .body("data.size()", equalTo(6))
+        .body("data.id", hasItems(1, 2, 3))
+
+        // Nested objects
+        .body("support.url", containsString("reqres"))
+
+        // Collection of values
+        .body("data.email", everyItem(containsString("@")));
+}</code></pre>
+
+                        <h3>Groovy GPath Expressions</h3>
+                        <p>Rest Assured uses Groovy's GPath for advanced queries:</p>
+
+                        <pre><code class="language-java">@Test
+public void gPathExpressions() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users?page=1")
+    .then()
+        .statusCode(200)
+
+        // Find single item matching condition
+        .body("data.find { it.id == 1 }.email", equalTo("george.bluth@reqres.in"))
+
+        // Find all items matching condition
+        .body("data.findAll { it.id > 3 }.size()", greaterThan(0))
+
+        // Collect specific field from all items
+        .body("data.collect { it.first_name }", hasItem("George"))
+
+        // Sum, min, max
+        .body("data.id.sum()", greaterThan(0))
+        .body("data.id.min()", equalTo(1))
+        .body("data.id.max()", equalTo(6));
+}</code></pre>
+
+                        <h3>Extracting with JsonPath</h3>
+                        <pre><code class="language-java">@Test
+public void extractWithJsonPath() {
+    Response response = given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users?page=1")
+    .then()
+        .extract().response();
+
+    // Using JsonPath object
+    JsonPath jsonPath = response.jsonPath();
+
+    // Extract single value
+    int page = jsonPath.getInt("page");
+    String firstEmail = jsonPath.getString("data[0].email");
+
+    // Extract list
+    List&lt;String&gt; emails = jsonPath.getList("data.email");
+    List&lt;Integer&gt; ids = jsonPath.getList("data.id", Integer.class);
+
+    // Extract as Map
+    Map&lt;String, Object&gt; firstUser = jsonPath.getMap("data[0]");
+
+    // Extract list of objects
+    List&lt;Map&lt;String, Object&gt;&gt; allUsers = jsonPath.getList("data");
+
+    System.out.println("Emails: " + emails);
+    System.out.println("First user: " + firstUser);
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 6: Response Extraction -->
+                    <section class="chapter" id="extraction">
+                        <h2 class="chapter-title"><i class="fas fa-download"></i> Response Extraction Patterns</h2>
+
+                        <h3>Extract Full Response</h3>
+                        <pre><code class="language-java">@Test
+public void extractFullResponse() {
+    Response response = given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users/2")
+    .then()
+        .statusCode(200)
+        .extract().response();
+
+    // Response metadata
+    int statusCode = response.getStatusCode();
+    String statusLine = response.getStatusLine();
+    long responseTime = response.getTime();
+
+    // Body as string
+    String body = response.getBody().asString();
+
+    // Pretty print
+    response.prettyPrint();
+
+    System.out.println("Status: " + statusCode);
+    System.out.println("Time: " + responseTime + "ms");
+}</code></pre>
+
+                        <h3>Extract Specific Fields</h3>
+                        <pre><code class="language-java">@Test
+public void extractSpecificFields() {
+    // Extract single field directly
+    String email = given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users/2")
+    .then()
+        .statusCode(200)
+        .extract().path("data.email");
+
+    System.out.println("Email: " + email);
+
+    // Extract multiple values
+    Response response = given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users/2")
+    .then()
+        .extract().response();
+
+    String firstName = response.path("data.first_name");
+    String lastName = response.path("data.last_name");
+    int id = response.path("data.id");
+}</code></pre>
+
+                        <h3>Deserialize to POJO</h3>
+                        <pre><code class="language-java">// UserResponse.java
+public class UserResponse {
+    private UserData data;
+    private Support support;
+
+    // Nested classes
+    public static class UserData {
+        private int id;
+        private String email;
+        private String first_name;
+        private String last_name;
+        // getters, setters
+    }
+
+    public static class Support {
+        private String url;
+        private String text;
+        // getters, setters
+    }
+    // getters, setters
+}
+
+@Test
+public void deserializeToPojo() {
+    UserResponse userResponse = given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users/2")
+    .then()
+        .statusCode(200)
+        .extract().as(UserResponse.class);
+
+    Assert.assertEquals(userResponse.getData().getId(), 2);
+    Assert.assertNotNull(userResponse.getData().getEmail());
+}</code></pre>
+
+                        <h3>Chaining Requests</h3>
+                        <pre><code class="language-java">@Test
+public void chainedRequests() {
+    // Step 1: Create a user and get the ID
+    String userId = given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body(Map.of("name", "Test User", "job", "Tester"))
+    .when()
+        .post("/api/users")
+    .then()
+        .statusCode(201)
+        .extract().path("id");
+
+    // Step 2: Update the user using extracted ID
+    given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body(Map.of("name", "Updated User", "job", "Senior Tester"))
+    .when()
+        .put("/api/users/" + userId)
+    .then()
+        .statusCode(200)
+        .body("name", equalTo("Updated User"));
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: Schema Validation -->
+                    <section class="chapter" id="schema-validation">
+                        <h2 class="chapter-title"><i class="fas fa-check-double"></i> JSON Schema Validation</h2>
+
+                        <p>Validate that API responses conform to a defined schema structure.</p>
+
+                        <h3>Create JSON Schema</h3>
+                        <p>Save as <code>src/test/resources/schemas/user-schema.json</code>:</p>
+
+                        <pre><code class="language-json">{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "type": "object",
+    "required": ["data", "support"],
+    "properties": {
+        "data": {
+            "type": "object",
+            "required": ["id", "email", "first_name", "last_name"],
+            "properties": {
+                "id": { "type": "integer" },
+                "email": { "type": "string", "format": "email" },
+                "first_name": { "type": "string" },
+                "last_name": { "type": "string" },
+                "avatar": { "type": "string", "format": "uri" }
+            }
+        },
+        "support": {
+            "type": "object",
+            "properties": {
+                "url": { "type": "string" },
+                "text": { "type": "string" }
+            }
+        }
+    }
+}</code></pre>
+
+                        <h3>Validate Against Schema</h3>
+                        <pre><code class="language-java">import static io.restassured.module.jsv.JsonSchemaValidator.*;
+
+@Test
+public void validateJsonSchema() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users/2")
+    .then()
+        .statusCode(200)
+        .body(matchesJsonSchemaInClasspath("schemas/user-schema.json"));
+}
+
+@Test
+public void validateSchemaFromFile() {
+    File schemaFile = new File("src/test/resources/schemas/user-schema.json");
+
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users/2")
+    .then()
+        .statusCode(200)
+        .body(matchesJsonSchema(schemaFile));
+}</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> Schema Validation Benefits</h4>
+                            <ul>
+                                <li>Catches breaking API changes early</li>
+                                <li>Validates data types automatically</li>
+                                <li>Ensures required fields are present</li>
+                                <li>Documents API contract</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 8: Error Handling -->
+                    <section class="chapter" id="error-handling">
+                        <h2 class="chapter-title"><i class="fas fa-exclamation-triangle"></i> Testing Error Scenarios</h2>
+
+                        <h3>Testing 4xx Client Errors</h3>
+                        <pre><code class="language-java">@Test
+public void testNotFound() {
+    given()
+        .baseUri("https://reqres.in")
+    .when()
+        .get("/api/users/999")
+    .then()
+        .statusCode(404)
+        .body(equalTo("{}"));  // Empty response
+}
+
+@Test
+public void testBadRequest() {
+    given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body("{invalid json}")  // Malformed JSON
+    .when()
+        .post("/api/users")
+    .then()
+        .statusCode(400);
+}
+
+@Test
+public void testUnauthorized() {
+    given()
+        .baseUri("https://api.example.com")
+        // No auth token provided
+    .when()
+        .get("/protected/resource")
+    .then()
+        .statusCode(401)
+        .body("error", equalTo("Unauthorized"));
+}</code></pre>
+
+                        <h3>Validating Error Response Structure</h3>
+                        <pre><code class="language-java">@Test
+public void testLoginFailure() {
+    given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body(Map.of("email", "peter@klaven"))  // Missing password
+    .when()
+        .post("/api/login")
+    .then()
+        .statusCode(400)
+        .body("error", equalTo("Missing password"));
+}
+
+@Test
+public void testRegistrationValidation() {
+    given()
+        .baseUri("https://reqres.in")
+        .contentType(ContentType.JSON)
+        .body(Map.of("email", "invalid-email"))  // Invalid email format
+    .when()
+        .post("/api/register")
+    .then()
+        .statusCode(400)
+        .body("error", notNullValue());
+}</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-arrow-right"></i> Next Steps</h4>
+                            <p>Learn how to handle different authentication mechanisms in <a href="/api-testing/rest-assured-authentication.html">Authentication</a> - covering Basic Auth, OAuth2, API Keys, and JWT tokens.</p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/api-testing/rest-assured-basics.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Rest Assured Basics</span>
+                    </a>
+                    <a href="/api-testing/rest-assured-authentication.html" class="nav-next">
+                        <span>Authentication</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
