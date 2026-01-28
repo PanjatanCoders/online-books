@@ -353,6 +353,15 @@ const SITE_NAVIGATION = {
             ]
         },
         {
+            id: 'blog',
+            name: 'Blog',
+            icon: 'fas fa-blog',
+            enabled: true,
+            description: 'QA insights, best practices, career tips, and industry trends',
+            indexUrl: '/blog/index.html',
+            categories: []
+        },
+        {
             id: 'python',
             name: 'Python',
             icon: 'fab fa-python',
@@ -383,7 +392,8 @@ const SITE_NAVIGATION = {
 
     quickLinks: [
         { name: 'Home', url: '/index.html', icon: 'fas fa-home' },
-        { name: 'About', url: '/index.html#about', icon: 'fas fa-user' }
+        { name: 'About', url: '/index.html#about', icon: 'fas fa-user' },
+        { name: 'Blog', url: '/blog/index.html', icon: 'fas fa-blog' }
     ],
 
     social: [

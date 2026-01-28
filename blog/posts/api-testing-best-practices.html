@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="10 essential API testing best practices every QA engineer should know - From authentication testing to performance validation.">
+    <title>10 API Testing Best Practices - GyanCode Blog</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fas fa-code"></i> Tutorial
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 10 min read
+                        </span>
+                        <span class="article-date">
+                            <i class="fas fa-calendar"></i> Jan 20, 2026
+                        </span>
+                    </div>
+                    <h1 class="article-title">10 API Testing Best Practices Every QA Should Know</h1>
+                    <p class="article-subtitle">
+                        Practical tips to improve your API test coverage and catch bugs early.
+                    </p>
+                </header>
+
+                <div class="article-body">
+
+                    <p>
+                        API testing is crucial in modern software development. Here are 10 best practices
+                        that will make your API tests more effective, maintainable, and reliable.
+                    </p>
+
+                    <h2>1. Validate Status Codes First</h2>
+
+                    <p>
+                        Always check the HTTP status code before validating the response body. A 200 response
+                        with wrong data is very different from a 500 server error.
+                    </p>
+
+                    <pre><code class="language-java">// Good: Check status first
+given()
+    .get("/api/users/1")
+.then()
+    .statusCode(200)  // Validate this first
+    .body("name", notNullValue());</code></pre>
+
+                    <div class="info-box info-box-tip">
+                        <h4><i class="fas fa-lightbulb"></i> Common Status Codes to Test</h4>
+                        <ul>
+                            <li><strong>200:</strong> Success</li>
+                            <li><strong>201:</strong> Created (POST success)</li>
+                            <li><strong>400:</strong> Bad Request (validation errors)</li>
+                            <li><strong>401:</strong> Unauthorized</li>
+                            <li><strong>404:</strong> Not Found</li>
+                            <li><strong>500:</strong> Server Error</li>
+                        </ul>
+                    </div>
+
+                    <h2>2. Test Both Happy Path and Error Cases</h2>
+
+                    <p>
+                        Don't just test successful scenarios. Error handling often has more bugs than happy paths.
+                    </p>
+
+                    <pre><code class="language-java">// Happy path
+@Test
+public void createUser_validData_returns201() { ... }
+
+// Error cases - often forgotten!
+@Test
+public void createUser_missingEmail_returns400() { ... }
+
+@Test
+public void createUser_invalidEmail_returns400() { ... }
+
+@Test
+public void createUser_duplicateEmail_returns409() { ... }</code></pre>
+
+                    <h2>3. Use JSON Schema Validation</h2>
+
+                    <p>
+                        Don't just check individual fields. Validate the entire response structure against a schema.
+                        This catches missing fields, wrong types, and unexpected changes.
+                    </p>
+
+                    <pre><code class="language-java">given()
+    .get("/api/users/1")
+.then()
+    .body(matchesJsonSchemaInClasspath("schemas/user-response.json"));</code></pre>
+
+                    <h2>4. Test Authentication Thoroughly</h2>
+
+                    <p>
+                        Authentication is a common source of security vulnerabilities. Test these scenarios:
+                    </p>
+
+                    <ul>
+                        <li>Request without token → 401</li>
+                        <li>Request with invalid token → 401</li>
+                        <li>Request with expired token → 401</li>
+                        <li>Request with valid token but wrong permissions → 403</li>
+                        <li>SQL injection in token field</li>
+                    </ul>
+
+                    <h2>5. Validate Response Headers</h2>
+
+                    <p>
+                        Headers matter! Don't ignore them in your tests.
+                    </p>
+
+                    <pre><code class="language-java">given()
+    .get("/api/users")
+.then()
+    .header("Content-Type", containsString("application/json"))
+    .header("Cache-Control", notNullValue())
+    .header("X-RateLimit-Remaining", greaterThan(0));</code></pre>
+
+                    <h2>6. Test Boundary Conditions</h2>
+
+                    <p>
+                        Edge cases often reveal bugs. Test limits and boundaries:
+                    </p>
+
+                    <ul>
+                        <li><strong>Pagination:</strong> page=0, page=-1, page=999999</li>
+                        <li><strong>String fields:</strong> Empty, max length, special characters</li>
+                        <li><strong>Numbers:</strong> Zero, negative, max integer</li>
+                        <li><strong>Arrays:</strong> Empty array, single item, max items</li>
+                    </ul>
+
+                    <h2>7. Keep Tests Independent</h2>
+
+                    <p>
+                        Each test should set up its own data and clean up after itself.
+                        Never rely on data created by other tests.
+                    </p>
+
+                    <pre><code class="language-java">@Test
+public void deleteUser_existingUser_returns204() {
+    // Setup: Create a user for this test
+    String userId = createTestUser();
+
+    // Test: Delete the user
+    given()
+        .delete("/api/users/" + userId)
+    .then()
+        .statusCode(204);
+
+    // Verify: User no longer exists
+    given()
+        .get("/api/users/" + userId)
+    .then()
+        .statusCode(404);
+}</code></pre>
+
+                    <h2>8. Test Response Time</h2>
+
+                    <p>
+                        Slow APIs hurt user experience. Add response time assertions:
+                    </p>
+
+                    <pre><code class="language-java">given()
+    .get("/api/users")
+.then()
+    .time(lessThan(2000L));  // Response within 2 seconds</code></pre>
+
+                    <div class="info-box info-box-warning">
+                        <h4><i class="fas fa-exclamation-triangle"></i> Note</h4>
+                        <p>
+                            Response time checks in functional tests are indicators, not replacements for proper
+                            performance testing. Network latency varies.
+                        </p>
+                    </div>
+
+                    <h2>9. Use Meaningful Test Data</h2>
+
+                    <p>
+                        Avoid generic data like "test123". Use realistic data that might expose bugs:
+                    </p>
+
+                    <pre><code class="language-java">// Bad: Generic data
+String email = "test@test.com";
+
+// Good: Realistic and edge cases
+String[] testEmails = {
+    "user.name+tag@example.com",     // Plus sign
+    "user@subdomain.example.co.uk",  // Multiple dots
+    "user@192.168.1.1",              // IP address
+    "用户@example.com"                // Unicode
+};</code></pre>
+
+                    <h2>10. Document Your Tests</h2>
+
+                    <p>
+                        Tests are documentation. Make them readable:
+                    </p>
+
+                    <pre><code class="language-java">@Test
+@Description("Verify that creating a user with an existing email returns 409 Conflict")
+public void createUser_duplicateEmail_returns409() {
+    // Given: A user already exists with this email
+    String existingEmail = "existing@example.com";
+    createUserWithEmail(existingEmail);
+
+    // When: We try to create another user with the same email
+    Response response = given()
+        .contentType(ContentType.JSON)
+        .body(Map.of("email", existingEmail, "name", "Test User"))
+    .when()
+        .post("/api/users");
+
+    // Then: We get a 409 Conflict response
+    response.then()
+        .statusCode(409)
+        .body("error", containsString("already exists"));
+}</code></pre>
+
+                    <h2>Bonus: Quick Checklist</h2>
+
+                    <div class="info-box info-box-primary">
+                        <h4><i class="fas fa-clipboard-check"></i> API Test Checklist</h4>
+                        <ul>
+                            <li>Status codes (200, 201, 400, 401, 403, 404, 500)</li>
+                            <li>Response body validation</li>
+                            <li>Response headers</li>
+                            <li>Authentication/Authorization</li>
+                            <li>Input validation (required fields, formats)</li>
+                            <li>Boundary conditions</li>
+                            <li>Error messages and codes</li>
+                            <li>Response time</li>
+                            <li>Idempotency (PUT, DELETE)</li>
+                            <li>CORS headers (if applicable)</li>
+                        </ul>
+                    </div>
+
+                    <h2>Conclusion</h2>
+
+                    <p>
+                        Effective API testing goes beyond checking if endpoints return 200.
+                        By following these best practices, you'll catch more bugs, create more maintainable tests,
+                        and build confidence in your API's reliability.
+                    </p>
+
+                    <div class="info-box info-box-highlight">
+                        <h4><i class="fas fa-book"></i> Deep Dive</h4>
+                        <p>
+                            Want to learn more? Check out our complete
+                            <a href="/api-testing/index.html">REST API Testing tutorials</a> with hands-on examples
+                            using Rest Assured.
+                        </p>
+                    </div>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/blog/posts/qa-automation-career-roadmap.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Career Roadmap</span>
+                    </a>
+                    <a href="/blog/index.html" class="nav-next">
+                        <span>All Posts</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

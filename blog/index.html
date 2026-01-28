@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GyanCode Blog - QA insights, automation best practices, career tips, and industry trends for test automation professionals.">
+    <title>Blog - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+
+    <style>
+        /* Blog List Styles */
+        .blog-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .blog-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .blog-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .blog-filters {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent-primary);
+            color: white;
+            border-color: var(--accent-primary);
+        }
+
+        .blog-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .blog-post-item {
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: all 0.2s ease;
+        }
+
+        .blog-post-item:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .blog-post-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .blog-post-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .blog-post-category {
+            background: var(--accent-primary);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .blog-post-title {
+            font-size: 1.35rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .blog-post-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .blog-post-title a:hover {
+            color: var(--accent-primary);
+        }
+
+        .blog-post-excerpt {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .blog-post-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-primary);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .blog-post-link:hover {
+            gap: 0.75rem;
+        }
+
+        .blog-empty {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .blog-empty i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .blog-container {
+                padding: 1rem;
+            }
+
+            .blog-header h1 {
+                font-size: 2rem;
+            }
+
+            .blog-post-meta {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+
+        <div class="blog-container">
+            <header class="blog-header">
+                <h1><i class="fas fa-blog"></i> Blog</h1>
+                <p>QA insights, best practices, career tips, and industry trends</p>
+            </header>
+
+            <!-- Category Filters -->
+            <div class="blog-filters">
+                <button type="button" class="filter-btn active" data-filter="all">All Posts</button>
+                <button type="button" class="filter-btn" data-filter="insights">QA Insights</button>
+                <button type="button" class="filter-btn" data-filter="tutorial">Tutorials</button>
+                <button type="button" class="filter-btn" data-filter="career">Career</button>
+                <button type="button" class="filter-btn" data-filter="tools">Tools</button>
+            </div>
+
+            <!-- Blog Posts List -->
+            <div class="blog-list">
+                <!-- Post 1 -->
+                <article class="blog-post-item" data-category="insights">
+                    <div class="blog-post-meta">
+                        <span class="blog-post-category">QA Insights</span>
+                        <span><i class="fas fa-calendar"></i> Jan 28, 2026</span>
+                        <span><i class="fas fa-clock"></i> 8 min read</span>
+                    </div>
+                    <h2 class="blog-post-title">
+                        <a href="/blog/posts/selenium-vs-playwright-2026.html">Selenium vs Playwright in 2026: Which Should You Learn?</a>
+                    </h2>
+                    <p class="blog-post-excerpt">
+                        A comprehensive comparison of Selenium and Playwright for test automation in 2025.
+                        We analyze performance, ecosystem, learning curve, and job market demand to help you make an informed decision.
+                    </p>
+                    <a href="/blog/posts/selenium-vs-playwright-2026.html" class="blog-post-link">
+                        Read More <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+                <!-- Post 2 -->
+                <article class="blog-post-item" data-category="career">
+                    <div class="blog-post-meta">
+                        <span class="blog-post-category">Career</span>
+                        <span><i class="fas fa-calendar"></i> Jan 25, 2026</span>
+                        <span><i class="fas fa-clock"></i> 6 min read</span>
+                    </div>
+                    <h2 class="blog-post-title">
+                        <a href="/blog/posts/qa-automation-career-roadmap.html">QA Automation Engineer Career Roadmap 2026</a>
+                    </h2>
+                    <p class="blog-post-excerpt">
+                        A complete career roadmap for aspiring and experienced QA automation engineers. From entry-level skills
+                        to senior architect positions - learn what skills to acquire at each stage of your career.
+                    </p>
+                    <a href="/blog/posts/qa-automation-career-roadmap.html" class="blog-post-link">
+                        Read More <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+
+                <!-- Post 3 -->
+                <article class="blog-post-item" data-category="tutorial">
+                    <div class="blog-post-meta">
+                        <span class="blog-post-category">Tutorial</span>
+                        <span><i class="fas fa-calendar"></i> Jan 20, 2026</span>
+                        <span><i class="fas fa-clock"></i> 10 min read</span>
+                    </div>
+                    <h2 class="blog-post-title">
+                        <a href="/blog/posts/api-testing-best-practices.html">10 API Testing Best Practices Every QA Should Know</a>
+                    </h2>
+                    <p class="blog-post-excerpt">
+                        Essential best practices for API testing that will improve your test coverage and catch bugs early.
+                        From authentication testing to performance validation - practical tips from real-world projects.
+                    </p>
+                    <a href="/blog/posts/api-testing-best-practices.html" class="blog-post-link">
+                        Read More <i class="fas fa-arrow-right"></i>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+    <script>
+        // Blog filter functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const posts = document.querySelectorAll('.blog-post-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active state
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.dataset.filter;
+
+                    // Filter posts
+                    posts.forEach(post => {
+                        if (filter === 'all' || post.dataset.category === filter) {
+                            post.style.display = 'block';
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
