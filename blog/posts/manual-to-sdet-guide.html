@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete guide to transitioning from Manual Tester to SDET - Learn the skills, timeline, and practical steps to make the career shift successfully.">
+    <title>From Manual Tester to SDET: A Step-by-Step Guide - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fas fa-road"></i> Career
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 14 min read
+                        </span>
+                        <span class="article-date">
+                            <i class="fas fa-calendar"></i> Jan 28, 2026
+                        </span>
+                    </div>
+                    <h1 class="article-title">From Manual Tester to SDET: A Step-by-Step Transition Guide</h1>
+                    <p class="article-subtitle">
+                        The complete roadmap with skills, timeline, and real advice from someone who made the journey.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- The Reality Check -->
+                    <section class="chapter" id="reality-check">
+                        <h2 class="chapter-title"><i class="fas fa-eye"></i> The Reality Check</h2>
+
+                        <p>
+                            Let's be honest: the testing industry has changed. Manual testing roles are shrinking,
+                            salaries are stagnating, and job postings increasingly demand automation skills.
+                            If you're a manual tester feeling the pressure, you're not alone.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-chart-line"></i> The Numbers Don't Lie</h4>
+                            <ul>
+                                <li><strong>40-60% higher salaries</strong> for SDETs compared to manual testers</li>
+                                <li><strong>3x more job postings</strong> require automation skills</li>
+                                <li><strong>85% of companies</strong> are adopting CI/CD (requiring automated tests)</li>
+                                <li>Manual testing roles are being <strong>consolidated or eliminated</strong></li>
+                            </ul>
+                        </div>
+
+                        <p>
+                            But here's the good news: <strong>you already have the hardest skill to teach</strong> —
+                            testing mindset. You know how to break software, think about edge cases, and understand
+                            user perspectives. Now you just need to add the technical skills.
+                        </p>
+
+                        <h3>What is an SDET, Really?</h3>
+                        <p>
+                            <strong>SDET (Software Development Engineer in Test)</strong> is a hybrid role:
+                        </p>
+
+                        <pre><code class="language-text">Manual Tester          SDET                    Developer
+┌─────────────┐    ┌─────────────────┐    ┌─────────────┐
+│ Test cases  │    │ Test cases      │    │ Features    │
+│ Bug reports │    │ Automation code │    │ Production  │
+│ Exploratory │    │ Framework design│    │ code        │
+│ testing     │    │ CI/CD pipelines │    │             │
+│             │    │ Testing strategy│    │             │
+└─────────────┘    └─────────────────┘    └─────────────┘
+
+       You write tests           You write production-
+       but don't code            quality test code</code></pre>
+
+                        <p>
+                            SDETs don't just "click and verify" — they write code that clicks and verifies
+                            <em>thousands of times</em>, catches bugs before production, and integrates
+                            with the development pipeline.
+                        </p>
+                    </section>
+
+                    <!-- The Skills You Need -->
+                    <section class="chapter" id="skills-needed">
+                        <h2 class="chapter-title"><i class="fas fa-tools"></i> The Skills You Need</h2>
+
+                        <p>
+                            Here's the honest breakdown of skills, prioritized by importance:
+                        </p>
+
+                        <h3>Tier 1: Non-Negotiable (Master These First)</h3>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-code"></i> 1. Programming Language</h4>
+                            <p>
+                                <strong>Pick ONE and go deep:</strong>
+                            </p>
+                            <ul>
+                                <li><strong>Java</strong> — Most SDET jobs, enterprise companies, Selenium ecosystem</li>
+                                <li><strong>Python</strong> — Faster to learn, growing demand, great for API testing</li>
+                                <li><strong>JavaScript</strong> — Frontend-heavy companies, Playwright/Cypress</li>
+                            </ul>
+                            <p>
+                                <em>My recommendation: Java if you want maximum job opportunities,
+                                Python if you want faster learning curve.</em>
+                            </p>
+                        </div>
+
+                        <pre><code class="language-java">// You need to be comfortable with:
+// 1. Variables, data types, operators
+// 2. Control flow (if, loops)
+// 3. Methods/Functions
+// 4. OOP (classes, objects, inheritance)
+// 5. Collections (List, Map, Set)
+// 6. Exception handling
+// 7. File I/O basics
+
+public class LoginTest {
+    private WebDriver driver;
+
+    @Test
+    public void validLoginShouldSucceed() {
+        LoginPage loginPage = new LoginPage(driver);
+        DashboardPage dashboard = loginPage.login("user", "pass");
+
+        assertTrue(dashboard.isDisplayed());
+        assertEquals("Welcome, user!", dashboard.getGreeting());
+    }
+}</code></pre>
+
+                        <h4>2. Test Automation Framework</h4>
+                        <ul>
+                            <li><strong>Selenium WebDriver</strong> — Industry standard for web UI testing</li>
+                            <li><strong>TestNG or JUnit</strong> — Test runners and assertions</li>
+                            <li><strong>Page Object Model</strong> — Design pattern for maintainable tests</li>
+                        </ul>
+
+                        <h4>3. API Testing</h4>
+                        <ul>
+                            <li><strong>REST concepts</strong> — HTTP methods, status codes, headers</li>
+                            <li><strong>Postman</strong> — Manual API testing and exploration</li>
+                            <li><strong>Rest Assured</strong> (Java) or <strong>Requests</strong> (Python) — Automated API tests</li>
+                        </ul>
+
+                        <h3>Tier 2: Important (Learn After Basics)</h3>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Skill</th>
+                                    <th>Why It Matters</th>
+                                    <th>Time to Learn</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Git</strong></td>
+                                    <td>Version control is mandatory in every team</td>
+                                    <td>1-2 weeks</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Maven/Gradle</strong></td>
+                                    <td>Build tools for managing dependencies</td>
+                                    <td>1 week</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>CI/CD basics</strong></td>
+                                    <td>Jenkins, GitHub Actions — running tests automatically</td>
+                                    <td>2 weeks</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>SQL basics</strong></td>
+                                    <td>Verify data in databases during testing</td>
+                                    <td>1-2 weeks</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Tier 3: Nice to Have (Learn On the Job)</h3>
+                        <ul>
+                            <li>Docker — Containerized test environments</li>
+                            <li>Cloud basics (AWS/Azure) — Cloud-based testing</li>
+                            <li>Performance testing (JMeter, Gatling)</li>
+                            <li>Mobile testing (Appium)</li>
+                            <li>BDD frameworks (Cucumber)</li>
+                        </ul>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> Don't Overwhelm Yourself</h4>
+                            <p>
+                                You don't need ALL these skills to get your first SDET job.
+                                Focus on Tier 1 first. Many companies will hire you with solid fundamentals
+                                and train you on their specific tools.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- The Timeline -->
+                    <section class="chapter" id="timeline">
+                        <h2 class="chapter-title"><i class="fas fa-calendar-alt"></i> The Realistic Timeline</h2>
+
+                        <p>
+                            Here's a 6-month plan assuming you're working full-time and studying 1-2 hours daily
+                            (more on weekends). Adjust based on your pace.
+                        </p>
+
+                        <h3>Month 1-2: Programming Foundations</h3>
+                        <pre><code class="language-text">Week 1-2: Variables, data types, operators, control flow
+Week 3-4: Methods, arrays, basic debugging
+Week 5-6: OOP fundamentals (classes, objects, constructors)
+Week 7-8: Inheritance, polymorphism, interfaces
+
+Daily practice: Solve 2-3 coding problems on LeetCode (Easy level)
+Project: Build a simple calculator or to-do list app</code></pre>
+
+                        <h3>Month 3: Selenium + First Automation Project</h3>
+                        <pre><code class="language-text">Week 9-10: Selenium basics - locators, waits, actions
+Week 11-12: Page Object Model, handling dropdowns/alerts/frames
+
+Project: Automate a real website (e.g., Amazon search, login flow)
+- Create 5-10 test cases
+- Implement Page Object Model
+- Run with TestNG</code></pre>
+
+                        <h3>Month 4: API Testing + Git</h3>
+                        <pre><code class="language-text">Week 13-14: REST concepts, Postman, manual API testing
+Week 15-16: Rest Assured - automated API tests
+
+Project: Automate tests for a public API (JSONPlaceholder, ReqRes)
+- GET, POST, PUT, DELETE operations
+- Response validation
+- Push code to GitHub</code></pre>
+
+                        <h3>Month 5: Framework Building + CI/CD</h3>
+                        <pre><code class="language-text">Week 17-18: Build a complete test framework
+  - Data-driven testing
+  - Reporting (Extent Reports/Allure)
+  - Configuration management
+
+Week 19-20: CI/CD integration
+  - Set up GitHub Actions or Jenkins
+  - Run tests automatically on commit</code></pre>
+
+                        <h3>Month 6: Portfolio + Job Prep</h3>
+                        <pre><code class="language-text">Week 21-22: Polish your GitHub projects
+  - Clean README files
+  - Code comments
+  - Remove hardcoded values
+
+Week 23-24: Interview preparation
+  - Review SDET interview questions
+  - Practice explaining your projects
+  - Mock interviews</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-stopwatch"></i> Faster Path (If You Can Dedicate More Time)</h4>
+                            <p>
+                                With 4-5 hours daily study, you can compress this to 3-4 months.
+                                Some bootcamps promise this, but self-learning is more sustainable
+                                and helps you truly understand the concepts.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Building Your Portfolio -->
+                    <section class="chapter" id="portfolio">
+                        <h2 class="chapter-title"><i class="fas fa-folder-open"></i> Building Your Portfolio</h2>
+
+                        <p>
+                            Your GitHub is your resume. Here's what hiring managers actually look for:
+                        </p>
+
+                        <h3>Project 1: UI Automation Framework</h3>
+                        <pre><code class="language-text">selenium-automation-framework/
+├── src/
+│   ├── main/java/
+│   │   ├── pages/           # Page Objects
+│   │   ├── utils/           # Utilities, helpers
+│   │   └── config/          # Configuration
+│   └── test/java/
+│       └── tests/           # Test classes
+├── testdata/                # Test data files
+├── reports/                 # Test reports
+├── pom.xml                  # Maven configuration
+└── README.md                # IMPORTANT!</code></pre>
+
+                        <p><strong>What to automate:</strong></p>
+                        <ul>
+                            <li>E-commerce site (OrangeHRM, SauceDemo, Amazon)</li>
+                            <li>Login, search, cart, checkout flows</li>
+                            <li>At least 15-20 test cases</li>
+                        </ul>
+
+                        <h3>Project 2: API Automation Framework</h3>
+                        <pre><code class="language-text">api-automation-framework/
+├── src/
+│   ├── main/java/
+│   │   ├── endpoints/       # API endpoint classes
+│   │   ├── models/          # POJO classes
+│   │   └── utils/           # API utilities
+│   └── test/java/
+│       └── tests/           # API test classes
+├── testdata/                # JSON test data
+└── README.md</code></pre>
+
+                        <p><strong>What to test:</strong></p>
+                        <ul>
+                            <li>Public APIs (Reqres.in, JSONPlaceholder, Restful-Booker)</li>
+                            <li>Full CRUD operations</li>
+                            <li>Authentication tests</li>
+                            <li>Schema validation</li>
+                        </ul>
+
+                        <h3>Project 3: Hybrid Framework (Differentiator)</h3>
+                        <p>
+                            Combine UI + API + Database testing in one framework. This shows advanced skills
+                            and understanding of end-to-end testing.
+                        </p>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> README Files Are Critical</h4>
+                            <p>
+                                A project without documentation is useless to hiring managers. Your README should include:
+                            </p>
+                            <ul>
+                                <li>What the project does</li>
+                                <li>Tech stack used</li>
+                                <li>How to set up and run</li>
+                                <li>Sample test output/reports</li>
+                                <li>Project structure explanation</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Common Mistakes -->
+                    <section class="chapter" id="mistakes">
+                        <h2 class="chapter-title"><i class="fas fa-times-circle"></i> Common Mistakes (Avoid These)</h2>
+
+                        <h3>1. Tutorial Hell</h3>
+                        <p>
+                            Watching endless tutorials without building anything. After 2-3 tutorials on a topic,
+                            <strong>start a project</strong>. You'll learn more from debugging your own code
+                            than watching someone else's.
+                        </p>
+
+                        <h3>2. Copying Code Without Understanding</h3>
+                        <pre><code class="language-java">// DON'T do this:
+// Copy-paste from Stack Overflow → It works → Move on
+
+// DO this:
+// Copy-paste → Understand WHY it works →
+// Rewrite it yourself → Explain it to someone</code></pre>
+
+                        <h3>3. Learning Too Many Tools at Once</h3>
+                        <p>
+                            "I'm learning Selenium, Playwright, Cypress, Appium, and Katalon!"
+                        </p>
+                        <p>
+                            <strong>No.</strong> Master ONE tool first. Selenium skills transfer to other tools.
+                            Once you know one well, learning others takes days, not months.
+                        </p>
+
+                        <h3>4. Ignoring Manual Testing Experience</h3>
+                        <p>
+                            Your manual testing background is an <strong>advantage</strong>, not a weakness.
+                            You understand:
+                        </p>
+                        <ul>
+                            <li>Test design and coverage</li>
+                            <li>Edge cases and boundary conditions</li>
+                            <li>User perspective</li>
+                            <li>Bug reporting and communication</li>
+                            <li>Testing processes and SDLC</li>
+                        </ul>
+
+                        <h3>5. Waiting Until You're "Ready"</h3>
+                        <p>
+                            You'll never feel 100% ready. Start applying when you have:
+                        </p>
+                        <ul>
+                            <li>Solid programming fundamentals</li>
+                            <li>One complete automation project on GitHub</li>
+                            <li>Basic understanding of API testing</li>
+                        </ul>
+                        <p>
+                            Many SDET jobs train you on specific tools. They want someone who can <em>learn</em>,
+                            not someone who knows everything.
+                        </p>
+                    </section>
+
+                    <!-- Job Search Strategy -->
+                    <section class="chapter" id="job-search">
+                        <h2 class="chapter-title"><i class="fas fa-search"></i> Job Search Strategy</h2>
+
+                        <h3>Option 1: Internal Transfer</h3>
+                        <p>
+                            The easiest path is often within your current company:
+                        </p>
+                        <ul>
+                            <li>Talk to your manager about transitioning</li>
+                            <li>Offer to help with automation on current projects</li>
+                            <li>Shadow the automation team</li>
+                            <li>Take on hybrid responsibilities</li>
+                        </ul>
+
+                        <h3>Option 2: Target Entry-Level SDET Roles</h3>
+                        <p>Search for:</p>
+                        <ul>
+                            <li>"Junior SDET"</li>
+                            <li>"QA Automation Engineer - Entry Level"</li>
+                            <li>"Associate Test Engineer"</li>
+                            <li>"QA Engineer with Automation" (often open to learning)</li>
+                        </ul>
+
+                        <h3>Option 3: Contract/Freelance First</h3>
+                        <p>
+                            Sometimes easier to get: contract positions, freelance projects on Upwork/Toptal,
+                            or short-term automation projects. Build experience, then target permanent roles.
+                        </p>
+
+                        <h3>Resume Tips</h3>
+                        <pre><code class="language-text">BEFORE (Manual Tester Resume):
+"Executed test cases and reported bugs"
+
+AFTER (Aspiring SDET Resume):
+"Executed 500+ test cases; identified automation opportunities
+that reduced regression time by 30%. Built personal automation
+framework using Selenium + Java + TestNG (GitHub link)"</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> LinkedIn Optimization</h4>
+                            <ul>
+                                <li>Update headline: "QA Engineer | Automation Enthusiast | Selenium | Java"</li>
+                                <li>Add your GitHub projects to Featured section</li>
+                                <li>Get LinkedIn Learning badges for automation courses</li>
+                                <li>Engage with SDET content and communities</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Interview Preparation -->
+                    <section class="chapter" id="interview-prep">
+                        <h2 class="chapter-title"><i class="fas fa-user-tie"></i> Interview Preparation</h2>
+
+                        <h3>Technical Questions to Expect</h3>
+
+                        <h4>Programming</h4>
+                        <ul>
+                            <li>Explain OOP concepts with examples</li>
+                            <li>Difference between ArrayList and LinkedList</li>
+                            <li>What is method overloading vs overriding?</li>
+                            <li>Write a program to reverse a string / find duplicates</li>
+                        </ul>
+
+                        <h4>Selenium</h4>
+                        <ul>
+                            <li>How do you handle dynamic elements?</li>
+                            <li>Implicit vs Explicit vs Fluent waits</li>
+                            <li>How do you handle frames, alerts, multiple windows?</li>
+                            <li>Explain Page Object Model and why it's used</li>
+                            <li>How do you handle test failures and flaky tests?</li>
+                        </ul>
+
+                        <h4>API Testing</h4>
+                        <ul>
+                            <li>What are HTTP methods and when to use each?</li>
+                            <li>How do you validate API responses?</li>
+                            <li>What's the difference between authentication and authorization?</li>
+                        </ul>
+
+                        <h4>Framework Design</h4>
+                        <ul>
+                            <li>Walk me through your framework architecture</li>
+                            <li>How do you handle test data?</li>
+                            <li>How do you generate reports?</li>
+                            <li>How does your CI/CD pipeline work?</li>
+                        </ul>
+
+                        <h3>Behavioral Questions</h3>
+                        <ul>
+                            <li>"Why are you transitioning from manual to automation?"</li>
+                            <li>"Tell me about a challenging bug you found"</li>
+                            <li>"How do you decide what to automate?"</li>
+                            <li>"How do you keep up with new testing tools?"</li>
+                        </ul>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-star"></i> The Golden Answer Format</h4>
+                            <p>For technical explanations:</p>
+                            <ol>
+                                <li><strong>Definition</strong> — What is it?</li>
+                                <li><strong>Why</strong> — When/why do you use it?</li>
+                                <li><strong>Example</strong> — Real scenario from your project</li>
+                            </ol>
+                        </div>
+                    </section>
+
+                    <!-- Real Talk -->
+                    <section class="chapter" id="real-talk">
+                        <h2 class="chapter-title"><i class="fas fa-comments"></i> Real Talk: What Nobody Tells You</h2>
+
+                        <h3>The First Few Months Are Brutal</h3>
+                        <p>
+                            Learning programming is hard. You'll feel stupid. You'll want to quit.
+                            This is normal. Every developer felt this way. Push through.
+                        </p>
+
+                        <h3>You Won't Use Everything You Learn</h3>
+                        <p>
+                            80% of your job will use 20% of what you learned. But you need the foundation
+                            to understand that 20% deeply.
+                        </p>
+
+                        <h3>Imposter Syndrome is Real</h3>
+                        <p>
+                            Even after you get the job, you'll feel like you don't belong.
+                            Senior engineers feel this too. Focus on learning, not comparing.
+                        </p>
+
+                        <h3>The Market is Competitive but Fair</h3>
+                        <p>
+                            Yes, there are many candidates. But most have poor fundamentals or empty GitHubs.
+                            If you actually build projects and understand the code, you're ahead of 70%.
+                        </p>
+
+                        <h3>Salary Expectations</h3>
+                        <pre><code class="language-text">Manual Tester (3 years)      → $45,000 - $65,000
+Entry SDET (0-1 years)       → $60,000 - $80,000
+Mid SDET (2-4 years)         → $80,000 - $120,000
+Senior SDET (5+ years)       → $120,000 - $160,000+
+
+* Varies by location, company size, and negotiation skills</code></pre>
+                    </section>
+
+                    <!-- Action Plan -->
+                    <section class="chapter" id="action-plan">
+                        <h2 class="chapter-title"><i class="fas fa-rocket"></i> Your Action Plan (Start Today)</h2>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-check-circle"></i> This Week</h4>
+                            <ol>
+                                <li>Choose your language (Java recommended)</li>
+                                <li>Set up your development environment (IDE, JDK)</li>
+                                <li>Create a GitHub account</li>
+                                <li>Start a programming fundamentals course</li>
+                                <li>Block 1-2 hours daily for study</li>
+                            </ol>
+                        </div>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check-circle"></i> This Month</h4>
+                            <ol>
+                                <li>Complete programming basics (variables, loops, methods)</li>
+                                <li>Solve 20+ easy coding problems</li>
+                                <li>Build a simple project (calculator, converter)</li>
+                                <li>Push your first code to GitHub</li>
+                            </ol>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-check-circle"></i> This Quarter</h4>
+                            <ol>
+                                <li>Master OOP concepts</li>
+                                <li>Start Selenium automation</li>
+                                <li>Build your first test framework</li>
+                                <li>Learn Git workflow</li>
+                                <li>Start networking with SDETs on LinkedIn</li>
+                            </ol>
+                        </div>
+
+                        <p>
+                            The journey from manual tester to SDET is challenging but achievable.
+                            Thousands have done it before you. The difference between those who succeed
+                            and those who don't? <strong>Consistency.</strong>
+                        </p>
+
+                        <p>
+                            One hour daily for 6 months beats 10 hours once a week. Show up every day,
+                            even when you don't feel like it. Future you will thank you.
+                        </p>
+
+                        <blockquote>
+                            "The best time to start was a year ago. The second best time is now."
+                        </blockquote>
+                    </section>
+
+                    <!-- Resources -->
+                    <section class="chapter" id="resources">
+                        <h2 class="chapter-title"><i class="fas fa-book"></i> Recommended Resources</h2>
+
+                        <h3>Learning Paths on GyanCode</h3>
+                        <ul>
+                            <li><a href="/java/index.html">Java Tutorials</a> — Core Java for testers</li>
+                            <li><a href="/selenium/index.html">Selenium Tutorials</a> — Complete automation guide</li>
+                            <li><a href="/api-testing/index.html">API Testing</a> — Rest Assured tutorials</li>
+                            <li><a href="/git/index.html">Git Tutorials</a> — Version control mastery</li>
+                            <li><a href="/interview-qna/index.html">Interview Q&A</a> — Preparation material</li>
+                        </ul>
+
+                        <h3>Free Practice Sites</h3>
+                        <ul>
+                            <li><strong>OrangeHRM</strong> — opensource-demo.orangehrmlive.com</li>
+                            <li><strong>SauceDemo</strong> — saucedemo.com</li>
+                            <li><strong>Reqres API</strong> — reqres.in</li>
+                            <li><strong>LeetCode</strong> — Coding practice</li>
+                        </ul>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-star"></i> You've Got This</h4>
+                            <p>
+                                Remember: you're not starting from zero. Your testing experience is valuable.
+                                You're just adding new tools to your toolkit. Take it one day at a time,
+                                celebrate small wins, and keep pushing forward.
+                            </p>
+                            <p>
+                                See you on the other side. 🚀
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/blog/posts/docker-for-testers.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Docker for Testers</span>
+                    </a>
+                    <a href="/blog/index.html" class="nav-next">
+                        <span>All Posts</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
