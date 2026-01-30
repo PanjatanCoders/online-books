@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Docker for QA Engineers - Learn to containerize test environments, run Selenium Grid in Docker, and create consistent, portable test infrastructure.">
+    <title>Docker for Testers: Run Your Tests Anywhere - GyanCode Blog</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fab fa-docker"></i> Tools
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 12 min read
+                        </span>
+                        <span class="article-date">
+                            <i class="fas fa-calendar"></i> Jan 30, 2026
+                        </span>
+                    </div>
+                    <h1 class="article-title">Docker for Testers: Run Your Tests Anywhere</h1>
+                    <p class="article-subtitle">
+                        Containerize your test environments for consistent, portable, and scalable test execution.
+                    </p>
+                </header>
+
+                <div class="article-body">
+
+                    <p>
+                        "It works on my machine" - the classic developer excuse. But as testers, we face the same problem:
+                        tests pass locally but fail in CI. Different browser versions, missing dependencies, environment
+                        misconfigurations. Docker solves this by packaging everything your tests need into portable containers.
+                    </p>
+
+                    <h2>Why Docker for Testing?</h2>
+
+                    <div class="info-box info-box-primary">
+                        <h4><i class="fab fa-docker"></i> Benefits for QA</h4>
+                        <ul>
+                            <li><strong>Consistency:</strong> Same environment everywhere - local, CI, staging</li>
+                            <li><strong>Isolation:</strong> Tests don't interfere with each other</li>
+                            <li><strong>Portability:</strong> Run on any machine with Docker installed</li>
+                            <li><strong>Scalability:</strong> Spin up multiple browsers in parallel</li>
+                            <li><strong>Clean state:</strong> Fresh environment for each test run</li>
+                        </ul>
+                    </div>
+
+                    <h2>Docker Basics for Testers</h2>
+
+                    <p>You don't need to be a Docker expert. These concepts are enough to get started:</p>
+
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Concept</th>
+                                <th>What It Is</th>
+                                <th>Analogy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Image</strong></td>
+                                <td>Template with OS, tools, dependencies</td>
+                                <td>Recipe</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Container</strong></td>
+                                <td>Running instance of an image</td>
+                                <td>Cooked dish</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dockerfile</strong></td>
+                                <td>Instructions to build an image</td>
+                                <td>Recipe steps</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Docker Compose</strong></td>
+                                <td>Define multi-container applications</td>
+                                <td>Full menu</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Volume</strong></td>
+                                <td>Persistent storage for containers</td>
+                                <td>External hard drive</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>Essential Docker Commands</h2>
+
+                    <pre><code class="language-bash"># Pull an image from Docker Hub
+docker pull selenium/standalone-chrome
+
+# Run a container
+docker run -d -p 4444:4444 selenium/standalone-chrome
+
+# List running containers
+docker ps
+
+# Stop a container
+docker stop &lt;container-id&gt;
+
+# Remove a container
+docker rm &lt;container-id&gt;
+
+# View container logs
+docker logs &lt;container-id&gt;
+
+# Execute command inside container
+docker exec -it &lt;container-id&gt; /bin/bash</code></pre>
+
+                    <h2>Running Selenium in Docker</h2>
+
+                    <h3>Quick Start: Standalone Chrome</h3>
+
+                    <pre><code class="language-bash"># Run Selenium with Chrome
+docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest
+
+# Access Selenium Grid console: http://localhost:4444
+# Watch browser via VNC: http://localhost:7900 (password: secret)</code></pre>
+
+                    <h3>Connect Your Tests</h3>
+
+                    <pre><code class="language-java">@BeforeEach
+public void setup() throws MalformedURLException {
+    ChromeOptions options = new ChromeOptions();
+
+    // Connect to Docker Selenium
+    driver = new RemoteWebDriver(
+        new URL("http://localhost:4444/wd/hub"),
+        options
+    );
+}
+
+@Test
+public void testInDocker() {
+    driver.get("https://example.com");
+    assertThat(driver.getTitle()).contains("Example");
+}</code></pre>
+
+                    <div class="info-box info-box-tip">
+                        <h4><i class="fas fa-lightbulb"></i> The --shm-size Flag</h4>
+                        <p>
+                            Always use <code>--shm-size="2g"</code> when running Chrome in Docker. Chrome uses
+                            <code>/dev/shm</code> for shared memory, and Docker's default 64MB is too small,
+                            causing crashes.
+                        </p>
+                    </div>
+
+                    <h2>Selenium Grid with Docker Compose</h2>
+
+                    <p>For parallel testing across multiple browsers, use Docker Compose:</p>
+
+                    <pre><code class="language-yaml"># docker-compose.yml
+version: "3"
+services:
+  selenium-hub:
+    image: selenium/hub:latest
+    container_name: selenium-hub
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome:latest
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=2
+
+  firefox:
+    image: selenium/node-firefox:latest
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=2
+
+  edge:
+    image: selenium/node-edge:latest
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443</code></pre>
+
+                    <pre><code class="language-bash"># Start the grid
+docker-compose up -d
+
+# Scale Chrome nodes for parallel testing
+docker-compose up -d --scale chrome=5
+
+# Stop and remove
+docker-compose down</code></pre>
+
+                    <h2>Containerizing Your Test Framework</h2>
+
+                    <p>Package your entire test suite as a Docker image:</p>
+
+                    <h3>Dockerfile for Java/Maven Tests</h3>
+
+                    <pre><code class="language-dockerfile"># Dockerfile
+FROM maven:3.9-eclipse-temurin-17
+
+# Set working directory
+WORKDIR /tests
+
+# Copy pom.xml first (for dependency caching)
+COPY pom.xml .
+RUN mvn dependency:resolve
+
+# Copy test code
+COPY src ./src
+COPY testng.xml .
+
+# Default command
+CMD ["mvn", "test"]</code></pre>
+
+                    <h3>Build and Run</h3>
+
+                    <pre><code class="language-bash"># Build your test image
+docker build -t my-test-suite:latest .
+
+# Run tests against Docker Selenium
+docker run --network host my-test-suite:latest
+
+# Run with environment variables
+docker run --network host \
+  -e BASE_URL=https://staging.example.com \
+  -e BROWSER=chrome \
+  my-test-suite:latest
+
+# Mount test results to host
+docker run --network host \
+  -v $(pwd)/reports:/tests/target/surefire-reports \
+  my-test-suite:latest</code></pre>
+
+                    <h2>Complete Test Environment</h2>
+
+                    <p>Combine your tests with Selenium Grid in one compose file:</p>
+
+                    <pre><code class="language-yaml"># docker-compose.test.yml
+version: "3"
+services:
+  selenium-hub:
+    image: selenium/hub:latest
+    ports:
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome:latest
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_MAX_SESSIONS=4
+
+  test-runner:
+    build: .
+    depends_on:
+      - chrome
+    environment:
+      - SELENIUM_HUB_URL=http://selenium-hub:4444/wd/hub
+      - BASE_URL=https://example.com
+    volumes:
+      - ./reports:/tests/target/surefire-reports
+    command: ["mvn", "test", "-Dselenium.hub=http://selenium-hub:4444/wd/hub"]</code></pre>
+
+                    <pre><code class="language-bash"># Run complete test environment
+docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit
+
+# View results in ./reports folder</code></pre>
+
+                    <h2>CI/CD Integration</h2>
+
+                    <h3>GitHub Actions</h3>
+
+                    <pre><code class="language-yaml"># .github/workflows/test.yml
+name: Selenium Tests
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      selenium:
+        image: selenium/standalone-chrome:latest
+        ports:
+          - 4444:4444
+        options: --shm-size=2g
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Run Tests
+        run: mvn test -Dselenium.hub=http://localhost:4444/wd/hub
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: target/surefire-reports/</code></pre>
+
+                    <h3>Jenkins Pipeline</h3>
+
+                    <pre><code class="language-groovy">pipeline {
+    agent any
+
+    stages {
+        stage('Start Selenium Grid') {
+            steps {
+                sh 'docker-compose up -d selenium-hub chrome'
+                sh 'sleep 10' // Wait for grid to be ready
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh '''
+                    docker run --network host \
+                        -v ${WORKSPACE}/reports:/tests/target \
+                        my-test-suite:latest \
+                        mvn test -Dselenium.hub=http://localhost:4444/wd/hub
+                '''
+            }
+        }
+
+        stage('Publish Results') {
+            steps {
+                junit 'reports/surefire-reports/*.xml'
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker-compose down'
+        }
+    }
+}</code></pre>
+
+                    <h2>API Testing with Docker</h2>
+
+                    <p>Run API tests against dockerized services:</p>
+
+                    <pre><code class="language-yaml"># docker-compose.api-test.yml
+version: "3"
+services:
+  # Your application
+  api:
+    image: my-api:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=jdbc:postgresql://db:5432/testdb
+
+  # Test database
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=testdb
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+
+  # API tests
+  api-tests:
+    build:
+      context: ./api-tests
+    depends_on:
+      - api
+    environment:
+      - API_BASE_URL=http://api:8080
+    command: ["./wait-for-it.sh", "api:8080", "--", "mvn", "test"]</code></pre>
+
+                    <h2>Debugging in Docker</h2>
+
+                    <h3>View Browser via VNC</h3>
+
+                    <pre><code class="language-bash"># Use debug images for VNC access
+docker run -d -p 4444:4444 -p 7900:7900 --shm-size="2g" \
+    selenium/standalone-chrome:latest
+
+# Open browser: http://localhost:7900
+# Password: secret</code></pre>
+
+                    <h3>Access Container Shell</h3>
+
+                    <pre><code class="language-bash"># Get shell access to running container
+docker exec -it &lt;container-id&gt; /bin/bash
+
+# Check logs
+docker logs -f &lt;container-id&gt;
+
+# Inspect container details
+docker inspect &lt;container-id&gt;</code></pre>
+
+                    <h2>Best Practices</h2>
+
+                    <div class="info-box info-box-primary">
+                        <h4><i class="fas fa-check-circle"></i> Docker Testing Best Practices</h4>
+                        <ul>
+                            <li><strong>Use specific image tags:</strong> <code>selenium/standalone-chrome:4.15.0</code> not <code>:latest</code></li>
+                            <li><strong>Set resource limits:</strong> Prevent containers from consuming all resources</li>
+                            <li><strong>Use health checks:</strong> Wait for services to be ready before testing</li>
+                            <li><strong>Clean up:</strong> Remove containers and images after test runs</li>
+                            <li><strong>Cache dependencies:</strong> Layer Dockerfile to speed up builds</li>
+                            <li><strong>Use .dockerignore:</strong> Exclude unnecessary files from builds</li>
+                        </ul>
+                    </div>
+
+                    <h3>Example .dockerignore</h3>
+
+                    <pre><code class="language-text"># .dockerignore
+target/
+.git/
+.idea/
+*.log
+node_modules/
+reports/
+screenshots/</code></pre>
+
+                    <h3>Health Check Example</h3>
+
+                    <pre><code class="language-yaml"># Wait for Selenium to be ready
+services:
+  chrome:
+    image: selenium/standalone-chrome:latest
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  tests:
+    depends_on:
+      chrome:
+        condition: service_healthy</code></pre>
+
+                    <h2>Common Issues and Solutions</h2>
+
+                    <table class="styled-table">
+                        <thead>
+                            <tr>
+                                <th>Issue</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Chrome crashes</td>
+                                <td>Add <code>--shm-size="2g"</code></td>
+                            </tr>
+                            <tr>
+                                <td>Connection refused</td>
+                                <td>Wait for container to be ready, check ports</td>
+                            </tr>
+                            <tr>
+                                <td>Tests can't reach app</td>
+                                <td>Use Docker network, not localhost</td>
+                            </tr>
+                            <tr>
+                                <td>Slow builds</td>
+                                <td>Cache dependencies, use multi-stage builds</td>
+                            </tr>
+                            <tr>
+                                <td>Out of disk space</td>
+                                <td>Run <code>docker system prune</code> regularly</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2>Quick Reference</h2>
+
+                    <pre><code class="language-bash"># Selenium standalone browsers
+docker run -d -p 4444:4444 --shm-size=2g selenium/standalone-chrome
+docker run -d -p 4444:4444 --shm-size=2g selenium/standalone-firefox
+docker run -d -p 4444:4444 --shm-size=2g selenium/standalone-edge
+
+# With VNC access (port 7900, password: secret)
+docker run -d -p 4444:4444 -p 7900:7900 --shm-size=2g selenium/standalone-chrome
+
+# Docker Compose commands
+docker-compose up -d          # Start in background
+docker-compose down           # Stop and remove
+docker-compose logs -f        # Follow logs
+docker-compose ps             # List containers
+docker-compose up --scale chrome=5  # Scale nodes
+
+# Cleanup
+docker system prune           # Remove unused data
+docker image prune            # Remove unused images
+docker container prune        # Remove stopped containers</code></pre>
+
+                    <h2>Conclusion</h2>
+
+                    <p>
+                        Docker transforms test automation from "works on my machine" to "works everywhere."
+                        Start with running Selenium in Docker, then gradually containerize your entire test
+                        infrastructure. The initial setup takes time, but the consistency and reliability
+                        you gain are worth it.
+                    </p>
+
+                    <p>
+                        Remember: Docker is a tool, not a goal. Use it to solve real problems - environment
+                        inconsistency, parallel execution, CI/CD integration. Don't containerize just for
+                        the sake of containerizing.
+                    </p>
+
+                    <div class="info-box info-box-highlight">
+                        <h4><i class="fas fa-rocket"></i> Next Steps</h4>
+                        <p>
+                            Ready to scale your tests? Check out our
+                            <a href="/selenium/selenium-grid.html">Selenium Grid tutorial</a> for parallel
+                            execution strategies, or learn about
+                            <a href="/selenium/selenium-framework-architecture.html">Framework Architecture</a>
+                            for building maintainable test suites.
+                        </p>
+                    </div>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/blog/posts/test-automation-frameworks-fail.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Why Frameworks Fail</span>
+                    </a>
+                    <a href="/blog/index.html" class="nav-next">
+                        <span>All Posts</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
