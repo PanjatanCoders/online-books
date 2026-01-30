@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn Git remote repositories - Connect to GitHub, push and pull changes, clone repos, and collaborate with teams effectively.">
+    <title>Remote Repositories - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fab fa-git-alt"></i> Git
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 18 min read
+                        </span>
+                        <span class="article-level">
+                            <i class="fas fa-signal"></i> Intermediate
+                        </span>
+                    </div>
+                    <h1 class="article-title">Remote Repositories</h1>
+                    <p class="article-subtitle">
+                        Connect your local work to the cloud. Collaborate with the world.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- What Are Remotes -->
+                    <section class="chapter" id="what-are-remotes">
+                        <h2 class="chapter-title"><i class="fas fa-cloud"></i> What Are Remote Repositories?</h2>
+
+                        <p>
+                            A <strong>remote</strong> is a copy of your repository hosted somewhere else -
+                            usually on GitHub, GitLab, or Bitbucket. It's how you backup code and work with others.
+                        </p>
+
+                        <pre><code class="language-text">Your Computer              Cloud (GitHub)
+┌─────────────┐           ┌─────────────┐
+│   Local     │  push ──▶ │   Remote    │
+│   Repo      │ ◀── pull  │   Repo      │
+└─────────────┘           └─────────────┘
+                               │
+                    Other developers clone/pull</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Why Use Remotes?</h4>
+                            <ul>
+                                <li><strong>Backup</strong> - Your code is safe even if your laptop dies</li>
+                                <li><strong>Collaboration</strong> - Share code with teammates</li>
+                                <li><strong>CI/CD</strong> - Trigger automated tests and deployments</li>
+                                <li><strong>Portfolio</strong> - Show off your work to employers</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Setting Up GitHub -->
+                    <section class="chapter" id="github-setup">
+                        <h2 class="chapter-title"><i class="fab fa-github"></i> Setting Up GitHub</h2>
+
+                        <h3>1. Create a GitHub Account</h3>
+                        <p>Go to <a href="https://github.com" target="_blank">github.com</a> and sign up. It's free.</p>
+
+                        <h3>2. Create a New Repository</h3>
+                        <ol>
+                            <li>Click the <strong>+</strong> icon → <strong>New repository</strong></li>
+                            <li>Name it (e.g., <code>my-project</code>)</li>
+                            <li>Choose Public or Private</li>
+                            <li>Don't initialize with README (if you have local code)</li>
+                            <li>Click <strong>Create repository</strong></li>
+                        </ol>
+
+                        <h3>3. Authentication Setup</h3>
+                        <p>GitHub requires authentication. Two main options:</p>
+
+                        <h4>Option A: HTTPS + Personal Access Token</h4>
+                        <pre><code class="language-bash"># GitHub.com → Settings → Developer settings → Personal access tokens
+# Generate token with 'repo' scope
+# Use token as password when pushing</code></pre>
+
+                        <h4>Option B: SSH Keys (Recommended)</h4>
+                        <pre><code class="language-bash"># Generate SSH key
+ssh-keygen -t ed25519 -C "your@email.com"
+
+# Start SSH agent
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+
+# Copy public key
+cat ~/.ssh/id_ed25519.pub
+# Add this to GitHub → Settings → SSH Keys
+
+# Test connection
+ssh -T git@github.com</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-key"></i> SSH vs HTTPS</h4>
+                            <p>
+                                SSH is more secure and convenient - no password prompts after setup.
+                                Use HTTPS if you're behind a restrictive firewall.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Connecting Local to Remote -->
+                    <section class="chapter" id="connecting-remote">
+                        <h2 class="chapter-title"><i class="fas fa-link"></i> Connecting Local to Remote</h2>
+
+                        <h3>Scenario 1: Local Repo First</h3>
+                        <p>You have local code and want to push to GitHub:</p>
+                        <pre><code class="language-bash"># Add remote (name it 'origin')
+git remote add origin git@github.com:username/my-project.git
+
+# Verify
+git remote -v
+
+# Push for the first time (-u sets upstream)
+git push -u origin main</code></pre>
+
+                        <h3>Scenario 2: GitHub Repo First</h3>
+                        <p>You want to download an existing repo:</p>
+                        <pre><code class="language-bash"># Clone repository
+git clone git@github.com:username/my-project.git
+
+# This automatically:
+# - Downloads all files and history
+# - Sets up 'origin' remote
+# - Creates local 'main' branch tracking origin/main</code></pre>
+
+                        <h3>Managing Remotes</h3>
+                        <pre><code class="language-bash"># List remotes
+git remote -v
+
+# Add a remote
+git remote add origin &lt;url&gt;
+
+# Change remote URL
+git remote set-url origin &lt;new-url&gt;
+
+# Remove remote
+git remote remove origin
+
+# Rename remote
+git remote rename origin upstream</code></pre>
+                    </section>
+
+                    <!-- Push and Pull -->
+                    <section class="chapter" id="push-pull">
+                        <h2 class="chapter-title"><i class="fas fa-exchange-alt"></i> Push & Pull</h2>
+
+                        <h3>Push: Send Changes to Remote</h3>
+                        <pre><code class="language-bash"># Push current branch to remote
+git push
+
+# Push specific branch
+git push origin feature-login
+
+# First push of a new branch (set upstream)
+git push -u origin feature-login</code></pre>
+
+                        <h3>Pull: Get Changes from Remote</h3>
+                        <pre><code class="language-bash"># Pull changes from remote
+git pull
+
+# Pull is actually: fetch + merge
+git fetch origin    # Download changes
+git merge origin/main  # Merge into local</code></pre>
+
+                        <h3>Fetch vs Pull</h3>
+                        <pre><code class="language-text">git fetch                    git pull
+┌──────────────────┐        ┌──────────────────┐
+│ Downloads new    │        │ Downloads AND    │
+│ commits but      │        │ merges changes   │
+│ doesn't merge    │        │ automatically    │
+└──────────────────┘        └──────────────────┘
+   Safe, inspect first         Quick, might conflict</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> Pro Tip</h4>
+                            <p>
+                                Use <code>git fetch</code> first to see what changed, then decide
+                                whether to merge or rebase. It's safer than blind <code>git pull</code>.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Working with Branches -->
+                    <section class="chapter" id="remote-branches">
+                        <h2 class="chapter-title"><i class="fas fa-code-branch"></i> Remote Branches</h2>
+
+                        <h3>See All Branches</h3>
+                        <pre><code class="language-bash"># Local branches only
+git branch
+
+# Remote branches only
+git branch -r
+
+# All branches
+git branch -a</code></pre>
+
+                        <h3>Work on a Remote Branch</h3>
+                        <pre><code class="language-bash"># Fetch all remote branches
+git fetch --all
+
+# Create local branch tracking remote
+git checkout -b feature-login origin/feature-login
+
+# Or with newer Git
+git switch -c feature-login origin/feature-login</code></pre>
+
+                        <h3>Push a New Branch</h3>
+                        <pre><code class="language-bash"># Create and push new branch
+git checkout -b feature-payment
+# ... make commits ...
+git push -u origin feature-payment</code></pre>
+
+                        <h3>Delete Remote Branch</h3>
+                        <pre><code class="language-bash"># Delete remote branch
+git push origin --delete feature-old
+
+# Clean up stale remote tracking branches
+git fetch --prune</code></pre>
+                    </section>
+
+                    <!-- Collaboration Workflow -->
+                    <section class="chapter" id="collaboration">
+                        <h2 class="chapter-title"><i class="fas fa-users"></i> Collaboration Workflow</h2>
+
+                        <h3>The Pull Request Workflow</h3>
+                        <pre><code class="language-text">1. Clone/Pull latest main
+2. Create feature branch
+3. Make changes and commit
+4. Push feature branch
+5. Open Pull Request on GitHub
+6. Team reviews code
+7. Merge PR into main
+8. Delete feature branch</code></pre>
+
+                        <h3>Step by Step</h3>
+                        <pre><code class="language-bash"># 1. Get latest main
+git checkout main
+git pull origin main
+
+# 2. Create feature branch
+git checkout -b feature/add-login
+
+# 3. Work and commit
+echo "login code" > login.js
+git add login.js
+git commit -m "Add login functionality"
+
+# 4. Push to remote
+git push -u origin feature/add-login
+
+# 5. Go to GitHub → Open Pull Request
+
+# After PR is merged:
+# 6. Update local main
+git checkout main
+git pull origin main
+
+# 7. Delete local feature branch
+git branch -d feature/add-login</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-code-branch"></i> Why Pull Requests?</h4>
+                            <ul>
+                                <li><strong>Code Review</strong> - Teammates catch bugs before merge</li>
+                                <li><strong>Discussion</strong> - Comment on specific lines</li>
+                                <li><strong>CI/CD</strong> - Run tests before merging</li>
+                                <li><strong>Documentation</strong> - History of why changes were made</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Handling Conflicts -->
+                    <section class="chapter" id="remote-conflicts">
+                        <h2 class="chapter-title"><i class="fas fa-exclamation-triangle"></i> Handling Remote Conflicts</h2>
+
+                        <h3>When Push is Rejected</h3>
+                        <pre><code class="language-bash"># You try to push...
+git push origin main
+# ! [rejected] main -> main (non-fast-forward)
+
+# Someone else pushed first. Your local is behind.</code></pre>
+
+                        <h3>Solution: Pull First</h3>
+                        <pre><code class="language-bash"># Pull changes (may cause merge conflict)
+git pull origin main
+
+# If conflict, resolve it:
+# 1. Edit conflicted files
+# 2. git add .
+# 3. git commit
+
+# Now push
+git push origin main</code></pre>
+
+                        <h3>Better: Pull with Rebase</h3>
+                        <pre><code class="language-bash"># Cleaner history - replay your commits on top
+git pull --rebase origin main
+
+# If conflict during rebase:
+# 1. Fix the conflict
+# 2. git add .
+# 3. git rebase --continue
+
+# Then push
+git push origin main</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Golden Rule</h4>
+                            <p>
+                                <strong>Never force push to shared branches</strong> like main/master.
+                                It overwrites others' work. Only force push to your own feature branches
+                                when absolutely necessary.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Forking -->
+                    <section class="chapter" id="forking">
+                        <h2 class="chapter-title"><i class="fas fa-code-fork"></i> Forking (Open Source)</h2>
+
+                        <p>
+                            <strong>Fork</strong> = Your personal copy of someone else's repo.
+                            Used for contributing to projects you don't have write access to.
+                        </p>
+
+                        <h3>Fork Workflow</h3>
+                        <pre><code class="language-bash"># 1. Fork on GitHub (click Fork button)
+
+# 2. Clone YOUR fork
+git clone git@github.com:YOUR-USERNAME/project.git
+
+# 3. Add original repo as 'upstream'
+git remote add upstream git@github.com:ORIGINAL-OWNER/project.git
+
+# 4. Create feature branch
+git checkout -b fix-bug
+
+# 5. Make changes and push to YOUR fork
+git push origin fix-bug
+
+# 6. Open Pull Request from your fork to original repo</code></pre>
+
+                        <h3>Keep Fork Updated</h3>
+                        <pre><code class="language-bash"># Fetch from original
+git fetch upstream
+
+# Merge upstream changes into your main
+git checkout main
+git merge upstream/main
+
+# Push to your fork
+git push origin main</code></pre>
+                    </section>
+
+                    <!-- Quick Reference -->
+                    <section class="chapter" id="quick-reference">
+                        <h2 class="chapter-title"><i class="fas fa-bookmark"></i> Quick Reference</h2>
+
+                        <pre><code class="language-bash"># Remotes
+git remote -v                 # List remotes
+git remote add origin &lt;url&gt;   # Add remote
+git remote set-url origin &lt;url&gt;  # Change URL
+
+# Clone
+git clone &lt;url&gt;              # Download repo
+git clone &lt;url&gt; folder-name  # Clone to specific folder
+
+# Push
+git push                     # Push to tracked branch
+git push -u origin branch    # Push and set upstream
+git push origin --delete branch  # Delete remote branch
+
+# Pull & Fetch
+git fetch                    # Download without merging
+git pull                     # Fetch + merge
+git pull --rebase            # Fetch + rebase (cleaner)
+
+# Remote Branches
+git branch -r                # List remote branches
+git fetch --all              # Fetch all remotes
+git checkout -b local origin/remote  # Track remote branch
+git fetch --prune            # Remove stale references</code></pre>
+                    </section>
+
+                    <!-- Practice -->
+                    <section class="chapter" id="practice">
+                        <h2 class="chapter-title"><i class="fas fa-dumbbell"></i> Practice Exercise</h2>
+
+                        <pre><code class="language-bash"># 1. Create a GitHub repository (do this on github.com)
+
+# 2. Connect local project to GitHub
+mkdir remote-practice && cd remote-practice
+git init
+echo "# My Project" > README.md
+git add . && git commit -m "Initial commit"
+
+# 3. Add remote and push
+git remote add origin git@github.com:YOUR-USERNAME/remote-practice.git
+git push -u origin main
+
+# 4. Simulate teammate (edit README on GitHub directly)
+# Add a line through GitHub's web interface
+
+# 5. Pull the changes
+git pull origin main
+
+# 6. Create a feature branch and push
+git checkout -b feature/add-docs
+echo "Documentation here" > docs.md
+git add . && git commit -m "Add documentation"
+git push -u origin feature/add-docs
+
+# 7. Go to GitHub and create a Pull Request!</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-arrow-right"></i> Next Steps</h4>
+                            <p>
+                                You can now collaborate on any project! Ready to level up? Learn
+                                <a href="/git/git-advanced.html">Advanced Git</a> - rebase, cherry-pick,
+                                stash, and recover from any mistake.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/git/git-branching.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Branching & Merging</span>
+                    </a>
+                    <a href="/git/git-advanced.html" class="nav-next">
+                        <span>Advanced Git</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

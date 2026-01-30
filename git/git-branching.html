@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master Git branching and merging - Create branches, merge changes, resolve conflicts, and use effective branching strategies.">
+    <title>Branching & Merging - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fab fa-git-alt"></i> Git
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 20 min read
+                        </span>
+                        <span class="article-level">
+                            <i class="fas fa-signal"></i> Intermediate
+                        </span>
+                    </div>
+                    <h1 class="article-title">Branching & Merging</h1>
+                    <p class="article-subtitle">
+                        Work on features without breaking your main code. Git's superpower.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- What Are Branches -->
+                    <section class="chapter" id="what-are-branches">
+                        <h2 class="chapter-title"><i class="fas fa-code-branch"></i> What Are Branches?</h2>
+
+                        <p>
+                            A <strong>branch</strong> is a parallel universe for your code. You can experiment,
+                            break things, and when you're happy, merge it back. Main code stays safe.
+                        </p>
+
+                        <pre><code class="language-text">main:     A ─── B ─── C ─── D ─── E
+                       \           /
+feature:                F ─── G ──</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Why Branch?</h4>
+                            <ul>
+                                <li><strong>Isolation</strong> - Work on features without affecting others</li>
+                                <li><strong>Experimentation</strong> - Try ideas risk-free</li>
+                                <li><strong>Collaboration</strong> - Multiple features in parallel</li>
+                                <li><strong>Code review</strong> - Review before merging to main</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Creating Branches -->
+                    <section class="chapter" id="creating-branches">
+                        <h2 class="chapter-title"><i class="fas fa-plus-circle"></i> Creating Branches</h2>
+
+                        <h3>See All Branches</h3>
+                        <pre><code class="language-bash"># List local branches (* = current)
+git branch
+
+# List all branches (including remote)
+git branch -a</code></pre>
+
+                        <h3>Create a New Branch</h3>
+                        <pre><code class="language-bash"># Create branch
+git branch feature-login
+
+# Create and switch to branch (recommended)
+git checkout -b feature-login
+
+# Modern alternative (Git 2.23+)
+git switch -c feature-login</code></pre>
+
+                        <h3>Switch Between Branches</h3>
+                        <pre><code class="language-bash"># Switch to existing branch
+git checkout main
+
+# Modern alternative
+git switch main</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> Branch Naming</h4>
+                            <p>Use descriptive names with prefixes:</p>
+                            <ul>
+                                <li><code>feature/login-page</code></li>
+                                <li><code>bugfix/header-alignment</code></li>
+                                <li><code>hotfix/security-patch</code></li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Working with Branches -->
+                    <section class="chapter" id="working-with-branches">
+                        <h2 class="chapter-title"><i class="fas fa-laptop-code"></i> Working with Branches</h2>
+
+                        <h3>Typical Workflow</h3>
+                        <pre><code class="language-bash"># 1. Start from main
+git checkout main
+
+# 2. Create feature branch
+git checkout -b feature/user-profile
+
+# 3. Make changes and commit
+echo "Profile code" > profile.js
+git add profile.js
+git commit -m "Add user profile feature"
+
+# 4. Make more commits as needed
+echo "More code" >> profile.js
+git commit -am "Enhance profile feature"
+
+# 5. Switch back to main when done
+git checkout main</code></pre>
+
+                        <h3>See Branch Differences</h3>
+                        <pre><code class="language-bash"># Compare branches
+git diff main..feature/user-profile
+
+# See commits in feature not in main
+git log main..feature/user-profile --oneline</code></pre>
+                    </section>
+
+                    <!-- Merging -->
+                    <section class="chapter" id="merging">
+                        <h2 class="chapter-title"><i class="fas fa-compress-arrows-alt"></i> Merging Branches</h2>
+
+                        <p>Merging brings changes from one branch into another.</p>
+
+                        <h3>Basic Merge</h3>
+                        <pre><code class="language-bash"># 1. Switch to target branch (usually main)
+git checkout main
+
+# 2. Merge feature branch into main
+git merge feature/user-profile
+
+# 3. Delete feature branch (optional)
+git branch -d feature/user-profile</code></pre>
+
+                        <h3>Merge Types</h3>
+
+                        <h4>Fast-Forward Merge</h4>
+                        <p>When main hasn't changed since you branched:</p>
+                        <pre><code class="language-text">Before:
+main:    A ─── B
+              \
+feature:       C ─── D
+
+After (fast-forward):
+main:    A ─── B ─── C ─── D</code></pre>
+
+                        <h4>Three-Way Merge</h4>
+                        <p>When both branches have new commits:</p>
+                        <pre><code class="language-text">Before:
+main:    A ─── B ─── E
+              \
+feature:       C ─── D
+
+After (merge commit):
+main:    A ─── B ─── E ─── M
+              \           /
+feature:       C ─── D ──</code></pre>
+
+                        <pre><code class="language-bash"># Force a merge commit (no fast-forward)
+git merge --no-ff feature/user-profile</code></pre>
+                    </section>
+
+                    <!-- Resolving Conflicts -->
+                    <section class="chapter" id="conflicts">
+                        <h2 class="chapter-title"><i class="fas fa-exclamation-triangle"></i> Resolving Conflicts</h2>
+
+                        <p>Conflicts happen when both branches change the same lines. Git can't decide which to keep.</p>
+
+                        <h3>What Conflicts Look Like</h3>
+                        <pre><code class="language-text"><<<<<<< HEAD
+This is the content from main branch
+=======
+This is the content from feature branch
+>>>>>>> feature/user-profile</code></pre>
+
+                        <h3>Resolving Step by Step</h3>
+                        <pre><code class="language-bash"># 1. Try to merge
+git merge feature/user-profile
+# CONFLICT (content): Merge conflict in app.js
+
+# 2. See conflicted files
+git status
+
+# 3. Open and edit conflicted files
+# Remove conflict markers, keep the code you want
+
+# 4. Stage resolved files
+git add app.js
+
+# 5. Complete the merge
+git commit -m "Merge feature/user-profile, resolve conflicts"</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-tools"></i> Conflict Tools</h4>
+                            <p>Use visual merge tools for complex conflicts:</p>
+                            <pre><code class="language-bash"># Configure merge tool
+git config --global merge.tool vscode
+
+# Launch tool during conflict
+git mergetool</code></pre>
+                        </div>
+
+                        <h3>Abort a Merge</h3>
+                        <pre><code class="language-bash"># Cancel merge and go back to before
+git merge --abort</code></pre>
+                    </section>
+
+                    <!-- Deleting Branches -->
+                    <section class="chapter" id="deleting-branches">
+                        <h2 class="chapter-title"><i class="fas fa-trash"></i> Deleting Branches</h2>
+
+                        <pre><code class="language-bash"># Delete merged branch (safe)
+git branch -d feature/user-profile
+
+# Force delete unmerged branch (careful!)
+git branch -D feature/abandoned
+
+# Delete remote branch
+git push origin --delete feature/user-profile</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Caution</h4>
+                            <p>
+                                <code>-D</code> (uppercase) force-deletes even if not merged.
+                                You may lose work. Use <code>-d</code> (lowercase) normally.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Branching Strategies -->
+                    <section class="chapter" id="strategies">
+                        <h2 class="chapter-title"><i class="fas fa-sitemap"></i> Branching Strategies</h2>
+
+                        <h3>GitHub Flow (Simple)</h3>
+                        <p>Best for continuous deployment:</p>
+                        <pre><code class="language-text">main ──────────────────────────────────
+        \                    /
+         feature-branch ────</code></pre>
+                        <ul>
+                            <li><code>main</code> is always deployable</li>
+                            <li>Create branch for each feature</li>
+                            <li>Open PR, review, merge</li>
+                        </ul>
+
+                        <h3>Git Flow (Structured)</h3>
+                        <p>Best for scheduled releases:</p>
+                        <pre><code class="language-text">main     ─────────────────────────────
+            \                    /
+develop  ────●─────────●────────●────
+              \       / \      /
+feature        ●─────●   ●────●</code></pre>
+                        <ul>
+                            <li><code>main</code> - production releases</li>
+                            <li><code>develop</code> - integration branch</li>
+                            <li><code>feature/*</code> - new features</li>
+                            <li><code>release/*</code> - release prep</li>
+                            <li><code>hotfix/*</code> - production fixes</li>
+                        </ul>
+                    </section>
+
+                    <!-- Quick Reference -->
+                    <section class="chapter" id="quick-reference">
+                        <h2 class="chapter-title"><i class="fas fa-bookmark"></i> Quick Reference</h2>
+
+                        <pre><code class="language-bash"># Branches
+git branch                    # List branches
+git branch &lt;name&gt;             # Create branch
+git checkout -b &lt;name&gt;        # Create and switch
+git checkout &lt;name&gt;           # Switch branch
+git branch -d &lt;name&gt;          # Delete (safe)
+git branch -D &lt;name&gt;          # Delete (force)
+
+# Merging
+git merge &lt;branch&gt;            # Merge into current
+git merge --no-ff &lt;branch&gt;    # Force merge commit
+git merge --abort             # Cancel merge
+
+# Comparing
+git diff &lt;branch1&gt;..&lt;branch2&gt;
+git log &lt;branch1&gt;..&lt;branch2&gt;</code></pre>
+                    </section>
+
+                    <!-- Practice -->
+                    <section class="chapter" id="practice">
+                        <h2 class="chapter-title"><i class="fas fa-dumbbell"></i> Practice Exercise</h2>
+
+                        <pre><code class="language-bash"># Setup
+mkdir branch-practice && cd branch-practice
+git init
+echo "# Main Project" > README.md
+git add . && git commit -m "Initial commit"
+
+# Create and work on feature branch
+git checkout -b feature/add-about
+echo "About page content" > about.txt
+git add . && git commit -m "Add about page"
+
+# Go back to main and make a change
+git checkout main
+echo "Updated main" >> README.md
+git commit -am "Update README"
+
+# Merge feature branch
+git merge feature/add-about
+
+# View the result
+git log --oneline --graph
+
+# Cleanup
+git branch -d feature/add-about</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-arrow-right"></i> Next Steps</h4>
+                            <p>
+                                Now that you can branch and merge locally, learn to collaborate with
+                                <a href="/git/git-remote.html">Remote Repositories</a> - push to GitHub,
+                                pull from teammates, and work as a team.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/git/git-basics.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Git Basics</span>
+                    </a>
+                    <a href="/git/git-remote.html" class="nav-next">
+                        <span>Remote Repositories</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

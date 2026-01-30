@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master advanced Git techniques - Rebase, cherry-pick, stash, interactive staging, reflog, and recovering from mistakes.">
+    <title>Advanced Git - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fab fa-git-alt"></i> Git
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 25 min read
+                        </span>
+                        <span class="article-level">
+                            <i class="fas fa-signal"></i> Advanced
+                        </span>
+                    </div>
+                    <h1 class="article-title">Advanced Git</h1>
+                    <p class="article-subtitle">
+                        Power user techniques. Rewrite history. Recover from anything.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Git Stash -->
+                    <section class="chapter" id="stash">
+                        <h2 class="chapter-title"><i class="fas fa-box"></i> Git Stash</h2>
+
+                        <p>
+                            <strong>Stash</strong> = Temporarily save uncommitted changes.
+                            Perfect when you need to switch branches but aren't ready to commit.
+                        </p>
+
+                        <h3>Basic Stash</h3>
+                        <pre><code class="language-bash"># Save current changes
+git stash
+
+# Your working directory is now clean
+git status  # Nothing to commit
+
+# Switch branches, do other work...
+git checkout other-branch
+
+# Come back and restore changes
+git checkout original-branch
+git stash pop  # Restores and removes from stash</code></pre>
+
+                        <h3>Stash with Message</h3>
+                        <pre><code class="language-bash"># Name your stash (easier to find later)
+git stash save "WIP: login validation"
+
+# Or modern syntax
+git stash push -m "WIP: login validation"</code></pre>
+
+                        <h3>Managing Multiple Stashes</h3>
+                        <pre><code class="language-bash"># List all stashes
+git stash list
+# stash@{0}: WIP: login validation
+# stash@{1}: WIP: fixing header
+
+# Apply specific stash (keep in list)
+git stash apply stash@{1}
+
+# Apply and remove specific stash
+git stash pop stash@{1}
+
+# Delete a stash
+git stash drop stash@{0}
+
+# Clear all stashes
+git stash clear</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> Stash Includes Untracked</h4>
+                            <pre><code class="language-bash"># Include untracked files in stash
+git stash -u
+
+# Include everything (even ignored files)
+git stash -a</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Git Rebase -->
+                    <section class="chapter" id="rebase">
+                        <h2 class="chapter-title"><i class="fas fa-layer-group"></i> Git Rebase</h2>
+
+                        <p>
+                            <strong>Rebase</strong> = Move your branch to start from a different commit.
+                            Creates a cleaner, linear history compared to merge.
+                        </p>
+
+                        <h3>Rebase vs Merge</h3>
+                        <pre><code class="language-text">MERGE (creates merge commit):
+main:    A ─── B ─── C ─── M
+              \           /
+feature:       D ─── E ──
+
+REBASE (linear history):
+main:    A ─── B ─── C
+                      \
+feature:               D' ─── E'</code></pre>
+
+                        <h3>Basic Rebase</h3>
+                        <pre><code class="language-bash"># On your feature branch
+git checkout feature
+
+# Rebase onto main (move feature to tip of main)
+git rebase main
+
+# If conflicts occur:
+# 1. Fix conflicts in files
+# 2. git add .
+# 3. git rebase --continue
+
+# Abort if things go wrong
+git rebase --abort</code></pre>
+
+                        <h3>Interactive Rebase</h3>
+                        <p>Edit, squash, reorder, or drop commits:</p>
+                        <pre><code class="language-bash"># Rebase last 3 commits
+git rebase -i HEAD~3</code></pre>
+
+                        <p>This opens an editor:</p>
+                        <pre><code class="language-text">pick abc1234 Add login form
+pick def5678 Fix typo in login
+pick ghi9012 Add validation
+
+# Commands:
+# p, pick = use commit
+# r, reword = edit commit message
+# e, edit = stop to amend commit
+# s, squash = combine with previous commit
+# f, fixup = squash but discard message
+# d, drop = remove commit</code></pre>
+
+                        <h3>Squash Commits</h3>
+                        <pre><code class="language-bash"># Combine last 3 commits into one
+git rebase -i HEAD~3
+
+# Change 'pick' to 'squash' (or 's'):
+pick abc1234 Add login form
+squash def5678 Fix typo in login
+squash ghi9012 Add validation
+
+# Save and edit the combined commit message</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Golden Rule of Rebasing</h4>
+                            <p>
+                                <strong>Never rebase commits that have been pushed and shared.</strong>
+                                Rebase rewrites history. If others have pulled your commits,
+                                rebasing causes chaos. Only rebase your own unpushed work.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Cherry Pick -->
+                    <section class="chapter" id="cherry-pick">
+                        <h2 class="chapter-title"><i class="fas fa-cherry"></i> Cherry Pick</h2>
+
+                        <p>
+                            <strong>Cherry-pick</strong> = Copy a specific commit to your current branch.
+                            Grab just the commits you need without merging everything.
+                        </p>
+
+                        <pre><code class="language-bash"># Copy one commit
+git cherry-pick abc1234
+
+# Copy multiple commits
+git cherry-pick abc1234 def5678
+
+# Copy a range of commits
+git cherry-pick abc1234..ghi9012</code></pre>
+
+                        <h3>Common Use Cases</h3>
+                        <pre><code class="language-bash"># Hotfix: Apply bugfix from develop to main
+git checkout main
+git cherry-pick abc1234  # The bugfix commit
+
+# Oops: Wrong branch - move commit to correct branch
+git checkout correct-branch
+git cherry-pick abc1234
+git checkout wrong-branch
+git reset --hard HEAD~1  # Remove from wrong branch</code></pre>
+
+                        <h3>Cherry-Pick Options</h3>
+                        <pre><code class="language-bash"># Don't commit automatically (stage only)
+git cherry-pick -n abc1234
+
+# Edit commit message
+git cherry-pick -e abc1234
+
+# If conflicts, after resolving:
+git cherry-pick --continue
+
+# Abort cherry-pick
+git cherry-pick --abort</code></pre>
+                    </section>
+
+                    <!-- Reset vs Revert -->
+                    <section class="chapter" id="reset-revert">
+                        <h2 class="chapter-title"><i class="fas fa-undo"></i> Reset vs Revert</h2>
+
+                        <p>Two ways to undo changes. Different purposes.</p>
+
+                        <h3>Git Reset (Rewrite History)</h3>
+                        <pre><code class="language-bash"># Soft: Undo commit, keep changes staged
+git reset --soft HEAD~1
+
+# Mixed (default): Undo commit, keep changes unstaged
+git reset HEAD~1
+
+# Hard: Undo commit AND discard changes ⚠️
+git reset --hard HEAD~1</code></pre>
+
+                        <pre><code class="language-text">Before: A ─── B ─── C ─── D (HEAD)
+
+git reset --hard HEAD~2
+
+After:  A ─── B (HEAD)
+        C and D are gone!</code></pre>
+
+                        <h3>Git Revert (Safe Undo)</h3>
+                        <p>Creates a new commit that undoes a previous commit. Safe for shared branches.</p>
+                        <pre><code class="language-bash"># Revert a specific commit
+git revert abc1234
+
+# Revert without auto-commit
+git revert -n abc1234</code></pre>
+
+                        <pre><code class="language-text">Before: A ─── B ─── C ─── D (HEAD)
+
+git revert C
+
+After:  A ─── B ─── C ─── D ─── C' (HEAD)
+        C' undoes C's changes</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-balance-scale"></i> When to Use Which</h4>
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Situation</th>
+                                        <th>Use</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Undo unpushed commits</td>
+                                        <td><code>git reset</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Undo pushed/shared commits</td>
+                                        <td><code>git revert</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Unstage files</td>
+                                        <td><code>git reset HEAD file</code></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Completely start over</td>
+                                        <td><code>git reset --hard</code></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Reflog -->
+                    <section class="chapter" id="reflog">
+                        <h2 class="chapter-title"><i class="fas fa-history"></i> Git Reflog (Your Safety Net)</h2>
+
+                        <p>
+                            <strong>Reflog</strong> = Reference log. Records every move HEAD makes.
+                            Even after <code>reset --hard</code>, your commits aren't truly gone.
+                        </p>
+
+                        <h3>View Reflog</h3>
+                        <pre><code class="language-bash">git reflog
+
+# Output:
+# abc1234 HEAD@{0}: reset: moving to HEAD~2
+# def5678 HEAD@{1}: commit: Add feature X
+# ghi9012 HEAD@{2}: commit: Fix bug Y
+# jkl3456 HEAD@{3}: checkout: moving from main to feature</code></pre>
+
+                        <h3>Recover "Lost" Commits</h3>
+                        <pre><code class="language-bash"># Oops! Accidentally reset --hard
+git reset --hard HEAD~3  # Deleted 3 commits!
+
+# Find them in reflog
+git reflog
+# abc1234 HEAD@{1}: commit: Important work
+
+# Recover!
+git reset --hard abc1234
+# Or create a branch at that point
+git branch recovered abc1234</code></pre>
+
+                        <h3>Recover Deleted Branch</h3>
+                        <pre><code class="language-bash"># Deleted a branch by mistake
+git branch -D feature-important  # Oops!
+
+# Find it
+git reflog | grep feature-important
+# Shows: checkout: moving from feature-important
+
+# Find the commit hash and recreate
+git branch feature-important abc1234</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-shield-alt"></i> Reflog Saves Lives</h4>
+                            <p>
+                                Reflog entries expire after 90 days by default.
+                                As long as the commit exists in reflog, you can recover it.
+                                Git almost never truly deletes data.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Amend and Fixup -->
+                    <section class="chapter" id="amend">
+                        <h2 class="chapter-title"><i class="fas fa-edit"></i> Amend & Fixup</h2>
+
+                        <h3>Amend Last Commit</h3>
+                        <pre><code class="language-bash"># Fix last commit message
+git commit --amend -m "Better message"
+
+# Add forgotten file to last commit
+git add forgotten-file.js
+git commit --amend --no-edit  # Keep same message
+
+# Change author of last commit
+git commit --amend --author="Name &lt;email@example.com&gt;"</code></pre>
+
+                        <h3>Fixup Older Commits</h3>
+                        <pre><code class="language-bash"># Create a fixup commit
+git commit --fixup abc1234
+
+# Later, squash all fixups automatically
+git rebase -i --autosquash main</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Warning</h4>
+                            <p>
+                                <code>--amend</code> rewrites the last commit.
+                                Don't amend commits you've already pushed, unless you're
+                                the only one working on that branch.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Bisect -->
+                    <section class="chapter" id="bisect">
+                        <h2 class="chapter-title"><i class="fas fa-search"></i> Git Bisect (Bug Hunt)</h2>
+
+                        <p>
+                            <strong>Bisect</strong> = Binary search through commits to find when a bug was introduced.
+                            Tests hundreds of commits in just a few steps.
+                        </p>
+
+                        <pre><code class="language-bash"># Start bisect
+git bisect start
+
+# Mark current commit as bad (has bug)
+git bisect bad
+
+# Mark a known good commit (before bug existed)
+git bisect good abc1234
+
+# Git checks out middle commit
+# Test if bug exists, then:
+git bisect good  # No bug
+# or
+git bisect bad   # Bug exists
+
+# Repeat until Git finds the culprit
+# "abc1234 is the first bad commit"
+
+# Done - return to normal
+git bisect reset</code></pre>
+
+                        <h3>Automate with Script</h3>
+                        <pre><code class="language-bash"># Run a test script automatically
+git bisect start HEAD abc1234
+git bisect run npm test
+
+# Git will find the commit that broke the tests!</code></pre>
+                    </section>
+
+                    <!-- Clean and Maintenance -->
+                    <section class="chapter" id="maintenance">
+                        <h2 class="chapter-title"><i class="fas fa-broom"></i> Cleanup & Maintenance</h2>
+
+                        <h3>Remove Untracked Files</h3>
+                        <pre><code class="language-bash"># See what would be deleted (dry run)
+git clean -n
+
+# Delete untracked files
+git clean -f
+
+# Delete untracked files AND directories
+git clean -fd
+
+# Delete ignored files too
+git clean -fdx</code></pre>
+
+                        <h3>Garbage Collection</h3>
+                        <pre><code class="language-bash"># Optimize repository
+git gc
+
+# Aggressive cleanup (slower but thorough)
+git gc --aggressive</code></pre>
+
+                        <h3>Check Repository Health</h3>
+                        <pre><code class="language-bash"># Verify integrity
+git fsck
+
+# Show repository size
+git count-objects -vH</code></pre>
+                    </section>
+
+                    <!-- Quick Reference -->
+                    <section class="chapter" id="quick-reference">
+                        <h2 class="chapter-title"><i class="fas fa-bookmark"></i> Quick Reference</h2>
+
+                        <pre><code class="language-bash"># Stash
+git stash                    # Save changes
+git stash pop                # Restore and remove
+git stash list               # List all stashes
+git stash drop stash@{0}     # Delete stash
+
+# Rebase
+git rebase main              # Rebase onto main
+git rebase -i HEAD~3         # Interactive rebase
+git rebase --abort           # Cancel rebase
+
+# Cherry-pick
+git cherry-pick &lt;commit&gt;     # Copy commit
+git cherry-pick -n &lt;commit&gt;  # Stage only, don't commit
+
+# Reset
+git reset --soft HEAD~1      # Undo commit, keep staged
+git reset HEAD~1             # Undo commit, keep changes
+git reset --hard HEAD~1      # Undo commit, discard all
+
+# Revert
+git revert &lt;commit&gt;          # Create undo commit
+
+# Recovery
+git reflog                   # View all HEAD movements
+git reset --hard &lt;hash&gt;      # Recover to any point
+
+# Amend
+git commit --amend           # Edit last commit
+git commit --amend --no-edit # Add to last commit
+
+# Bisect
+git bisect start             # Start bug hunt
+git bisect good/bad          # Mark commits
+git bisect reset             # End bisect</code></pre>
+                    </section>
+
+                    <!-- Practice -->
+                    <section class="chapter" id="practice">
+                        <h2 class="chapter-title"><i class="fas fa-dumbbell"></i> Practice Exercise</h2>
+
+                        <pre><code class="language-bash"># Setup
+mkdir advanced-practice && cd advanced-practice
+git init
+echo "v1" > file.txt && git add . && git commit -m "v1"
+echo "v2" > file.txt && git commit -am "v2"
+echo "v3" > file.txt && git commit -am "v3"
+echo "v4" > file.txt && git commit -am "v4"
+
+# Exercise 1: Stash
+echo "work in progress" >> file.txt
+git stash
+git stash list
+git stash pop
+
+# Exercise 2: Interactive Rebase (squash v2,v3,v4 into one)
+git rebase -i HEAD~3
+# Change 'pick' to 'squash' for last two commits
+
+# Exercise 3: Reset and Recover
+git log --oneline  # Note the commit hash
+git reset --hard HEAD~1  # "Lose" a commit
+git reflog  # Find it
+git reset --hard &lt;hash&gt;  # Recover!
+
+# Exercise 4: Amend
+git commit --amend -m "Better commit message"</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-trophy"></i> Congratulations!</h4>
+                            <p>
+                                You've completed the Git tutorial series! You now have the skills to:
+                            </p>
+                            <ul>
+                                <li>Track and manage code changes</li>
+                                <li>Branch, merge, and collaborate</li>
+                                <li>Work with remote repositories</li>
+                                <li>Rewrite history and recover from mistakes</li>
+                            </ul>
+                            <p>
+                                <strong>Keep practicing!</strong> The best way to master Git is to use it daily.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/git/git-remote.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Remote Repositories</span>
+                    </a>
+                    <a href="/git/index.html" class="nav-next">
+                        <span>Git Home</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

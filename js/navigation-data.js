@@ -362,6 +362,51 @@ const SITE_NAVIGATION = {
             categories: []
         },
         {
+            id: 'git',
+            name: 'Git',
+            icon: 'fab fa-git-alt',
+            enabled: true,
+            description: 'Master Git version control from zero to hero',
+            indexUrl: '/git/index.html',
+            categories: [
+                {
+                    id: 'git-tutorials',
+                    name: 'Git Tutorials',
+                    icon: 'fab fa-git-alt',
+                    tutorials: [
+                        {
+                            title: 'Git Basics',
+                            url: '/git/git-basics.html',
+                            icon: 'fas fa-play-circle',
+                            description: 'Installation, first repo, essential commands',
+                            readTime: '15 min'
+                        },
+                        {
+                            title: 'Branching & Merging',
+                            url: '/git/git-branching.html',
+                            icon: 'fas fa-code-branch',
+                            description: 'Branches, merging, resolving conflicts',
+                            readTime: '20 min'
+                        },
+                        {
+                            title: 'Remote Repositories',
+                            url: '/git/git-remote.html',
+                            icon: 'fas fa-cloud',
+                            description: 'GitHub, push, pull, clone, collaboration',
+                            readTime: '18 min'
+                        },
+                        {
+                            title: 'Advanced Git',
+                            url: '/git/git-advanced.html',
+                            icon: 'fas fa-rocket',
+                            description: 'Rebase, cherry-pick, stash, reset, reflog',
+                            readTime: '25 min'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             id: 'python',
             name: 'Python',
             icon: 'fab fa-python',

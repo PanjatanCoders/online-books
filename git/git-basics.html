@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn Git basics from scratch - Installation, creating repositories, essential commands, and understanding the Git workflow.">
+    <title>Git Basics - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fab fa-git-alt"></i> Git
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 15 min read
+                        </span>
+                        <span class="article-level">
+                            <i class="fas fa-signal"></i> Beginner
+                        </span>
+                    </div>
+                    <h1 class="article-title">Git Basics</h1>
+                    <p class="article-subtitle">
+                        Your journey into version control starts here. Zero experience required.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- What is Git -->
+                    <section class="chapter" id="what-is-git">
+                        <h2 class="chapter-title"><i class="fas fa-question-circle"></i> What is Git?</h2>
+
+                        <p>
+                            Git is a <strong>time machine for your code</strong>. It tracks every change you make,
+                            lets you go back in time, and enables multiple people to work on the same project without chaos.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Why Git Matters</h4>
+                            <ul>
+                                <li><strong>Undo mistakes</strong> - Accidentally deleted something? Go back in time.</li>
+                                <li><strong>Track changes</strong> - See who changed what and when.</li>
+                                <li><strong>Work together</strong> - Multiple people, one codebase, no conflicts.</li>
+                                <li><strong>Experiment safely</strong> - Try new ideas without breaking working code.</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Installation -->
+                    <section class="chapter" id="installation">
+                        <h2 class="chapter-title"><i class="fas fa-download"></i> Installation</h2>
+
+                        <h3>Windows</h3>
+                        <pre><code class="language-bash"># Download from https://git-scm.com/download/win
+# Run installer, use default options
+# Verify installation:
+git --version</code></pre>
+
+                        <h3>macOS</h3>
+                        <pre><code class="language-bash"># Using Homebrew (recommended)
+brew install git
+
+# Or install Xcode Command Line Tools
+xcode-select --install</code></pre>
+
+                        <h3>Linux</h3>
+                        <pre><code class="language-bash"># Ubuntu/Debian
+sudo apt update && sudo apt install git
+
+# Fedora
+sudo dnf install git</code></pre>
+
+                        <h3>First-Time Setup</h3>
+                        <p>Tell Git who you are (do this once):</p>
+
+                        <pre><code class="language-bash"># Set your name
+git config --global user.name "Your Name"
+
+# Set your email
+git config --global user.email "you@example.com"
+
+# Verify settings
+git config --list</code></pre>
+                    </section>
+
+                    <!-- Your First Repository -->
+                    <section class="chapter" id="first-repo">
+                        <h2 class="chapter-title"><i class="fas fa-folder-plus"></i> Your First Repository</h2>
+
+                        <p>A <strong>repository</strong> (repo) is a folder that Git tracks. Let's create one.</p>
+
+                        <pre><code class="language-bash"># Create a new folder
+mkdir my-project
+cd my-project
+
+# Initialize Git (creates hidden .git folder)
+git init</code></pre>
+
+                        <p>That's it! Your folder is now a Git repository.</p>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-eye"></i> The .git Folder</h4>
+                            <p>
+                                Git creates a hidden <code>.git</code> folder. This is where Git stores all history.
+                                <strong>Never delete this folder</strong> - you'll lose all your history.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- The Three States -->
+                    <section class="chapter" id="three-states">
+                        <h2 class="chapter-title"><i class="fas fa-layer-group"></i> The Three States</h2>
+
+                        <p>Every file in Git exists in one of three states:</p>
+
+                        <pre><code class="language-text">┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│  Working    │    │   Staging   │    │  Repository │
+│  Directory  │───▶│    Area     │───▶│  (History)  │
+│             │    │             │    │             │
+│ Your files  │    │ Ready to    │    │ Saved       │
+│ as you see  │    │ commit      │    │ forever     │
+│ them        │    │             │    │             │
+└─────────────┘    └─────────────┘    └─────────────┘
+                         ▲                   │
+                         └───────────────────┘
+                            checkout / reset</code></pre>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>State</th>
+                                    <th>What It Means</th>
+                                    <th>Command</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Modified</strong></td>
+                                    <td>You changed the file</td>
+                                    <td>(automatic)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Staged</strong></td>
+                                    <td>Marked for next commit</td>
+                                    <td><code>git add</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Committed</strong></td>
+                                    <td>Saved in history</td>
+                                    <td><code>git commit</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Basic Workflow -->
+                    <section class="chapter" id="basic-workflow">
+                        <h2 class="chapter-title"><i class="fas fa-sync-alt"></i> Basic Workflow</h2>
+
+                        <h3>Step 1: Create a File</h3>
+                        <pre><code class="language-bash"># Create a simple file
+echo "Hello, Git!" > hello.txt</code></pre>
+
+                        <h3>Step 2: Check Status</h3>
+                        <pre><code class="language-bash">git status
+
+# Output:
+# Untracked files:
+#   hello.txt</code></pre>
+                        <p><strong>Untracked</strong> means Git sees the file but isn't tracking it yet.</p>
+
+                        <h3>Step 3: Stage the File</h3>
+                        <pre><code class="language-bash"># Add specific file
+git add hello.txt
+
+# Or add all files
+git add .</code></pre>
+
+                        <h3>Step 4: Commit</h3>
+                        <pre><code class="language-bash">git commit -m "Add hello.txt file"
+
+# Output:
+# [main abc1234] Add hello.txt file
+#  1 file changed, 1 insertion(+)</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-check-circle"></i> Commit Message Tips</h4>
+                            <ul>
+                                <li>Start with a verb: "Add", "Fix", "Update", "Remove"</li>
+                                <li>Keep it short (50 characters or less)</li>
+                                <li>Explain <strong>what</strong> and <strong>why</strong>, not how</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Essential Commands -->
+                    <section class="chapter" id="essential-commands">
+                        <h2 class="chapter-title"><i class="fas fa-terminal"></i> Essential Commands</h2>
+
+                        <h3>Check Status</h3>
+                        <pre><code class="language-bash"># See what's changed
+git status
+
+# Short version
+git status -s</code></pre>
+
+                        <h3>View History</h3>
+                        <pre><code class="language-bash"># See all commits
+git log
+
+# One line per commit
+git log --oneline
+
+# With graph (shows branches)
+git log --oneline --graph</code></pre>
+
+                        <h3>See Changes</h3>
+                        <pre><code class="language-bash"># Changes not yet staged
+git diff
+
+# Changes that are staged
+git diff --staged
+
+# Changes in a specific file
+git diff hello.txt</code></pre>
+
+                        <h3>Undo Changes</h3>
+                        <pre><code class="language-bash"># Discard changes in working directory
+git checkout -- hello.txt
+
+# Unstage a file (keep changes)
+git reset HEAD hello.txt
+
+# Undo last commit (keep changes)
+git reset --soft HEAD~1
+
+# Undo last commit (discard changes) ⚠️
+git reset --hard HEAD~1</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Danger Zone</h4>
+                            <p>
+                                <code>git reset --hard</code> permanently deletes uncommitted changes.
+                                Use with caution!
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- .gitignore -->
+                    <section class="chapter" id="gitignore">
+                        <h2 class="chapter-title"><i class="fas fa-eye-slash"></i> Ignoring Files (.gitignore)</h2>
+
+                        <p>Some files shouldn't be tracked: logs, dependencies, secrets. Use <code>.gitignore</code>.</p>
+
+                        <pre><code class="language-bash"># Create .gitignore file
+touch .gitignore</code></pre>
+
+                        <h3>Common Patterns</h3>
+                        <pre><code class="language-text"># .gitignore
+
+# Dependencies
+node_modules/
+vendor/
+target/
+
+# Build output
+dist/
+build/
+*.class
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Logs
+*.log
+logs/
+
+# Environment/Secrets
+.env
+*.pem
+credentials.json
+
+# OS files
+.DS_Store
+Thumbs.db</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> Pro Tip</h4>
+                            <p>
+                                Visit <a href="https://gitignore.io" target="_blank">gitignore.io</a> to generate
+                                .gitignore files for your tech stack.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Quick Reference -->
+                    <section class="chapter" id="quick-reference">
+                        <h2 class="chapter-title"><i class="fas fa-bookmark"></i> Quick Reference</h2>
+
+                        <pre><code class="language-bash"># Setup
+git init                    # Initialize new repo
+git config --global user.name "Name"
+git config --global user.email "email"
+
+# Daily workflow
+git status                  # Check status
+git add .                   # Stage all changes
+git commit -m "message"     # Commit with message
+git log --oneline           # View history
+
+# Viewing changes
+git diff                    # Unstaged changes
+git diff --staged           # Staged changes
+git show &lt;commit&gt;           # View specific commit
+
+# Undoing things
+git checkout -- &lt;file&gt;      # Discard file changes
+git reset HEAD &lt;file&gt;       # Unstage file
+git reset --soft HEAD~1     # Undo commit, keep changes
+git reset --hard HEAD~1     # Undo commit, lose changes</code></pre>
+                    </section>
+
+                    <!-- Practice -->
+                    <section class="chapter" id="practice">
+                        <h2 class="chapter-title"><i class="fas fa-dumbbell"></i> Practice Exercise</h2>
+
+                        <p>Try this hands-on exercise:</p>
+
+                        <pre><code class="language-bash"># 1. Create and initialize a project
+mkdir git-practice && cd git-practice
+git init
+
+# 2. Create some files
+echo "# My Project" > README.md
+echo "console.log('Hello');" > app.js
+
+# 3. Stage and commit
+git add .
+git commit -m "Initial commit"
+
+# 4. Make changes
+echo "More content" >> README.md
+
+# 5. See the diff
+git diff
+
+# 6. Stage and commit
+git add README.md
+git commit -m "Update README"
+
+# 7. View history
+git log --oneline</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-arrow-right"></i> Next Steps</h4>
+                            <p>
+                                You've learned the basics! Next, learn about
+                                <a href="/git/git-branching.html">Branching & Merging</a> to work on features
+                                without breaking your main code.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/git/index.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Git Home</span>
+                    </a>
+                    <a href="/git/git-branching.html" class="nav-next">
+                        <span>Branching & Merging</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
