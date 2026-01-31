@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Essential Git commands every QA engineer should know - beyond basic commit and push. Debugging, stash, bisect, and commands that save hours in your daily workflow.">
+    <title>Git Commands Every QA Should Master - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fab fa-git-alt"></i> Tools
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 12 min read
+                        </span>
+                        <span class="article-date">
+                            <i class="fas fa-calendar"></i> Jan 31, 2026
+                        </span>
+                    </div>
+                    <h1 class="article-title">Git Commands Every QA Should Master</h1>
+                    <p class="article-subtitle">
+                        Beyond commit and push — the commands that separate beginners from pros.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Introduction -->
+                    <section class="chapter" id="introduction">
+                        <h2 class="chapter-title"><i class="fas fa-terminal"></i> Why Git Matters for QA</h2>
+
+                        <p>
+                            You know <code>git add</code>, <code>git commit</code>, <code>git push</code>.
+                            That's enough to get by, but it's like driving a car using only first gear.
+                        </p>
+
+                        <p>
+                            As a QA engineer, you'll face situations that basic commands can't handle:
+                        </p>
+
+                        <ul>
+                            <li>A test was passing last week — which commit broke it?</li>
+                            <li>You need to switch branches but have uncommitted changes</li>
+                            <li>Someone asks "who wrote this flaky test?"</li>
+                            <li>You accidentally committed to the wrong branch</li>
+                            <li>A merge conflict appeared and you're not sure what to do</li>
+                        </ul>
+
+                        <p>
+                            This guide covers the Git commands that solve these real problems.
+                            <strong>Bookmark this page</strong> — you'll come back to it.
+                        </p>
+                    </section>
+
+                    <!-- Status and Inspection -->
+                    <section class="chapter" id="inspection">
+                        <h2 class="chapter-title"><i class="fas fa-search"></i> Inspection Commands</h2>
+
+                        <h3>git status -sb (Short Status)</h3>
+                        <p>The cleaner, faster version of <code>git status</code>:</p>
+                        <pre><code class="language-bash">git status -sb
+
+## main...origin/main
+ M src/tests/LoginTest.java
+?? src/tests/NewTest.java</code></pre>
+                        <p><code>M</code> = modified, <code>??</code> = untracked, <code>A</code> = added, <code>D</code> = deleted</p>
+
+                        <h3>git log --oneline (Compact History)</h3>
+                        <pre><code class="language-bash">git log --oneline -10
+
+a1b2c3d Fix flaky test in LoginTest
+e4f5g6h Add retry logic for API calls
+i7j8k9l Update Selenium to 4.15
+m0n1o2p Refactor page objects</code></pre>
+
+                        <h3>git log --graph (Visual Branch History)</h3>
+                        <pre><code class="language-bash">git log --oneline --graph --all
+
+* a1b2c3d (HEAD -> feature/login) Fix login test
+| * e4f5g6h (main) Hotfix for prod
+|/
+* i7j8k9l Common ancestor commit</code></pre>
+
+                        <h3>git diff (What Changed?)</h3>
+                        <pre><code class="language-bash"># Unstaged changes
+git diff
+
+# Staged changes (ready to commit)
+git diff --staged
+
+# Changes between branches
+git diff main..feature/login
+
+# Changes in specific file
+git diff src/tests/LoginTest.java</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-lightbulb"></i> QA Pro Tip</h4>
+                            <p>
+                                Before pushing test changes, always run <code>git diff --staged</code>
+                                to review exactly what you're about to commit. Catches accidental debug code.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Stash -->
+                    <section class="chapter" id="stash">
+                        <h2 class="chapter-title"><i class="fas fa-box"></i> Git Stash (Your Best Friend)</h2>
+
+                        <p>
+                            <strong>Scenario:</strong> You're halfway through writing a test. Urgent bug comes in.
+                            You need to switch branches but don't want to commit half-done work.
+                        </p>
+
+                        <h3>Basic Stash</h3>
+                        <pre><code class="language-bash"># Save current changes
+git stash
+
+# Switch to hotfix branch
+git checkout hotfix/urgent-bug
+
+# ... fix the bug, commit, push ...
+
+# Return to your branch
+git checkout feature/my-tests
+
+# Restore your changes
+git stash pop</code></pre>
+
+                        <h3>Named Stashes (Better)</h3>
+                        <pre><code class="language-bash"># Stash with a description
+git stash push -m "WIP: login test validation"
+
+# List all stashes
+git stash list
+# stash@{0}: WIP: login test validation
+# stash@{1}: WIP: api test refactor
+
+# Apply specific stash
+git stash apply stash@{1}
+
+# Apply and remove from list
+git stash pop stash@{0}</code></pre>
+
+                        <h3>Stash Untracked Files</h3>
+                        <pre><code class="language-bash"># Include new files that aren't tracked yet
+git stash -u
+
+# Include everything (even ignored files)
+git stash -a</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-bookmark"></i> Stash Cheat Sheet</h4>
+                            <pre><code class="language-bash">git stash              # Quick save
+git stash push -m "msg" # Save with name
+git stash list         # Show all stashes
+git stash pop          # Restore & delete
+git stash apply        # Restore & keep
+git stash drop         # Delete stash
+git stash clear        # Delete all stashes</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Branch Operations -->
+                    <section class="chapter" id="branches">
+                        <h2 class="chapter-title"><i class="fas fa-code-branch"></i> Branch Operations</h2>
+
+                        <h3>Create and Switch in One Command</h3>
+                        <pre><code class="language-bash"># Old way (two commands)
+git branch feature/new-tests
+git checkout feature/new-tests
+
+# Better way
+git checkout -b feature/new-tests
+
+# Modern way (Git 2.23+)
+git switch -c feature/new-tests</code></pre>
+
+                        <h3>Track Remote Branch</h3>
+                        <pre><code class="language-bash"># Someone created a branch, you need to work on it
+git fetch origin
+git checkout -b feature/login origin/feature/login
+
+# Or simply (Git auto-tracks if names match)
+git checkout feature/login</code></pre>
+
+                        <h3>Delete Branches</h3>
+                        <pre><code class="language-bash"># Delete local branch (safe - warns if unmerged)
+git branch -d feature/old-tests
+
+# Force delete local branch
+git branch -D feature/old-tests
+
+# Delete remote branch
+git push origin --delete feature/old-tests
+
+# Clean up stale remote references
+git fetch --prune</code></pre>
+
+                        <h3>Rename Branch</h3>
+                        <pre><code class="language-bash"># Rename current branch
+git branch -m new-name
+
+# Rename any branch
+git branch -m old-name new-name</code></pre>
+                    </section>
+
+                    <!-- Undoing Mistakes -->
+                    <section class="chapter" id="undoing">
+                        <h2 class="chapter-title"><i class="fas fa-undo"></i> Undoing Mistakes</h2>
+
+                        <h3>Unstage Files</h3>
+                        <pre><code class="language-bash"># Unstage specific file
+git restore --staged LoginTest.java
+
+# Unstage everything
+git restore --staged .
+
+# Old syntax (still works)
+git reset HEAD LoginTest.java</code></pre>
+
+                        <h3>Discard Local Changes</h3>
+                        <pre><code class="language-bash"># Discard changes in specific file
+git restore LoginTest.java
+
+# Discard ALL local changes (careful!)
+git restore .
+
+# Old syntax
+git checkout -- LoginTest.java</code></pre>
+
+                        <h3>Undo Last Commit (Keep Changes)</h3>
+                        <pre><code class="language-bash"># Undo commit, keep changes staged
+git reset --soft HEAD~1
+
+# Undo commit, keep changes unstaged
+git reset HEAD~1
+
+# Undo commit AND discard changes (dangerous!)
+git reset --hard HEAD~1</code></pre>
+
+                        <h3>Fix Last Commit Message</h3>
+                        <pre><code class="language-bash">git commit --amend -m "Better commit message"</code></pre>
+
+                        <h3>Add Forgotten File to Last Commit</h3>
+                        <pre><code class="language-bash">git add ForgottenFile.java
+git commit --amend --no-edit</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Warning</h4>
+                            <p>
+                                <code>--amend</code> and <code>reset</code> rewrite history.
+                                <strong>Never use on commits you've already pushed</strong> to shared branches.
+                                Use <code>git revert</code> instead for pushed commits.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Debugging -->
+                    <section class="chapter" id="debugging">
+                        <h2 class="chapter-title"><i class="fas fa-bug"></i> Debugging Commands</h2>
+
+                        <h3>git blame (Who Wrote This?)</h3>
+                        <pre><code class="language-bash"># See who changed each line
+git blame LoginTest.java
+
+# Output:
+# a1b2c3d (John Smith 2026-01-15) @Test
+# a1b2c3d (John Smith 2026-01-15) public void testLogin() {
+# e4f5g6h (Jane Doe  2026-01-20)     driver.get(URL);  // Changed URL</code></pre>
+
+                        <pre><code class="language-bash"># Blame specific lines only
+git blame -L 10,20 LoginTest.java
+
+# Ignore whitespace changes
+git blame -w LoginTest.java</code></pre>
+
+                        <h3>git bisect (Find the Breaking Commit)</h3>
+                        <p>
+                            <strong>Scenario:</strong> Tests were passing 2 weeks ago, now they fail.
+                            50 commits happened. Which one broke it?
+                        </p>
+                        <pre><code class="language-bash"># Start bisect
+git bisect start
+
+# Current commit is bad (tests fail)
+git bisect bad
+
+# This commit from 2 weeks ago was good
+git bisect good a1b2c3d
+
+# Git checks out middle commit
+# Run your tests, then tell Git:
+git bisect good  # Tests pass
+# or
+git bisect bad   # Tests fail
+
+# Git narrows down, repeat until:
+# "e4f5g6h is the first bad commit"
+
+# Done - return to normal
+git bisect reset</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-magic"></i> Automate Bisect</h4>
+                            <pre><code class="language-bash"># Run a test script automatically
+git bisect start HEAD a1b2c3d
+git bisect run mvn test -Dtest=LoginTest
+
+# Git finds the breaking commit automatically!</code></pre>
+                        </div>
+
+                        <h3>git log -S (Search for Code Changes)</h3>
+                        <pre><code class="language-bash"># Find commits that added/removed "flaky"
+git log -S "Thread.sleep" --oneline
+
+# Find commits changing a specific method
+git log -S "loginWithCredentials" --oneline</code></pre>
+
+                        <h3>git show (Inspect a Commit)</h3>
+                        <pre><code class="language-bash"># See full details of a commit
+git show a1b2c3d
+
+# See only files changed
+git show --stat a1b2c3d
+
+# See changes in specific file from that commit
+git show a1b2c3d:src/tests/LoginTest.java</code></pre>
+                    </section>
+
+                    <!-- Cherry Pick -->
+                    <section class="chapter" id="cherry-pick">
+                        <h2 class="chapter-title"><i class="fas fa-cherry"></i> Cherry-Pick</h2>
+
+                        <p>
+                            <strong>Scenario:</strong> There's a test fix on the develop branch.
+                            You need it on your feature branch, but don't want to merge everything.
+                        </p>
+
+                        <pre><code class="language-bash"># Copy specific commit to current branch
+git cherry-pick a1b2c3d
+
+# Cherry-pick without committing (just stage)
+git cherry-pick -n a1b2c3d
+
+# Cherry-pick multiple commits
+git cherry-pick a1b2c3d e4f5g6h</code></pre>
+
+                        <h3>QA Use Case: Backport a Fix</h3>
+                        <pre><code class="language-bash"># You're on release/v2.0, need a fix from main
+git checkout release/v2.0
+git cherry-pick abc123  # The fix commit from main
+git push</code></pre>
+                    </section>
+
+                    <!-- Reflog -->
+                    <section class="chapter" id="reflog">
+                        <h2 class="chapter-title"><i class="fas fa-history"></i> Git Reflog (Recovery)</h2>
+
+                        <p>
+                            <strong>Scenario:</strong> You ran <code>git reset --hard</code> and lost work.
+                            Don't panic — Git rarely truly deletes anything.
+                        </p>
+
+                        <pre><code class="language-bash"># See all recent HEAD movements
+git reflog
+
+# Output:
+# a1b2c3d HEAD@{0}: reset: moving to HEAD~3
+# e4f5g6h HEAD@{1}: commit: Add login tests
+# i7j8k9l HEAD@{2}: commit: Fix API tests
+# m0n1o2p HEAD@{3}: checkout: moving to feature/tests</code></pre>
+
+                        <h3>Recover Lost Commits</h3>
+                        <pre><code class="language-bash"># Find the commit hash in reflog
+git reflog
+
+# Recover by resetting to it
+git reset --hard e4f5g6h
+
+# Or create a branch at that point
+git branch recovered-work e4f5g6h</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-shield-alt"></i> Reflog = Your Safety Net</h4>
+                            <p>
+                                Reflog keeps records for 90 days. As long as you committed something,
+                                you can almost always recover it. Even "deleted" branches can be restored.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- CI/CD Commands -->
+                    <section class="chapter" id="ci-cd">
+                        <h2 class="chapter-title"><i class="fas fa-rocket"></i> Commands for CI/CD</h2>
+
+                        <h3>Shallow Clone (Faster CI)</h3>
+                        <pre><code class="language-bash"># Clone only recent history (faster in CI)
+git clone --depth 1 https://github.com/user/repo.git
+
+# Clone specific branch only
+git clone --single-branch --branch main repo-url</code></pre>
+
+                        <h3>Get Latest Without Checkout</h3>
+                        <pre><code class="language-bash"># Update remote tracking branches
+git fetch origin
+
+# See what changed before pulling
+git log HEAD..origin/main --oneline</code></pre>
+
+                        <h3>Clean Build Directory</h3>
+                        <pre><code class="language-bash"># Remove untracked files (dry run first!)
+git clean -n
+
+# Actually remove untracked files
+git clean -f
+
+# Remove untracked files AND directories
+git clean -fd
+
+# Remove ignored files too (full clean)
+git clean -fdx</code></pre>
+
+                        <h3>Get Current Commit for Reports</h3>
+                        <pre><code class="language-bash"># Short hash (for reports)
+git rev-parse --short HEAD
+# Output: a1b2c3d
+
+# Full hash
+git rev-parse HEAD
+
+# Current branch name
+git branch --show-current
+
+# Use in scripts
+COMMIT=$(git rev-parse --short HEAD)
+echo "Running tests on commit: $COMMIT"</code></pre>
+                    </section>
+
+                    <!-- Quick Reference -->
+                    <section class="chapter" id="quick-reference">
+                        <h2 class="chapter-title"><i class="fas fa-bookmark"></i> Quick Reference Card</h2>
+
+                        <pre><code class="language-bash"># INSPECTION
+git status -sb              # Short status
+git log --oneline -10       # Compact history
+git diff --staged           # Review before commit
+git show abc123             # Inspect commit
+
+# STASH
+git stash push -m "msg"     # Save with name
+git stash list              # Show stashes
+git stash pop               # Restore latest
+
+# BRANCHES
+git switch -c feature/name  # Create & switch
+git branch -d branch-name   # Delete local
+git push origin --delete x  # Delete remote
+
+# UNDO
+git restore --staged file   # Unstage
+git restore file            # Discard changes
+git reset --soft HEAD~1     # Undo commit, keep staged
+git commit --amend          # Fix last commit
+
+# DEBUG
+git blame file              # Who wrote this?
+git bisect start/good/bad   # Find breaking commit
+git log -S "text"           # Search history
+
+# RECOVERY
+git reflog                  # Find lost commits
+git reset --hard abc123     # Restore to point
+
+# CI/CD
+git clone --depth 1 url     # Shallow clone
+git clean -fd               # Remove untracked
+git rev-parse --short HEAD  # Get commit hash</code></pre>
+                    </section>
+
+                    <!-- Conclusion -->
+                    <section class="chapter" id="conclusion">
+                        <h2 class="chapter-title"><i class="fas fa-flag-checkered"></i> Start Using These Today</h2>
+
+                        <p>
+                            You don't need to memorize everything. Start with these three:
+                        </p>
+
+                        <ol>
+                            <li><strong>git stash</strong> — Use it next time you need to switch context</li>
+                            <li><strong>git diff --staged</strong> — Review before every commit</li>
+                            <li><strong>git reflog</strong> — Remember it exists when you mess up</li>
+                        </ol>
+
+                        <p>
+                            The rest will come naturally as you face situations that need them.
+                            Keep this page bookmarked — it's your Git survival guide.
+                        </p>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> Want to Go Deeper?</h4>
+                            <p>
+                                Check out our complete <a href="/git/index.html">Git Tutorial Series</a>
+                                covering everything from basics to advanced rebasing and recovery techniques.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/blog/posts/manual-to-sdet-guide.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Manual to SDET Guide</span>
+                    </a>
+                    <a href="/blog/index.html" class="nav-next">
+                        <span>All Posts</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
