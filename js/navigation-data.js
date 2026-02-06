@@ -215,6 +215,13 @@ const SITE_NAVIGATION = {
                             icon: 'fas fa-robot',
                             description: 'Expert level automation questions',
                             readTime: '30 min'
+                        },
+                        {
+                            title: 'Barclays AVP - Automation',
+                            url: '/interview-qna/automation/barclays-avp-automation.html',
+                            icon: 'fas fa-university',
+                            description: 'Test Automation Specialist AVP (10+ yrs)',
+                            readTime: '30 min'
                         }
                     ]
                 },
