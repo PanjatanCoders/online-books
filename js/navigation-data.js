@@ -515,7 +515,7 @@ const SITE_NAVIGATION = {
     ],
 
     footer: {
-        copyright: '2024 GyanCode. All rights reserved.',
+        copyright: '2025 GyanCode. All rights reserved.',
         madeWith: 'Made with love and lots of coffee',
         quote: '"Code is like humor. When you have to explain it, it\'s bad." - Cory House'
     }
