@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="What's New in Java 25 — Complete guide to all 18 JEPs in the latest LTS release. Language features, performance improvements, and what QA engineers need to know.">
+    <title>What's New in Java 25: The Complete Guide - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+            <article class="article-container">
+
+                <header class="article-header">
+                    <div class="article-meta">
+                        <span class="article-category">
+                            <i class="fab fa-java"></i> Tutorial
+                        </span>
+                        <span class="article-reading-time">
+                            <i class="fas fa-clock"></i> 12 min read
+                        </span>
+                        <span class="article-date">
+                            <i class="fas fa-calendar"></i> Feb 9, 2026
+                        </span>
+                    </div>
+                    <h1 class="article-title">What's New in Java 25: The Complete Guide</h1>
+                    <p class="article-subtitle">
+                        18 JEPs, LTS release, and Java turns 30. Everything you need to know.
+                    </p>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Overview -->
+                    <section class="chapter" id="overview">
+                        <h2 class="chapter-title"><i class="fas fa-rocket"></i> Overview</h2>
+
+                        <p>
+                            Java 25 (JDK 25) reached General Availability on <strong>September 16, 2025</strong>,
+                            and it's a big one. It's the new <strong>Long-Term Support (LTS)</strong> release &mdash;
+                            the first since JDK 21 in September 2023 &mdash; with at least <strong>8 years</strong>
+                            of commercial support from Oracle.
+                        </p>
+
+                        <div class="highlight-box">
+                            <h4><i class="fas fa-birthday-cake"></i> Java Turns 30</h4>
+                            <p>
+                                Java celebrated its <strong>30th anniversary</strong> in 2025. From applets to
+                                microservices, from J2EE to virtual threads &mdash; three decades of evolution,
+                                and Java 25 proves the language isn't slowing down.
+                            </p>
+                        </div>
+
+                        <p>JDK 25 delivers <strong>18 JEPs</strong> across these categories:</p>
+                        <ul>
+                            <li><strong>7 Finalized</strong> features (production-ready)</li>
+                            <li><strong>4 Preview</strong> features (opt-in with <code>--enable-preview</code>)</li>
+                            <li><strong>1 Incubator</strong> (Vector API, 10th round)</li>
+                            <li><strong>1 Experimental</strong> (JFR CPU-Time Profiling)</li>
+                            <li><strong>3 JFR enhancements</strong></li>
+                            <li><strong>2 Removals</strong></li>
+                        </ul>
+                    </section>
+
+                    <!-- Language Features -->
+                    <section class="chapter" id="language-features">
+                        <h2 class="chapter-title"><i class="fas fa-code"></i> Language Features</h2>
+
+                        <h3>Compact Source Files & Instance Main Methods (JEP 512) &mdash; Final</h3>
+                        <p>
+                            After previewing across JDK 21&ndash;24, the simplified entry point is now official.
+                            No more <code>public static void main(String[] args)</code> for simple programs.
+                        </p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fab fa-java"></i> Before (Java 8&ndash;24)</span></div>
+                            <pre><code><span class="keyword">public class</span> HelloWorld {
+    <span class="keyword">public static void</span> main(String[] args) {
+        System.out.println(<span class="string">"Hello, World!"</span>);
+    }
+}</code></pre>
+                        </div>
+
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fab fa-java"></i> After (Java 25)</span></div>
+                            <pre><code><span class="keyword">void</span> main() {
+    println(<span class="string">"Hello, World!"</span>);
+}</code></pre>
+                        </div>
+
+                        <p>
+                            Three lines. No class declaration, no <code>static</code>, no <code>String[] args</code>,
+                            no <code>System.out</code>. Perfect for scripting, teaching, and quick prototypes.
+                        </p>
+
+                        <h3>Module Import Declarations (JEP 511) &mdash; Final</h3>
+                        <p>
+                            Import all exported packages from a module in one line:
+                        </p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fab fa-java"></i> Module Imports</span></div>
+                            <pre><code><span class="comment">// Before: multiple import statements</span>
+<span class="keyword">import</span> java.util.List;
+<span class="keyword">import</span> java.util.Map;
+<span class="keyword">import</span> java.util.stream.Collectors;
+
+<span class="comment">// After: one module import covers everything</span>
+<span class="keyword">import module</span> java.base;</code></pre>
+                        </div>
+
+                        <p>
+                            You don't need to modularize your own code to use this.
+                            <code>import module java.base</code> gives you access to <code>java.util</code>,
+                            <code>java.io</code>, <code>java.time</code>, and all other <code>java.base</code>
+                            packages in one shot.
+                        </p>
+
+                        <h3>Flexible Constructor Bodies (JEP 513) &mdash; Final</h3>
+                        <p>
+                            You can now execute statements <strong>before</strong> calling <code>super()</code>
+                            or <code>this()</code> in constructors. A long-awaited change.
+                        </p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fab fa-java"></i> Validate Before super()</span></div>
+                            <pre><code><span class="keyword">public class</span> Employee <span class="keyword">extends</span> Person {
+
+    <span class="keyword">public</span> Employee(String name, <span class="keyword">int</span> age) {
+        <span class="comment">// Validate BEFORE calling super — now legal in Java 25!</span>
+        <span class="keyword">if</span> (age &lt; <span class="number">18</span>) {
+            <span class="keyword">throw new</span> IllegalArgumentException(<span class="string">"Must be 18+"</span>);
+        }
+        <span class="keyword">super</span>(name, age);
+    }
+}</code></pre>
+                        </div>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Restriction</h4>
+                            <p>
+                                Pre-invocation statements <strong>cannot reference <code>this</code></strong>
+                                (the object under construction). You can validate parameters, compute values,
+                                and initialize fields &mdash; but not call instance methods.
+                            </p>
+                        </div>
+
+                        <h3>Primitive Types in Patterns (JEP 507) &mdash; 3rd Preview</h3>
+                        <p>
+                            Pattern matching now works with <code>int</code>, <code>long</code>, <code>double</code>,
+                            and other primitives in <code>instanceof</code> and <code>switch</code>:
+                        </p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fab fa-java"></i> Primitive Patterns in switch</span></div>
+                            <pre><code><span class="comment">// switch with int patterns — new in Java 25 (preview)</span>
+<span class="keyword">String</span> classify(<span class="keyword">int</span> statusCode) {
+    <span class="keyword">return switch</span> (statusCode) {
+        <span class="keyword">case</span> <span class="number">200</span>        -> <span class="string">"OK"</span>;
+        <span class="keyword">case</span> <span class="number">301</span>, <span class="number">302</span>  -> <span class="string">"Redirect"</span>;
+        <span class="keyword">case</span> <span class="number">400</span>        -> <span class="string">"Bad Request"</span>;
+        <span class="keyword">case</span> <span class="number">404</span>        -> <span class="string">"Not Found"</span>;
+        <span class="keyword">case</span> <span class="number">500</span>        -> <span class="string">"Server Error"</span>;
+        <span class="keyword">case int</span> n <span class="keyword">when</span> n &gt;= <span class="number">200</span> && n &lt; <span class="number">300</span> -> <span class="string">"Success"</span>;
+        <span class="keyword">case int</span> n <span class="keyword">when</span> n &gt;= <span class="number">400</span> && n &lt; <span class="number">500</span> -> <span class="string">"Client Error"</span>;
+        <span class="keyword">default</span>         -> <span class="string">"Unknown"</span>;
+    };
+}</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Performance -->
+                    <section class="chapter" id="performance">
+                        <h2 class="chapter-title"><i class="fas fa-bolt"></i> Performance & Runtime</h2>
+
+                        <h3>Compact Object Headers (JEP 519) &mdash; Final</h3>
+                        <p>
+                            Object headers in the HotSpot JVM are reduced from <strong>96&ndash;128 bits</strong>
+                            down to <strong>64 bits</strong> on 64-bit architectures. This is automatic &mdash;
+                            no code changes needed.
+                        </p>
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-chart-line"></i> Impact</h4>
+                            <p>
+                                <strong>10&ndash;20% reduction</strong> in heap usage for object-heavy applications.
+                                Better data locality, lower GC pressure, improved deployment density.
+                                This is one of those "free performance" upgrades you get just by upgrading the JVM.
+                            </p>
+                        </div>
+
+                        <h3>Ahead-of-Time Method Profiling (JEP 515) &mdash; Final</h3>
+                        <p>
+                            Java apps typically run slow at startup while the JIT compiler "warms up"
+                            by profiling which methods are hot. JEP 515 saves those profiles from a
+                            previous run into an AOT cache, so the JIT can generate native code <strong>immediately</strong>
+                            on next startup.
+                        </p>
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fas fa-terminal"></i> AOT Cache with Method Profiles</span></div>
+                            <pre><code><span class="comment"># Create AOT cache in one step (JEP 514 simplifies this)</span>
+java -XX:AOTCacheOutput=app.aot -jar myapp.jar
+
+<span class="comment"># Run with cached profiles — instant warmup</span>
+java -XX:AOTCache=app.aot -jar myapp.jar</code></pre>
+                        </div>
+
+                        <h3>Generational Shenandoah (JEP 521) &mdash; Final</h3>
+                        <p>
+                            The Shenandoah garbage collector now officially supports <strong>generational mode</strong>,
+                            promoting it from experimental to production-ready.
+                        </p>
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fas fa-terminal"></i> Enable Generational Shenandoah</span></div>
+                            <pre><code>java -XX:+UseShenandoahGC -XX:ShenandoahGCMode=generational -jar myapp.jar</code></pre>
+                        </div>
+                        <p>
+                            Benefits: improved throughput, better load-spike resilience, and more efficient memory
+                            utilization compared to non-generational mode.
+                        </p>
+                    </section>
+
+                    <!-- Concurrency -->
+                    <section class="chapter" id="concurrency">
+                        <h2 class="chapter-title"><i class="fas fa-layer-group"></i> Concurrency & Data Sharing</h2>
+
+                        <h3>Scoped Values (JEP 506) &mdash; Final</h3>
+                        <p>
+                            <code>ScopedValue</code> is finalized after five previews. It provides a way to share
+                            <strong>immutable data</strong> with callees within and across threads &mdash; like
+                            <code>ThreadLocal</code> but safer, faster, and immutable.
+                        </p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fab fa-java"></i> ScopedValue Example</span></div>
+                            <pre><code><span class="keyword">private static final</span> ScopedValue&lt;String&gt; USER =
+    ScopedValue.newInstance();
+
+<span class="comment">// Set the value for a scope</span>
+ScopedValue.where(USER, <span class="string">"admin"</span>).run(() -> {
+    handleRequest();  <span class="comment">// USER.get() returns "admin" here</span>
+});
+
+<span class="keyword">void</span> handleRequest() {
+    String currentUser = USER.get();  <span class="comment">// "admin"</span>
+    <span class="comment">// Any method called from here can also access USER</span>
+}</code></pre>
+                        </div>
+
+                        <h3>Structured Concurrency (JEP 505) &mdash; 5th Preview</h3>
+                        <p>
+                            Groups of related tasks running in different threads are treated as a
+                            <strong>single unit of work</strong>. If one subtask fails, the others are
+                            automatically cancelled.
+                        </p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fab fa-java"></i> Structured Concurrency</span></div>
+                            <pre><code><span class="comment">// Fetch user and orders in parallel — if either fails, both cancel</span>
+<span class="keyword">try</span> (<span class="keyword">var</span> scope = StructuredTaskScope.open()) {
+
+    Subtask&lt;User&gt; userTask = scope.fork(() -> fetchUser(userId));
+    Subtask&lt;List&lt;Order&gt;&gt; ordersTask = scope.fork(() -> fetchOrders(userId));
+
+    scope.join();  <span class="comment">// Wait for both</span>
+
+    <span class="keyword">return new</span> UserProfile(userTask.get(), ordersTask.get());
+}</code></pre>
+                        </div>
+
+                        <h3>Stable Values (JEP 502) &mdash; Preview</h3>
+                        <p>
+                            A <code>StableValue</code> can be set <strong>only once</strong> and is then
+                            treated as a constant by the JVM, enabling constant-folding optimizations.
+                            Perfect for lazy initialization.
+                        </p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fab fa-java"></i> Stable Values</span></div>
+                            <pre><code><span class="comment">// Lazy, thread-safe, one-time initialization</span>
+<span class="keyword">private static final</span> StableValue&lt;DatabasePool&gt; DB_POOL =
+    StableValue.of(() -> createExpensivePool());
+
+<span class="comment">// First call initializes, all subsequent calls return the same instance</span>
+DatabasePool pool = DB_POOL.get();</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Security -->
+                    <section class="chapter" id="security">
+                        <h2 class="chapter-title"><i class="fas fa-shield-alt"></i> Security</h2>
+
+                        <h3>Key Derivation Function API (JEP 510) &mdash; Final</h3>
+                        <p>
+                            A new API for deriving additional cryptographic keys from a secret key.
+                            Supports HKDF (HMAC-based Extract-and-Expand) and Argon2.
+                        </p>
+
+                        <div class="code-block">
+                            <div class="code-header"><span><i class="fab fa-java"></i> Key Derivation</span></div>
+                            <pre><code><span class="keyword">import</span> javax.crypto.KDF;
+
+KDF kdf = KDF.getInstance(<span class="string">"HKDF-SHA256"</span>);
+SecretKey derivedKey = kdf.deriveKey(
+    <span class="string">"AES"</span>,
+    <span class="keyword">new</span> HKDFParameterSpec.Builder(
+        secretKey, salt, info
+    ).build()
+);</code></pre>
+                        </div>
+
+                        <p>
+                            This is a foundational piece for Java's <strong>post-quantum cryptography</strong>
+                            support &mdash; used internally by ML-KEM and TLS 1.3 Hybrid Key Exchange.
+                        </p>
+
+                        <h3>PEM Encodings of Cryptographic Objects (JEP 470) &mdash; Preview</h3>
+                        <p>
+                            A new API for encoding/decoding keys, certificates, and CRLs in the widely used
+                            <strong>PEM format</strong> (.pem files). No more bouncing between byte arrays
+                            and Base64 manually.
+                        </p>
+                    </section>
+
+                    <!-- Observability -->
+                    <section class="chapter" id="observability">
+                        <h2 class="chapter-title"><i class="fas fa-chart-bar"></i> Observability (JFR)</h2>
+
+                        <p>
+                            Java Flight Recorder gets three significant upgrades in JDK 25:
+                        </p>
+
+                        <div class="highlight-box">
+                            <h4><i class="fas fa-list-ol"></i> JFR Enhancements</h4>
+                            <table class="styled-table">
+                                <thead>
+                                    <tr><th>JEP</th><th>Feature</th><th>What It Does</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>518</td>
+                                        <td><strong>Cooperative Sampling</strong></td>
+                                        <td>Walks call stacks only at safepoints, reducing bias and improving stability</td>
+                                    </tr>
+                                    <tr>
+                                        <td>520</td>
+                                        <td><strong>Method Timing & Tracing</strong></td>
+                                        <td>Records execution times for specific methods without modifying source code</td>
+                                    </tr>
+                                    <tr>
+                                        <td>509</td>
+                                        <td><strong>CPU-Time Profiling</strong> (Experimental)</td>
+                                        <td>More accurate CPU-time capture on Linux using kernel CPU timers</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <p>
+                            For QA teams, JFR Method Timing is especially useful &mdash; you can identify
+                            slow methods in production without adding any logging or instrumentation to your code.
+                        </p>
+                    </section>
+
+                    <!-- Other -->
+                    <section class="chapter" id="other-changes">
+                        <h2 class="chapter-title"><i class="fas fa-puzzle-piece"></i> Other Changes</h2>
+
+                        <h3>Vector API (JEP 508) &mdash; 10th Incubator</h3>
+                        <p>
+                            Still incubating (waiting for Project Valhalla), but now links to native math
+                            libraries via the Foreign Function and Memory API. Auto-vectorizes
+                            <code>Float16</code> operations on x64 CPUs.
+                        </p>
+
+                        <h3>Removal of 32-bit x86 Port (JEP 503)</h3>
+                        <p>
+                            All source code and build support for 32-bit x86 is removed. If you're still
+                            running 32-bit Java... it's time.
+                        </p>
+
+                        <h3>Other Notable Changes</h3>
+                        <ul>
+                            <li><strong>ZGC string deduplication</strong> now skips young, short-lived strings for better performance</li>
+                            <li>New <strong>SHAKE128-256</strong> and <strong>SHAKE256-512</strong> MessageDigest algorithms added</li>
+                            <li><strong>Post-quantum cryptography (PQC)</strong> support for improved security</li>
+                            <li>Removal of the <strong>experimental Graal JIT compiler</strong></li>
+                        </ul>
+                    </section>
+
+                    <!-- Complete JEP Summary -->
+                    <section class="chapter" id="all-jeps">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> All 18 JEPs at a Glance</h2>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr><th>JEP</th><th>Feature</th><th>Status</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>506</td><td>Scoped Values</td><td>Final</td></tr>
+                                <tr><td>510</td><td>Key Derivation Function API</td><td>Final</td></tr>
+                                <tr><td>511</td><td>Module Import Declarations</td><td>Final</td></tr>
+                                <tr><td>512</td><td>Compact Source Files & Instance Main Methods</td><td>Final</td></tr>
+                                <tr><td>513</td><td>Flexible Constructor Bodies</td><td>Final</td></tr>
+                                <tr><td>519</td><td>Compact Object Headers</td><td>Final</td></tr>
+                                <tr><td>521</td><td>Generational Shenandoah</td><td>Final</td></tr>
+                                <tr><td>507</td><td>Primitive Types in Patterns</td><td>3rd Preview</td></tr>
+                                <tr><td>505</td><td>Structured Concurrency</td><td>5th Preview</td></tr>
+                                <tr><td>502</td><td>Stable Values</td><td>Preview</td></tr>
+                                <tr><td>470</td><td>PEM Encodings</td><td>Preview</td></tr>
+                                <tr><td>508</td><td>Vector API</td><td>10th Incubator</td></tr>
+                                <tr><td>509</td><td>JFR CPU-Time Profiling</td><td>Experimental</td></tr>
+                                <tr><td>514</td><td>AOT Command-Line Ergonomics</td><td>Final</td></tr>
+                                <tr><td>515</td><td>AOT Method Profiling</td><td>Final</td></tr>
+                                <tr><td>518</td><td>JFR Cooperative Sampling</td><td>Final</td></tr>
+                                <tr><td>520</td><td>JFR Method Timing & Tracing</td><td>Final</td></tr>
+                                <tr><td>503</td><td>Remove 32-bit x86 Port</td><td>Removal</td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Why QA Should Care -->
+                    <section class="chapter" id="qa-impact">
+                        <h2 class="chapter-title"><i class="fas fa-user-check"></i> Why Should QA Engineers Care?</h2>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Directly Useful for Testers</h4>
+                            <ul>
+                                <li>
+                                    <strong>Compact Source Files</strong> &mdash; Write quick test scripts and utility
+                                    classes without boilerplate. Great for ad-hoc data generators and test helpers.
+                                </li>
+                                <li>
+                                    <strong>Module Imports</strong> &mdash; <code>import module java.base</code> means
+                                    less fighting with import statements in test classes.
+                                </li>
+                                <li>
+                                    <strong>Flexible Constructors</strong> &mdash; Cleaner Page Object Models and
+                                    test data builders with validation before <code>super()</code>.
+                                </li>
+                                <li>
+                                    <strong>JFR Method Timing</strong> &mdash; Profile slow API endpoints or
+                                    test methods without adding instrumentation code.
+                                </li>
+                                <li>
+                                    <strong>Compact Object Headers</strong> &mdash; Your data-heavy tests
+                                    (large collections, object pools) use 10&ndash;20% less memory automatically.
+                                </li>
+                                <li>
+                                    <strong>AOT Profiling</strong> &mdash; Faster test suite startup.
+                                    Build an AOT cache and your CI pipeline runs faster from the first test.
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> Interview Tip</h4>
+                            <p>
+                                "What's new in Java 25?" is a common interview question for SDET and QA automation roles.
+                                Knowing the LTS release features &mdash; especially Compact Source Files, Scoped Values,
+                                and Compact Object Headers &mdash; shows you stay current.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/blog/posts/qa-interview-mistakes.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>QA Interview Mistakes</span>
+                    </a>
+                    <a href="/blog/index.html" class="nav-next">
+                        <span>All Posts</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
