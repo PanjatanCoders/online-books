@@ -141,7 +141,7 @@ const SITE_NAVIGATION = {
                             url: '/java/core/string/java-regular-expresions.html',
                             icon: 'fas fa-circle-dot',
                             description: 'Pattern matching and regex',
-                            readTime: '20 min'
+                            readTime: '35 min'
                         }
                     ]
                 },
