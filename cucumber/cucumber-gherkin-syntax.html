@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master Gherkin syntax for Cucumber BDD - All keywords, Background, Tags, Rule keyword, doc strings, data tables, comments, and feature file organization best practices.">
+    <title>Gherkin Syntax Mastery - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Gherkin Syntax Mastery</h1>
+                    <p class="article-subtitle">Every Gherkin keyword, feature file pattern, and organization technique you need to write professional BDD scenarios.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                        <span><i class="fas fa-leaf"></i> Cucumber BDD</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: All Gherkin Keywords -->
+                    <section class="chapter" id="keywords-overview">
+                        <h2 class="chapter-title"><i class="fas fa-key"></i> The Complete Gherkin Keywords</h2>
+
+                        <p>
+                            Gherkin has a small but powerful set of keywords. Here's every single one
+                            with its purpose:
+                        </p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Keyword</th>
+                                    <th>Purpose</th>
+                                    <th>Required?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>Feature</code></td><td>Names and describes the feature under test</td><td>Yes (one per file)</td></tr>
+                                <tr><td><code>Scenario</code></td><td>Defines a single test case</td><td>Yes (at least one)</td></tr>
+                                <tr><td><code>Given</code></td><td>Precondition — sets up the context</td><td>No, but recommended</td></tr>
+                                <tr><td><code>When</code></td><td>Action — the event being tested</td><td>No, but recommended</td></tr>
+                                <tr><td><code>Then</code></td><td>Outcome — the expected result</td><td>No, but recommended</td></tr>
+                                <tr><td><code>And</code></td><td>Continues the previous Given/When/Then</td><td>No</td></tr>
+                                <tr><td><code>But</code></td><td>Negative continuation (reads better for exclusions)</td><td>No</td></tr>
+                                <tr><td><code>Background</code></td><td>Shared steps that run before every scenario</td><td>No</td></tr>
+                                <tr><td><code>Scenario Outline</code></td><td>Template for data-driven scenarios</td><td>No</td></tr>
+                                <tr><td><code>Examples</code></td><td>Data table for Scenario Outline</td><td>Required with Outline</td></tr>
+                                <tr><td><code>Rule</code></td><td>Groups related scenarios under a business rule</td><td>No (Cucumber 6+)</td></tr>
+                                <tr><td><code>@tag</code></td><td>Labels for filtering and organizing</td><td>No</td></tr>
+                                <tr><td><code>#</code></td><td>Comment line</td><td>No</td></tr>
+                                <tr><td><code>"""</code></td><td>Doc string (multi-line text)</td><td>No</td></tr>
+                                <tr><td><code>|</code></td><td>Data table row delimiter</td><td>No</td></tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> And vs But</h4>
+                            <p>
+                                <code>And</code> and <code>But</code> are interchangeable to Cucumber — they both
+                                continue the previous keyword. Use <code>But</code> when the step expresses a
+                                negative condition for better readability:
+                            </p>
+                            <pre><code class="language-gherkin">Then I should see the dashboard
+And I should see a welcome message
+But I should not see the admin panel</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2: Feature and Scenario -->
+                    <section class="chapter" id="feature-scenario">
+                        <h2 class="chapter-title"><i class="fas fa-file-alt"></i> Feature & Scenario</h2>
+
+                        <h3>Feature Block</h3>
+                        <p>Every <code>.feature</code> file starts with exactly one <code>Feature:</code> keyword:</p>
+
+                        <pre><code class="language-gherkin">Feature: Shopping Cart Management
+  As an online shopper
+  I want to manage items in my cart
+  So that I can purchase what I need</code></pre>
+
+                        <p>
+                            The description lines (As a / I want / So that) are optional free text.
+                            Cucumber ignores them — they're purely for human readers. You can write
+                            any description you like:
+                        </p>
+
+                        <pre><code class="language-gherkin">Feature: Password Reset
+  This feature covers all password reset scenarios including
+  email verification, security questions, and token expiration.
+  Priority: High | Sprint: 24.3 | Owner: QA Team</code></pre>
+
+                        <h3>Scenario Block</h3>
+                        <p>
+                            Each <code>Scenario</code> represents one specific test case with a clear
+                            name that describes what's being tested:
+                        </p>
+
+                        <pre><code class="language-gherkin">Feature: User Registration
+
+  Scenario: Successful registration with all required fields
+    Given I am on the registration page
+    When I fill in the registration form with valid data
+    And I accept the terms and conditions
+    And I click the register button
+    Then I should see a confirmation message
+    And I should receive a verification email
+
+  Scenario: Registration fails without email
+    Given I am on the registration page
+    When I fill in the form without an email
+    And I click the register button
+    Then I should see an error "Email is required"</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Naming Matters</h4>
+                            <p>
+                                Each scenario name should clearly state what's being tested and the expected outcome.
+                                Bad: <code>Scenario: Test 1</code>. Good: <code>Scenario: Registration fails when email is already taken</code>.
+                                When a test fails, the scenario name is the first thing you see in reports.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 3: Background -->
+                    <section class="chapter" id="background">
+                        <h2 class="chapter-title"><i class="fas fa-layer-group"></i> Background — Shared Setup</h2>
+
+                        <p>
+                            When every scenario in a feature file starts with the same steps,
+                            use <code>Background</code> to avoid repetition:
+                        </p>
+
+                        <h3>Without Background (Repetitive)</h3>
+                        <pre><code class="language-gherkin">Feature: Shopping Cart
+
+  Scenario: Add item to cart
+    Given I am logged in as a customer
+    And I am on the products page
+    When I add "Laptop" to the cart
+    Then the cart should contain 1 item
+
+  Scenario: Remove item from cart
+    Given I am logged in as a customer
+    And I am on the products page
+    When I add "Laptop" to the cart
+    And I remove "Laptop" from the cart
+    Then the cart should be empty</code></pre>
+
+                        <h3>With Background (Clean)</h3>
+                        <pre><code class="language-gherkin">Feature: Shopping Cart
+
+  Background:
+    Given I am logged in as a customer
+    And I am on the products page
+
+  Scenario: Add item to cart
+    When I add "Laptop" to the cart
+    Then the cart should contain 1 item
+
+  Scenario: Remove item from cart
+    When I add "Laptop" to the cart
+    And I remove "Laptop" from the cart
+    Then the cart should be empty</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> Background Rules</h4>
+                            <ul>
+                                <li>Only <strong>one Background per feature file</strong></li>
+                                <li>Runs <strong>before every scenario</strong> in that file</li>
+                                <li>Should only contain <code>Given</code> steps (setup, not actions)</li>
+                                <li>Keep it short — if Background has 5+ steps, your scenarios might belong in separate feature files</li>
+                                <li>Background steps appear in reports for each scenario</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 4: Tags -->
+                    <section class="chapter" id="tags">
+                        <h2 class="chapter-title"><i class="fas fa-tags"></i> Tags — Organize and Filter</h2>
+
+                        <p>
+                            Tags let you categorize, filter, and selectively run scenarios.
+                            They start with <code>@</code> and can be placed on Features, Scenarios,
+                            Scenario Outlines, and Examples tables.
+                        </p>
+
+                        <h3>Applying Tags</h3>
+                        <pre><code class="language-gherkin">@regression
+Feature: User Login
+
+  @smoke @priority-high
+  Scenario: Successful login
+    Given I am on the login page
+    When I login with valid credentials
+    Then I should see the dashboard
+
+  @negative @priority-medium
+  Scenario: Login with wrong password
+    Given I am on the login page
+    When I login with invalid password
+    Then I should see an error message
+
+  @wip
+  Scenario: Login with expired account
+    Given I have an expired account
+    When I try to login
+    Then I should see "Account expired" message</code></pre>
+
+                        <h3>Tag Inheritance</h3>
+                        <p>
+                            Tags on the <code>Feature</code> line are inherited by all scenarios in that file.
+                            In the example above, every scenario automatically has <code>@regression</code>.
+                        </p>
+
+                        <h3>Running with Tags</h3>
+                        <pre><code class="language-java">// In TestRunner
+@CucumberOptions(
+    features = "src/test/resources/features",
+    glue = "com.gyancode.cucumber.stepdefinitions",
+    tags = "@smoke and not @wip"
+)</code></pre>
+
+                        <pre><code class="language-bash"># From command line
+mvn test -Dcucumber.filter.tags="@smoke"
+mvn test -Dcucumber.filter.tags="@smoke and @login"
+mvn test -Dcucumber.filter.tags="@smoke or @regression"
+mvn test -Dcucumber.filter.tags="not @wip"
+mvn test -Dcucumber.filter.tags="(@smoke or @regression) and not @skip"</code></pre>
+
+                        <h3>Common Tag Strategies</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Tag</th>
+                                    <th>Purpose</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>@smoke</code></td><td>Critical path tests — run on every build</td></tr>
+                                <tr><td><code>@regression</code></td><td>Full regression suite — run nightly</td></tr>
+                                <tr><td><code>@wip</code></td><td>Work in progress — skip in CI</td></tr>
+                                <tr><td><code>@negative</code></td><td>Negative/error scenarios</td></tr>
+                                <tr><td><code>@api</code></td><td>API-only tests (no UI)</td></tr>
+                                <tr><td><code>@slow</code></td><td>Long-running tests</td></tr>
+                                <tr><td><code>@JIRA-1234</code></td><td>Linked to a specific ticket</td></tr>
+                                <tr><td><code>@sprint-24</code></td><td>Tied to a development sprint</td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 5: Rule Keyword -->
+                    <section class="chapter" id="rule-keyword">
+                        <h2 class="chapter-title"><i class="fas fa-gavel"></i> Rule — Group by Business Rule</h2>
+
+                        <p>
+                            The <code>Rule</code> keyword (Cucumber 6+) groups scenarios that verify the
+                            same business rule. It adds a semantic layer between Feature and Scenario:
+                        </p>
+
+                        <pre><code class="language-gherkin">Feature: Account Withdrawal
+
+  Rule: Withdrawal is allowed when account has sufficient funds
+
+    Scenario: Withdraw within balance
+      Given my account balance is 500
+      When I withdraw 200
+      Then my new balance should be 300
+
+    Scenario: Withdraw exact balance
+      Given my account balance is 500
+      When I withdraw 500
+      Then my new balance should be 0
+
+  Rule: Withdrawal is denied when funds are insufficient
+
+    Scenario: Withdraw more than balance
+      Given my account balance is 500
+      When I try to withdraw 600
+      Then I should see "Insufficient funds"
+      And my balance should remain 500
+
+  Rule: Daily withdrawal limit is enforced
+
+    Scenario: Exceed daily withdrawal limit
+      Given my account balance is 10000
+      And the daily limit is 2000
+      When I try to withdraw 3000
+      Then I should see "Exceeds daily limit"</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> When to Use Rule</h4>
+                            <p>
+                                Use <code>Rule</code> when a feature has many scenarios that can be logically
+                                grouped by business rules. It makes feature files more organized and easier to
+                                navigate. Each Rule can also have its own <code>Background</code>.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 6: Doc Strings -->
+                    <section class="chapter" id="doc-strings">
+                        <h2 class="chapter-title"><i class="fas fa-align-left"></i> Doc Strings — Multi-line Text</h2>
+
+                        <p>
+                            When a step needs a large block of text (JSON body, email content, error message),
+                            use doc strings with triple quotes:
+                        </p>
+
+                        <pre><code class="language-gherkin">Scenario: Create user via API
+  Given the API is available
+  When I send a POST request to "/api/users" with body:
+    """json
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@example.com",
+      "role": "admin"
+    }
+    """
+  Then the response status should be 201</code></pre>
+
+                        <p>In the step definition, the doc string is received as a <code>String</code> parameter:</p>
+
+                        <pre><code class="language-java">@When("I send a POST request to {string} with body:")
+public void sendPostRequest(String endpoint, String body) {
+    // 'body' contains the entire JSON block
+    response = given()
+        .contentType(ContentType.JSON)
+        .body(body)
+        .post(endpoint);
+}</code></pre>
+
+                        <h3>Doc Strings with Content Type</h3>
+                        <p>
+                            The content type hint after <code>"""</code> (like <code>"""json</code> or
+                            <code>"""xml</code>) is optional and is for readability. Cucumber passes
+                            the raw text regardless.
+                        </p>
+
+                        <pre><code class="language-gherkin">Scenario: Verify email content
+  When the system sends a welcome email
+  Then the email body should contain:
+    """
+    Dear John,
+
+    Welcome to our platform! Your account has been
+    successfully created.
+
+    Best regards,
+    The Team
+    """</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: Data Tables Introduction -->
+                    <section class="chapter" id="data-tables-intro">
+                        <h2 class="chapter-title"><i class="fas fa-table"></i> Data Tables — Structured Data in Steps</h2>
+
+                        <p>
+                            Data tables pass structured data to a step. They're defined with pipe characters
+                            (<code>|</code>) right after a step:
+                        </p>
+
+                        <pre><code class="language-gherkin">Scenario: Register a new user
+  When I fill in the registration form:
+    | field     | value             |
+    | firstName | John              |
+    | lastName  | Doe               |
+    | email     | john@example.com  |
+    | password  | SecurePass123     |
+  Then the registration should be successful</code></pre>
+
+                        <h3>Different Table Shapes</h3>
+
+                        <h4>Key-Value Pairs (2 columns)</h4>
+                        <pre><code class="language-gherkin">When I configure the settings:
+  | timeout    | 30      |
+  | retries    | 3       |
+  | headless   | true    |</code></pre>
+
+                        <h4>Single Column (List)</h4>
+                        <pre><code class="language-gherkin">Then the following items should be in the cart:
+  | Laptop  |
+  | Mouse   |
+  | Keyboard|</code></pre>
+
+                        <h4>Multiple Rows with Headers</h4>
+                        <pre><code class="language-gherkin">When I create the following users:
+  | username | email            | role   |
+  | john     | john@test.com    | admin  |
+  | jane     | jane@test.com    | user   |
+  | bob      | bob@test.com     | viewer |</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> Data Tables vs Scenario Outline</h4>
+                            <p>
+                                <strong>Data Table</strong> passes multiple values to a <em>single</em> scenario.
+                                <strong>Scenario Outline</strong> runs the <em>entire scenario</em> multiple times
+                                with different data. We'll cover both in depth in Tutorial 5.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 8: Comments -->
+                    <section class="chapter" id="comments">
+                        <h2 class="chapter-title"><i class="fas fa-comment"></i> Comments and Descriptions</h2>
+
+                        <h3>Comments</h3>
+                        <p>Lines starting with <code>#</code> are comments and are ignored by Cucumber:</p>
+
+                        <pre><code class="language-gherkin"># This feature covers the payment processing module
+# Last updated: Feb 2026 by QA team
+
+Feature: Payment Processing
+
+  # Positive scenarios
+  Scenario: Successful credit card payment
+    Given I have items in my cart
+    # TODO: Add step for applying discount code
+    When I pay with a valid credit card
+    Then the payment should be processed</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Comments vs Descriptions</h4>
+                            <p>
+                                Comments (<code>#</code>) are stripped out completely. Description text (the free text
+                                after <code>Feature:</code> or <code>Scenario:</code> name) is preserved and can
+                                appear in reports. Prefer descriptions over comments for important context.
+                            </p>
+                        </div>
+
+                        <h3>Descriptions</h3>
+                        <p>Free-form text after Feature, Scenario, Rule, or Background names:</p>
+
+                        <pre><code class="language-gherkin">Feature: Inventory Management
+  Manages product stock levels, reorder alerts,
+  and warehouse allocation.
+
+  Scenario: Low stock alert triggers notification
+  When a product drops below the reorder threshold,
+  the system should notify the warehouse manager.
+    Given "Widget A" has a reorder threshold of 10
+    And the current stock of "Widget A" is 15
+    When 6 units of "Widget A" are sold
+    Then a low stock alert should be sent</code></pre>
+                    </section>
+
+                    <!-- Chapter 9: Scenario Outline Preview -->
+                    <section class="chapter" id="scenario-outline-preview">
+                        <h2 class="chapter-title"><i class="fas fa-copy"></i> Scenario Outline — A Quick Preview</h2>
+
+                        <p>
+                            When you want to run the same scenario with multiple data sets,
+                            use <code>Scenario Outline</code> with <code>Examples</code>:
+                        </p>
+
+                        <pre><code class="language-gherkin">Feature: Login Validation
+
+  Scenario Outline: Login with different credentials
+    Given I am on the login page
+    When I enter username "&lt;username&gt;"
+    And I enter password "&lt;password&gt;"
+    And I click login
+    Then I should see "&lt;result&gt;"
+
+    Examples:
+      | username    | password    | result              |
+      | validuser   | validpass   | Welcome             |
+      | invaliduser | validpass   | Invalid credentials |
+      | validuser   | wrongpass   | Invalid credentials |
+      |             | validpass   | Username required   |
+      | validuser   |             | Password required   |</code></pre>
+
+                        <p>
+                            This generates <strong>5 separate scenarios</strong>, one for each row in the
+                            Examples table. The angle brackets (<code>&lt;username&gt;</code>) are placeholders
+                            that get replaced with values from each row.
+                        </p>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Preview Only</h4>
+                            <p>
+                                We'll cover Scenario Outline, multiple Examples tables, and advanced data-driven
+                                patterns in full detail in <strong>Tutorial 5: Data-Driven Testing</strong>.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 10: Feature File Organization -->
+                    <section class="chapter" id="organization">
+                        <h2 class="chapter-title"><i class="fas fa-folder-open"></i> Feature File Organization</h2>
+
+                        <h3>Recommended Folder Structure</h3>
+                        <pre><code class="language-text">src/test/resources/features/
+├── authentication/
+│   ├── login.feature
+│   ├── logout.feature
+│   ├── password_reset.feature
+│   └── registration.feature
+├── shopping/
+│   ├── cart.feature
+│   ├── checkout.feature
+│   ├── product_search.feature
+│   └── wishlist.feature
+├── user_management/
+│   ├── profile.feature
+│   ├── settings.feature
+│   └── notifications.feature
+└── api/
+    ├── user_api.feature
+    ├── product_api.feature
+    └── order_api.feature</code></pre>
+
+                        <h3>Feature File Naming Conventions</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Convention</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Use snake_case or kebab-case</td><td><code>password_reset.feature</code></td></tr>
+                                <tr><td>Name by feature, not by page</td><td><code>checkout.feature</code> not <code>checkout_page.feature</code></td></tr>
+                                <tr><td>One feature per file</td><td>Don't mix login and registration in one file</td></tr>
+                                <tr><td>Group by business domain</td><td><code>shopping/</code>, <code>authentication/</code></td></tr>
+                                <tr><td>Keep scenarios under 10 per file</td><td>Split large features into sub-features</td></tr>
+                            </tbody>
+                        </table>
+
+                        <h3>A Well-Organized Feature File</h3>
+                        <pre><code class="language-gherkin">@authentication @regression
+Feature: User Login
+  Validates the login functionality for registered users
+  including successful login, failed attempts, and account lockout.
+
+  Background:
+    Given the application is running
+    And I am on the login page
+
+  @smoke @priority-high
+  Scenario: Successful login with valid credentials
+    When I login with valid credentials
+    Then I should see the dashboard
+    And the last login time should be updated
+
+  @negative
+  Scenario: Login fails with incorrect password
+    When I login with incorrect password
+    Then I should see "Invalid credentials"
+    But I should remain on the login page
+
+  @negative @security
+  Scenario: Account locks after 5 failed attempts
+    When I attempt login with wrong password 5 times
+    Then my account should be locked
+    And I should see "Account locked. Try again in 30 minutes."</code></pre>
+                    </section>
+
+                    <!-- Summary -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> Summary</h2>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What You Learned</h4>
+                            <ul>
+                                <li>All <strong>15 Gherkin keywords</strong> and when to use each one</li>
+                                <li><strong>Background</strong> eliminates repeated setup steps</li>
+                                <li><strong>Tags</strong> organize and filter scenarios for targeted execution</li>
+                                <li><strong>Rule</strong> keyword groups scenarios by business rules</li>
+                                <li><strong>Doc Strings</strong> pass multi-line text (JSON, email, etc.) to steps</li>
+                                <li><strong>Data Tables</strong> pass structured data within a single step</li>
+                                <li><strong>Scenario Outline</strong> runs the same scenario with multiple data sets</li>
+                                <li>Feature file <strong>organization best practices</strong> for maintainable projects</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-arrow-right"></i> What's Next?</h4>
+                            <p>
+                                Now that you can write professional feature files, the next tutorial covers
+                                <strong>Step Definitions & Expressions</strong> — the Java glue code that
+                                connects your Gherkin scenarios to automation code.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/cucumber/cucumber-introduction.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Introduction to BDD & Cucumber</span>
+                    </a>
+                    <a href="/cucumber/cucumber-step-definitions.html" class="nav-next">
+                        <span>Step Definitions & Expressions</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

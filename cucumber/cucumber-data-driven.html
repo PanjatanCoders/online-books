@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cucumber Data-Driven Testing - Data Tables, Scenario Outline with Examples, @DataTableType transformers, multiple Examples tables, and real-world data-driven patterns.">
+    <title>Data-Driven Testing - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Data-Driven Testing</h1>
+                    <p class="article-subtitle">Master Data Tables, Scenario Outlines, @DataTableType transformers, and patterns for running scenarios with multiple data sets.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                        <span><i class="fas fa-leaf"></i> Cucumber BDD</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: Data Tables vs Scenario Outline -->
+                    <section class="chapter" id="tables-vs-outlines">
+                        <h2 class="chapter-title"><i class="fas fa-columns"></i> Data Tables vs Scenario Outline</h2>
+
+                        <p>Cucumber has two ways to work with data. Understanding the difference is critical:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Aspect</th>
+                                    <th>Data Table</th>
+                                    <th>Scenario Outline</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Purpose</strong></td>
+                                    <td>Pass multiple values to a <em>single</em> step</td>
+                                    <td>Run the <em>entire scenario</em> with different data</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Execution</strong></td>
+                                    <td>Scenario runs <strong>once</strong></td>
+                                    <td>Scenario runs <strong>N times</strong> (once per row)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Placement</strong></td>
+                                    <td>Under a single step</td>
+                                    <td>Under the scenario with <code>Examples:</code></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Use Case</strong></td>
+                                    <td>Fill a form, create multiple records</td>
+                                    <td>Test login with 5 different credential sets</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <pre><code class="language-gherkin"># DATA TABLE — runs once, table passed to one step
+Scenario: Fill registration form
+  When I fill in the form:
+    | firstName | John            |
+    | lastName  | Doe             |
+    | email     | john@test.com   |
+  Then registration should succeed
+
+# SCENARIO OUTLINE — runs 3 times (once per Examples row)
+Scenario Outline: Login attempts
+  When I login with "&lt;user&gt;" and "&lt;pass&gt;"
+  Then I should see "&lt;result&gt;"
+
+  Examples:
+    | user  | pass    | result    |
+    | admin | admin1  | Dashboard |
+    | user  | wrong   | Error     |
+    | guest |         | Error     |</code></pre>
+                    </section>
+
+                    <!-- Chapter 2: Data Tables Deep Dive -->
+                    <section class="chapter" id="data-tables">
+                        <h2 class="chapter-title"><i class="fas fa-table"></i> Data Tables — All Formats</h2>
+
+                        <h3>Format 1: Key-Value Pairs (Map)</h3>
+                        <pre><code class="language-gherkin">Scenario: Update user profile
+  When I update my profile with:
+    | firstName | John              |
+    | lastName  | Doe               |
+    | email     | john@example.com  |
+    | phone     | 1234567890        |</code></pre>
+
+                        <pre><code class="language-java">@When("I update my profile with:")
+public void iUpdateProfileWith(DataTable dataTable) {
+    // Convert to Map (2-column table without header)
+    Map&lt;String, String&gt; data = dataTable.asMap(String.class, String.class);
+
+    profilePage.enterFirstName(data.get("firstName")); // "John"
+    profilePage.enterLastName(data.get("lastName"));   // "Doe"
+    profilePage.enterEmail(data.get("email"));         // "john@example.com"
+    profilePage.enterPhone(data.get("phone"));         // "1234567890"
+}</code></pre>
+
+                        <h3>Format 2: Single Column (List)</h3>
+                        <pre><code class="language-gherkin">Scenario: Verify available categories
+  Then I should see the following categories:
+    | Electronics |
+    | Clothing    |
+    | Books       |
+    | Sports      |</code></pre>
+
+                        <pre><code class="language-java">@Then("I should see the following categories:")
+public void iShouldSeeCategories(DataTable dataTable) {
+    // Convert to flat list
+    List&lt;String&gt; expectedCategories = dataTable.asList();
+    // ["Electronics", "Clothing", "Books", "Sports"]
+
+    List&lt;String&gt; actualCategories = categoryPage.getCategories();
+    Assert.assertEquals(expectedCategories, actualCategories);
+}</code></pre>
+
+                        <h3>Format 3: Multiple Rows with Headers (List of Maps)</h3>
+                        <pre><code class="language-gherkin">Scenario: Create multiple users
+  When I create the following users:
+    | username | email            | role   |
+    | john     | john@test.com    | admin  |
+    | jane     | jane@test.com    | user   |
+    | bob      | bob@test.com     | viewer |</code></pre>
+
+                        <pre><code class="language-java">@When("I create the following users:")
+public void iCreateUsers(DataTable dataTable) {
+    // First row is the header, remaining rows are data
+    List&lt;Map&lt;String, String&gt;&gt; users = dataTable.asMaps();
+
+    for (Map&lt;String, String&gt; user : users) {
+        userService.createUser(
+            user.get("username"),  // "john", "jane", "bob"
+            user.get("email"),     // "john@test.com", ...
+            user.get("role")       // "admin", "user", "viewer"
+        );
+    }
+}
+// users.size() == 3 (header row is not counted)</code></pre>
+
+                        <h3>Format 4: Lists of Lists</h3>
+                        <pre><code class="language-java">@When("I verify the price list:")
+public void verifyPriceList(DataTable dataTable) {
+    // Raw access — each row is a List&lt;String&gt;
+    List&lt;List&lt;String&gt;&gt; rows = dataTable.asLists();
+
+    // rows.get(0) = ["Product", "Price"] (header)
+    // rows.get(1) = ["Laptop", "999.99"]
+    // rows.get(2) = ["Mouse", "29.99"]
+
+    for (int i = 1; i &lt; rows.size(); i++) {  // skip header
+        String product = rows.get(i).get(0);
+        String price = rows.get(i).get(1);
+        Assert.assertEquals(price, productPage.getPrice(product));
+    }
+}</code></pre>
+
+                        <h3>Quick Reference — DataTable Methods</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Returns</th>
+                                    <th>Best For</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>asMap()</code></td><td><code>Map&lt;String, String&gt;</code></td><td>2-column key-value pairs</td></tr>
+                                <tr><td><code>asMaps()</code></td><td><code>List&lt;Map&lt;String, String&gt;&gt;</code></td><td>Multiple rows with headers</td></tr>
+                                <tr><td><code>asList()</code></td><td><code>List&lt;String&gt;</code></td><td>Single column flat list</td></tr>
+                                <tr><td><code>asLists()</code></td><td><code>List&lt;List&lt;String&gt;&gt;</code></td><td>Raw access to all cells</td></tr>
+                                <tr><td><code>transpose()</code></td><td><code>DataTable</code></td><td>Flip rows and columns</td></tr>
+                                <tr><td><code>cell(row, col)</code></td><td><code>String</code></td><td>Single cell access</td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 3: @DataTableType -->
+                    <section class="chapter" id="datatable-type">
+                        <h2 class="chapter-title"><i class="fas fa-exchange-alt"></i> @DataTableType — Transform to Objects</h2>
+
+                        <p>
+                            Instead of working with raw Maps, transform data table rows directly
+                            into Java objects using <code>@DataTableType</code>:
+                        </p>
+
+                        <h3>The POJO</h3>
+                        <pre><code class="language-java">public class User {
+    private String username;
+    private String email;
+    private String role;
+
+    public User(String username, String email, String role) {
+        this.username = username;
+        this.email = email;
+        this.role = role;
+    }
+
+    // Getters
+    public String getUsername() { return username; }
+    public String getEmail() { return email; }
+    public String getRole() { return role; }
+}</code></pre>
+
+                        <h3>The Transformer</h3>
+                        <pre><code class="language-java">import io.cucumber.java.DataTableType;
+
+public class DataTableTransformers {
+
+    @DataTableType
+    public User userEntry(Map&lt;String, String&gt; entry) {
+        return new User(
+            entry.get("username"),
+            entry.get("email"),
+            entry.get("role")
+        );
+    }
+}</code></pre>
+
+                        <h3>The Step Definition — Clean!</h3>
+                        <pre><code class="language-java">@When("I create the following users:")
+public void iCreateUsers(List&lt;User&gt; users) {
+    // Cucumber automatically converts each row to a User object
+    for (User user : users) {
+        userService.createUser(user);
+        System.out.println("Created: " + user.getUsername());
+    }
+}
+
+// Or even simpler with Java streams
+@When("I create the following users:")
+public void iCreateUsers(List&lt;User&gt; users) {
+    users.forEach(userService::createUser);
+}</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Why Use @DataTableType?</h4>
+                            <ul>
+                                <li><strong>Type safety</strong> — work with User objects instead of Map&lt;String, String&gt;</li>
+                                <li><strong>Reusable</strong> — define once, use in any step that has a User table</li>
+                                <li><strong>Readable</strong> — <code>List&lt;User&gt;</code> is clearer than <code>List&lt;Map&lt;String, String&gt;&gt;</code></li>
+                                <li><strong>Testable</strong> — easier to unit test step definitions</li>
+                            </ul>
+                        </div>
+
+                        <h3>More @DataTableType Examples</h3>
+                        <pre><code class="language-java">// Product with type conversion
+@DataTableType
+public Product productEntry(Map&lt;String, String&gt; entry) {
+    return new Product(
+        entry.get("name"),
+        Double.parseDouble(entry.get("price")),
+        Integer.parseInt(entry.get("quantity"))
+    );
+}
+
+// Single-cell table entry (for single-column tables)
+@DataTableType
+public Category categoryEntry(String cell) {
+    return new Category(cell);
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 4: Scenario Outline -->
+                    <section class="chapter" id="scenario-outline">
+                        <h2 class="chapter-title"><i class="fas fa-copy"></i> Scenario Outline — Full Guide</h2>
+
+                        <p>
+                            <code>Scenario Outline</code> is a template that runs the entire scenario
+                            once for each row in the <code>Examples</code> table. Placeholders in
+                            angle brackets (<code>&lt;name&gt;</code>) get replaced with values from each row.
+                        </p>
+
+                        <h3>Basic Example</h3>
+                        <pre><code class="language-gherkin">Scenario Outline: Calculator operations
+  Given I have a calculator
+  When I perform "&lt;operation&gt;" on &lt;a&gt; and &lt;b&gt;
+  Then the result should be &lt;result&gt;
+
+  Examples:
+    | operation | a  | b  | result |
+    | add       | 5  | 3  | 8      |
+    | subtract  | 10 | 4  | 6      |
+    | multiply  | 3  | 7  | 21     |
+    | divide    | 20 | 5  | 4      |</code></pre>
+
+                        <p>This generates <strong>4 separate scenarios</strong> — one for each row.</p>
+
+                        <pre><code class="language-java">@When("I perform {string} on {int} and {int}")
+public void iPerform(String operation, int a, int b) {
+    switch (operation) {
+        case "add"      -> result = a + b;
+        case "subtract" -> result = a - b;
+        case "multiply" -> result = a * b;
+        case "divide"   -> result = a / b;
+    }
+}
+
+@Then("the result should be {int}")
+public void resultShouldBe(int expected) {
+    Assert.assertEquals(result, expected);
+}</code></pre>
+
+                        <h3>Multiple Examples Tables</h3>
+                        <p>
+                            You can have multiple <code>Examples</code> blocks, each with its own
+                            name and tags:
+                        </p>
+
+                        <pre><code class="language-gherkin">Scenario Outline: User role permissions
+  Given I am logged in as "&lt;role&gt;"
+  When I navigate to "&lt;page&gt;"
+  Then access should be "&lt;access&gt;"
+
+  @admin-tests
+  Examples: Admin permissions
+    | role  | page          | access  |
+    | admin | dashboard     | granted |
+    | admin | settings      | granted |
+    | admin | user-mgmt     | granted |
+    | admin | billing       | granted |
+
+  @user-tests
+  Examples: Regular user permissions
+    | role | page          | access  |
+    | user | dashboard     | granted |
+    | user | settings      | denied  |
+    | user | user-mgmt     | denied  |
+    | user | billing       | denied  |
+
+  @guest-tests
+  Examples: Guest permissions
+    | role  | page          | access  |
+    | guest | dashboard     | denied  |
+    | guest | settings      | denied  |
+    | guest | user-mgmt     | denied  |
+    | guest | billing       | denied  |</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Tags on Examples</h4>
+                            <p>
+                                Tags on Examples blocks let you run subsets of the data:
+                                <code>mvn test -Dcucumber.filter.tags="@admin-tests"</code> runs only the
+                                admin permission rows. Very useful for focused testing.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 5: Scenario Outline with Data Table -->
+                    <section class="chapter" id="outline-with-table">
+                        <h2 class="chapter-title"><i class="fas fa-layer-group"></i> Combining Outline with Data Tables</h2>
+
+                        <p>
+                            You can use placeholders inside data tables within a Scenario Outline:
+                        </p>
+
+                        <pre><code class="language-gherkin">Scenario Outline: Register user by type
+  When I register a new "&lt;type&gt;" user:
+    | firstName | &lt;firstName&gt;     |
+    | lastName  | &lt;lastName&gt;      |
+    | email     | &lt;email&gt;         |
+  Then the user should be created with role "&lt;expectedRole&gt;"
+
+  Examples:
+    | type     | firstName | lastName | email            | expectedRole |
+    | customer | John      | Doe      | john@test.com    | CUSTOMER     |
+    | vendor   | Jane      | Smith    | jane@vendor.com  | VENDOR       |
+    | admin    | Bob       | Admin    | bob@company.com  | ADMIN        |</code></pre>
+
+                        <p>
+                            The placeholders in the data table get replaced just like those in
+                            regular steps, so each Examples row generates a complete scenario
+                            with its own data table values.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 6: Real-World Data-Driven Patterns -->
+                    <section class="chapter" id="real-world-patterns">
+                        <h2 class="chapter-title"><i class="fas fa-briefcase"></i> Real-World Patterns</h2>
+
+                        <h3>Pattern 1: Login Test Matrix</h3>
+                        <pre><code class="language-gherkin">@regression
+Scenario Outline: Login validation matrix
+  Given I am on the login page
+  When I enter username "&lt;username&gt;" and password "&lt;password&gt;"
+  And I click login
+  Then I should see "&lt;message&gt;"
+  And the response code should be &lt;code&gt;
+
+  @positive
+  Examples: Valid credentials
+    | username    | password     | message    | code |
+    | admin       | Admin@123    | Welcome    | 200  |
+    | testuser    | Test@456     | Welcome    | 200  |
+
+  @negative
+  Examples: Invalid credentials
+    | username    | password     | message              | code |
+    | admin       | wrongpass    | Invalid credentials  | 401  |
+    | unknown     | Admin@123    | User not found       | 404  |
+    |             | Admin@123    | Username required    | 400  |
+    | admin       |              | Password required    | 400  |
+
+  @security
+  Examples: Security scenarios
+    | username         | password    | message          | code |
+    | admin' OR '1'='1 | anything    | Invalid input    | 400  |
+    | admin            | &lt;script&gt;   | Invalid input    | 400  |</code></pre>
+
+                        <h3>Pattern 2: Form Validation with Data Tables</h3>
+                        <pre><code class="language-gherkin">Scenario: Validate registration form fields
+  When I submit the registration form with:
+    | field       | value           | valid |
+    | email       | john@test.com   | true  |
+    | email       | invalid-email   | false |
+    | email       |                 | false |
+    | phone       | 1234567890      | true  |
+    | phone       | 123             | false |
+    | phone       | abc             | false |
+    | password    | Str0ng@Pass     | true  |
+    | password    | weak            | false |
+    | password    | 12345678        | false |</code></pre>
+
+                        <pre><code class="language-java">@When("I submit the registration form with:")
+public void validateFields(DataTable dataTable) {
+    List&lt;Map&lt;String, String&gt;&gt; rows = dataTable.asMaps();
+
+    for (Map&lt;String, String&gt; row : rows) {
+        String field = row.get("field");
+        String value = row.get("value");
+        boolean expectedValid = Boolean.parseBoolean(row.get("valid"));
+
+        boolean actualValid = validationHelper.isValid(field, value);
+        Assert.assertEquals(
+            actualValid, expectedValid,
+            field + " with value '" + value + "' expected "
+                + (expectedValid ? "valid" : "invalid")
+        );
+    }
+}</code></pre>
+
+                        <h3>Pattern 3: API Response Verification</h3>
+                        <pre><code class="language-gherkin">Scenario: Verify user API response fields
+  Given I request user details for "john_doe"
+  Then the response should contain:
+    | field      | value             |
+    | username   | john_doe          |
+    | email      | john@example.com  |
+    | role       | admin             |
+    | isActive   | true              |
+  And the response should not contain:
+    | password |
+    | ssn      |
+    | token    |</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: Transpose and Advanced Table Operations -->
+                    <section class="chapter" id="advanced-tables">
+                        <h2 class="chapter-title"><i class="fas fa-exchange-alt"></i> Advanced Table Operations</h2>
+
+                        <h3>Transpose</h3>
+                        <p>Flip rows and columns when the natural layout is horizontal:</p>
+
+                        <pre><code class="language-gherkin"># Horizontal layout (easier to read for single records)
+Scenario: Verify product details
+  Then the product should have:
+    | name  | price | category    | inStock |
+    | Mouse | 29.99 | Electronics | true    |</code></pre>
+
+                        <pre><code class="language-java">@Then("the product should have:")
+public void verifyProduct(DataTable dataTable) {
+    // Transpose converts the single row into a map
+    Map&lt;String, String&gt; product = dataTable.transpose()
+        .asMap(String.class, String.class);
+
+    Assert.assertEquals("Mouse", product.get("name"));
+    Assert.assertEquals("29.99", product.get("price"));
+    Assert.assertEquals("Electronics", product.get("category"));
+    Assert.assertEquals("true", product.get("inStock"));
+}</code></pre>
+
+                        <h3>Cell Access</h3>
+                        <pre><code class="language-java">@Then("I verify the data:")
+public void verifyData(DataTable dataTable) {
+    // Direct cell access (0-indexed)
+    String topLeft = dataTable.cell(0, 0);
+    String secondRowThirdCol = dataTable.cell(1, 2);
+
+    // Row count
+    int rows = dataTable.height();
+    // Column count
+    int cols = dataTable.width();
+}</code></pre>
+
+                        <h3>Diff Tables — Compare Expected vs Actual</h3>
+                        <pre><code class="language-java">@Then("the search results should be:")
+public void verifySearchResults(DataTable expectedTable) {
+    // Build actual data table from the page
+    List&lt;List&lt;String&gt;&gt; actualData = new ArrayList&lt;&gt;();
+    actualData.add(List.of("name", "price", "rating")); // header
+
+    for (Product p : searchPage.getResults()) {
+        actualData.add(List.of(
+            p.getName(),
+            String.valueOf(p.getPrice()),
+            String.valueOf(p.getRating())
+        ));
+    }
+
+    DataTable actualTable = DataTable.create(actualData);
+
+    // diff() throws an error with a clear diff if tables don't match
+    expectedTable.diff(actualTable);
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 8: Best Practices -->
+                    <section class="chapter" id="best-practices">
+                        <h2 class="chapter-title"><i class="fas fa-star"></i> Data-Driven Best Practices</h2>
+
+                        <div class="two-column-grid">
+                            <div class="info-box info-box-success">
+                                <h4><i class="fas fa-check-circle"></i> Do</h4>
+                                <ul>
+                                    <li>Use <strong>Scenario Outline</strong> for testing the same flow with different data</li>
+                                    <li>Use <strong>Data Tables</strong> for passing structured data to a single step</li>
+                                    <li>Use <strong>@DataTableType</strong> to convert tables to domain objects</li>
+                                    <li>Name your Examples blocks descriptively</li>
+                                    <li>Tag Examples blocks for selective execution</li>
+                                    <li>Keep Examples tables focused — 5-10 rows maximum</li>
+                                </ul>
+                            </div>
+                            <div class="info-box info-box-danger">
+                                <h4><i class="fas fa-times-circle"></i> Avoid</h4>
+                                <ul>
+                                    <li>Scenario Outlines with 50+ rows (use external data files instead)</li>
+                                    <li>Complex business logic in step definitions to parse table data</li>
+                                    <li>Deeply nested data tables (keep them flat)</li>
+                                    <li>Using Scenario Outline when each row needs different steps</li>
+                                    <li>Hard-coding test data — use tables or config files</li>
+                                    <li>Mixing positive and negative cases in the same Examples block</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> When to Use External Data</h4>
+                            <p>
+                                If your test data exceeds 15-20 rows, consider loading from external
+                                sources (JSON files, Excel, database) in your step definitions rather
+                                than putting everything in the feature file. Feature files should remain
+                                readable and maintainable.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Summary -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> Summary</h2>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What You Learned</h4>
+                            <ul>
+                                <li><strong>Data Table</strong> passes structured data to a single step (4 formats: Map, List, List of Maps, Lists of Lists)</li>
+                                <li><strong>@DataTableType</strong> transforms table rows into Java objects automatically</li>
+                                <li><strong>Scenario Outline</strong> runs the entire scenario multiple times with different Examples data</li>
+                                <li><strong>Multiple Examples</strong> blocks with separate names and tags for organized test data</li>
+                                <li><strong>Advanced operations</strong> — transpose, cell access, diff for comparison</li>
+                                <li><strong>Real-world patterns</strong> for login matrices, form validation, and API testing</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-arrow-right"></i> What's Next?</h4>
+                            <p>
+                                The final tutorial: <strong>Building a Complete BDD Framework</strong> — dependency
+                                injection, Page Object integration, config management, parallel execution,
+                                reporting, CI/CD integration, and best practices for enterprise-grade Cucumber projects.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/cucumber/cucumber-hooks-lifecycle.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Hooks & Lifecycle Management</span>
+                    </a>
+                    <a href="/cucumber/cucumber-framework.html" class="nav-next">
+                        <span>Building a Complete BDD Framework</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

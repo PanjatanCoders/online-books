@@ -360,6 +360,65 @@ const SITE_NAVIGATION = {
             ]
         },
         {
+            id: 'cucumber',
+            name: 'Cucumber BDD',
+            icon: 'fas fa-leaf',
+            enabled: true,
+            description: 'Master Behavior-Driven Development with Cucumber from zero to framework design',
+            indexUrl: '/cucumber/index.html',
+            categories: [
+                {
+                    id: 'cucumber-tutorials',
+                    name: 'Cucumber Tutorials',
+                    icon: 'fas fa-leaf',
+                    tutorials: [
+                        {
+                            title: 'Introduction to BDD & Cucumber',
+                            url: '/cucumber/cucumber-introduction.html',
+                            icon: 'fas fa-play-circle',
+                            description: 'What is BDD, setup, first feature file & runner',
+                            readTime: '20 min'
+                        },
+                        {
+                            title: 'Gherkin Syntax Mastery',
+                            url: '/cucumber/cucumber-gherkin-syntax.html',
+                            icon: 'fas fa-code',
+                            description: 'All keywords, Background, Tags, Rule, doc strings',
+                            readTime: '25 min'
+                        },
+                        {
+                            title: 'Step Definitions & Expressions',
+                            url: '/cucumber/cucumber-step-definitions.html',
+                            icon: 'fas fa-cogs',
+                            description: 'Cucumber Expressions, regex, parameter types',
+                            readTime: '25 min'
+                        },
+                        {
+                            title: 'Hooks & Lifecycle Management',
+                            url: '/cucumber/cucumber-hooks-lifecycle.html',
+                            icon: 'fas fa-anchor',
+                            description: 'Setup/teardown, ordering, conditional hooks',
+                            readTime: '20 min'
+                        },
+                        {
+                            title: 'Data-Driven Testing',
+                            url: '/cucumber/cucumber-data-driven.html',
+                            icon: 'fas fa-table',
+                            description: 'Data Tables, Scenario Outline, transformers',
+                            readTime: '25 min'
+                        },
+                        {
+                            title: 'Building a Complete BDD Framework',
+                            url: '/cucumber/cucumber-framework.html',
+                            icon: 'fas fa-cubes',
+                            description: 'DI, Page Objects, reporting, CI/CD, best practices',
+                            readTime: '30 min'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             id: 'blog',
             name: 'Blog',
             icon: 'fas fa-blog',

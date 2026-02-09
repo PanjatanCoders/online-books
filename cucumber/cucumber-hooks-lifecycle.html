@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cucumber Hooks and Lifecycle Management - @Before, @After, @BeforeAll, @AfterAll, @BeforeStep, @AfterStep, hook ordering, conditional hooks, screenshot capture, and execution lifecycle.">
+    <title>Hooks & Lifecycle Management - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Hooks & Lifecycle Management</h1>
+                    <p class="article-subtitle">Control the test execution lifecycle with @Before, @After, conditional hooks, ordering, screenshot capture, and the Scenario object.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 20 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                        <span><i class="fas fa-leaf"></i> Cucumber BDD</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: What Are Hooks? -->
+                    <section class="chapter" id="what-are-hooks">
+                        <h2 class="chapter-title"><i class="fas fa-anchor"></i> What Are Hooks?</h2>
+
+                        <p>
+                            Hooks are methods that run automatically at specific points in the Cucumber
+                            lifecycle — before/after scenarios, before/after steps, or before/after the
+                            entire test suite. They handle setup and teardown without cluttering your
+                            feature files.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> Hooks vs Background</h4>
+                            <p>
+                                <strong>Background</strong> runs Gherkin steps before each scenario — visible in
+                                feature files and reports. <strong>Hooks</strong> run Java code before/after scenarios —
+                                invisible in feature files, used for technical setup (browser, database, logging).
+                            </p>
+                        </div>
+
+                        <h3>All Hook Types</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Hook</th>
+                                    <th>Runs</th>
+                                    <th>Scope</th>
+                                    <th>Static?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>@BeforeAll</code></td><td>Once before all scenarios</td><td>Global</td><td>Yes</td></tr>
+                                <tr><td><code>@Before</code></td><td>Before each scenario</td><td>Per scenario</td><td>No</td></tr>
+                                <tr><td><code>@BeforeStep</code></td><td>Before each step</td><td>Per step</td><td>No</td></tr>
+                                <tr><td><code>@AfterStep</code></td><td>After each step</td><td>Per step</td><td>No</td></tr>
+                                <tr><td><code>@After</code></td><td>After each scenario</td><td>Per scenario</td><td>No</td></tr>
+                                <tr><td><code>@AfterAll</code></td><td>Once after all scenarios</td><td>Global</td><td>Yes</td></tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Import the Right Package!</h4>
+                            <p>
+                                Always import hooks from <code>io.cucumber.java</code>, NOT from TestNG or JUnit:
+                            </p>
+                            <pre><code class="language-java">import io.cucumber.java.Before;    // Correct
+import io.cucumber.java.After;     // Correct
+import io.cucumber.java.BeforeAll; // Correct
+
+// NOT these:
+// import org.testng.annotations.BeforeMethod;  // Wrong!
+// import org.junit.Before;                      // Wrong!</code></pre>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2: Execution Lifecycle -->
+                    <section class="chapter" id="execution-lifecycle">
+                        <h2 class="chapter-title"><i class="fas fa-project-diagram"></i> The Execution Lifecycle</h2>
+
+                        <p>Here's the exact order in which hooks and steps execute:</p>
+
+                        <pre><code class="language-text">═══════════════════════════════════════════════
+  @BeforeAll         (once — global setup)
+═══════════════════════════════════════════════
+
+  ┌─── Scenario 1 ───────────────────────────┐
+  │  @Before          (scenario setup)        │
+  │                                           │
+  │  ┌── Step 1 ──────────────────────────┐  │
+  │  │  @BeforeStep                        │  │
+  │  │  Given I am on the login page       │  │
+  │  │  @AfterStep                         │  │
+  │  └─────────────────────────────────────┘  │
+  │                                           │
+  │  ┌── Step 2 ──────────────────────────┐  │
+  │  │  @BeforeStep                        │  │
+  │  │  When I enter username "john"       │  │
+  │  │  @AfterStep                         │  │
+  │  └─────────────────────────────────────┘  │
+  │                                           │
+  │  ┌── Step 3 ──────────────────────────┐  │
+  │  │  @BeforeStep                        │  │
+  │  │  Then I should see the dashboard    │  │
+  │  │  @AfterStep                         │  │
+  │  └─────────────────────────────────────┘  │
+  │                                           │
+  │  @After            (scenario teardown)    │
+  └───────────────────────────────────────────┘
+
+  ┌─── Scenario 2 ───────────────────────────┐
+  │  @Before → Steps → @After                │
+  └───────────────────────────────────────────┘
+
+═══════════════════════════════════════════════
+  @AfterAll          (once — global teardown)
+═══════════════════════════════════════════════</code></pre>
+                    </section>
+
+                    <!-- Chapter 3: @Before and @After -->
+                    <section class="chapter" id="before-after">
+                        <h2 class="chapter-title"><i class="fas fa-play-circle"></i> @Before and @After</h2>
+
+                        <p>The most commonly used hooks — run before and after <strong>each scenario</strong>:</p>
+
+                        <pre><code class="language-java">import io.cucumber.java.Before;
+import io.cucumber.java.After;
+import io.cucumber.java.Scenario;
+
+public class Hooks {
+
+    private WebDriver driver;
+
+    @Before
+    public void setUp(Scenario scenario) {
+        System.out.println("Starting: " + scenario.getName());
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+    }
+
+    @After
+    public void tearDown(Scenario scenario) {
+        System.out.println("Finished: " + scenario.getName()
+            + " — Status: " + scenario.getStatus());
+
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> The Scenario Parameter</h4>
+                            <p>
+                                Both <code>@Before</code> and <code>@After</code> can optionally accept a
+                                <code>Scenario</code> object. This gives you access to the scenario name, tags,
+                                status (passed/failed), and the ability to attach data (like screenshots) to reports.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 4: @BeforeAll and @AfterAll -->
+                    <section class="chapter" id="beforeall-afterall">
+                        <h2 class="chapter-title"><i class="fas fa-globe"></i> @BeforeAll and @AfterAll</h2>
+
+                        <p>
+                            These run <strong>once</strong> for the entire test suite — perfect for
+                            expensive one-time setup:
+                        </p>
+
+                        <pre><code class="language-java">import io.cucumber.java.BeforeAll;
+import io.cucumber.java.AfterAll;
+
+public class GlobalHooks {
+
+    @BeforeAll
+    public static void globalSetup() {
+        // Runs ONCE before any scenario
+        System.out.println("=== Test Suite Starting ===");
+
+        // Load configuration
+        ConfigReader.loadProperties("config.properties");
+
+        // Prepare test database
+        DatabaseHelper.seedTestData();
+
+        // Start mock server if needed
+        MockServer.start();
+    }
+
+    @AfterAll
+    public static void globalTeardown() {
+        // Runs ONCE after all scenarios complete
+        System.out.println("=== Test Suite Complete ===");
+
+        // Clean up test data
+        DatabaseHelper.cleanTestData();
+
+        // Stop mock server
+        MockServer.stop();
+
+        // Generate summary report
+        ReportHelper.generateSummary();
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Must Be Static!</h4>
+                            <p>
+                                <code>@BeforeAll</code> and <code>@AfterAll</code> methods must be
+                                <code>static</code>. They run before any instance is created, so they
+                                cannot access instance fields or use dependency injection.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 5: @BeforeStep and @AfterStep -->
+                    <section class="chapter" id="beforestep-afterstep">
+                        <h2 class="chapter-title"><i class="fas fa-shoe-prints"></i> @BeforeStep and @AfterStep</h2>
+
+                        <p>These run before and after <strong>every individual step</strong> — useful for logging and debugging:</p>
+
+                        <pre><code class="language-java">import io.cucumber.java.BeforeStep;
+import io.cucumber.java.AfterStep;
+import io.cucumber.java.Scenario;
+
+public class StepHooks {
+
+    @BeforeStep
+    public void beforeStep(Scenario scenario) {
+        System.out.println("  → Executing step...");
+    }
+
+    @AfterStep
+    public void afterStep(Scenario scenario) {
+        // Log step completion
+        System.out.println("  ← Step completed");
+
+        // Capture screenshot after every step (useful for debugging)
+        if (DriverManager.getDriver() != null) {
+            byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver())
+                .getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png",
+                "Step screenshot — " + scenario.getName());
+        }
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Performance Warning</h4>
+                            <p>
+                                <code>@BeforeStep</code> and <code>@AfterStep</code> run for <em>every</em> step
+                                in <em>every</em> scenario. Taking a screenshot after every step can slow down
+                                your suite significantly. Use them sparingly — typically only during debugging
+                                or for critical scenarios.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 6: Hook Ordering -->
+                    <section class="chapter" id="hook-ordering">
+                        <h2 class="chapter-title"><i class="fas fa-sort-numeric-down"></i> Hook Ordering</h2>
+
+                        <p>
+                            When you have multiple <code>@Before</code> or <code>@After</code> hooks,
+                            use the <code>order</code> parameter to control execution order:
+                        </p>
+
+                        <pre><code class="language-java">public class OrderedHooks {
+
+    // @Before hooks: lower order runs FIRST
+    @Before(order = 1)
+    public void loadConfig() {
+        System.out.println("1. Loading configuration...");
+        ConfigReader.load();
+    }
+
+    @Before(order = 2)
+    public void startBrowser() {
+        System.out.println("2. Starting browser...");
+        DriverManager.initDriver();
+    }
+
+    @Before(order = 3)
+    public void navigateToApp() {
+        System.out.println("3. Navigating to application...");
+        DriverManager.getDriver().get(ConfigReader.getBaseUrl());
+    }
+
+    // @After hooks: lower order runs LAST (reverse!)
+    @After(order = 3)
+    public void captureEvidence(Scenario scenario) {
+        System.out.println("3. Capturing evidence...");
+        if (scenario.isFailed()) {
+            captureScreenshot(scenario);
+        }
+    }
+
+    @After(order = 2)
+    public void closeBrowser() {
+        System.out.println("2. Closing browser...");
+        DriverManager.quitDriver();
+    }
+
+    @After(order = 1)
+    public void logResult(Scenario scenario) {
+        System.out.println("1. Logging result: " + scenario.getStatus());
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> Ordering Logic</h4>
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Hook Type</th>
+                                        <th>Lower Order Number</th>
+                                        <th>Higher Order Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><code>@Before</code></td>
+                                        <td>Runs <strong>first</strong></td>
+                                        <td>Runs last</td>
+                                    </tr>
+                                    <tr>
+                                        <td><code>@After</code></td>
+                                        <td>Runs <strong>last</strong></td>
+                                        <td>Runs first</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p>
+                                Think of it like an onion: <code>@Before(order=1)</code> wraps the outside,
+                                <code>@Before(order=2)</code> is inside it. <code>@After</code> unwinds in
+                                reverse order. Default order is <code>10000</code> if not specified.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 7: Conditional Hooks -->
+                    <section class="chapter" id="conditional-hooks">
+                        <h2 class="chapter-title"><i class="fas fa-filter"></i> Conditional Hooks with Tags</h2>
+
+                        <p>
+                            Hooks can be restricted to scenarios with specific tags. This is powerful
+                            for running different setup/teardown based on scenario type:
+                        </p>
+
+                        <pre><code class="language-java">public class ConditionalHooks {
+
+    // Only runs before scenarios tagged @ui
+    @Before("@ui")
+    public void setupBrowser() {
+        DriverManager.initDriver();
+    }
+
+    // Only runs after scenarios tagged @ui
+    @After("@ui")
+    public void closeBrowser() {
+        DriverManager.quitDriver();
+    }
+
+    // Only runs before scenarios tagged @api
+    @Before("@api")
+    public void setupApiClient() {
+        ApiClient.init(ConfigReader.getBaseApiUrl());
+    }
+
+    // Only runs before scenarios tagged @database
+    @Before("@database")
+    public void seedDatabase() {
+        DatabaseHelper.seedTestData();
+    }
+
+    // Only runs after scenarios tagged @database
+    @After("@database")
+    public void cleanDatabase() {
+        DatabaseHelper.cleanTestData();
+    }
+
+    // Complex tag expression — same syntax as runner tags
+    @Before("@smoke and not @wip")
+    public void smokeSetup() {
+        System.out.println("Smoke test setup...");
+    }
+}</code></pre>
+
+                        <h3>Tag Expressions in Hooks</h3>
+                        <pre><code class="language-java">@Before("@ui")                        // Scenarios tagged @ui
+@Before("@ui and @smoke")             // Scenarios with BOTH tags
+@Before("@ui or @api")                // Scenarios with EITHER tag
+@Before("not @wip")                   // Scenarios NOT tagged @wip
+@Before("(@smoke or @regression) and not @skip")  // Complex expression</code></pre>
+
+                        <h3>Real-World Example: UI vs API Testing</h3>
+                        <pre><code class="language-gherkin">@ui @smoke
+Scenario: Login via browser
+  Given I am on the login page
+  When I login with valid credentials
+  Then I should see the dashboard
+
+@api @smoke
+Scenario: Login via API
+  Given the API is available
+  When I send login request with valid credentials
+  Then the response status should be 200</code></pre>
+
+                        <p>
+                            The <code>@ui</code> scenario gets browser setup/teardown.
+                            The <code>@api</code> scenario gets API client setup.
+                            Neither gets the other's hooks — clean separation.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 8: The Scenario Object -->
+                    <section class="chapter" id="scenario-object">
+                        <h2 class="chapter-title"><i class="fas fa-info-circle"></i> The Scenario Object</h2>
+
+                        <p>
+                            The <code>Scenario</code> object is your window into the currently running scenario.
+                            Available in <code>@Before</code>, <code>@After</code>, <code>@BeforeStep</code>,
+                            and <code>@AfterStep</code>:
+                        </p>
+
+                        <pre><code class="language-java">@After
+public void afterScenario(Scenario scenario) {
+    // Get scenario metadata
+    String name = scenario.getName();           // "Successful login"
+    String id = scenario.getId();               // Unique ID
+    Status status = scenario.getStatus();       // PASSED, FAILED, SKIPPED, etc.
+    boolean failed = scenario.isFailed();       // true if any step failed
+
+    // Get tags
+    Collection&lt;String&gt; tags = scenario.getSourceTagNames();
+    // ["@smoke", "@login", "@regression"]
+
+    // Get the line number in feature file
+    String uri = scenario.getUri().toString();
+    int line = scenario.getLine();
+
+    // Attach data to the report
+    scenario.attach(
+        "Some log text".getBytes(),
+        "text/plain",
+        "Debug Log"
+    );
+
+    // Attach screenshot (most common use)
+    if (scenario.isFailed()) {
+        byte[] screenshot = ((TakesScreenshot) driver)
+            .getScreenshotAs(OutputType.BYTES);
+        scenario.attach(screenshot, "image/png", "Failure Screenshot");
+    }
+
+    // Log to report
+    scenario.log("Scenario completed at: " + LocalDateTime.now());
+}</code></pre>
+
+                        <h3>Scenario Status Values</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><code>PASSED</code></td><td>All steps passed</td></tr>
+                                <tr><td><code>FAILED</code></td><td>One or more steps failed</td></tr>
+                                <tr><td><code>SKIPPED</code></td><td>Steps after a failure are skipped</td></tr>
+                                <tr><td><code>PENDING</code></td><td>Step threw PendingException (not implemented)</td></tr>
+                                <tr><td><code>UNDEFINED</code></td><td>No matching step definition found</td></tr>
+                                <tr><td><code>AMBIGUOUS</code></td><td>Multiple step definitions match</td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 9: Screenshot on Failure -->
+                    <section class="chapter" id="screenshot-on-failure">
+                        <h2 class="chapter-title"><i class="fas fa-camera"></i> Screenshot on Failure — Complete Setup</h2>
+
+                        <p>The most essential hook pattern — capturing evidence when tests fail:</p>
+
+                        <pre><code class="language-java">import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class Hooks {
+
+    private static ThreadLocal&lt;WebDriver&gt; driverThread = new ThreadLocal&lt;&gt;();
+
+    @Before("@ui")
+    public void setupBrowser(Scenario scenario) {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        driverThread.set(driver);
+        scenario.log("Browser started for: " + scenario.getName());
+    }
+
+    @After("@ui")
+    public void teardownBrowser(Scenario scenario) {
+        WebDriver driver = driverThread.get();
+
+        if (driver != null) {
+            // Capture screenshot on failure
+            if (scenario.isFailed()) {
+                try {
+                    byte[] screenshot = ((TakesScreenshot) driver)
+                        .getScreenshotAs(OutputType.BYTES);
+                    scenario.attach(screenshot, "image/png",
+                        "FAILED — " + scenario.getName());
+
+                    // Also log the current URL for debugging
+                    scenario.log("Failed at URL: " + driver.getCurrentUrl());
+
+                    // Log the page source for debugging
+                    String pageSource = driver.getPageSource();
+                    scenario.attach(pageSource.getBytes(), "text/html",
+                        "Page Source on Failure");
+
+                } catch (WebDriverException e) {
+                    scenario.log("Could not capture screenshot: " + e.getMessage());
+                }
+            }
+
+            driver.quit();
+            driverThread.remove();
+        }
+    }
+
+    public static WebDriver getDriver() {
+        return driverThread.get();
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Why ThreadLocal?</h4>
+                            <p>
+                                <code>ThreadLocal&lt;WebDriver&gt;</code> gives each thread its own driver
+                                instance. This is essential for <strong>parallel execution</strong> — without
+                                it, scenarios running in parallel would share a single browser and cause conflicts.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 10: Putting It All Together -->
+                    <section class="chapter" id="complete-example">
+                        <h2 class="chapter-title"><i class="fas fa-puzzle-piece"></i> Complete Hooks Example</h2>
+
+                        <p>Here's a production-ready hooks class combining all the concepts:</p>
+
+                        <pre><code class="language-java">package com.gyancode.cucumber.hooks;
+
+import io.cucumber.java.*;
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import java.time.Duration;
+import java.time.LocalDateTime;
+
+public class Hooks {
+
+    private static final ThreadLocal&lt;WebDriver&gt; driver = new ThreadLocal&lt;&gt;();
+
+    // ─── Global Setup (once) ────────────────────────────
+    @BeforeAll
+    public static void suiteSetup() {
+        System.out.println("═══ Suite started at: "
+            + LocalDateTime.now() + " ═══");
+        ConfigReader.loadProperties();
+    }
+
+    // ─── Per-Scenario Setup ─────────────────────────────
+    @Before(value = "@ui", order = 1)
+    public void initBrowser(Scenario scenario) {
+        ChromeOptions options = new ChromeOptions();
+        if (ConfigReader.isHeadless()) {
+            options.addArguments("--headless=new");
+        }
+        WebDriver webDriver = new ChromeDriver(options);
+        webDriver.manage().window().maximize();
+        webDriver.manage().timeouts()
+            .implicitlyWait(Duration.ofSeconds(10));
+        driver.set(webDriver);
+    }
+
+    @Before(value = "@ui", order = 2)
+    public void navigateToApp() {
+        getDriver().get(ConfigReader.getBaseUrl());
+    }
+
+    // ─── Per-Scenario Teardown ──────────────────────────
+    @After(value = "@ui", order = 2)
+    public void captureOnFailure(Scenario scenario) {
+        if (scenario.isFailed() && getDriver() != null) {
+            try {
+                byte[] screenshot = ((TakesScreenshot) getDriver())
+                    .getScreenshotAs(OutputType.BYTES);
+                scenario.attach(screenshot, "image/png",
+                    scenario.getName() + " — failure");
+                scenario.log("URL: " + getDriver().getCurrentUrl());
+            } catch (Exception e) {
+                scenario.log("Screenshot failed: " + e.getMessage());
+            }
+        }
+    }
+
+    @After(value = "@ui", order = 1)
+    public void closeBrowser() {
+        if (getDriver() != null) {
+            getDriver().quit();
+            driver.remove();
+        }
+    }
+
+    // ─── Global Teardown (once) ─────────────────────────
+    @AfterAll
+    public static void suiteTeardown() {
+        System.out.println("═══ Suite finished at: "
+            + LocalDateTime.now() + " ═══");
+    }
+
+    // ─── Helper ─────────────────────────────────────────
+    public static WebDriver getDriver() {
+        return driver.get();
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> Execution Order for a @ui Scenario</h4>
+                            <ol>
+                                <li><code>@BeforeAll suiteSetup()</code> — load config (once)</li>
+                                <li><code>@Before(order=1) initBrowser()</code> — start Chrome</li>
+                                <li><code>@Before(order=2) navigateToApp()</code> — open base URL</li>
+                                <li><em>Given → When → Then steps execute</em></li>
+                                <li><code>@After(order=2) captureOnFailure()</code> — screenshot if failed</li>
+                                <li><code>@After(order=1) closeBrowser()</code> — quit Chrome</li>
+                                <li><code>@AfterAll suiteTeardown()</code> — cleanup (once)</li>
+                            </ol>
+                        </div>
+                    </section>
+
+                    <!-- Summary -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> Summary</h2>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What You Learned</h4>
+                            <ul>
+                                <li><strong>6 hook types</strong>: @BeforeAll, @Before, @BeforeStep, @AfterStep, @After, @AfterAll</li>
+                                <li><strong>Execution lifecycle</strong> — the exact order hooks and steps run</li>
+                                <li><strong>Hook ordering</strong> with <code>order</code> parameter (lower = first for @Before, last for @After)</li>
+                                <li><strong>Conditional hooks</strong> with tag expressions — different setup for @ui vs @api</li>
+                                <li><strong>Scenario object</strong> — access name, status, tags, and attach data to reports</li>
+                                <li><strong>Screenshot capture</strong> — the essential @After pattern for failure evidence</li>
+                                <li><strong>ThreadLocal</strong> for thread-safe parallel execution</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-arrow-right"></i> What's Next?</h4>
+                            <p>
+                                Next up: <strong>Data-Driven Testing</strong> — master Data Tables,
+                                Scenario Outlines, @DataTableType transformers, and patterns for
+                                running scenarios with multiple data sets.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/cucumber/cucumber-step-definitions.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Step Definitions & Expressions</span>
+                    </a>
+                    <a href="/cucumber/cucumber-data-driven.html" class="nav-next">
+                        <span>Data-Driven Testing</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

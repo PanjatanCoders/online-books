@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Build a complete Cucumber BDD framework from scratch - Dependency injection with PicoContainer, Page Objects, config management, parallel execution, reporting, CI/CD integration, and best practices.">
+    <title>Building a Complete BDD Framework - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Building a Complete BDD Framework</h1>
+                    <p class="article-subtitle">Enterprise-grade Cucumber framework with dependency injection, Page Objects, config management, parallel execution, reporting, and CI/CD integration.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 30 min read</span>
+                        <span><i class="fas fa-signal"></i> Advanced</span>
+                        <span><i class="fas fa-leaf"></i> Cucumber BDD</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: Framework Architecture -->
+                    <section class="chapter" id="architecture">
+                        <h2 class="chapter-title"><i class="fas fa-sitemap"></i> Framework Architecture</h2>
+
+                        <p>Here's the complete project structure we'll build:</p>
+
+                        <pre><code class="language-text">cucumber-bdd-framework/
+├── pom.xml
+├── config/
+│   ├── config.properties
+│   └── config-staging.properties
+├── src/test/
+│   ├── java/com/gyancode/
+│   │   ├── runner/
+│   │   │   ├── TestRunner.java
+│   │   │   └── FailedTestRunner.java
+│   │   ├── stepdefinitions/
+│   │   │   ├── LoginSteps.java
+│   │   │   ├── CartSteps.java
+│   │   │   └── CommonSteps.java
+│   │   ├── hooks/
+│   │   │   └── Hooks.java
+│   │   ├── pages/
+│   │   │   ├── BasePage.java
+│   │   │   ├── LoginPage.java
+│   │   │   ├── DashboardPage.java
+│   │   │   └── CartPage.java
+│   │   ├── context/
+│   │   │   └── TestContext.java
+│   │   ├── config/
+│   │   │   └── ConfigReader.java
+│   │   └── utils/
+│   │       ├── DriverManager.java
+│   │       ├── WaitHelper.java
+│   │       └── ScreenshotHelper.java
+│   └── resources/
+│       ├── features/
+│       │   ├── authentication/
+│       │   │   └── login.feature
+│       │   └── shopping/
+│       │       └── cart.feature
+│       └── testng.xml</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-layer-group"></i> Architecture Layers</h4>
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Layer</th>
+                                        <th>Responsibility</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td><strong>Feature Files</strong></td><td>Business scenarios in Gherkin</td></tr>
+                                    <tr><td><strong>Step Definitions</strong></td><td>Map Gherkin to Java — thin, delegate to pages</td></tr>
+                                    <tr><td><strong>Page Objects</strong></td><td>Encapsulate UI interactions per page</td></tr>
+                                    <tr><td><strong>Context</strong></td><td>Share state between step classes via DI</td></tr>
+                                    <tr><td><strong>Hooks</strong></td><td>Setup/teardown, screenshot capture</td></tr>
+                                    <tr><td><strong>Config</strong></td><td>Environment configuration management</td></tr>
+                                    <tr><td><strong>Utilities</strong></td><td>Driver management, waits, helpers</td></tr>
+                                    <tr><td><strong>Runner</strong></td><td>Execution configuration, plugins, tags</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2: Dependency Injection -->
+                    <section class="chapter" id="dependency-injection">
+                        <h2 class="chapter-title"><i class="fas fa-syringe"></i> Dependency Injection with PicoContainer</h2>
+
+                        <p>
+                            Step definitions live in separate classes, but they need to share state
+                            (the WebDriver, test data, page objects). <strong>PicoContainer</strong>
+                            is the simplest DI solution for Cucumber:
+                        </p>
+
+                        <h3>Add Dependency</h3>
+                        <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+    &lt;artifactId&gt;cucumber-picocontainer&lt;/artifactId&gt;
+    &lt;version&gt;${cucumber.version}&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+
+                        <h3>TestContext — The Shared State</h3>
+                        <pre><code class="language-java">package com.gyancode.context;
+
+import org.openqa.selenium.WebDriver;
+import java.util.HashMap;
+import java.util.Map;
+
+public class TestContext {
+    private WebDriver driver;
+    private final Map&lt;String, Object&gt; scenarioData = new HashMap&lt;&gt;();
+
+    public WebDriver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    public void setData(String key, Object value) {
+        scenarioData.put(key, value);
+    }
+
+    @SuppressWarnings("unchecked")
+    public &lt;T&gt; T getData(String key) {
+        return (T) scenarioData.get(key);
+    }
+
+    public void clearData() {
+        scenarioData.clear();
+    }
+}</code></pre>
+
+                        <h3>Injecting TestContext into Steps</h3>
+                        <pre><code class="language-java">// PicoContainer injects TestContext via constructor — no config needed!
+public class LoginSteps {
+    private final TestContext context;
+    private LoginPage loginPage;
+
+    // PicoContainer sees the constructor parameter and injects automatically
+    public LoginSteps(TestContext context) {
+        this.context = context;
+    }
+
+    @Given("I am on the login page")
+    public void iAmOnLoginPage() {
+        context.getDriver().get(ConfigReader.getBaseUrl() + "/login");
+        loginPage = new LoginPage(context.getDriver());
+    }
+
+    @When("I login with {string} and {string}")
+    public void iLoginWith(String username, String password) {
+        loginPage.login(username, password);
+        context.setData("currentUser", username);
+    }
+}
+
+public class DashboardSteps {
+    private final TestContext context;
+
+    public DashboardSteps(TestContext context) {
+        this.context = context;
+    }
+
+    @Then("the welcome message should display my username")
+    public void verifyWelcome() {
+        String user = context.getData("currentUser");
+        DashboardPage dashboard = new DashboardPage(context.getDriver());
+        Assert.assertTrue(dashboard.getWelcomeMessage().contains(user));
+    }
+}
+
+public class Hooks {
+    private final TestContext context;
+
+    public Hooks(TestContext context) {
+        this.context = context;
+    }
+
+    @Before("@ui")
+    public void setupBrowser() {
+        WebDriver driver = DriverManager.createDriver();
+        context.setDriver(driver);
+    }
+
+    @After("@ui")
+    public void closeBrowser(Scenario scenario) {
+        if (scenario.isFailed() && context.getDriver() != null) {
+            ScreenshotHelper.capture(context.getDriver(), scenario);
+        }
+        DriverManager.quitDriver(context.getDriver());
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> How PicoContainer Works</h4>
+                            <p>
+                                PicoContainer creates a <strong>new instance</strong> of each class per scenario.
+                                All classes that request <code>TestContext</code> in their constructor receive
+                                the <strong>same instance</strong> within that scenario. No XML, no annotations,
+                                no configuration — just constructor parameters.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 3: Page Object Integration -->
+                    <section class="chapter" id="page-objects">
+                        <h2 class="chapter-title"><i class="fas fa-layer-group"></i> Page Object Integration</h2>
+
+                        <h3>BasePage</h3>
+                        <pre><code class="language-java">package com.gyancode.pages;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.*;
+import java.time.Duration;
+
+public abstract class BasePage {
+    protected WebDriver driver;
+    protected WebDriverWait wait;
+
+    public BasePage(WebDriver driver) {
+        this.driver = driver;
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        PageFactory.initElements(driver, this);
+    }
+
+    protected void click(WebElement element) {
+        wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+    }
+
+    protected void type(WebElement element, String text) {
+        WebElement el = wait.until(ExpectedConditions.visibilityOf(element));
+        el.clear();
+        el.sendKeys(text);
+    }
+
+    protected String getText(WebElement element) {
+        return wait.until(ExpectedConditions.visibilityOf(element)).getText();
+    }
+
+    protected boolean isDisplayed(WebElement element) {
+        try {
+            return wait.until(ExpectedConditions.visibilityOf(element))
+                .isDisplayed();
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+}</code></pre>
+
+                        <h3>LoginPage</h3>
+                        <pre><code class="language-java">package com.gyancode.pages;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+
+public class LoginPage extends BasePage {
+
+    @FindBy(id = "username") private WebElement usernameField;
+    @FindBy(id = "password") private WebElement passwordField;
+    @FindBy(id = "login-btn") private WebElement loginButton;
+    @FindBy(css = ".error-message") private WebElement errorMessage;
+    @FindBy(css = ".welcome-text") private WebElement welcomeText;
+
+    public LoginPage(WebDriver driver) {
+        super(driver);
+    }
+
+    public void login(String username, String password) {
+        type(usernameField, username);
+        type(passwordField, password);
+        click(loginButton);
+    }
+
+    public String getErrorMessage() {
+        return getText(errorMessage);
+    }
+
+    public boolean isErrorDisplayed() {
+        return isDisplayed(errorMessage);
+    }
+}</code></pre>
+
+                        <h3>Step Definition — Clean and Thin</h3>
+                        <pre><code class="language-java">public class LoginSteps {
+    private final TestContext context;
+    private LoginPage loginPage;
+
+    public LoginSteps(TestContext context) {
+        this.context = context;
+    }
+
+    @Given("I am on the login page")
+    public void navigateToLogin() {
+        context.getDriver().get(ConfigReader.getBaseUrl() + "/login");
+        loginPage = new LoginPage(context.getDriver());
+    }
+
+    @When("I login with {string} and {string}")
+    public void performLogin(String username, String password) {
+        loginPage.login(username, password);
+    }
+
+    @Then("I should see an error {string}")
+    public void verifyError(String expected) {
+        Assert.assertEquals(expected, loginPage.getErrorMessage());
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 4: Config Management -->
+                    <section class="chapter" id="config-management">
+                        <h2 class="chapter-title"><i class="fas fa-cog"></i> Configuration Management</h2>
+
+                        <h3>config.properties</h3>
+                        <pre><code class="language-text"># config/config.properties
+base.url=https://staging.example.com
+browser=chrome
+headless=false
+implicit.wait=10
+explicit.wait=15
+screenshot.on.failure=true
+parallel.count=4</code></pre>
+
+                        <h3>ConfigReader</h3>
+                        <pre><code class="language-java">package com.gyancode.config;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class ConfigReader {
+    private static final Properties properties = new Properties();
+
+    public static void loadProperties() {
+        String env = System.getProperty("env", "config");
+        String filePath = "config/" + env + ".properties";
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            properties.load(fis);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot load config: " + filePath, e);
+        }
+    }
+
+    public static String getBaseUrl() {
+        return getProperty("base.url");
+    }
+
+    public static String getBrowser() {
+        return getProperty("browser", "chrome");
+    }
+
+    public static boolean isHeadless() {
+        return Boolean.parseBoolean(getProperty("headless", "false"));
+    }
+
+    public static int getImplicitWait() {
+        return Integer.parseInt(getProperty("implicit.wait", "10"));
+    }
+
+    public static int getExplicitWait() {
+        return Integer.parseInt(getProperty("explicit.wait", "15"));
+    }
+
+    private static String getProperty(String key) {
+        String sysValue = System.getProperty(key);
+        return sysValue != null ? sysValue : properties.getProperty(key);
+    }
+
+    private static String getProperty(String key, String defaultValue) {
+        String value = getProperty(key);
+        return value != null ? value : defaultValue;
+    }
+}</code></pre>
+
+                        <pre><code class="language-bash"># Run with different environments
+mvn test                                    # Uses config.properties
+mvn test -Denv=config-staging               # Uses config-staging.properties
+mvn test -Dbrowser=firefox -Dheadless=true  # Override specific values</code></pre>
+                    </section>
+
+                    <!-- Chapter 5: Driver Management -->
+                    <section class="chapter" id="driver-management">
+                        <h2 class="chapter-title"><i class="fas fa-desktop"></i> Driver Management</h2>
+
+                        <pre><code class="language-java">package com.gyancode.utils;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import java.time.Duration;
+
+public class DriverManager {
+
+    public static WebDriver createDriver() {
+        String browser = ConfigReader.getBrowser().toLowerCase();
+        boolean headless = ConfigReader.isHeadless();
+        WebDriver driver;
+
+        switch (browser) {
+            case "firefox" -> {
+                FirefoxOptions options = new FirefoxOptions();
+                if (headless) options.addArguments("--headless");
+                driver = new FirefoxDriver(options);
+            }
+            case "edge" -> driver = new EdgeDriver();
+            default -> {
+                ChromeOptions options = new ChromeOptions();
+                if (headless) options.addArguments("--headless=new");
+                options.addArguments("--disable-gpu");
+                options.addArguments("--no-sandbox");
+                options.addArguments("--window-size=1920,1080");
+                driver = new ChromeDriver(options);
+            }
+        }
+
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(
+            Duration.ofSeconds(ConfigReader.getImplicitWait())
+        );
+        return driver;
+    }
+
+    public static void quitDriver(WebDriver driver) {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 6: Parallel Execution -->
+                    <section class="chapter" id="parallel-execution">
+                        <h2 class="chapter-title"><i class="fas fa-bolt"></i> Parallel Execution</h2>
+
+                        <h3>TestNG Parallel Runner</h3>
+                        <pre><code class="language-java">@CucumberOptions(
+    features = "src/test/resources/features",
+    glue = {"com.gyancode.stepdefinitions", "com.gyancode.hooks"},
+    plugin = {
+        "pretty",
+        "html:target/cucumber-reports/cucumber.html",
+        "json:target/cucumber-reports/cucumber.json",
+        "rerun:target/failed-scenarios.txt"
+    },
+    monochrome = true
+)
+public class TestRunner extends AbstractTestNGCucumberTests {
+
+    @Override
+    @DataProvider(parallel = true)
+    public Object[][] scenarios() {
+        return super.scenarios();
+    }
+}</code></pre>
+
+                        <h3>testng.xml for Thread Control</h3>
+                        <pre><code class="language-xml">&lt;!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd"&gt;
+&lt;suite name="Cucumber BDD Suite" parallel="methods"
+       thread-count="4" data-provider-thread-count="4"&gt;
+    &lt;test name="Cucumber Tests"&gt;
+        &lt;classes&gt;
+            &lt;class name="com.gyancode.runner.TestRunner"/&gt;
+        &lt;/classes&gt;
+    &lt;/test&gt;
+&lt;/suite&gt;</code></pre>
+
+                        <h3>Rerun Failed Scenarios</h3>
+                        <pre><code class="language-java">@CucumberOptions(
+    features = "@target/failed-scenarios.txt",
+    glue = {"com.gyancode.stepdefinitions", "com.gyancode.hooks"},
+    plugin = {"pretty", "html:target/rerun-reports/rerun.html"}
+)
+public class FailedTestRunner extends AbstractTestNGCucumberTests {
+}</code></pre>
+
+                        <pre><code class="language-bash"># Run full suite, then retry failures
+mvn test -Dtest=TestRunner
+mvn test -Dtest=FailedTestRunner</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Parallel Safety Checklist</h4>
+                            <ul>
+                                <li>WebDriver must be <strong>per-scenario</strong> (via TestContext + DI, or ThreadLocal)</li>
+                                <li>No <strong>static mutable state</strong> shared between scenarios</li>
+                                <li>Test data must be <strong>independent</strong> — no scenario depends on another's state</li>
+                                <li>Database tests need <strong>isolated data</strong> or separate schemas per thread</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 7: Reporting -->
+                    <section class="chapter" id="reporting">
+                        <h2 class="chapter-title"><i class="fas fa-chart-bar"></i> Reporting</h2>
+
+                        <h3>Built-in Cucumber Reports</h3>
+                        <pre><code class="language-java">plugin = {
+    "pretty",                                  // Console output
+    "html:target/cucumber-reports.html",       // HTML report
+    "json:target/cucumber.json",               // JSON (for tools)
+    "junit:target/cucumber.xml",               // JUnit XML (for CI)
+    "timeline:target/timeline",                // Timeline view
+    "rerun:target/failed-scenarios.txt"        // Failed scenario list
+}</code></pre>
+
+                        <h3>Allure Reports Integration</h3>
+                        <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;io.qameta.allure&lt;/groupId&gt;
+    &lt;artifactId&gt;allure-cucumber7-jvm&lt;/artifactId&gt;
+    &lt;version&gt;2.25.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+
+                        <pre><code class="language-java">@CucumberOptions(
+    plugin = {
+        "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm",
+        "pretty"
+    }
+)</code></pre>
+
+                        <pre><code class="language-bash"># Generate and open Allure report
+mvn test
+allure serve target/allure-results</code></pre>
+
+                        <h3>Extent Reports Integration</h3>
+                        <pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;tech.grasshopper&lt;/groupId&gt;
+    &lt;artifactId&gt;extentreports-cucumber7-adapter&lt;/artifactId&gt;
+    &lt;version&gt;1.14.0&lt;/version&gt;
+&lt;/dependency&gt;</code></pre>
+
+                        <pre><code class="language-java">@CucumberOptions(
+    plugin = {
+        "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
+        "pretty"
+    }
+)</code></pre>
+
+                        <p>Create <code>src/test/resources/extent.properties</code>:</p>
+                        <pre><code class="language-text">extent.reporter.spark.start=true
+extent.reporter.spark.out=target/extent-reports/SparkReport.html
+screenshot.dir=target/extent-reports/screenshots/
+screenshot.rel.path=screenshots/</code></pre>
+                    </section>
+
+                    <!-- Chapter 8: CI/CD Integration -->
+                    <section class="chapter" id="cicd">
+                        <h2 class="chapter-title"><i class="fas fa-infinity"></i> CI/CD Integration</h2>
+
+                        <h3>GitHub Actions</h3>
+                        <pre><code class="language-yaml">name: Cucumber BDD Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+
+      - name: Run smoke tests
+        run: mvn test -Dcucumber.filter.tags="@smoke" -Dheadless=true
+
+      - name: Upload test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cucumber-reports
+          path: target/cucumber-reports/</code></pre>
+
+                        <h3>Jenkins Pipeline</h3>
+                        <pre><code class="language-groovy">pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps { checkout scm }
+        }
+        stage('Smoke Tests') {
+            steps {
+                sh 'mvn test -Dcucumber.filter.tags="@smoke" -Dheadless=true'
+            }
+        }
+        stage('Regression Tests') {
+            steps {
+                sh 'mvn test -Dcucumber.filter.tags="@regression" -Dheadless=true'
+            }
+        }
+        stage('Rerun Failures') {
+            when { expression { fileExists('target/failed-scenarios.txt') } }
+            steps {
+                sh 'mvn test -Dtest=FailedTestRunner -Dheadless=true'
+            }
+        }
+    }
+    post {
+        always {
+            cucumber buildStatus: 'UNSTABLE',
+                fileIncludePattern: '**/cucumber.json'
+            archiveArtifacts artifacts: 'target/cucumber-reports/**'
+        }
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 9: Best Practices -->
+                    <section class="chapter" id="best-practices">
+                        <h2 class="chapter-title"><i class="fas fa-star"></i> Framework Best Practices</h2>
+
+                        <h3>Declarative vs Imperative Scenarios</h3>
+                        <div class="info-box info-box-danger">
+                            <h4><i class="fas fa-thumbs-down"></i> Imperative (Bad)</h4>
+                            <pre><code class="language-gherkin">Scenario: Login
+  Given I open the browser
+  And I navigate to "https://app.com/login"
+  And I wait for the page to load
+  When I click on the username field
+  And I type "testuser"
+  And I click on the password field
+  And I type "password123"
+  And I click the element with id "login-btn"
+  And I wait for 3 seconds
+  Then the URL should contain "/dashboard"
+  And I should see an element with class "welcome"</code></pre>
+                        </div>
+
+                        <div class="info-box info-box-success">
+                            <h4><i class="fas fa-thumbs-up"></i> Declarative (Good)</h4>
+                            <pre><code class="language-gherkin">Scenario: Successful login
+  Given I am a registered user
+  When I login with valid credentials
+  Then I should see my dashboard</code></pre>
+                        </div>
+
+                        <h3>Anti-Patterns to Avoid</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Anti-Pattern</th>
+                                    <th>Problem</th>
+                                    <th>Solution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>UI details in Gherkin</strong></td>
+                                    <td>Feature files break when UI changes</td>
+                                    <td>Write business-level steps, hide UI details in step defs</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Coupled scenarios</strong></td>
+                                    <td>Scenario 2 depends on Scenario 1's state</td>
+                                    <td>Each scenario must be fully independent</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fat step definitions</strong></td>
+                                    <td>50+ lines of Selenium code in one step</td>
+                                    <td>Delegate to Page Objects and utilities</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>God feature file</strong></td>
+                                    <td>100+ scenarios in one file</td>
+                                    <td>Split by feature area, max 10-15 scenarios per file</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Hard-coded waits</strong></td>
+                                    <td>Thread.sleep() everywhere</td>
+                                    <td>Use explicit waits with ExpectedConditions</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>No tag strategy</strong></td>
+                                    <td>Can't run subsets, CI runs everything</td>
+                                    <td>Tag by type (@smoke, @regression), priority, and feature</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>The Golden Rules</h3>
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-crown"></i> 10 Rules for Production BDD Frameworks</h4>
+                            <ol>
+                                <li><strong>Feature files are for business</strong> — no CSS selectors, no XPaths, no technical details</li>
+                                <li><strong>Step definitions are thin</strong> — delegate everything to Page Objects</li>
+                                <li><strong>Page Objects encapsulate UI</strong> — only pages know about locators</li>
+                                <li><strong>One scenario = one behavior</strong> — keep scenarios focused</li>
+                                <li><strong>Scenarios are independent</strong> — any scenario can run in isolation</li>
+                                <li><strong>Use DI for shared state</strong> — PicoContainer or Spring, never static fields</li>
+                                <li><strong>Config is externalized</strong> — no hard-coded URLs, credentials, or paths</li>
+                                <li><strong>Tags drive execution</strong> — @smoke, @regression, @wip for CI/CD control</li>
+                                <li><strong>Screenshot on failure is mandatory</strong> — always capture evidence</li>
+                                <li><strong>Reports are generated automatically</strong> — HTML, JSON, or Allure for every run</li>
+                            </ol>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 10: Complete pom.xml -->
+                    <section class="chapter" id="complete-pom">
+                        <h2 class="chapter-title"><i class="fas fa-file-code"></i> Complete pom.xml Reference</h2>
+
+                        <pre><code class="language-xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;com.gyancode&lt;/groupId&gt;
+    &lt;artifactId&gt;cucumber-bdd-framework&lt;/artifactId&gt;
+    &lt;version&gt;1.0.0&lt;/version&gt;
+
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt;
+        &lt;cucumber.version&gt;7.15.0&lt;/cucumber.version&gt;
+        &lt;selenium.version&gt;4.16.0&lt;/selenium.version&gt;
+        &lt;testng.version&gt;7.9.0&lt;/testng.version&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;!-- Cucumber --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+            &lt;artifactId&gt;cucumber-java&lt;/artifactId&gt;
+            &lt;version&gt;${cucumber.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+            &lt;artifactId&gt;cucumber-testng&lt;/artifactId&gt;
+            &lt;version&gt;${cucumber.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+            &lt;artifactId&gt;cucumber-picocontainer&lt;/artifactId&gt;
+            &lt;version&gt;${cucumber.version}&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- Selenium --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.seleniumhq.selenium&lt;/groupId&gt;
+            &lt;artifactId&gt;selenium-java&lt;/artifactId&gt;
+            &lt;version&gt;${selenium.version}&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- TestNG --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.testng&lt;/groupId&gt;
+            &lt;artifactId&gt;testng&lt;/artifactId&gt;
+            &lt;version&gt;${testng.version}&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- Allure Reporting --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;io.qameta.allure&lt;/groupId&gt;
+            &lt;artifactId&gt;allure-cucumber7-jvm&lt;/artifactId&gt;
+            &lt;version&gt;2.25.0&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+                &lt;version&gt;3.2.3&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;includes&gt;
+                        &lt;include&gt;**/TestRunner.java&lt;/include&gt;
+                    &lt;/includes&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;</code></pre>
+                    </section>
+
+                    <!-- Summary -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> Summary</h2>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What You Learned</h4>
+                            <ul>
+                                <li><strong>Framework architecture</strong> — layered design with clear separation of concerns</li>
+                                <li><strong>Dependency injection</strong> with PicoContainer for sharing state between step classes</li>
+                                <li><strong>Page Object integration</strong> — BasePage + specific pages with thin step definitions</li>
+                                <li><strong>Config management</strong> — externalized properties with environment and CLI overrides</li>
+                                <li><strong>Driver management</strong> — multi-browser support with headless mode</li>
+                                <li><strong>Parallel execution</strong> — TestNG DataProvider with thread-safe design</li>
+                                <li><strong>Reporting</strong> — built-in HTML, Allure, and Extent Reports</li>
+                                <li><strong>CI/CD integration</strong> — GitHub Actions and Jenkins pipeline configurations</li>
+                                <li><strong>Best practices</strong> — declarative scenarios, anti-patterns, and the 10 golden rules</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-trophy"></i> Tutorial Series Complete!</h4>
+                            <p>
+                                Congratulations! You've completed the entire Cucumber BDD tutorial series — from
+                                understanding BDD concepts to building a production-ready framework. You now have
+                                the knowledge to implement Cucumber in real-world projects. Continue practicing
+                                with our <a href="/selenium/index.html">Selenium tutorials</a> and
+                                <a href="/interview-qna/automation/automations-set-1.html">Automation Interview Q&A</a>.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/cucumber/cucumber-data-driven.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Data-Driven Testing</span>
+                    </a>
+                    <a href="/cucumber/index.html" class="nav-next">
+                        <span>Cucumber Tutorials</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

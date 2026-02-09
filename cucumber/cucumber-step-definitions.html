@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Master Cucumber Step Definitions and Expressions - Cucumber Expressions vs regex, parameter types, custom transformers, step reuse patterns, and avoiding ambiguous step errors.">
+    <title>Step Definitions & Expressions - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Step Definitions & Expressions</h1>
+                    <p class="article-subtitle">The Java glue code that connects Gherkin scenarios to automation — Cucumber Expressions, regex, parameter types, and reuse patterns.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                        <span><i class="fas fa-leaf"></i> Cucumber BDD</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: How Step Matching Works -->
+                    <section class="chapter" id="how-matching-works">
+                        <h2 class="chapter-title"><i class="fas fa-link"></i> How Step Matching Works</h2>
+
+                        <p>
+                            When Cucumber runs a scenario, it reads each Gherkin step and searches
+                            through all your Java classes (in the <code>glue</code> package) for a method
+                            whose annotation matches the step text. Here's the flow:
+                        </p>
+
+                        <pre><code class="language-text">Gherkin Step:  "When I add 5 and 3"
+                        ↓
+Cucumber scans all classes in the glue package
+                        ↓
+Finds:  @When("I add {int} and {int}")
+        public void iAddAnd(int a, int b)
+                        ↓
+Extracts: a = 5, b = 3
+                        ↓
+Executes the method with those values</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> Key Rules</h4>
+                            <ul>
+                                <li>Each step must match <strong>exactly one</strong> step definition</li>
+                                <li><code>@Given</code>, <code>@When</code>, <code>@Then</code>, <code>@And</code>, <code>@But</code> are interchangeable to the matcher — Cucumber ignores the keyword type</li>
+                                <li>Step definitions can live in <strong>any class</strong> within the glue package</li>
+                                <li>Step definitions are <strong>global</strong> — a step in one feature file can match a definition in any class</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> @Given vs @When vs @Then — Does It Matter?</h4>
+                            <p>
+                                Technically, <code>@Given("I click login")</code> would match a <code>When I click login</code>
+                                Gherkin step. But <strong>always use the matching annotation</strong> for readability.
+                                If your Gherkin says <code>Given</code>, use <code>@Given</code> in Java.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2: Cucumber Expressions -->
+                    <section class="chapter" id="cucumber-expressions">
+                        <h2 class="chapter-title"><i class="fas fa-code"></i> Cucumber Expressions</h2>
+
+                        <p>
+                            Cucumber 7+ introduced <strong>Cucumber Expressions</strong> as a simpler
+                            alternative to regular expressions. They're the recommended approach:
+                        </p>
+
+                        <h3>Built-in Parameter Types</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Expression</th>
+                                    <th>Matches</th>
+                                    <th>Java Type</th>
+                                    <th>Example Gherkin</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>{int}</code></td>
+                                    <td>Integers</td>
+                                    <td><code>int</code> or <code>Integer</code></td>
+                                    <td>I have <strong>5</strong> items</td>
+                                </tr>
+                                <tr>
+                                    <td><code>{float}</code></td>
+                                    <td>Decimal numbers</td>
+                                    <td><code>float</code> or <code>Float</code></td>
+                                    <td>The price is <strong>9.99</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><code>{string}</code></td>
+                                    <td>Text in quotes</td>
+                                    <td><code>String</code></td>
+                                    <td>I search for <strong>"laptop"</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><code>{word}</code></td>
+                                    <td>Single word (no spaces)</td>
+                                    <td><code>String</code></td>
+                                    <td>I am on the <strong>login</strong> page</td>
+                                </tr>
+                                <tr>
+                                    <td><code>{}</code></td>
+                                    <td>Any text (anonymous)</td>
+                                    <td><code>String</code></td>
+                                    <td>Matches anything</td>
+                                </tr>
+                                <tr>
+                                    <td><code>{bigdecimal}</code></td>
+                                    <td>Precise decimals</td>
+                                    <td><code>BigDecimal</code></td>
+                                    <td>The total is <strong>1234.56</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><code>{double}</code></td>
+                                    <td>Double-precision float</td>
+                                    <td><code>double</code></td>
+                                    <td>The rate is <strong>3.14</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><code>{byte}</code></td>
+                                    <td>Byte value</td>
+                                    <td><code>byte</code></td>
+                                    <td>Status code is <strong>1</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><code>{short}</code></td>
+                                    <td>Short integer</td>
+                                    <td><code>short</code></td>
+                                    <td>Port <strong>8080</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><code>{long}</code></td>
+                                    <td>Long integer</td>
+                                    <td><code>long</code></td>
+                                    <td>ID is <strong>123456789</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Examples in Action</h3>
+                        <pre><code class="language-java">// {string} — captures text in double or single quotes
+@When("I search for {string}")
+public void iSearchFor(String query) {
+    searchPage.search(query);
+}
+// Matches: When I search for "laptop"
+// Matches: When I search for 'laptop'
+
+// {int} — captures whole numbers
+@Then("I should see {int} results")
+public void iShouldSeeResults(int count) {
+    Assert.assertEquals(searchPage.getResultCount(), count);
+}
+// Matches: Then I should see 10 results
+
+// {word} — captures a single word (no quotes needed)
+@Given("I am on the {word} page")
+public void iAmOnPage(String pageName) {
+    navigator.goTo(pageName);
+}
+// Matches: Given I am on the login page
+// Matches: Given I am on the dashboard page
+
+// {float} — captures decimal numbers
+@Then("the total should be {float}")
+public void theTotalShouldBe(float total) {
+    Assert.assertEquals(cartPage.getTotal(), total, 0.01);
+}
+// Matches: Then the total should be 29.99</code></pre>
+                    </section>
+
+                    <!-- Chapter 3: Optional Text and Alternation -->
+                    <section class="chapter" id="optional-alternation">
+                        <h2 class="chapter-title"><i class="fas fa-random"></i> Optional Text & Alternation</h2>
+
+                        <h3>Optional Text — Parentheses</h3>
+                        <p>
+                            Wrap optional words in parentheses. This lets one step definition match
+                            multiple variations:
+                        </p>
+
+                        <pre><code class="language-java">// Matches both "I click login button" and "I click the login button"
+@When("I click (the )login button")
+public void iClickLoginButton() {
+    loginPage.clickLogin();
+}
+
+// Matches "I have 1 item" and "I have 5 items"
+@Then("I have {int} item(s)")
+public void iHaveItems(int count) {
+    Assert.assertEquals(cart.getItemCount(), count);
+}
+
+// Matches "file is present" and "file is not present"
+@Then("the file is (not )present")
+public void theFileIsPresent() {
+    // handle both cases
+}</code></pre>
+
+                        <h3>Alternation — Forward Slash</h3>
+                        <p>
+                            Use <code>/</code> to offer word choices:
+                        </p>
+
+                        <pre><code class="language-java">// Matches "I add the item" and "I remove the item"
+@When("I add/remove the item")
+public void iModifyItem() {
+    // handle both actions
+}
+
+// Matches "color is red", "color is blue", "color is green"
+@Then("color is red/blue/green")
+public void colorIs() { }
+
+// Combined with parameter capture
+@When("I click the accept/reject button")
+public void iClickButton() { }</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> When to Use Each</h4>
+                            <ul>
+                                <li><strong>Optional <code>(text)</code></strong> — when a word may or may not be present</li>
+                                <li><strong>Alternation <code>a/b</code></strong> — when one of several words must be present</li>
+                                <li>Both help you avoid creating duplicate step definitions for slight wording variations</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 4: Regular Expressions -->
+                    <section class="chapter" id="regular-expressions">
+                        <h2 class="chapter-title"><i class="fas fa-asterisk"></i> Regular Expressions</h2>
+
+                        <p>
+                            Before Cucumber Expressions existed, regex was the only option. You can still
+                            use regex when you need more power. Cucumber detects regex by the presence
+                            of <code>^</code> and <code>$</code> anchors:
+                        </p>
+
+                        <pre><code class="language-java">// Regex — anchored with ^ and $
+@When("^I enter \"([^\"]*)\" in the (.*) field$")
+public void iEnterInField(String value, String fieldName) {
+    page.enterValue(fieldName, value);
+}
+// Matches: When I enter "john" in the username field
+// Matches: When I enter "test@email.com" in the email field
+
+// Regex with numeric capture
+@Then("^I should see (\\d+) results?$")
+public void iShouldSeeResults(int count) {
+    Assert.assertEquals(searchPage.getResultCount(), count);
+}
+// Matches: Then I should see 1 result
+// Matches: Then I should see 10 results</code></pre>
+
+                        <h3>Cucumber Expressions vs Regex — Comparison</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Cucumber Expression</th>
+                                    <th>Regex</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Readability</td>
+                                    <td>Easy to read</td>
+                                    <td>Harder to read</td>
+                                </tr>
+                                <tr>
+                                    <td>Type safety</td>
+                                    <td>Built-in (<code>{int}</code>, <code>{string}</code>)</td>
+                                    <td>Manual casting</td>
+                                </tr>
+                                <tr>
+                                    <td>Custom types</td>
+                                    <td><code>@ParameterType</code></td>
+                                    <td>Capture groups</td>
+                                </tr>
+                                <tr>
+                                    <td>Optional text</td>
+                                    <td><code>(optional)</code></td>
+                                    <td><code>(?:optional)?</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Alternation</td>
+                                    <td><code>a/b/c</code></td>
+                                    <td><code>(?:a|b|c)</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Detection</td>
+                                    <td>No <code>^</code> or <code>$</code></td>
+                                    <td>Starts with <code>^</code>, ends with <code>$</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Recommendation</td>
+                                    <td><strong>Preferred for new projects</strong></td>
+                                    <td>Use when complex patterns are needed</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Rule of Thumb</h4>
+                            <p>
+                                Use <strong>Cucumber Expressions</strong> by default. Switch to
+                                <strong>regex</strong> only when you need complex pattern matching
+                                (e.g., matching dates, emails, or multi-format strings).
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 5: Custom Parameter Types -->
+                    <section class="chapter" id="custom-parameter-types">
+                        <h2 class="chapter-title"><i class="fas fa-puzzle-piece"></i> Custom Parameter Types</h2>
+
+                        <p>
+                            When the built-in types (<code>{int}</code>, <code>{string}</code>, etc.)
+                            aren't enough, create your own with <code>@ParameterType</code>:
+                        </p>
+
+                        <h3>Boolean from Text</h3>
+                        <pre><code class="language-java">@ParameterType("enabled|disabled")
+public Boolean status(String value) {
+    return "enabled".equals(value);
+}
+
+// Usage
+@Then("the feature should be {status}")
+public void featureShouldBe(Boolean isEnabled) {
+    Assert.assertEquals(isEnabled, feature.isEnabled());
+}
+// Matches: Then the feature should be enabled
+// Matches: Then the feature should be disabled</code></pre>
+
+                        <h3>Enum Mapping</h3>
+                        <pre><code class="language-java">public enum UserRole { ADMIN, USER, VIEWER }
+
+@ParameterType("admin|user|viewer")
+public UserRole role(String value) {
+    return UserRole.valueOf(value.toUpperCase());
+}
+
+// Usage
+@Given("I am logged in as a {role}")
+public void loggedInAs(UserRole role) {
+    loginHelper.loginAs(role);
+}
+// Matches: Given I am logged in as a admin
+// Matches: Given I am logged in as a viewer</code></pre>
+
+                        <h3>Object from Pattern</h3>
+                        <pre><code class="language-java">// Parse dates from Gherkin text
+@ParameterType("\\d{4}-\\d{2}-\\d{2}")
+public LocalDate date(String value) {
+    return LocalDate.parse(value);
+}
+
+// Usage
+@Given("the report date is {date}")
+public void reportDate(LocalDate date) {
+    reportPage.setDate(date);
+}
+// Matches: Given the report date is 2026-02-09</code></pre>
+
+                        <h3>Composite Custom Type</h3>
+                        <pre><code class="language-java">// Parse money amounts
+@ParameterType("\\$[\\d,]+\\.\\d{2}")
+public BigDecimal amount(String value) {
+    return new BigDecimal(value.replace("$", "").replace(",", ""));
+}
+
+// Usage
+@Then("the total should be {amount}")
+public void totalShouldBe(BigDecimal expected) {
+    Assert.assertEquals(expected, cart.getTotal());
+}
+// Matches: Then the total should be $1,299.99</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> Where to Place @ParameterType</h4>
+                            <p>
+                                <code>@ParameterType</code> methods can live in any class within the <code>glue</code>
+                                package. A common practice is to create a dedicated <code>TypeRegistryConfig.java</code>
+                                or <code>ParameterTypes.java</code> class for all custom types.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 6: Step Definition Patterns -->
+                    <section class="chapter" id="step-patterns">
+                        <h2 class="chapter-title"><i class="fas fa-layer-group"></i> Step Definition Patterns</h2>
+
+                        <h3>Pattern 1: One Step Definition Class per Feature</h3>
+                        <pre><code class="language-text">stepdefinitions/
+├── LoginSteps.java          // Steps for login.feature
+├── CartSteps.java           // Steps for cart.feature
+├── CheckoutSteps.java       // Steps for checkout.feature
+└── CommonSteps.java         // Shared steps used across features</code></pre>
+
+                        <h3>Pattern 2: Steps Organized by Layer</h3>
+                        <pre><code class="language-text">stepdefinitions/
+├── ui/
+│   ├── LoginUISteps.java
+│   └── CartUISteps.java
+├── api/
+│   ├── UserAPISteps.java
+│   └── OrderAPISteps.java
+└── common/
+    ├── NavigationSteps.java
+    └── AssertionSteps.java</code></pre>
+
+                        <h3>Reusable Steps</h3>
+                        <p>
+                            Since step definitions are global, a step defined once can be used
+                            across all feature files:
+                        </p>
+
+                        <pre><code class="language-java">// CommonSteps.java — Reusable across all features
+public class CommonSteps {
+
+    @Given("I am on the {word} page")
+    public void iAmOnPage(String pageName) {
+        navigator.navigateTo(pageName);
+    }
+
+    @Then("I should see a success message")
+    public void iShouldSeeSuccessMessage() {
+        Assert.assertTrue(page.isSuccessMessageDisplayed());
+    }
+
+    @Then("I should see an error {string}")
+    public void iShouldSeeError(String errorMessage) {
+        Assert.assertEquals(errorMessage, page.getErrorMessage());
+    }
+
+    @When("I wait for {int} seconds")
+    public void iWaitForSeconds(int seconds) {
+        Thread.sleep(seconds * 1000L);
+    }
+}</code></pre>
+
+                        <pre><code class="language-gherkin"># login.feature — uses CommonSteps
+Scenario: Failed login
+  Given I am on the login page         # CommonSteps
+  When I login with invalid password    # LoginSteps
+  Then I should see an error "Invalid"  # CommonSteps
+
+# registration.feature — same CommonSteps
+Scenario: Successful registration
+  Given I am on the register page       # CommonSteps
+  When I submit the registration form   # RegistrationSteps
+  Then I should see a success message   # CommonSteps</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: Avoiding Ambiguity -->
+                    <section class="chapter" id="avoiding-ambiguity">
+                        <h2 class="chapter-title"><i class="fas fa-exclamation-triangle"></i> Avoiding Ambiguous Steps</h2>
+
+                        <p>
+                            The most common error in Cucumber is the <strong>ambiguous step</strong> error.
+                            It occurs when a Gherkin step matches more than one step definition:
+                        </p>
+
+                        <pre><code class="language-text">io.cucumber.core.exception.CucumberException:
+  Step "I click the button" matches more than one step definition:
+    iClickButton() in LoginSteps
+    iClickTheButton() in CommonSteps</code></pre>
+
+                        <h3>Common Causes and Fixes</h3>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Cause</th>
+                                    <th>Example</th>
+                                    <th>Fix</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Duplicate definitions</td>
+                                    <td>Two methods with <code>@When("I click the button")</code></td>
+                                    <td>Delete one, keep in a shared class</td>
+                                </tr>
+                                <tr>
+                                    <td>Overlapping patterns</td>
+                                    <td><code>"I am on the {word} page"</code> and <code>"I am on the login page"</code></td>
+                                    <td>Remove the specific one — the generic one handles it</td>
+                                </tr>
+                                <tr>
+                                    <td>Regex too broad</td>
+                                    <td><code>"^I (.*)$"</code> matches everything</td>
+                                    <td>Make the regex more specific</td>
+                                </tr>
+                                <tr>
+                                    <td>Copy-paste leftovers</td>
+                                    <td>Same step in old and new step class</td>
+                                    <td>Search your glue package for duplicates</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>Prevention Strategies</h3>
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-shield-alt"></i> Best Practices</h4>
+                            <ul>
+                                <li><strong>Use dryRun first</strong> — catches undefined and ambiguous steps without running tests</li>
+                                <li><strong>Keep steps specific</strong> — <code>"I click the login button"</code> is better than <code>"I click the button"</code></li>
+                                <li><strong>Centralize shared steps</strong> — Put commonly reused steps in <code>CommonSteps.java</code></li>
+                                <li><strong>Search before creating</strong> — Check if a matching step already exists</li>
+                                <li><strong>Avoid overly generic regex</strong> — <code>"^I (.*)$"</code> will match almost anything</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 8: Step Definition Best Practices -->
+                    <section class="chapter" id="best-practices">
+                        <h2 class="chapter-title"><i class="fas fa-star"></i> Step Definition Best Practices</h2>
+
+                        <div class="two-column-grid">
+                            <div class="info-box info-box-success">
+                                <h4><i class="fas fa-check-circle"></i> Do</h4>
+                                <ul>
+                                    <li>Keep step definitions <strong>thin</strong> — delegate to Page Objects or services</li>
+                                    <li>Use <strong>Cucumber Expressions</strong> over regex for new projects</li>
+                                    <li>Create <strong>custom parameter types</strong> for domain objects</li>
+                                    <li>Organize by <strong>feature or domain</strong></li>
+                                    <li>Use <strong>{string}</strong> for quoted parameters</li>
+                                    <li>Write steps that read like <strong>natural English</strong></li>
+                                </ul>
+                            </div>
+                            <div class="info-box info-box-danger">
+                                <h4><i class="fas fa-times-circle"></i> Avoid</h4>
+                                <ul>
+                                    <li>Putting <strong>business logic</strong> in step definitions</li>
+                                    <li>Creating <strong>god classes</strong> with 50+ step methods</li>
+                                    <li>Using <strong>Thread.sleep()</strong> instead of explicit waits</li>
+                                    <li>Hard-coding <strong>URLs, credentials, or test data</strong></li>
+                                    <li>Writing <strong>overly generic</strong> step patterns</li>
+                                    <li>Returning values from step methods (they return <code>void</code>)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Thin Step Definition Example</h3>
+                        <pre><code class="language-java">// GOOD — Step definition delegates to Page Object
+@When("I login with {string} and {string}")
+public void iLoginWith(String username, String password) {
+    loginPage.login(username, password);
+}
+
+// BAD — Step definition contains all the logic
+@When("I login with {string} and {string}")
+public void iLoginWith(String username, String password) {
+    driver.findElement(By.id("username")).clear();
+    driver.findElement(By.id("username")).sendKeys(username);
+    driver.findElement(By.id("password")).clear();
+    driver.findElement(By.id("password")).sendKeys(password);
+    driver.findElement(By.id("login-btn")).click();
+    new WebDriverWait(driver, Duration.ofSeconds(10))
+        .until(ExpectedConditions.urlContains("/dashboard"));
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 9: Handling Undefined Steps -->
+                    <section class="chapter" id="undefined-steps">
+                        <h2 class="chapter-title"><i class="fas fa-question-circle"></i> Handling Undefined Steps</h2>
+
+                        <p>
+                            When Cucumber encounters a step with no matching definition, it reports it as
+                            <strong>undefined</strong> and suggests a snippet:
+                        </p>
+
+                        <pre><code class="language-text">Step undefined
+You can implement it using the snippet(s) below:
+
+@Given("I have {int} items in stock")
+public void i_have_items_in_stock(Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}</code></pre>
+
+                        <h3>Workflow for New Steps</h3>
+                        <ol>
+                            <li>Write the Gherkin scenario in the feature file</li>
+                            <li>Run with <code>dryRun = true</code></li>
+                            <li>Copy the generated snippets</li>
+                            <li>Paste into the appropriate step definition class</li>
+                            <li>Replace <code>PendingException</code> with real implementation</li>
+                            <li>Switch to <code>dryRun = false</code> and run</li>
+                        </ol>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> IDE Plugin Shortcut</h4>
+                            <p>
+                                If you use IntelliJ with the Cucumber plugin, you can <strong>Alt+Enter</strong>
+                                on an undefined step in the feature file and select "Create step definition"
+                                to auto-generate the method in a class of your choice.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Summary -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> Summary</h2>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What You Learned</h4>
+                            <ul>
+                                <li><strong>Step matching</strong> connects Gherkin steps to Java methods via annotations</li>
+                                <li><strong>Cucumber Expressions</strong> with <code>{int}</code>, <code>{string}</code>, <code>{word}</code>, <code>{float}</code> for type-safe parameter capture</li>
+                                <li><strong>Optional text</strong> <code>()</code> and <strong>alternation</strong> <code>/</code> reduce duplicate step definitions</li>
+                                <li><strong>Regex</strong> is still available when complex patterns are needed</li>
+                                <li><strong>Custom @ParameterType</strong> for domain-specific types (enums, dates, money)</li>
+                                <li><strong>Step organization</strong> patterns — per feature, per layer, shared commons</li>
+                                <li><strong>Ambiguity prevention</strong> — specific names, centralized shared steps, dryRun</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-arrow-right"></i> What's Next?</h4>
+                            <p>
+                                Next up: <strong>Hooks & Lifecycle Management</strong> — learn how to set up
+                                and tear down browser sessions, capture screenshots on failure, and control
+                                the execution lifecycle with @Before, @After, and more.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/cucumber/cucumber-gherkin-syntax.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Gherkin Syntax Mastery</span>
+                    </a>
+                    <a href="/cucumber/cucumber-hooks-lifecycle.html" class="nav-next">
+                        <span>Hooks & Lifecycle Management</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

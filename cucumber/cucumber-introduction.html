@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Introduction to BDD and Cucumber - Learn what Behavior-Driven Development is, how Cucumber works, and write your first feature file with step definitions and test runner.">
+    <title>Introduction to BDD & Cucumber - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Introduction to BDD & Cucumber</h1>
+                    <p class="article-subtitle">Understand Behavior-Driven Development, set up Cucumber with Java, and write your first feature file from scratch.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 20 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                        <span><i class="fas fa-leaf"></i> Cucumber BDD</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: What is BDD? -->
+                    <section class="chapter" id="what-is-bdd">
+                        <h2 class="chapter-title"><i class="fas fa-lightbulb"></i> What is BDD?</h2>
+
+                        <p>
+                            Imagine you're building a login page. The developer thinks "valid credentials" means
+                            any non-empty string. The tester thinks it means an email and password from the database.
+                            The product owner thinks it means an active user with a verified email. Three people,
+                            three different interpretations — and the bug is born before a single line of code is written.
+                        </p>
+
+                        <p>
+                            <strong>Behavior-Driven Development (BDD)</strong> solves this by making everyone — business,
+                            development, and QA — describe the expected behavior in a shared, plain-English format
+                            <em>before</em> coding starts.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-quote-left"></i> BDD in One Sentence</h4>
+                            <p>
+                                BDD is a collaborative approach where business requirements are written as
+                                <strong>executable specifications</strong> in plain language that both humans and
+                                machines can understand.
+                            </p>
+                        </div>
+
+                        <h3>The Three Amigos</h3>
+                        <p>
+                            BDD works best when three perspectives come together in a conversation called the
+                            <strong>Three Amigos</strong> meeting:
+                        </p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Brings</th>
+                                    <th>Asks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Product Owner</strong></td>
+                                    <td>Business rules & acceptance criteria</td>
+                                    <td>"What should the system do?"</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Developer</strong></td>
+                                    <td>Technical feasibility & edge cases</td>
+                                    <td>"What could go wrong technically?"</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tester (QA)</strong></td>
+                                    <td>Scenarios, edge cases & what-ifs</td>
+                                    <td>"What if the user does X instead?"</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            The output of this meeting is a set of <strong>scenarios</strong> written in a structured
+                            format that everyone agrees on. These scenarios become both the specification and the test.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 2: TDD vs BDD vs ATDD -->
+                    <section class="chapter" id="tdd-vs-bdd">
+                        <h2 class="chapter-title"><i class="fas fa-balance-scale"></i> TDD vs BDD vs ATDD</h2>
+
+                        <p>You'll hear these terms used interchangeably, but they're different:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Aspect</th>
+                                    <th>TDD</th>
+                                    <th>BDD</th>
+                                    <th>ATDD</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Full Name</strong></td>
+                                    <td>Test-Driven Development</td>
+                                    <td>Behavior-Driven Development</td>
+                                    <td>Acceptance Test-Driven Development</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Focus</strong></td>
+                                    <td>Unit-level code correctness</td>
+                                    <td>System behavior from user perspective</td>
+                                    <td>Acceptance criteria for user stories</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Written By</strong></td>
+                                    <td>Developers</td>
+                                    <td>Three Amigos (PO + Dev + QA)</td>
+                                    <td>QA + PO</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Language</strong></td>
+                                    <td>Programming language (Java, Python)</td>
+                                    <td>Plain English (Gherkin)</td>
+                                    <td>Plain English or structured</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tool Example</strong></td>
+                                    <td>JUnit, TestNG</td>
+                                    <td>Cucumber, SpecFlow</td>
+                                    <td>FitNesse, Cucumber</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Cycle</strong></td>
+                                    <td>Red → Green → Refactor</td>
+                                    <td>Discover → Formulate → Automate</td>
+                                    <td>Discuss → Distill → Develop → Demo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Key Takeaway</h4>
+                            <p>
+                                TDD says <em>"Did I build the code right?"</em> — BDD says <em>"Did I build the right thing?"</em>
+                                BDD is not a replacement for TDD. They work at different levels and complement each other.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 3: Why Cucumber? -->
+                    <section class="chapter" id="why-cucumber">
+                        <h2 class="chapter-title"><i class="fas fa-leaf"></i> Why Cucumber?</h2>
+
+                        <p>
+                            Cucumber is the most popular BDD framework. It takes plain-English scenarios
+                            written in <strong>Gherkin</strong> syntax and connects them to automation code
+                            (Java, JavaScript, Ruby, etc.) through <strong>step definitions</strong>.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-star"></i> Why Teams Choose Cucumber</h4>
+                            <ul>
+                                <li><strong>Living Documentation</strong> — Feature files double as up-to-date specs</li>
+                                <li><strong>Shared Language</strong> — Business, dev, and QA read the same scenarios</li>
+                                <li><strong>Reusable Steps</strong> — Write a step once, use it in hundreds of scenarios</li>
+                                <li><strong>Language Support</strong> — Java, JavaScript, Ruby, Python, C#, Kotlin</li>
+                                <li><strong>Tool Ecosystem</strong> — Works with Selenium, Playwright, Rest Assured, Appium</li>
+                                <li><strong>CI/CD Friendly</strong> — Integrates with Jenkins, GitHub Actions, GitLab CI</li>
+                                <li><strong>Rich Reporting</strong> — Built-in HTML reports, Allure, Extent Reports</li>
+                            </ul>
+                        </div>
+
+                        <h3>How Cucumber Works — The Big Picture</h3>
+                        <p>Here's the flow from requirement to automated test:</p>
+
+                        <pre><code class="language-text">┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
+│  Feature File   │────▶│ Step Definitions  │────▶│  Automation Code │
+│  (Gherkin)      │     │  (Java Glue)      │     │  (Selenium, API) │
+│                 │     │                   │     │                  │
+│ Given I login   │     │ @Given("I login") │     │ driver.get(url)  │
+│ When I search   │     │ @When("I search") │     │ page.search()    │
+│ Then I see...   │     │ @Then("I see...")  │     │ assert(result)   │
+└─────────────────┘     └──────────────────┘     └─────────────────┘
+        │                                                 │
+        │              ┌──────────────────┐              │
+        └─────────────▶│   Test Runner    │◀─────────────┘
+                       │  (TestNG/JUnit)  │
+                       │  Executes all    │
+                       └──────────────────┘</code></pre>
+
+                        <ol>
+                            <li><strong>Feature File</strong> — Plain-English scenarios in Gherkin format (<code>.feature</code>)</li>
+                            <li><strong>Step Definitions</strong> — Java methods that map Gherkin steps to code</li>
+                            <li><strong>Automation Code</strong> — The actual actions (click buttons, call APIs, assert results)</li>
+                            <li><strong>Test Runner</strong> — Ties everything together and executes the tests</li>
+                        </ol>
+                    </section>
+
+                    <!-- Chapter 4: Gherkin at a Glance -->
+                    <section class="chapter" id="gherkin-glance">
+                        <h2 class="chapter-title"><i class="fas fa-file-alt"></i> Gherkin at a Glance</h2>
+
+                        <p>
+                            Gherkin is the language Cucumber uses. It's designed to be readable by non-technical
+                            people while being structured enough for machines to parse.
+                        </p>
+
+                        <h3>Your First Feature File</h3>
+                        <pre><code class="language-gherkin">Feature: User Login
+  As a registered user
+  I want to log in to my account
+  So that I can access my personalized dashboard
+
+  Scenario: Successful login with valid credentials
+    Given I am on the login page
+    When I enter username "john_doe"
+    And I enter password "SecurePass123"
+    And I click the login button
+    Then I should be redirected to the dashboard
+    And I should see a welcome message "Hello, John!"</code></pre>
+
+                        <p>Let's break this down:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Keyword</th>
+                                    <th>Purpose</th>
+                                    <th>In This Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>Feature</code></td>
+                                    <td>Names the feature being tested</td>
+                                    <td>User Login</td>
+                                </tr>
+                                <tr>
+                                    <td><code>As a / I want / So that</code></td>
+                                    <td>User story (optional but helpful)</td>
+                                    <td>Context for why this matters</td>
+                                </tr>
+                                <tr>
+                                    <td><code>Scenario</code></td>
+                                    <td>One specific test case</td>
+                                    <td>Successful login with valid credentials</td>
+                                </tr>
+                                <tr>
+                                    <td><code>Given</code></td>
+                                    <td>Precondition — the starting state</td>
+                                    <td>I am on the login page</td>
+                                </tr>
+                                <tr>
+                                    <td><code>When</code></td>
+                                    <td>Action — what the user does</td>
+                                    <td>I enter username, password, click login</td>
+                                </tr>
+                                <tr>
+                                    <td><code>Then</code></td>
+                                    <td>Outcome — the expected result</td>
+                                    <td>Redirected to dashboard, see welcome message</td>
+                                </tr>
+                                <tr>
+                                    <td><code>And</code></td>
+                                    <td>Continuation of the previous keyword</td>
+                                    <td>Additional steps within Given/When/Then</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Think of It Like a Story</h4>
+                            <p>
+                                <strong>Given</strong> sets the scene (precondition),
+                                <strong>When</strong> is the action (what happens),
+                                <strong>Then</strong> is the outcome (what you expect).
+                                It's like telling a story: "Given I'm at the store, When I pick up milk, Then I should have milk in my cart."
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 5: Project Setup -->
+                    <section class="chapter" id="project-setup">
+                        <h2 class="chapter-title"><i class="fas fa-tools"></i> Project Setup</h2>
+
+                        <h3>Prerequisites</h3>
+                        <ul>
+                            <li>Java 11+ installed (<code>java -version</code> to check)</li>
+                            <li>Maven installed (<code>mvn -version</code> to check)</li>
+                            <li>An IDE — IntelliJ IDEA (recommended) or Eclipse</li>
+                            <li>Cucumber plugin for your IDE (for syntax highlighting)</li>
+                        </ul>
+
+                        <h3>Step 1: Create a Maven Project</h3>
+                        <pre><code class="language-bash">mvn archetype:generate \
+  -DgroupId=com.gyancode.cucumber \
+  -DartifactId=cucumber-bdd-tutorial \
+  -DarchetypeArtifactId=maven-archetype-quickstart \
+  -DinteractiveMode=false</code></pre>
+
+                        <h3>Step 2: Add Dependencies to pom.xml</h3>
+                        <pre><code class="language-xml">&lt;properties&gt;
+    &lt;maven.compiler.source&gt;11&lt;/maven.compiler.source&gt;
+    &lt;maven.compiler.target&gt;11&lt;/maven.compiler.target&gt;
+    &lt;cucumber.version&gt;7.15.0&lt;/cucumber.version&gt;
+    &lt;selenium.version&gt;4.16.0&lt;/selenium.version&gt;
+&lt;/properties&gt;
+
+&lt;dependencies&gt;
+    &lt;!-- Cucumber Core --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+        &lt;artifactId&gt;cucumber-java&lt;/artifactId&gt;
+        &lt;version&gt;${cucumber.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- Cucumber + TestNG Integration --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;io.cucumber&lt;/groupId&gt;
+        &lt;artifactId&gt;cucumber-testng&lt;/artifactId&gt;
+        &lt;version&gt;${cucumber.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- Selenium WebDriver --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.seleniumhq.selenium&lt;/groupId&gt;
+        &lt;artifactId&gt;selenium-java&lt;/artifactId&gt;
+        &lt;version&gt;${selenium.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- TestNG --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.testng&lt;/groupId&gt;
+        &lt;artifactId&gt;testng&lt;/artifactId&gt;
+        &lt;version&gt;7.9.0&lt;/version&gt;
+        &lt;scope&gt;test&lt;/scope&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+            &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+            &lt;version&gt;3.2.3&lt;/version&gt;
+            &lt;configuration&gt;
+                &lt;includes&gt;
+                    &lt;include&gt;**/TestRunner.java&lt;/include&gt;
+                &lt;/includes&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> JUnit vs TestNG</h4>
+                            <p>
+                                Cucumber supports both JUnit and TestNG. This tutorial uses <strong>TestNG</strong>
+                                because it offers built-in parallel execution and is widely used in enterprise QA.
+                                If you prefer JUnit 5, replace <code>cucumber-testng</code> with <code>cucumber-junit-platform-engine</code>.
+                            </p>
+                        </div>
+
+                        <h3>Step 3: Project Structure</h3>
+                        <pre><code class="language-text">cucumber-bdd-tutorial/
+├── pom.xml
+└── src/
+    └── test/
+        ├── java/
+        │   └── com/gyancode/cucumber/
+        │       ├── runner/
+        │       │   └── TestRunner.java
+        │       └── stepdefinitions/
+        │           └── LoginSteps.java
+        └── resources/
+            └── features/
+                └── login.feature</code></pre>
+
+                        <div class="info-box">
+                            <h4><i class="fas fa-folder-open"></i> Why This Structure?</h4>
+                            <ul>
+                                <li><code>features/</code> — All <code>.feature</code> files (Gherkin scenarios)</li>
+                                <li><code>stepdefinitions/</code> — Java classes that implement the steps</li>
+                                <li><code>runner/</code> — The TestRunner that configures and triggers execution</li>
+                            </ul>
+                            <p>Feature files go under <code>src/test/resources</code> because they are test resources, not Java code.</p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 6: Your First Test -->
+                    <section class="chapter" id="first-test">
+                        <h2 class="chapter-title"><i class="fas fa-rocket"></i> Your First Cucumber Test</h2>
+
+                        <p>Let's write a complete working example — a simple calculator test that doesn't need
+                           Selenium, so you can focus purely on how Cucumber works.</p>
+
+                        <h3>Step 1: The Feature File</h3>
+                        <p>Create <code>src/test/resources/features/calculator.feature</code>:</p>
+
+                        <pre><code class="language-gherkin">Feature: Calculator
+  As a user
+  I want to perform basic arithmetic
+  So that I can get correct results
+
+  Scenario: Add two numbers
+    Given I have a calculator
+    When I add 5 and 3
+    Then the result should be 8
+
+  Scenario: Subtract two numbers
+    Given I have a calculator
+    When I subtract 3 from 10
+    Then the result should be 7</code></pre>
+
+                        <h3>Step 2: The Step Definitions</h3>
+                        <p>Create <code>src/test/java/com/gyancode/cucumber/stepdefinitions/CalculatorSteps.java</code>:</p>
+
+                        <pre><code class="language-java">package com.gyancode.cucumber.stepdefinitions;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.Then;
+import org.testng.Assert;
+
+public class CalculatorSteps {
+
+    private int result;
+
+    @Given("I have a calculator")
+    public void iHaveACalculator() {
+        // Setup — nothing needed for a simple calculator
+        System.out.println("Calculator is ready!");
+    }
+
+    @When("I add {int} and {int}")
+    public void iAddAnd(int a, int b) {
+        result = a + b;
+    }
+
+    @When("I subtract {int} from {int}")
+    public void iSubtractFrom(int a, int b) {
+        result = b - a;
+    }
+
+    @Then("the result should be {int}")
+    public void theResultShouldBe(int expected) {
+        Assert.assertEquals(result, expected,
+            "Expected " + expected + " but got " + result);
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> How the Mapping Works</h4>
+                            <p>
+                                Each Gherkin step (<code>Given I have a calculator</code>) is matched to a Java method
+                                by the annotation text (<code>@Given("I have a calculator")</code>).
+                                The <code>{int}</code> placeholder captures numbers from the step text and passes them
+                                as method parameters.
+                            </p>
+                        </div>
+
+                        <h3>Step 3: The Test Runner</h3>
+                        <p>Create <code>src/test/java/com/gyancode/cucumber/runner/TestRunner.java</code>:</p>
+
+                        <pre><code class="language-java">package com.gyancode.cucumber.runner;
+
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import io.cucumber.testng.CucumberOptions;
+
+@CucumberOptions(
+    features = "src/test/resources/features",
+    glue = "com.gyancode.cucumber.stepdefinitions",
+    plugin = {
+        "pretty",
+        "html:target/cucumber-reports/cucumber.html"
+    },
+    monochrome = true
+)
+public class TestRunner extends AbstractTestNGCucumberTests {
+}</code></pre>
+
+                        <h3>Step 4: Run It!</h3>
+                        <pre><code class="language-bash"># From the project root
+mvn test</code></pre>
+
+                        <p>You should see output like:</p>
+                        <pre><code class="language-text">Scenario: Add two numbers
+  Given I have a calculator      ✓
+  When I add 5 and 3             ✓
+  Then the result should be 8    ✓
+
+Scenario: Subtract two numbers
+  Given I have a calculator      ✓
+  When I subtract 3 from 10     ✓
+  Then the result should be 7    ✓
+
+2 Scenarios (2 passed)
+6 Steps (6 passed)</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What Just Happened?</h4>
+                            <ol>
+                                <li>Maven ran the <code>TestRunner</code> class</li>
+                                <li>Cucumber scanned the <code>features</code> folder for <code>.feature</code> files</li>
+                                <li>For each Gherkin step, it found a matching <code>@Given</code>/<code>@When</code>/<code>@Then</code> method in the <code>glue</code> package</li>
+                                <li>It executed each step method in order and reported pass/fail</li>
+                                <li>An HTML report was generated at <code>target/cucumber-reports/cucumber.html</code></li>
+                            </ol>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 7: Runner Options Explained -->
+                    <section class="chapter" id="runner-options">
+                        <h2 class="chapter-title"><i class="fas fa-sliders-h"></i> Understanding Runner Options</h2>
+
+                        <p>The <code>@CucumberOptions</code> annotation configures everything. Here's what each option does:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>What It Does</th>
+                                    <th>Example</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>features</code></td>
+                                    <td>Path to feature files</td>
+                                    <td><code>"src/test/resources/features"</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>glue</code></td>
+                                    <td>Package(s) containing step definitions</td>
+                                    <td><code>"com.gyancode.cucumber.stepdefinitions"</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>plugin</code></td>
+                                    <td>Report formats to generate</td>
+                                    <td><code>"pretty"</code>, <code>"html:target/report.html"</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>tags</code></td>
+                                    <td>Filter which scenarios to run</td>
+                                    <td><code>"@smoke and not @wip"</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>monochrome</code></td>
+                                    <td>Clean console output (no ANSI codes)</td>
+                                    <td><code>true</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>dryRun</code></td>
+                                    <td>Check step mappings without running tests</td>
+                                    <td><code>true</code> for validation only</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h3>The dryRun Trick</h3>
+                        <p>
+                            Set <code>dryRun = true</code> when you write new feature files. Cucumber will tell you
+                            which steps are missing without running any tests. It even generates step definition
+                            snippets you can copy-paste:
+                        </p>
+
+                        <pre><code class="language-text">You can implement missing steps with the snippets below:
+
+@Given("I am on the registration page")
+public void i_am_on_the_registration_page() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Pro Tip</h4>
+                            <p>
+                                Always start with <code>dryRun = true</code> when building new scenarios.
+                                Write the feature file first, run dry to get snippets, implement the steps,
+                                then switch back to <code>dryRun = false</code> (or remove it) to execute.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 8: A Selenium Example -->
+                    <section class="chapter" id="selenium-example">
+                        <h2 class="chapter-title"><i class="fas fa-globe"></i> Adding Selenium — A Real Example</h2>
+
+                        <p>Now let's connect Cucumber with Selenium WebDriver for browser automation:</p>
+
+                        <h3>Feature File: login.feature</h3>
+                        <pre><code class="language-gherkin">Feature: User Login
+  As a registered user
+  I want to log in to my account
+  So that I can access my dashboard
+
+  Scenario: Successful login
+    Given I am on the login page
+    When I enter username "testuser"
+    And I enter password "password123"
+    And I click the login button
+    Then I should see the dashboard
+
+  Scenario: Failed login with wrong password
+    Given I am on the login page
+    When I enter username "testuser"
+    And I enter password "wrongpass"
+    And I click the login button
+    Then I should see an error message "Invalid credentials"</code></pre>
+
+                        <h3>Step Definitions: LoginSteps.java</h3>
+                        <pre><code class="language-java">package com.gyancode.cucumber.stepdefinitions;
+
+import io.cucumber.java.After;
+import io.cucumber.java.Before;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.Then;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+import java.time.Duration;
+
+public class LoginSteps {
+    private WebDriver driver;
+    private WebDriverWait wait;
+
+    @Before
+    public void setUp() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+    }
+
+    @After
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+    }
+
+    @Given("I am on the login page")
+    public void iAmOnTheLoginPage() {
+        driver.get("https://example.com/login");
+    }
+
+    @When("I enter username {string}")
+    public void iEnterUsername(String username) {
+        WebElement field = wait.until(
+            ExpectedConditions.visibilityOfElementLocated(By.id("username"))
+        );
+        field.clear();
+        field.sendKeys(username);
+    }
+
+    @When("I enter password {string}")
+    public void iEnterPassword(String password) {
+        WebElement field = driver.findElement(By.id("password"));
+        field.clear();
+        field.sendKeys(password);
+    }
+
+    @When("I click the login button")
+    public void iClickTheLoginButton() {
+        driver.findElement(By.id("login-btn")).click();
+    }
+
+    @Then("I should see the dashboard")
+    public void iShouldSeeTheDashboard() {
+        wait.until(ExpectedConditions.urlContains("/dashboard"));
+        Assert.assertTrue(driver.getCurrentUrl().contains("/dashboard"));
+    }
+
+    @Then("I should see an error message {string}")
+    public void iShouldSeeAnErrorMessage(String expectedMessage) {
+        WebElement error = wait.until(
+            ExpectedConditions.visibilityOfElementLocated(By.css(".error-message"))
+        );
+        Assert.assertEquals(error.getText(), expectedMessage);
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Note on @Before and @After</h4>
+                            <p>
+                                The <code>@Before</code> and <code>@After</code> here are <strong>Cucumber hooks</strong>
+                                (from <code>io.cucumber.java</code>), not TestNG annotations. They run before and after
+                                each <em>scenario</em>. We'll cover hooks in depth in Tutorial 4.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 9: Common Mistakes -->
+                    <section class="chapter" id="common-mistakes">
+                        <h2 class="chapter-title"><i class="fas fa-exclamation-circle"></i> Common Beginner Mistakes</h2>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Mistake</th>
+                                    <th>What Happens</th>
+                                    <th>Fix</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Wrong <code>glue</code> path</td>
+                                    <td>Cucumber can't find step definitions — all steps show as "undefined"</td>
+                                    <td>Use the full package name: <code>"com.gyancode.cucumber.stepdefinitions"</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Feature file not in <code>resources</code></td>
+                                    <td>Cucumber can't find feature files</td>
+                                    <td>Place <code>.feature</code> files under <code>src/test/resources/features/</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Step text doesn't match exactly</td>
+                                    <td>"Undefined step" error even though the method exists</td>
+                                    <td>The annotation string must match the Gherkin step exactly (including spaces and quotes)</td>
+                                </tr>
+                                <tr>
+                                    <td>Missing Cucumber dependency</td>
+                                    <td>Import errors for <code>@Given</code>, <code>@When</code>, <code>@Then</code></td>
+                                    <td>Ensure <code>cucumber-java</code> is in <code>pom.xml</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Runner doesn't extend <code>AbstractTestNGCucumberTests</code></td>
+                                    <td>Tests don't execute</td>
+                                    <td>The runner class must extend the correct base class</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 10: Summary -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> Summary</h2>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What You Learned</h4>
+                            <ul>
+                                <li><strong>BDD</strong> is a collaborative approach using plain-English specifications</li>
+                                <li><strong>Cucumber</strong> executes Gherkin feature files through Java step definitions</li>
+                                <li><strong>Feature files</strong> describe behavior with Given/When/Then keywords</li>
+                                <li><strong>Step definitions</strong> are Java methods annotated with <code>@Given</code>, <code>@When</code>, <code>@Then</code></li>
+                                <li><strong>Test Runner</strong> with <code>@CucumberOptions</code> configures features, glue, plugins, and tags</li>
+                                <li><strong>dryRun</strong> validates step mappings without executing tests</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-arrow-right"></i> What's Next?</h4>
+                            <p>
+                                In the next tutorial, we'll master <strong>Gherkin Syntax</strong> — all the keywords,
+                                Background, Tags, the Rule keyword, doc strings, and how to organize your feature files
+                                like a pro.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/cucumber/index.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Cucumber Tutorials</span>
+                    </a>
+                    <a href="/cucumber/cucumber-gherkin-syntax.html" class="nav-next">
+                        <span>Gherkin Syntax Mastery</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
