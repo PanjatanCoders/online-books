@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Singleton Pattern in Test Automation - Thread-safe Driver Manager, Config Reader, Logger Singleton with real Selenium and Cucumber framework examples.">
+    <title>Singleton Pattern in Test Automation - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Singleton Pattern in Test Automation</h1>
+                    <p class="article-subtitle">Ensure only one instance exists — Driver Manager, Config Reader, and Logger Singletons with thread-safe parallel execution support.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 20 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                        <span><i class="fas fa-drafting-compass"></i> Design Patterns</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: What is Singleton? -->
+                    <section class="chapter" id="what-is-singleton">
+                        <h2 class="chapter-title"><i class="fas fa-cube"></i> What is the Singleton Pattern?</h2>
+
+                        <p>
+                            Singleton ensures a class has <strong>exactly one instance</strong> and provides
+                            a global point of access to it. The class itself controls its instantiation —
+                            no one else can create a second instance.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Real-World Analogy</h4>
+                            <p>
+                                Your country has one president at a time. You don't create a new president
+                                every time you need to make a decision — you always refer to the same one.
+                                That's Singleton: one instance, accessed everywhere.
+                            </p>
+                        </div>
+
+                        <h3>Why It Matters in Test Automation</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Why Singleton?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Config Reader</strong></td><td>Load properties file once, read everywhere</td></tr>
+                                <tr><td><strong>Logger</strong></td><td>One logger instance for consistent logging</td></tr>
+                                <tr><td><strong>Database Connection</strong></td><td>Avoid opening multiple connections</td></tr>
+                                <tr><td><strong>Report Manager</strong></td><td>Single report instance collects all results</td></tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> What About WebDriver?</h4>
+                            <p>
+                                WebDriver is <strong>NOT</strong> a good candidate for classic Singleton in most
+                                modern frameworks. Each test scenario should have its own driver instance
+                                (especially for parallel execution). We'll cover the correct pattern —
+                                <strong>ThreadLocal Singleton</strong> — later in this tutorial.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2: Classic Singleton -->
+                    <section class="chapter" id="classic-singleton">
+                        <h2 class="chapter-title"><i class="fas fa-lock"></i> Classic Singleton Implementation</h2>
+
+                        <h3>The Three Rules of Singleton</h3>
+                        <ol>
+                            <li><strong>Private constructor</strong> — no one can <code>new</code> it from outside</li>
+                            <li><strong>Private static instance</strong> — the single instance lives inside the class</li>
+                            <li><strong>Public static getter</strong> — everyone accesses the instance through this method</li>
+                        </ol>
+
+                        <pre><code class="language-java">public class ConfigReader {
+    // 1. Private static instance
+    private static ConfigReader instance;
+
+    // Class data
+    private final Properties properties;
+
+    // 2. Private constructor — cannot be called from outside
+    private ConfigReader() {
+        properties = new Properties();
+        try (FileInputStream fis =
+                new FileInputStream("config/config.properties")) {
+            properties.load(fis);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot load config", e);
+        }
+    }
+
+    // 3. Public static getter — the only way to get the instance
+    public static ConfigReader getInstance() {
+        if (instance == null) {
+            instance = new ConfigReader();
+        }
+        return instance;
+    }
+
+    // Business methods
+    public String get(String key) {
+        return properties.getProperty(key);
+    }
+
+    public String get(String key, String defaultValue) {
+        return properties.getProperty(key, defaultValue);
+    }
+
+    public int getInt(String key) {
+        return Integer.parseInt(properties.getProperty(key));
+    }
+
+    public boolean getBoolean(String key) {
+        return Boolean.parseBoolean(properties.getProperty(key));
+    }
+}
+
+// Usage — anywhere in your framework
+String baseUrl = ConfigReader.getInstance().get("base.url");
+int timeout = ConfigReader.getInstance().getInt("implicit.wait");
+boolean headless = ConfigReader.getInstance().getBoolean("headless");</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Thread Safety Issue</h4>
+                            <p>
+                                The classic version above is <strong>NOT thread-safe</strong>. If two threads
+                                call <code>getInstance()</code> simultaneously when <code>instance</code> is null,
+                                both may create separate instances. This matters in parallel test execution.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 3: Thread-Safe Singleton -->
+                    <section class="chapter" id="thread-safe">
+                        <h2 class="chapter-title"><i class="fas fa-shield-alt"></i> Thread-Safe Singleton</h2>
+
+                        <p>Three approaches, from simplest to most robust:</p>
+
+                        <h3>Approach 1: Synchronized Method</h3>
+                        <pre><code class="language-java">public static synchronized ConfigReader getInstance() {
+    if (instance == null) {
+        instance = new ConfigReader();
+    }
+    return instance;
+}
+// Works, but synchronized on EVERY call — slower than needed</code></pre>
+
+                        <h3>Approach 2: Double-Checked Locking (Recommended)</h3>
+                        <pre><code class="language-java">public class ConfigReader {
+    private static volatile ConfigReader instance;
+    private final Properties properties;
+
+    private ConfigReader() {
+        properties = new Properties();
+        try (FileInputStream fis =
+                new FileInputStream("config/config.properties")) {
+            properties.load(fis);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot load config", e);
+        }
+    }
+
+    public static ConfigReader getInstance() {
+        if (instance == null) {                    // First check (no lock)
+            synchronized (ConfigReader.class) {
+                if (instance == null) {            // Second check (with lock)
+                    instance = new ConfigReader();
+                }
+            }
+        }
+        return instance;                           // No lock on subsequent calls
+    }
+
+    public String get(String key) {
+        return properties.getProperty(key);
+    }
+}</code></pre>
+
+                        <h3>Approach 3: Enum Singleton (Simplest)</h3>
+                        <pre><code class="language-java">public enum ConfigReader {
+    INSTANCE;
+
+    private final Properties properties;
+
+    ConfigReader() {
+        properties = new Properties();
+        try (FileInputStream fis =
+                new FileInputStream("config/config.properties")) {
+            properties.load(fis);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot load config", e);
+        }
+    }
+
+    public String get(String key) {
+        return properties.getProperty(key);
+    }
+
+    public int getInt(String key) {
+        return Integer.parseInt(properties.getProperty(key));
+    }
+
+    public boolean getBoolean(String key) {
+        return Boolean.parseBoolean(properties.getProperty(key));
+    }
+}
+
+// Usage
+String url = ConfigReader.INSTANCE.get("base.url");
+int timeout = ConfigReader.INSTANCE.getInt("implicit.wait");</code></pre>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Approach</th>
+                                    <th>Thread-Safe?</th>
+                                    <th>Performance</th>
+                                    <th>Complexity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Classic (no sync)</td><td>No</td><td>Fast</td><td>Simple</td></tr>
+                                <tr><td>Synchronized method</td><td>Yes</td><td>Slow (locks every call)</td><td>Simple</td></tr>
+                                <tr><td>Double-checked locking</td><td>Yes</td><td>Fast (locks only first time)</td><td>Medium</td></tr>
+                                <tr><td><strong>Enum</strong></td><td><strong>Yes</strong></td><td><strong>Fast</strong></td><td><strong>Simplest</strong></td></tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Recommendation</h4>
+                            <p>
+                                Use <strong>Enum Singleton</strong> for ConfigReader, Logger, and similar
+                                global utilities. It's thread-safe by default, serialization-safe, and
+                                the simplest to implement. Use Double-Checked Locking when you need lazy
+                                initialization with parameters.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 4: Config Reader Singleton -->
+                    <section class="chapter" id="config-reader">
+                        <h2 class="chapter-title"><i class="fas fa-cog"></i> Config Reader Singleton — Complete</h2>
+
+                        <p>A production-ready config reader with environment support:</p>
+
+                        <pre><code class="language-java">public class ConfigReader {
+    private static volatile ConfigReader instance;
+    private final Properties properties;
+
+    private ConfigReader() {
+        properties = new Properties();
+        String env = System.getProperty("env", "config");
+        String filePath = "config/" + env + ".properties";
+
+        try (FileInputStream fis = new FileInputStream(filePath)) {
+            properties.load(fis);
+        } catch (IOException e) {
+            throw new RuntimeException(
+                "Cannot load config from: " + filePath, e);
+        }
+    }
+
+    public static ConfigReader getInstance() {
+        if (instance == null) {
+            synchronized (ConfigReader.class) {
+                if (instance == null) {
+                    instance = new ConfigReader();
+                }
+            }
+        }
+        return instance;
+    }
+
+    // Reset for testing or environment switch
+    public static void reset() {
+        synchronized (ConfigReader.class) {
+            instance = null;
+        }
+    }
+
+    public String get(String key) {
+        // System property overrides file property
+        String sysValue = System.getProperty(key);
+        return sysValue != null ? sysValue : properties.getProperty(key);
+    }
+
+    public String get(String key, String defaultValue) {
+        String value = get(key);
+        return value != null ? value : defaultValue;
+    }
+
+    public int getInt(String key, int defaultValue) {
+        String value = get(key);
+        return value != null ? Integer.parseInt(value) : defaultValue;
+    }
+
+    public boolean getBoolean(String key, boolean defaultValue) {
+        String value = get(key);
+        return value != null ? Boolean.parseBoolean(value) : defaultValue;
+    }
+
+    public String getBaseUrl() { return get("base.url"); }
+    public String getBrowser() { return get("browser", "chrome"); }
+    public boolean isHeadless() { return getBoolean("headless", false); }
+    public int getTimeout() { return getInt("implicit.wait", 10); }
+}
+
+// Usage everywhere
+ConfigReader config = ConfigReader.getInstance();
+driver.get(config.getBaseUrl());
+// Or with command-line override:
+// mvn test -Dbase.url=https://staging.example.com</code></pre>
+                    </section>
+
+                    <!-- Chapter 5: ThreadLocal Driver Manager -->
+                    <section class="chapter" id="threadlocal-driver">
+                        <h2 class="chapter-title"><i class="fas fa-desktop"></i> ThreadLocal Driver Manager</h2>
+
+                        <p>
+                            In parallel execution, each thread needs its <strong>own WebDriver</strong>.
+                            A classic Singleton would share one driver across threads — causing chaos.
+                            The solution: <strong>ThreadLocal + Singleton</strong>.
+                        </p>
+
+                        <h3>Without ThreadLocal (Broken in Parallel)</h3>
+                        <pre><code class="language-java">// DON'T DO THIS — all threads share the same driver!
+public class DriverManager {
+    private static WebDriver driver; // Shared = broken in parallel
+
+    public static WebDriver getDriver() {
+        if (driver == null) {
+            driver = new ChromeDriver();
+        }
+        return driver;
+    }
+}</code></pre>
+
+                        <h3>With ThreadLocal (Correct)</h3>
+                        <pre><code class="language-java">public class DriverManager {
+    // Each thread gets its own WebDriver instance
+    private static final ThreadLocal&lt;WebDriver&gt; driver =
+        new ThreadLocal&lt;&gt;();
+
+    public static void setDriver(WebDriver webDriver) {
+        driver.set(webDriver);
+    }
+
+    public static WebDriver getDriver() {
+        return driver.get();
+    }
+
+    public static void initDriver() {
+        if (driver.get() == null) {
+            WebDriver webDriver = DriverFactory.createDriver();
+            driver.set(webDriver);
+        }
+    }
+
+    public static void quitDriver() {
+        WebDriver webDriver = driver.get();
+        if (webDriver != null) {
+            webDriver.quit();
+            driver.remove(); // Prevent memory leak!
+        }
+    }
+}
+
+// Usage in Cucumber Hooks
+@Before("@ui")
+public void setUp() {
+    DriverManager.initDriver();
+}
+
+@After("@ui")
+public void tearDown(Scenario scenario) {
+    if (scenario.isFailed()) {
+        byte[] screenshot = ((TakesScreenshot) DriverManager.getDriver())
+            .getScreenshotAs(OutputType.BYTES);
+        scenario.attach(screenshot, "image/png", "failure");
+    }
+    DriverManager.quitDriver();
+}
+
+// Usage in step definitions
+@Given("I am on the login page")
+public void navigateToLogin() {
+    DriverManager.getDriver().get(
+        ConfigReader.getInstance().getBaseUrl() + "/login"
+    );
+}</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> How ThreadLocal Works</h4>
+                            <pre><code class="language-text">Thread 1: DriverManager.getDriver() → Chrome instance A
+Thread 2: DriverManager.getDriver() → Chrome instance B
+Thread 3: DriverManager.getDriver() → Chrome instance C
+
+Each thread has its own isolated driver — no conflicts!</code></pre>
+                        </div>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Always Call remove()</h4>
+                            <p>
+                                Always call <code>driver.remove()</code> after <code>quit()</code>.
+                                ThreadLocal can cause <strong>memory leaks</strong> in thread pools
+                                (like TestNG parallel) if old references aren't cleaned up.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 6: Logger Singleton -->
+                    <section class="chapter" id="logger-singleton">
+                        <h2 class="chapter-title"><i class="fas fa-file-alt"></i> Logger Singleton</h2>
+
+                        <p>A custom test logger that writes to console and file:</p>
+
+                        <pre><code class="language-java">public class TestLogger {
+    private static volatile TestLogger instance;
+    private final Logger logger;
+
+    private TestLogger() {
+        logger = LogManager.getLogger("TestAutomation");
+    }
+
+    public static TestLogger getInstance() {
+        if (instance == null) {
+            synchronized (TestLogger.class) {
+                if (instance == null) {
+                    instance = new TestLogger();
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void info(String message) {
+        logger.info(message);
+    }
+
+    public void error(String message, Throwable throwable) {
+        logger.error(message, throwable);
+    }
+
+    public void step(String stepDescription) {
+        logger.info("STEP: " + stepDescription);
+    }
+
+    public void pass(String message) {
+        logger.info("PASS: " + message);
+    }
+
+    public void fail(String message) {
+        logger.error("FAIL: " + message);
+    }
+}
+
+// Usage in step definitions
+@When("I login with {string} and {string}")
+public void login(String username, String password) {
+    TestLogger.getInstance().step(
+        "Logging in with user: " + username
+    );
+    loginPage.login(username, password);
+    TestLogger.getInstance().pass("Login successful");
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: Singleton vs DI -->
+                    <section class="chapter" id="singleton-vs-di">
+                        <h2 class="chapter-title"><i class="fas fa-balance-scale"></i> Singleton vs Dependency Injection</h2>
+
+                        <p>
+                            Modern frameworks often use Dependency Injection (PicoContainer, Spring) instead
+                            of Singleton. Here's when each is appropriate:
+                        </p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Aspect</th>
+                                    <th>Singleton</th>
+                                    <th>Dependency Injection</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Scope</strong></td><td>Application-wide (global)</td><td>Per-scenario or per-context</td></tr>
+                                <tr><td><strong>Testing</strong></td><td>Hard to mock/replace</td><td>Easy to mock/swap</td></tr>
+                                <tr><td><strong>State</strong></td><td>Persists across scenarios</td><td>Fresh per scenario</td></tr>
+                                <tr><td><strong>Parallel safety</strong></td><td>Needs ThreadLocal</td><td>Built-in isolation</td></tr>
+                                <tr><td><strong>Best for</strong></td><td>Config, Logger, Constants</td><td>Driver, TestContext, Page Objects</td></tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Rule of Thumb</h4>
+                            <ul>
+                                <li>Use <strong>Singleton</strong> for truly global, immutable resources: config properties, logger, constants</li>
+                                <li>Use <strong>DI (PicoContainer)</strong> for per-scenario state: WebDriver, TestContext, Page Objects</li>
+                                <li>Use <strong>ThreadLocal + Singleton</strong> when you need global access but per-thread isolation (DriverManager)</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 8: When to Use -->
+                    <section class="chapter" id="when-to-use">
+                        <h2 class="chapter-title"><i class="fas fa-clipboard-check"></i> When to Use & Common Mistakes</h2>
+
+                        <div class="two-column-grid">
+                            <div class="info-box info-box-success">
+                                <h4><i class="fas fa-check-circle"></i> Good Singleton Candidates</h4>
+                                <ul>
+                                    <li>ConfigReader (load once, read everywhere)</li>
+                                    <li>Logger (one log stream)</li>
+                                    <li>Database connection pool</li>
+                                    <li>Report manager (collect all results)</li>
+                                    <li>Environment constants</li>
+                                </ul>
+                            </div>
+                            <div class="info-box info-box-danger">
+                                <h4><i class="fas fa-times-circle"></i> Bad Singleton Candidates</h4>
+                                <ul>
+                                    <li>WebDriver (breaks parallel execution)</li>
+                                    <li>Test data (different per scenario)</li>
+                                    <li>Page Objects (different per scenario)</li>
+                                    <li>HTTP clients (different auth per test)</li>
+                                    <li>Any mutable state shared across tests</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Common Mistakes</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Mistake</th>
+                                    <th>Problem</th>
+                                    <th>Fix</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Singleton WebDriver without ThreadLocal</td>
+                                    <td>Parallel tests share one browser</td>
+                                    <td>Use ThreadLocal or DI</td>
+                                </tr>
+                                <tr>
+                                    <td>Forgetting <code>volatile</code></td>
+                                    <td>Partially constructed instance visible to other threads</td>
+                                    <td>Always use <code>volatile</code> with double-checked locking</td>
+                                </tr>
+                                <tr>
+                                    <td>No <code>remove()</code> on ThreadLocal</td>
+                                    <td>Memory leaks in thread pools</td>
+                                    <td>Always call <code>remove()</code> in teardown</td>
+                                </tr>
+                                <tr>
+                                    <td>Making everything a Singleton</td>
+                                    <td>Hidden dependencies, hard to test</td>
+                                    <td>Only use for truly global resources</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Summary -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> Summary</h2>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What You Learned</h4>
+                            <ul>
+                                <li><strong>Singleton</strong> ensures one instance with global access</li>
+                                <li><strong>Classic, Synchronized, Double-Checked, Enum</strong> — four implementation approaches</li>
+                                <li><strong>Config Reader Singleton</strong> — load properties once, read everywhere with env support</li>
+                                <li><strong>ThreadLocal Driver Manager</strong> — per-thread isolation for parallel execution</li>
+                                <li><strong>Logger Singleton</strong> — consistent test logging</li>
+                                <li><strong>Singleton vs DI</strong> — use Singleton for global immutable state, DI for per-scenario state</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-arrow-right"></i> What's Next?</h4>
+                            <p>
+                                Next: <strong>Strategy Pattern</strong> — learn how to swap algorithms at
+                                runtime for browser selection, wait strategies, locator strategies, and
+                                reporting in your automation framework.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/design-patterns/factory-pattern.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Factory Pattern</span>
+                    </a>
+                    <a href="/design-patterns/strategy-pattern.html" class="nav-next">
+                        <span>Strategy Pattern</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Factory Pattern in Test Automation - WebDriver Factory, Page Object Factory, Test Data Factory, and API Client Factory with real framework code examples.">
+    <title>Factory Pattern in Test Automation - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Factory Pattern in Test Automation</h1>
+                    <p class="article-subtitle">Create objects without exposing creation logic — WebDriver Factory, Page Object Factory, Test Data Factory, and API Client Factory for real frameworks.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                        <span><i class="fas fa-drafting-compass"></i> Design Patterns</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: What is Factory Pattern? -->
+                    <section class="chapter" id="what-is-factory">
+                        <h2 class="chapter-title"><i class="fas fa-industry"></i> What is the Factory Pattern?</h2>
+
+                        <p>
+                            The Factory Pattern creates objects without exposing the creation logic to the caller.
+                            Instead of using <code>new</code> directly, you ask a <strong>factory</strong> to
+                            give you the right object based on a parameter.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Real-World Analogy</h4>
+                            <p>
+                                You walk into a pizza shop and say "I want a Margherita." You don't go into the
+                                kitchen, pick the dough, choose the sauce, and bake it yourself. The shop (factory)
+                                takes your input and gives you the finished product. That's exactly what Factory
+                                Pattern does in code.
+                            </p>
+                        </div>
+
+                        <h3>Why It Matters in Test Automation</h3>
+                        <p>In test automation frameworks, you constantly create:</p>
+                        <ul>
+                            <li><strong>WebDriver instances</strong> — Chrome, Firefox, Edge, headless</li>
+                            <li><strong>Page Objects</strong> — LoginPage, DashboardPage, CartPage</li>
+                            <li><strong>Test Data</strong> — valid users, invalid users, admin users</li>
+                            <li><strong>API Clients</strong> — REST, GraphQL, SOAP</li>
+                        </ul>
+                        <p>
+                            Without Factory Pattern, your test code is littered with <code>if/else</code> blocks
+                            and <code>new</code> calls. With it, creation logic lives in one place — change once,
+                            update everywhere.
+                        </p>
+
+                        <h3>Three Flavors</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>What It Does</th>
+                                    <th>Automation Use Case</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Simple Factory</strong></td>
+                                    <td>One static method picks the right class</td>
+                                    <td>WebDriver Factory — give me Chrome or Firefox</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Factory Method</strong></td>
+                                    <td>Subclasses decide which object to create</td>
+                                    <td>Base test class with customizable driver creation</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Abstract Factory</strong></td>
+                                    <td>Factory of factories — creates families of objects</td>
+                                    <td>Create entire env setup (driver + config + data) per environment</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 2: WebDriver Factory -->
+                    <section class="chapter" id="webdriver-factory">
+                        <h2 class="chapter-title"><i class="fas fa-globe"></i> WebDriver Factory</h2>
+
+                        <p>The #1 most common use of Factory Pattern in Selenium automation.</p>
+
+                        <h3>Without Factory (The Problem)</h3>
+                        <pre><code class="language-java">// This is scattered across every test or hook class
+public class LoginTest {
+    WebDriver driver;
+
+    @Before
+    public void setup() {
+        String browser = System.getProperty("browser", "chrome");
+
+        if (browser.equals("chrome")) {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--disable-gpu");
+            if (Boolean.parseBoolean(System.getProperty("headless"))) {
+                options.addArguments("--headless=new");
+            }
+            driver = new ChromeDriver(options);
+        } else if (browser.equals("firefox")) {
+            FirefoxOptions options = new FirefoxOptions();
+            if (Boolean.parseBoolean(System.getProperty("headless"))) {
+                options.addArguments("--headless");
+            }
+            driver = new FirefoxDriver(options);
+        } else if (browser.equals("edge")) {
+            driver = new EdgeDriver();
+        }
+        driver.manage().window().maximize();
+    }
+}
+// Problem: This same 20-line block is copy-pasted in every test class!</code></pre>
+
+                        <h3>With Factory (The Solution)</h3>
+                        <pre><code class="language-java">public class DriverFactory {
+
+    public static WebDriver createDriver(String browser) {
+        WebDriver driver;
+        boolean headless = Boolean.parseBoolean(
+            System.getProperty("headless", "false")
+        );
+
+        switch (browser.toLowerCase()) {
+            case "firefox" -> {
+                FirefoxOptions options = new FirefoxOptions();
+                if (headless) options.addArguments("--headless");
+                driver = new FirefoxDriver(options);
+            }
+            case "edge" -> {
+                EdgeOptions options = new EdgeOptions();
+                if (headless) options.addArguments("--headless=new");
+                driver = new EdgeDriver(options);
+            }
+            default -> {
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--disable-gpu", "--no-sandbox");
+                if (headless) options.addArguments("--headless=new");
+                driver = new ChromeDriver(options);
+            }
+        }
+
+        driver.manage().window().maximize();
+        driver.manage().timeouts()
+            .implicitlyWait(Duration.ofSeconds(10));
+        return driver;
+    }
+
+    // Overloaded — uses config property if no browser specified
+    public static WebDriver createDriver() {
+        String browser = System.getProperty("browser", "chrome");
+        return createDriver(browser);
+    }
+}</code></pre>
+
+                        <h3>Usage — Clean and Simple</h3>
+                        <pre><code class="language-java">// In Cucumber Hooks
+@Before("@ui")
+public void setUp() {
+    WebDriver driver = DriverFactory.createDriver(); // One line!
+    context.setDriver(driver);
+}
+
+// In TestNG test
+@BeforeMethod
+public void setUp() {
+    driver = DriverFactory.createDriver("firefox");
+}
+
+// From command line
+// mvn test -Dbrowser=edge -Dheadless=true</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> What Changed?</h4>
+                            <ul>
+                                <li>Browser creation logic lives in <strong>one place</strong></li>
+                                <li>Adding a new browser = adding one <code>case</code> block</li>
+                                <li>All tests and hooks call <code>DriverFactory.createDriver()</code></li>
+                                <li>No duplication, no copy-paste, easy to maintain</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 3: Enhanced WebDriver Factory with Enum -->
+                    <section class="chapter" id="enum-factory">
+                        <h2 class="chapter-title"><i class="fas fa-level-up-alt"></i> Enhanced Factory with Enum</h2>
+
+                        <p>For a more robust, type-safe approach, use an enum-based factory:</p>
+
+                        <pre><code class="language-java">public enum BrowserType {
+    CHROME {
+        @Override
+        public WebDriver create(boolean headless) {
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--disable-gpu", "--no-sandbox",
+                "--window-size=1920,1080");
+            if (headless) options.addArguments("--headless=new");
+            return new ChromeDriver(options);
+        }
+    },
+    FIREFOX {
+        @Override
+        public WebDriver create(boolean headless) {
+            FirefoxOptions options = new FirefoxOptions();
+            if (headless) options.addArguments("--headless");
+            return new FirefoxDriver(options);
+        }
+    },
+    EDGE {
+        @Override
+        public WebDriver create(boolean headless) {
+            EdgeOptions options = new EdgeOptions();
+            if (headless) options.addArguments("--headless=new");
+            return new EdgeDriver(options);
+        }
+    };
+
+    public abstract WebDriver create(boolean headless);
+}
+
+// Factory class
+public class DriverFactory {
+
+    public static WebDriver createDriver() {
+        String browserName = System.getProperty("browser", "chrome");
+        boolean headless = Boolean.parseBoolean(
+            System.getProperty("headless", "false")
+        );
+
+        BrowserType browser = BrowserType.valueOf(
+            browserName.toUpperCase()
+        );
+
+        WebDriver driver = browser.create(headless);
+        driver.manage().window().maximize();
+        driver.manage().timeouts()
+            .implicitlyWait(Duration.ofSeconds(10));
+        return driver;
+    }
+}</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> Why Enum?</h4>
+                            <ul>
+                                <li><strong>Type-safe</strong> — can't pass an invalid browser name at compile time</li>
+                                <li><strong>Self-documenting</strong> — each browser's setup logic is encapsulated in its enum constant</li>
+                                <li><strong>No switch/if-else</strong> — polymorphism does the dispatch</li>
+                                <li><strong>Easy to extend</strong> — add <code>SAFARI</code> by adding one enum constant</li>
+                            </ul>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 4: Page Object Factory -->
+                    <section class="chapter" id="page-factory">
+                        <h2 class="chapter-title"><i class="fas fa-file-code"></i> Page Object Factory</h2>
+
+                        <p>
+                            When your framework has 30+ page objects, creating them manually in every step
+                            definition gets repetitive. A Page Factory centralizes this:
+                        </p>
+
+                        <h3>Without Factory</h3>
+                        <pre><code class="language-java">// Scattered across step definitions
+LoginPage loginPage = new LoginPage(driver);
+DashboardPage dashPage = new DashboardPage(driver);
+CartPage cartPage = new CartPage(driver);
+CheckoutPage checkoutPage = new CheckoutPage(driver);
+// Repeated everywhere...</code></pre>
+
+                        <h3>With Factory</h3>
+                        <pre><code class="language-java">public class PageFactory {
+    private final WebDriver driver;
+    private final Map&lt;Class&lt;?&gt;, Object&gt; pageCache = new HashMap&lt;&gt;();
+
+    public PageFactory(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    @SuppressWarnings("unchecked")
+    public &lt;T extends BasePage&gt; T getPage(Class&lt;T&gt; pageClass) {
+        // Cache pages to avoid re-creating them
+        return (T) pageCache.computeIfAbsent(pageClass, cls -> {
+            try {
+                return cls.getConstructor(WebDriver.class)
+                    .newInstance(driver);
+            } catch (Exception e) {
+                throw new RuntimeException(
+                    "Cannot create page: " + cls.getSimpleName(), e);
+            }
+        });
+    }
+}
+
+// Usage in step definitions
+public class LoginSteps {
+    private final PageFactory pages;
+
+    public LoginSteps(TestContext context) {
+        this.pages = new PageFactory(context.getDriver());
+    }
+
+    @Given("I am on the login page")
+    public void navigateToLogin() {
+        pages.getPage(LoginPage.class).navigate();
+    }
+
+    @When("I login with {string} and {string}")
+    public void login(String user, String pass) {
+        pages.getPage(LoginPage.class).login(user, pass);
+    }
+
+    @Then("I should see the dashboard")
+    public void verifyDashboard() {
+        Assert.assertTrue(
+            pages.getPage(DashboardPage.class).isDisplayed()
+        );
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 5: Test Data Factory -->
+                    <section class="chapter" id="test-data-factory">
+                        <h2 class="chapter-title"><i class="fas fa-database"></i> Test Data Factory</h2>
+
+                        <p>
+                            Hard-coded test data is one of the biggest maintenance problems. A Test Data
+                            Factory creates realistic, reusable test objects:
+                        </p>
+
+                        <h3>Without Factory</h3>
+                        <pre><code class="language-java">// Hard-coded everywhere — breaks when data requirements change
+loginPage.login("admin", "Admin@123");
+registrationPage.fillForm("John", "Doe", "john@test.com", "Pass123!");
+// 50 tests with the same hard-coded strings...</code></pre>
+
+                        <h3>With Factory</h3>
+                        <pre><code class="language-java">public class TestDataFactory {
+
+    // ── User Data ─────────────────────────────────
+    public static User validAdmin() {
+        return new User("admin", "Admin@123", "ADMIN");
+    }
+
+    public static User validCustomer() {
+        return new User("customer1", "Cust@456", "CUSTOMER");
+    }
+
+    public static User invalidUser() {
+        return new User("nonexistent", "wrong", "NONE");
+    }
+
+    public static User lockedUser() {
+        return new User("locked_user", "Locked@789", "CUSTOMER");
+    }
+
+    // ── Dynamic Data (unique per test run) ────────
+    public static User randomUser() {
+        String unique = UUID.randomUUID().toString().substring(0, 8);
+        return new User(
+            "user_" + unique,
+            "Pass@" + unique,
+            "CUSTOMER"
+        );
+    }
+
+    // ── Product Data ──────────────────────────────
+    public static Product sampleProduct() {
+        return new Product("Laptop Pro", 999.99, "Electronics");
+    }
+
+    public static List&lt;Product&gt; multipleProducts(int count) {
+        return IntStream.rangeClosed(1, count)
+            .mapToObj(i -> new Product("Product " + i, 10.0 * i, "General"))
+            .collect(Collectors.toList());
+    }
+
+    // ── Registration Data ─────────────────────────
+    public static Registration validRegistration() {
+        String unique = UUID.randomUUID().toString().substring(0, 6);
+        return new Registration(
+            "John", "Doe",
+            "john." + unique + "@test.com",
+            "1234567890",
+            "SecurePass@123"
+        );
+    }
+}</code></pre>
+
+                        <h3>Usage in Tests</h3>
+                        <pre><code class="language-java">// Clean, readable, maintainable
+@When("I login as admin")
+public void loginAsAdmin() {
+    User admin = TestDataFactory.validAdmin();
+    loginPage.login(admin.getUsername(), admin.getPassword());
+}
+
+@When("I register a new account")
+public void registerNewAccount() {
+    Registration reg = TestDataFactory.validRegistration();
+    registrationPage.fillForm(reg);
+}
+
+// Data changes? Update one factory method, all tests use it.</code></pre>
+                    </section>
+
+                    <!-- Chapter 6: API Client Factory -->
+                    <section class="chapter" id="api-client-factory">
+                        <h2 class="chapter-title"><i class="fas fa-exchange-alt"></i> API Client Factory</h2>
+
+                        <p>When your framework tests multiple APIs or environments:</p>
+
+                        <pre><code class="language-java">public class ApiClientFactory {
+
+    public static RequestSpecification createClient(String apiType) {
+        switch (apiType.toLowerCase()) {
+            case "user-service" -> {
+                return RestAssured.given()
+                    .baseUri(ConfigReader.get("user.api.baseUrl"))
+                    .contentType(ContentType.JSON)
+                    .header("Authorization",
+                        "Bearer " + TokenManager.getToken());
+            }
+            case "payment-service" -> {
+                return RestAssured.given()
+                    .baseUri(ConfigReader.get("payment.api.baseUrl"))
+                    .contentType(ContentType.JSON)
+                    .header("X-API-Key",
+                        ConfigReader.get("payment.api.key"));
+            }
+            case "public-api" -> {
+                return RestAssured.given()
+                    .baseUri(ConfigReader.get("public.api.baseUrl"))
+                    .contentType(ContentType.JSON);
+            }
+            default -> throw new IllegalArgumentException(
+                "Unknown API: " + apiType
+            );
+        }
+    }
+}
+
+// Usage
+@When("I fetch user details via API")
+public void fetchUser() {
+    response = ApiClientFactory.createClient("user-service")
+        .pathParam("id", userId)
+        .get("/users/{id}");
+}
+
+@When("I process a payment via API")
+public void processPayment() {
+    response = ApiClientFactory.createClient("payment-service")
+        .body(paymentPayload)
+        .post("/payments");
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: Factory Method Pattern -->
+                    <section class="chapter" id="factory-method">
+                        <h2 class="chapter-title"><i class="fas fa-code-branch"></i> Factory Method — Subclass Decides</h2>
+
+                        <p>
+                            Factory Method lets subclasses override the creation logic. Useful when
+                            you need different setups for different test suites:
+                        </p>
+
+                        <pre><code class="language-java">// Abstract base test with factory method
+public abstract class BaseTest {
+    protected WebDriver driver;
+
+    @BeforeMethod
+    public void setUp() {
+        driver = createDriver();   // Subclass decides HOW to create
+        driver.get(getBaseUrl());  // Subclass decides WHERE to navigate
+    }
+
+    // Factory methods — subclasses override
+    protected abstract WebDriver createDriver();
+    protected abstract String getBaseUrl();
+
+    @AfterMethod
+    public void tearDown() {
+        if (driver != null) driver.quit();
+    }
+}
+
+// Chrome test suite
+public class ChromeSmokeTests extends BaseTest {
+    @Override
+    protected WebDriver createDriver() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");
+        return new ChromeDriver(options);
+    }
+
+    @Override
+    protected String getBaseUrl() {
+        return "https://staging.example.com";
+    }
+
+    @Test
+    public void testLogin() { /* test code */ }
+}
+
+// Firefox regression suite — different driver, different env
+public class FirefoxRegressionTests extends BaseTest {
+    @Override
+    protected WebDriver createDriver() {
+        return new FirefoxDriver();
+    }
+
+    @Override
+    protected String getBaseUrl() {
+        return "https://qa.example.com";
+    }
+
+    @Test
+    public void testCheckout() { /* test code */ }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 8: When to Use / Not Use -->
+                    <section class="chapter" id="when-to-use">
+                        <h2 class="chapter-title"><i class="fas fa-balance-scale"></i> When to Use & When Not To</h2>
+
+                        <div class="two-column-grid">
+                            <div class="info-box info-box-success">
+                                <h4><i class="fas fa-check-circle"></i> Use Factory When</h4>
+                                <ul>
+                                    <li>Object creation has <strong>multiple variants</strong> (Chrome/Firefox/Edge)</li>
+                                    <li>Creation logic is <strong>complex</strong> (options, timeouts, headers)</li>
+                                    <li>The same creation code is <strong>duplicated</strong> in many places</li>
+                                    <li>You need to <strong>switch implementations</strong> at runtime (config/CLI)</li>
+                                    <li>New variants are <strong>added frequently</strong></li>
+                                </ul>
+                            </div>
+                            <div class="info-box info-box-danger">
+                                <h4><i class="fas fa-times-circle"></i> Don't Use Factory When</h4>
+                                <ul>
+                                    <li>Only <strong>one implementation</strong> exists (no need for a factory with one product)</li>
+                                    <li>Creation is <strong>trivial</strong> — <code>new ArrayList&lt;&gt;()</code> doesn't need a factory</li>
+                                    <li>It adds complexity with <strong>no clear benefit</strong></li>
+                                    <li>You're using a <strong>DI framework</strong> (Spring, PicoContainer) that already handles this</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Factory Pattern in Your Framework — Checklist</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Factory?</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>WebDriver creation</td><td><strong>Yes</strong></td><td>Multiple browsers, options, headless mode</td></tr>
+                                <tr><td>Test data</td><td><strong>Yes</strong></td><td>Multiple user types, dynamic data, reuse</td></tr>
+                                <tr><td>API clients</td><td><strong>Yes</strong></td><td>Multiple services, auth headers, base URLs</td></tr>
+                                <tr><td>Page Objects</td><td>Maybe</td><td>Useful with 20+ pages, optional with DI</td></tr>
+                                <tr><td>Assertions</td><td>No</td><td>Use assertion libraries directly</td></tr>
+                                <tr><td>String builders</td><td>No</td><td>Trivial creation, no variants</td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Summary -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> Summary</h2>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What You Learned</h4>
+                            <ul>
+                                <li><strong>Factory Pattern</strong> creates objects without exposing creation logic</li>
+                                <li><strong>WebDriver Factory</strong> — the most essential pattern in Selenium automation</li>
+                                <li><strong>Enum-based Factory</strong> for type-safe, extensible browser selection</li>
+                                <li><strong>Page Object Factory</strong> with caching for clean step definitions</li>
+                                <li><strong>Test Data Factory</strong> eliminates hard-coded data across tests</li>
+                                <li><strong>API Client Factory</strong> for multi-service API testing</li>
+                                <li><strong>Factory Method</strong> lets subclasses customize object creation</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-arrow-right"></i> What's Next?</h4>
+                            <p>
+                                Next: <strong>Singleton Pattern</strong> — learn how to ensure only one instance
+                                exists for Driver Manager, Config Reader, and Logger in your automation framework.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/design-patterns/index.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Design Patterns</span>
+                    </a>
+                    <a href="/design-patterns/singleton-pattern.html" class="nav-next">
+                        <span>Singleton Pattern</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

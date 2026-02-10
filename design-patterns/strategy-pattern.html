@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Strategy Pattern in Test Automation - Browser Strategy, Wait Strategy, Locator Strategy, Reporting Strategy, and Environment Strategy with real framework examples.">
+    <title>Strategy Pattern in Test Automation - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Strategy Pattern in Test Automation</h1>
+                    <p class="article-subtitle">Swap algorithms at runtime — Browser Strategy, Wait Strategy, Locator Strategy, and Reporting Strategy for flexible, maintainable frameworks.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 25 min read</span>
+                        <span><i class="fas fa-signal"></i> Intermediate</span>
+                        <span><i class="fas fa-drafting-compass"></i> Design Patterns</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1: What is Strategy Pattern? -->
+                    <section class="chapter" id="what-is-strategy">
+                        <h2 class="chapter-title"><i class="fas fa-chess-knight"></i> What is the Strategy Pattern?</h2>
+
+                        <p>
+                            Strategy Pattern defines a <strong>family of algorithms</strong>, puts each one
+                            in its own class, and makes them <strong>interchangeable</strong> at runtime.
+                            The client code doesn't know which algorithm it's using — it just calls the
+                            interface, and the right strategy does the work.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Real-World Analogy</h4>
+                            <p>
+                                GPS navigation gives you three route options: fastest, shortest, and cheapest
+                                (avoid tolls). The navigation system doesn't change — only the <strong>routing
+                                algorithm</strong> (strategy) changes based on your choice. That's Strategy Pattern.
+                            </p>
+                        </div>
+
+                        <h3>The Three Parts</h3>
+                        <pre><code class="language-text">┌─────────────┐        ┌─────────────────────┐
+│   Context    │───────▶│   Strategy Interface │
+│ (uses a      │        └──────────┬──────────┘
+│  strategy)   │                   │
+└─────────────┘        ┌──────────┼──────────┐
+                       │          │          │
+                ┌──────┴───┐ ┌───┴────┐ ┌───┴────┐
+                │StrategyA │ │StrategyB│ │StrategyC│
+                │ (Chrome)  │ │(Firefox)│ │ (Edge)  │
+                └───────────┘ └────────┘ └────────┘</code></pre>
+
+                        <ol>
+                            <li><strong>Strategy Interface</strong> — defines what the algorithm does</li>
+                            <li><strong>Concrete Strategies</strong> — different implementations of the algorithm</li>
+                            <li><strong>Context</strong> — uses a strategy without knowing which one</li>
+                        </ol>
+
+                        <h3>Strategy vs If/Else Chains</h3>
+                        <pre><code class="language-java">// WITHOUT Strategy — growing if/else chains
+public void takeScreenshot(String format) {
+    if (format.equals("png")) {
+        // 15 lines of PNG logic
+    } else if (format.equals("base64")) {
+        // 15 lines of base64 logic
+    } else if (format.equals("file")) {
+        // 15 lines of file logic
+    }
+    // Adding a new format? Edit this method. Violates Open/Closed principle.
+}
+
+// WITH Strategy — each format is its own class
+screenshotStrategy.capture(driver, scenario);
+// Adding a new format? Create a new class. No existing code changes.</code></pre>
+                    </section>
+
+                    <!-- Chapter 2: Browser Strategy -->
+                    <section class="chapter" id="browser-strategy">
+                        <h2 class="chapter-title"><i class="fas fa-globe"></i> Browser Strategy</h2>
+
+                        <p>
+                            Select the browser implementation at runtime without if/else chains.
+                            This is Strategy + Factory combined — a very common pattern:
+                        </p>
+
+                        <h3>The Interface</h3>
+                        <pre><code class="language-java">public interface BrowserStrategy {
+    WebDriver createDriver();
+    String getBrowserName();
+}</code></pre>
+
+                        <h3>Concrete Strategies</h3>
+                        <pre><code class="language-java">public class ChromeStrategy implements BrowserStrategy {
+    private final boolean headless;
+
+    public ChromeStrategy(boolean headless) {
+        this.headless = headless;
+    }
+
+    @Override
+    public WebDriver createDriver() {
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--disable-gpu", "--no-sandbox",
+            "--window-size=1920,1080");
+        if (headless) options.addArguments("--headless=new");
+        return new ChromeDriver(options);
+    }
+
+    @Override
+    public String getBrowserName() { return "Chrome"; }
+}
+
+public class FirefoxStrategy implements BrowserStrategy {
+    private final boolean headless;
+
+    public FirefoxStrategy(boolean headless) {
+        this.headless = headless;
+    }
+
+    @Override
+    public WebDriver createDriver() {
+        FirefoxOptions options = new FirefoxOptions();
+        if (headless) options.addArguments("--headless");
+        return new FirefoxDriver(options);
+    }
+
+    @Override
+    public String getBrowserName() { return "Firefox"; }
+}
+
+public class EdgeStrategy implements BrowserStrategy {
+    @Override
+    public WebDriver createDriver() {
+        return new EdgeDriver();
+    }
+
+    @Override
+    public String getBrowserName() { return "Edge"; }
+}</code></pre>
+
+                        <h3>Context — DriverManager</h3>
+                        <pre><code class="language-java">public class DriverManager {
+    private BrowserStrategy strategy;
+
+    public DriverManager(BrowserStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    // Can change strategy at runtime!
+    public void setStrategy(BrowserStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public WebDriver createDriver() {
+        System.out.println("Creating " + strategy.getBrowserName()
+            + " driver...");
+        WebDriver driver = strategy.createDriver();
+        driver.manage().window().maximize();
+        return driver;
+    }
+}
+
+// Usage — strategy selected from config
+boolean headless = ConfigReader.getInstance().isHeadless();
+BrowserStrategy strategy = switch (ConfigReader.getInstance().getBrowser()) {
+    case "firefox" -> new FirefoxStrategy(headless);
+    case "edge"    -> new EdgeStrategy();
+    default        -> new ChromeStrategy(headless);
+};
+
+DriverManager manager = new DriverManager(strategy);
+WebDriver driver = manager.createDriver();</code></pre>
+
+                        <div class="info-box info-box-tip">
+                            <h4><i class="fas fa-check"></i> Why Not Just Use Factory?</h4>
+                            <p>
+                                Factory creates objects. Strategy <strong>encapsulates behavior</strong>.
+                                Use Strategy when each variant has different setup logic, capabilities, or
+                                configuration that goes beyond just construction. In practice, Strategy
+                                and Factory often work together.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 3: Wait Strategy -->
+                    <section class="chapter" id="wait-strategy">
+                        <h2 class="chapter-title"><i class="fas fa-clock"></i> Wait Strategy</h2>
+
+                        <p>
+                            Different elements need different wait approaches. A Wait Strategy lets
+                            you swap wait logic without changing test code:
+                        </p>
+
+                        <h3>The Interface</h3>
+                        <pre><code class="language-java">public interface WaitStrategy {
+    WebElement waitForElement(WebDriver driver, By locator);
+    String getDescription();
+}</code></pre>
+
+                        <h3>Concrete Strategies</h3>
+                        <pre><code class="language-java">public class VisibleWaitStrategy implements WaitStrategy {
+    private final Duration timeout;
+
+    public VisibleWaitStrategy(Duration timeout) {
+        this.timeout = timeout;
+    }
+
+    @Override
+    public WebElement waitForElement(WebDriver driver, By locator) {
+        return new WebDriverWait(driver, timeout)
+            .until(ExpectedConditions.visibilityOfElementLocated(locator));
+    }
+
+    @Override
+    public String getDescription() { return "Wait until visible"; }
+}
+
+public class ClickableWaitStrategy implements WaitStrategy {
+    private final Duration timeout;
+
+    public ClickableWaitStrategy(Duration timeout) {
+        this.timeout = timeout;
+    }
+
+    @Override
+    public WebElement waitForElement(WebDriver driver, By locator) {
+        return new WebDriverWait(driver, timeout)
+            .until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+    @Override
+    public String getDescription() { return "Wait until clickable"; }
+}
+
+public class PresenceWaitStrategy implements WaitStrategy {
+    private final Duration timeout;
+
+    public PresenceWaitStrategy(Duration timeout) {
+        this.timeout = timeout;
+    }
+
+    @Override
+    public WebElement waitForElement(WebDriver driver, By locator) {
+        return new WebDriverWait(driver, timeout)
+            .until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    @Override
+    public String getDescription() { return "Wait until present in DOM"; }
+}</code></pre>
+
+                        <h3>Usage in Page Objects</h3>
+                        <pre><code class="language-java">public class BasePage {
+    protected WebDriver driver;
+    protected WaitStrategy waitStrategy;
+
+    public BasePage(WebDriver driver, WaitStrategy waitStrategy) {
+        this.driver = driver;
+        this.waitStrategy = waitStrategy;
+    }
+
+    // All page methods use the strategy
+    protected WebElement find(By locator) {
+        return waitStrategy.waitForElement(driver, locator);
+    }
+
+    protected void click(By locator) {
+        find(locator).click();
+    }
+
+    protected void type(By locator, String text) {
+        WebElement element = find(locator);
+        element.clear();
+        element.sendKeys(text);
+    }
+}
+
+// Login page uses clickable strategy for buttons
+LoginPage loginPage = new LoginPage(driver,
+    new ClickableWaitStrategy(Duration.ofSeconds(10)));
+
+// Dashboard uses visible strategy for elements that load dynamically
+DashboardPage dashPage = new DashboardPage(driver,
+    new VisibleWaitStrategy(Duration.ofSeconds(15)));</code></pre>
+                    </section>
+
+                    <!-- Chapter 4: Locator Strategy -->
+                    <section class="chapter" id="locator-strategy">
+                        <h2 class="chapter-title"><i class="fas fa-crosshairs"></i> Locator Strategy</h2>
+
+                        <p>
+                            Elements can be found by ID, CSS, XPath, etc. A Locator Strategy tries
+                            multiple approaches, providing fallback resilience:
+                        </p>
+
+                        <pre><code class="language-java">public interface LocatorStrategy {
+    WebElement findElement(WebDriver driver, String identifier);
+}
+
+// Try ID first, then CSS, then XPath
+public class ResilientLocatorStrategy implements LocatorStrategy {
+
+    @Override
+    public WebElement findElement(WebDriver driver, String identifier) {
+        // Try ID first (fastest)
+        try {
+            return driver.findElement(By.id(identifier));
+        } catch (NoSuchElementException e) { /* fall through */ }
+
+        // Try CSS selector
+        try {
+            return driver.findElement(By.cssSelector(identifier));
+        } catch (NoSuchElementException e) { /* fall through */ }
+
+        // Try XPath as last resort
+        try {
+            return driver.findElement(By.xpath(identifier));
+        } catch (NoSuchElementException e) {
+            throw new NoSuchElementException(
+                "Element not found with any strategy: " + identifier
+            );
+        }
+    }
+}
+
+// Strict — only uses one locator type
+public class CssSelectorStrategy implements LocatorStrategy {
+    @Override
+    public WebElement findElement(WebDriver driver, String cssSelector) {
+        return driver.findElement(By.cssSelector(cssSelector));
+    }
+}
+
+// Data-attribute strategy (best for test automation)
+public class DataTestIdStrategy implements LocatorStrategy {
+    @Override
+    public WebElement findElement(WebDriver driver, String testId) {
+        return driver.findElement(
+            By.cssSelector("[data-testid='" + testId + "']")
+        );
+    }
+}</code></pre>
+                    </section>
+
+                    <!-- Chapter 5: Reporting Strategy -->
+                    <section class="chapter" id="reporting-strategy">
+                        <h2 class="chapter-title"><i class="fas fa-chart-bar"></i> Reporting Strategy</h2>
+
+                        <p>
+                            Swap reporting implementations without changing test code. Your framework
+                            can generate Allure reports locally and Extent reports for stakeholders:
+                        </p>
+
+                        <pre><code class="language-java">public interface ReportingStrategy {
+    void startTest(String testName);
+    void logStep(String description, String status);
+    void attachScreenshot(byte[] screenshot, String name);
+    void endTest(String status);
+    void flush();
+}
+
+public class ExtentReportStrategy implements ReportingStrategy {
+    private final ExtentReports extent;
+    private final ThreadLocal&lt;ExtentTest&gt; test = new ThreadLocal&lt;&gt;();
+
+    public ExtentReportStrategy(String reportPath) {
+        extent = new ExtentReports();
+        extent.attachReporter(
+            new ExtentSparkReporter(reportPath)
+        );
+    }
+
+    @Override
+    public void startTest(String testName) {
+        test.set(extent.createTest(testName));
+    }
+
+    @Override
+    public void logStep(String description, String status) {
+        if ("pass".equalsIgnoreCase(status)) {
+            test.get().pass(description);
+        } else {
+            test.get().fail(description);
+        }
+    }
+
+    @Override
+    public void attachScreenshot(byte[] screenshot, String name) {
+        test.get().addScreenCaptureFromBase64String(
+            Base64.getEncoder().encodeToString(screenshot), name
+        );
+    }
+
+    @Override
+    public void endTest(String status) {
+        // Extent auto-handles status based on logged steps
+    }
+
+    @Override
+    public void flush() {
+        extent.flush();
+    }
+}
+
+public class ConsoleReportStrategy implements ReportingStrategy {
+    @Override
+    public void startTest(String testName) {
+        System.out.println("═══ START: " + testName + " ═══");
+    }
+
+    @Override
+    public void logStep(String description, String status) {
+        System.out.println("  [" + status.toUpperCase() + "] "
+            + description);
+    }
+
+    @Override
+    public void attachScreenshot(byte[] screenshot, String name) {
+        System.out.println("  [SCREENSHOT] " + name + " ("
+            + screenshot.length + " bytes)");
+    }
+
+    @Override
+    public void endTest(String status) {
+        System.out.println("═══ END: " + status.toUpperCase() + " ═══\n");
+    }
+
+    @Override
+    public void flush() { /* nothing to flush */ }
+}</code></pre>
+
+                        <h3>Usage in Hooks</h3>
+                        <pre><code class="language-java">public class Hooks {
+    private static ReportingStrategy reporter;
+
+    @BeforeAll
+    public static void initReporter() {
+        String reportType = ConfigReader.getInstance()
+            .get("report.type", "console");
+
+        reporter = switch (reportType) {
+            case "extent" -> new ExtentReportStrategy(
+                "target/reports/extent-report.html");
+            case "allure" -> new AllureReportStrategy();
+            default       -> new ConsoleReportStrategy();
+        };
+    }
+
+    @Before
+    public void beforeScenario(Scenario scenario) {
+        reporter.startTest(scenario.getName());
+    }
+
+    @After
+    public void afterScenario(Scenario scenario) {
+        reporter.endTest(scenario.getStatus().toString());
+    }
+
+    @AfterAll
+    public static void flushReport() {
+        reporter.flush();
+    }
+
+    public static ReportingStrategy getReporter() {
+        return reporter;
+    }
+}</code></pre>
+
+                        <pre><code class="language-bash"># Switch reporters via config — no code change!
+mvn test -Dreport.type=extent
+mvn test -Dreport.type=allure
+mvn test -Dreport.type=console</code></pre>
+                    </section>
+
+                    <!-- Chapter 6: Environment Strategy -->
+                    <section class="chapter" id="environment-strategy">
+                        <h2 class="chapter-title"><i class="fas fa-server"></i> Environment Strategy</h2>
+
+                        <p>
+                            Different environments (dev, staging, prod) have different URLs,
+                            credentials, and configurations. Encapsulate each as a strategy:
+                        </p>
+
+                        <pre><code class="language-java">public interface EnvironmentStrategy {
+    String getBaseUrl();
+    String getApiBaseUrl();
+    String getAdminUser();
+    String getAdminPassword();
+    int getTimeout();
+}
+
+public class DevEnvironment implements EnvironmentStrategy {
+    public String getBaseUrl()       { return "https://dev.example.com"; }
+    public String getApiBaseUrl()    { return "https://api-dev.example.com"; }
+    public String getAdminUser()     { return "dev_admin"; }
+    public String getAdminPassword() { return "devPass123"; }
+    public int getTimeout()          { return 5; }
+}
+
+public class StagingEnvironment implements EnvironmentStrategy {
+    public String getBaseUrl()       { return "https://staging.example.com"; }
+    public String getApiBaseUrl()    { return "https://api-staging.example.com"; }
+    public String getAdminUser()     { return "stage_admin"; }
+    public String getAdminPassword() { return "stagePass456"; }
+    public int getTimeout()          { return 10; }
+}
+
+public class ProdEnvironment implements EnvironmentStrategy {
+    public String getBaseUrl()       { return "https://www.example.com"; }
+    public String getApiBaseUrl()    { return "https://api.example.com"; }
+    public String getAdminUser()     { return "prod_admin"; }
+    public String getAdminPassword() { return "prodPass789"; }
+    public int getTimeout()          { return 15; }
+}
+
+// Factory to pick the right strategy
+public class EnvironmentFactory {
+    public static EnvironmentStrategy getEnvironment() {
+        String env = System.getProperty("env", "staging");
+        return switch (env) {
+            case "dev"  -> new DevEnvironment();
+            case "prod" -> new ProdEnvironment();
+            default     -> new StagingEnvironment();
+        };
+    }
+}
+
+// Usage
+EnvironmentStrategy env = EnvironmentFactory.getEnvironment();
+driver.get(env.getBaseUrl() + "/login");
+loginPage.login(env.getAdminUser(), env.getAdminPassword());</code></pre>
+
+                        <pre><code class="language-bash"># Run against different environments
+mvn test -Denv=dev
+mvn test -Denv=staging
+mvn test -Denv=prod</code></pre>
+                    </section>
+
+                    <!-- Chapter 7: When to Use -->
+                    <section class="chapter" id="when-to-use">
+                        <h2 class="chapter-title"><i class="fas fa-balance-scale"></i> When to Use & When Not To</h2>
+
+                        <div class="two-column-grid">
+                            <div class="info-box info-box-success">
+                                <h4><i class="fas fa-check-circle"></i> Use Strategy When</h4>
+                                <ul>
+                                    <li>You have <strong>multiple algorithms</strong> for the same task</li>
+                                    <li>You need to <strong>switch behavior at runtime</strong> (config, CLI)</li>
+                                    <li>You see <strong>growing if/else or switch</strong> blocks</li>
+                                    <li>Each variant has <strong>complex, independent logic</strong></li>
+                                    <li>You want to <strong>add new variants</strong> without modifying existing code</li>
+                                </ul>
+                            </div>
+                            <div class="info-box info-box-danger">
+                                <h4><i class="fas fa-times-circle"></i> Don't Use Strategy When</h4>
+                                <ul>
+                                    <li>Only <strong>2 simple options</strong> — a plain if/else is fine</li>
+                                    <li>The algorithm <strong>never changes</strong> at runtime</li>
+                                    <li>The variants are <strong>trivially different</strong> (one-line changes)</li>
+                                    <li>It adds <strong>more classes than value</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3>Strategy Pattern in Your Framework — Checklist</h3>
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Strategy?</th>
+                                    <th>Reason</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Browser selection</td><td><strong>Yes</strong></td><td>3+ browsers with different options and setup</td></tr>
+                                <tr><td>Wait mechanism</td><td><strong>Yes</strong></td><td>Different waits per element type</td></tr>
+                                <tr><td>Reporting</td><td><strong>Yes</strong></td><td>Swap between Allure/Extent/Console</td></tr>
+                                <tr><td>Environment config</td><td><strong>Yes</strong></td><td>Dev/staging/prod with different URLs and data</td></tr>
+                                <tr><td>Screenshot format</td><td>Maybe</td><td>Only if you need 3+ formats</td></tr>
+                                <tr><td>Assertion style</td><td>No</td><td>Use assertion libraries directly</td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 8: All Three Patterns Together -->
+                    <section class="chapter" id="all-together">
+                        <h2 class="chapter-title"><i class="fas fa-puzzle-piece"></i> All Three Patterns Together</h2>
+
+                        <p>In a real framework, Factory, Singleton, and Strategy work together:</p>
+
+                        <pre><code class="language-java">// SINGLETON — Config loaded once, used everywhere
+ConfigReader config = ConfigReader.getInstance();
+
+// STRATEGY — Environment selected at runtime
+EnvironmentStrategy env = EnvironmentFactory.getEnvironment();
+
+// FACTORY — Creates the right driver based on config
+WebDriver driver = DriverFactory.createDriver(config.getBrowser());
+
+// STRATEGY — Reporter selected at runtime
+ReportingStrategy reporter = switch (config.get("report.type")) {
+    case "extent" -> new ExtentReportStrategy("target/report.html");
+    default       -> new ConsoleReportStrategy();
+};
+
+// All working together
+driver.get(env.getBaseUrl());
+reporter.startTest("Login Test");
+reporter.logStep("Navigated to " + env.getBaseUrl(), "pass");
+// ...</code></pre>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> How They Complement Each Other</h4>
+                            <table class="styled-table">
+                                <thead>
+                                    <tr>
+                                        <th>Pattern</th>
+                                        <th>Role in Framework</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Factory</strong></td>
+                                        <td><em>Creates</em> the right object (WebDriver, test data, API client)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Singleton</strong></td>
+                                        <td><em>Manages</em> global resources (config, logger, driver manager)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Strategy</strong></td>
+                                        <td><em>Swaps</em> behavior at runtime (browser, waits, reporting, environment)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Summary -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> Summary</h2>
+
+                        <div class="info-box info-box-highlight">
+                            <h4><i class="fas fa-graduation-cap"></i> What You Learned</h4>
+                            <ul>
+                                <li><strong>Strategy Pattern</strong> encapsulates interchangeable algorithms behind an interface</li>
+                                <li><strong>Browser Strategy</strong> — swap Chrome/Firefox/Edge without if/else chains</li>
+                                <li><strong>Wait Strategy</strong> — different wait approaches per element type</li>
+                                <li><strong>Locator Strategy</strong> — resilient element finding with fallback locators</li>
+                                <li><strong>Reporting Strategy</strong> — swap Extent/Allure/Console via config</li>
+                                <li><strong>Environment Strategy</strong> — dev/staging/prod configuration per environment</li>
+                                <li><strong>All three patterns</strong> (Factory + Singleton + Strategy) work together in production frameworks</li>
+                            </ul>
+                        </div>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-trophy"></i> Tutorial Series Complete!</h4>
+                            <p>
+                                You've mastered the three most essential design patterns for test automation
+                                frameworks. Apply these patterns in your projects and explore our other tutorials:
+                                <a href="/selenium/index.html">Selenium</a>,
+                                <a href="/cucumber/index.html">Cucumber BDD</a>, and
+                                <a href="/api-testing/index.html">API Testing</a>.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/design-patterns/singleton-pattern.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Singleton Pattern</span>
+                    </a>
+                    <a href="/design-patterns/index.html" class="nav-next">
+                        <span>Design Patterns</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

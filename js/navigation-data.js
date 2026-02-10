@@ -419,6 +419,44 @@ const SITE_NAVIGATION = {
             ]
         },
         {
+            id: 'design-patterns',
+            name: 'Design Patterns',
+            icon: 'fas fa-drafting-compass',
+            enabled: true,
+            description: 'Essential design patterns for building scalable test automation frameworks',
+            indexUrl: '/design-patterns/index.html',
+            categories: [
+                {
+                    id: 'design-patterns-tutorials',
+                    name: 'Design Patterns for Automation',
+                    icon: 'fas fa-drafting-compass',
+                    tutorials: [
+                        {
+                            title: 'Factory Pattern',
+                            url: '/design-patterns/factory-pattern.html',
+                            icon: 'fas fa-industry',
+                            description: 'WebDriver Factory, Page Factory, Test Data Factory',
+                            readTime: '25 min'
+                        },
+                        {
+                            title: 'Singleton Pattern',
+                            url: '/design-patterns/singleton-pattern.html',
+                            icon: 'fas fa-cube',
+                            description: 'Driver Manager, Config Reader, thread-safe patterns',
+                            readTime: '20 min'
+                        },
+                        {
+                            title: 'Strategy Pattern',
+                            url: '/design-patterns/strategy-pattern.html',
+                            icon: 'fas fa-chess-knight',
+                            description: 'Browser Strategy, Wait Strategy, Reporting Strategy',
+                            readTime: '25 min'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             id: 'blog',
             name: 'Blog',
             icon: 'fas fa-blog',
