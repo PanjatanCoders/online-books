@@ -457,6 +457,65 @@ const SITE_NAVIGATION = {
             ]
         },
         {
+            id: 'docker',
+            name: 'Docker',
+            icon: 'fab fa-docker',
+            enabled: true,
+            description: 'Docker from zero — containers, images, Dockerfile, and Docker Compose with tiny beginner-friendly examples',
+            indexUrl: '/docker/index.html',
+            categories: [
+                {
+                    id: 'docker-tutorials',
+                    name: 'Docker Tutorials',
+                    icon: 'fab fa-docker',
+                    tutorials: [
+                        {
+                            title: 'What is Docker?',
+                            url: '/docker/docker-introduction.html',
+                            icon: 'fas fa-play-circle',
+                            description: 'The problem Docker solves, containers vs VMs, first command',
+                            readTime: '8 min'
+                        },
+                        {
+                            title: 'Docker Images',
+                            url: '/docker/docker-images.html',
+                            icon: 'fas fa-layer-group',
+                            description: 'Pull, list, remove images — Docker Hub explained',
+                            readTime: '10 min'
+                        },
+                        {
+                            title: 'Running Containers',
+                            url: '/docker/docker-containers.html',
+                            icon: 'fas fa-box',
+                            description: 'docker run flags, ports, start/stop/remove',
+                            readTime: '12 min'
+                        },
+                        {
+                            title: 'Your First Dockerfile',
+                            url: '/docker/docker-dockerfile.html',
+                            icon: 'fas fa-file-code',
+                            description: '5 instructions, build your own image and run it',
+                            readTime: '12 min'
+                        },
+                        {
+                            title: 'Docker for QA Engineers',
+                            url: '/docker/docker-for-qa.html',
+                            icon: 'fas fa-vial',
+                            description: 'Run Selenium Chrome in Docker, RemoteWebDriver setup',
+                            readTime: '10 min'
+                        },
+                        {
+                            title: 'Docker Compose',
+                            url: '/docker/docker-compose.html',
+                            icon: 'fas fa-cubes',
+                            description: 'Run Selenium Grid with hub and Chrome node in 12 lines',
+                            readTime: '10 min'
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             id: 'blog',
             name: 'Blog',
             icon: 'fas fa-blog',

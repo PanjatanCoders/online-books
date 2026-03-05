@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Running Docker containers — learn docker run flags one at a time, port mapping, start/stop/remove, and see a real container running in your browser.">
+    <title>Running Your First Container - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Running Your First Container</h1>
+                    <p class="article-subtitle">Learn docker run one flag at a time — ports, names, detached mode — then see a real web server running inside a container right in your browser.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 12 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                        <span><i class="fab fa-docker"></i> Docker</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1 -->
+                    <section class="chapter" id="docker-run-basics">
+                        <h2 class="chapter-title"><i class="fas fa-play"></i> docker run — The One Command That Does It All</h2>
+
+                        <p>
+                            <code>docker run</code> is the command you will use the most.
+                            It does three things in one go: finds the image, creates a container from it, and starts it.
+                        </p>
+
+                        <pre><code class="language-bash">docker run nginx:1.25</code></pre>
+
+                        <p>
+                            Run that and... nothing visible happens. The terminal just hangs.
+                            That is correct — nginx is a web server that keeps running until you stop it.
+                            Press <code>Ctrl + C</code> to stop it.
+                        </p>
+
+                        <p>
+                            Now let us add flags one at a time to make this actually useful.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 2 -->
+                    <section class="chapter" id="detached-mode">
+                        <h2 class="chapter-title"><i class="fas fa-window-minimize"></i> -d: Run in the Background</h2>
+
+                        <p>
+                            The <code>-d</code> flag stands for <strong>detached</strong>.
+                            It starts the container in the background so your terminal is free to use.
+                        </p>
+
+                        <pre><code class="language-bash">docker run -d nginx:1.25</code></pre>
+
+                        <p>Docker prints the container ID and gives you your prompt back:</p>
+
+                        <pre><code class="language-bash">3f4a8b12cd90e1a2...</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> When to Use -d</h4>
+                            <p>Almost always. Use <code>-d</code> for any service that keeps running (web servers, databases, Selenium Grid). Skip it only when you want to see the container output live in your terminal.</p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 3 -->
+                    <section class="chapter" id="port-mapping">
+                        <h2 class="chapter-title"><i class="fas fa-network-wired"></i> -p: Open a Port</h2>
+
+                        <p>
+                            A container is isolated — you cannot reach it from your browser yet.
+                            The <code>-p</code> flag creates a tunnel: <strong>your machine port → container port</strong>.
+                        </p>
+
+                        <pre><code class="language-bash">docker run -d -p 8080:80 nginx:1.25</code></pre>
+
+                        <p>Read <code>-p 8080:80</code> as: <em>"when I visit port 8080 on my machine, forward the traffic to port 80 inside the container."</em></p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Side</th>
+                                    <th>Port</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Left of :</td>
+                                    <td>8080</td>
+                                    <td>Your machine (host) — you choose this</td>
+                                </tr>
+                                <tr>
+                                    <td>Right of :</td>
+                                    <td>80</td>
+                                    <td>Inside the container — nginx listens here</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>Now open your browser and go to <code>http://localhost:8080</code>. You will see the nginx welcome page.</p>
+
+                        <div class="info-box info-box-success">
+                            <h4><i class="fas fa-star"></i> Wow Moment</h4>
+                            <p>
+                                You just ran a full web server in under 5 seconds, with a single command, with zero installation.
+                                No downloading nginx, no configuring it, no starting services — Docker handled everything.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 4 -->
+                    <section class="chapter" id="naming-containers">
+                        <h2 class="chapter-title"><i class="fas fa-tag"></i> --name: Give It a Friendly Name</h2>
+
+                        <p>
+                            By default Docker gives your container a random name like <code>sleepy_newton</code>.
+                            Use <code>--name</code> to give it something meaningful:
+                        </p>
+
+                        <pre><code class="language-bash">docker run -d -p 8080:80 --name my-webserver nginx:1.25</code></pre>
+
+                        <p>
+                            Now you can refer to the container by name in every subsequent command
+                            instead of copying a long ID.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 5 -->
+                    <section class="chapter" id="docker-ps">
+                        <h2 class="chapter-title"><i class="fas fa-list"></i> See What Is Running</h2>
+
+                        <p>List all running containers:</p>
+
+                        <pre><code class="language-bash">docker ps</code></pre>
+
+                        <pre><code class="language-bash">CONTAINER ID   IMAGE        COMMAND   CREATED        STATUS        PORTS                  NAMES
+3f4a8b12cd90   nginx:1.25   ...       2 minutes ago  Up 2 minutes  0.0.0.0:8080->80/tcp   my-webserver</code></pre>
+
+                        <p>To also see containers that have stopped:</p>
+
+                        <pre><code class="language-bash">docker ps -a</code></pre>
+
+                        <p>The <code>-a</code> flag means <em>all</em> (running + stopped).</p>
+                    </section>
+
+                    <!-- Chapter 6 -->
+                    <section class="chapter" id="stop-start-remove">
+                        <h2 class="chapter-title"><i class="fas fa-power-off"></i> Stop, Start, and Remove</h2>
+
+                        <p>Three simple commands control the lifecycle of a container:</p>
+
+                        <pre><code class="language-bash"># Stop a running container (graceful shutdown)
+docker stop my-webserver
+
+# Start it again
+docker start my-webserver
+
+# Remove it completely (must be stopped first)
+docker rm my-webserver</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> stop vs rm</h4>
+                            <p>
+                                <code>docker stop</code> pauses the container — it still exists and can be started again.
+                                <code>docker rm</code> deletes the container entirely. You cannot undo <code>rm</code>.
+                            </p>
+                        </div>
+
+                        <p>
+                            If you want to stop and remove in one go, use the <code>-f</code> (force) flag with <code>rm</code>:
+                        </p>
+
+                        <pre><code class="language-bash">docker rm -f my-webserver</code></pre>
+                    </section>
+
+                    <!-- Chapter 7 -->
+                    <section class="chapter" id="interactive-mode">
+                        <h2 class="chapter-title"><i class="fas fa-terminal"></i> -it: Go Inside a Container</h2>
+
+                        <p>
+                            Sometimes you want to open a shell inside a running container to look around.
+                            The <code>-it</code> flag does that:
+                        </p>
+
+                        <pre><code class="language-bash">docker run -it ubuntu:22.04 bash</code></pre>
+
+                        <p>
+                            This drops you into a bash shell <em>inside</em> an Ubuntu container.
+                            You can run commands, look at files, check what is installed — then type <code>exit</code> to leave.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-info-circle"></i> What -it Actually Means</h4>
+                            <p>
+                                <code>-i</code> keeps STDIN open (so you can type). <code>-t</code> allocates a terminal (so you get a proper shell prompt).
+                                They are almost always used together.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 8 -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-check-circle"></i> Summary: The Commands You Now Know</h2>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>docker run -d -p 8080:80 --name web nginx:1.25</code></td>
+                                    <td>Run nginx in background, expose on port 8080, name it "web"</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker ps</code></td>
+                                    <td>List running containers</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker ps -a</code></td>
+                                    <td>List all containers (running + stopped)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker stop web</code></td>
+                                    <td>Stop a container</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker start web</code></td>
+                                    <td>Start a stopped container</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker rm web</code></td>
+                                    <td>Delete a container</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker run -it ubuntu bash</code></td>
+                                    <td>Open a shell inside a container</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            Next up: stop relying on other people's images and build your own — with a Dockerfile.
+                        </p>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/docker/docker-images.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Docker Images</span>
+                    </a>
+                    <a href="/docker/docker-dockerfile.html" class="nav-next">
+                        <span>Your First Dockerfile</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

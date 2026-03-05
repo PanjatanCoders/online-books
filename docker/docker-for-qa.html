@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Docker for QA Engineers — run Selenium Chrome in Docker, connect your tests with RemoteWebDriver, and stop worrying about browser installation on CI.">
+    <title>Docker for QA Engineers - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Docker for QA Engineers</h1>
+                    <p class="article-subtitle">Run Selenium and Chrome inside Docker — no browser installation on your CI server, no driver version mismatches, tests that run identically everywhere.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 10 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                        <span><i class="fab fa-docker"></i> Docker</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1 -->
+                    <section class="chapter" id="qa-pain-points">
+                        <h2 class="chapter-title"><i class="fas fa-heartbeat"></i> The QA Pain Docker Eliminates</h2>
+
+                        <p>
+                            Before Docker, running Selenium tests on a CI server was painful:
+                        </p>
+
+                        <ul>
+                            <li>Install Chrome on the Jenkins server — then it auto-updates and breaks your ChromeDriver version</li>
+                            <li>Tests pass on your laptop (Chrome 120), fail on CI (Chrome 118)</li>
+                            <li>Headless mode configuration differs between OS types</li>
+                            <li>New team member spends a day setting up their test environment</li>
+                        </ul>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Docker Fixes All of This</h4>
+                            <p>
+                                The Selenium team maintains official Docker images that include a pre-configured browser
+                                and Selenium server in one container. You pull it, run it, point your tests at it — done.
+                                Chrome version is pinned. Driver is already matched. Works on every OS.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2 -->
+                    <section class="chapter" id="selenium-images">
+                        <h2 class="chapter-title"><i class="fas fa-layer-group"></i> The Selenium Docker Images</h2>
+
+                        <p>The Selenium project publishes ready-made images. The ones you will use most:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>What is inside</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>selenium/standalone-chrome</code></td>
+                                    <td>Chrome + ChromeDriver + Selenium Server, all-in-one</td>
+                                </tr>
+                                <tr>
+                                    <td><code>selenium/standalone-firefox</code></td>
+                                    <td>Firefox + GeckoDriver + Selenium Server, all-in-one</td>
+                                </tr>
+                                <tr>
+                                    <td><code>selenium/standalone-edge</code></td>
+                                    <td>Edge + EdgeDriver + Selenium Server, all-in-one</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            The "standalone" images are the easiest — everything you need in a single container.
+                            They also come with a VNC viewer so you can actually watch the browser run visually.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 3 -->
+                    <section class="chapter" id="run-selenium-container">
+                        <h2 class="chapter-title"><i class="fas fa-play"></i> Run Chrome in One Command</h2>
+
+                        <p>Start a Selenium Chrome container:</p>
+
+                        <pre><code class="language-bash">docker run -d -p 4444:4444 --name selenium-chrome selenium/standalone-chrome:latest</code></pre>
+
+                        <p>That is it. You now have a fully functional Chrome browser running in Docker, with a Selenium Server listening on port 4444.</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Flag</th>
+                                    <th>Why it is there</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>-d</code></td>
+                                    <td>Run in background so your terminal is free</td>
+                                </tr>
+                                <tr>
+                                    <td><code>-p 4444:4444</code></td>
+                                    <td>Expose the Selenium Server port to your machine</td>
+                                </tr>
+                                <tr>
+                                    <td><code>--name selenium-chrome</code></td>
+                                    <td>Give it a name so you can stop it easily later</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            Verify it started. Open your browser and go to <code>http://localhost:4444</code> —
+                            you will see the Selenium Grid UI showing one Chrome node ready.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 4 -->
+                    <section class="chapter" id="connect-tests">
+                        <h2 class="chapter-title"><i class="fas fa-plug"></i> Connect Your Tests</h2>
+
+                        <p>
+                            Instead of creating a <code>ChromeDriver</code> locally, you point your tests
+                            at the Selenium Server URL using <code>RemoteWebDriver</code>.
+                        </p>
+
+                        <pre><code class="language-java">ChromeOptions options = new ChromeOptions();
+
+WebDriver driver = new RemoteWebDriver(
+    new URL("http://localhost:4444"),
+    options
+);</code></pre>
+
+                        <p>That is three lines. Your tests now run in the Docker container.</p>
+
+                        <div class="info-box info-box-success">
+                            <h4><i class="fas fa-check-circle"></i> Nothing Else Changes</h4>
+                            <p>
+                                All your existing test code — <code>driver.get()</code>, <code>findElement()</code>, <code>click()</code> —
+                                works exactly the same with <code>RemoteWebDriver</code>.
+                                You only changed how the driver was created.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 5 -->
+                    <section class="chapter" id="watch-tests-run">
+                        <h2 class="chapter-title"><i class="fas fa-eye"></i> Watch the Tests Run (Optional)</h2>
+
+                        <p>
+                            The <code>selenium/standalone-chrome</code> image comes with VNC — a remote desktop viewer.
+                            Add one more port when starting the container:
+                        </p>
+
+                        <pre><code class="language-bash">docker run -d -p 4444:4444 -p 7900:7900 selenium/standalone-chrome:latest</code></pre>
+
+                        <p>
+                            Open your browser and go to <code>http://localhost:7900</code>.
+                            Password is <code>secret</code>.
+                            You will see a desktop with Chrome running your tests live.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Great for Debugging</h4>
+                            <p>
+                                When a test fails and you cannot see why, the VNC viewer shows you exactly what the browser is doing.
+                                Much easier than trying to interpret screenshots after the fact.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 6 -->
+                    <section class="chapter" id="pin-version">
+                        <h2 class="chapter-title"><i class="fas fa-thumbtack"></i> Pin the Browser Version</h2>
+
+                        <p>
+                            Using <code>:latest</code> is fine for quick experiments but risky for real CI pipelines.
+                            Pin to a specific version:
+                        </p>
+
+                        <pre><code class="language-bash">docker run -d -p 4444:4444 selenium/standalone-chrome:4.18.1-20240224</code></pre>
+
+                        <p>
+                            Now your pipeline always uses the exact same Chrome version, no matter when it runs.
+                            Check the Selenium Docker Hub page for available version tags.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 7 -->
+                    <section class="chapter" id="cleanup">
+                        <h2 class="chapter-title"><i class="fas fa-broom"></i> Clean Up After Tests</h2>
+
+                        <p>When your tests finish, stop and remove the container:</p>
+
+                        <pre><code class="language-bash">docker rm -f selenium-chrome</code></pre>
+
+                        <p>
+                            Or use the <code>--rm</code> flag when starting — it auto-removes the container once it stops:
+                        </p>
+
+                        <pre><code class="language-bash">docker run -d -p 4444:4444 --rm selenium/standalone-chrome:latest</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-server"></i> On CI Pipelines</h4>
+                            <p>
+                                In Jenkins or GitHub Actions, the typical pattern is:
+                                start the Selenium container before tests, run your tests, then stop it.
+                                Many CI systems support Docker natively and handle this automatically.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 8 -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-check-circle"></i> Summary</h2>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Task</th>
+                                    <th>Command</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Start Selenium Chrome</td>
+                                    <td><code>docker run -d -p 4444:4444 selenium/standalone-chrome</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Watch tests in browser</td>
+                                    <td>Add <code>-p 7900:7900</code>, open localhost:7900, password: secret</td>
+                                </tr>
+                                <tr>
+                                    <td>Connect tests</td>
+                                    <td><code>new RemoteWebDriver(new URL("http://localhost:4444"), options)</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Stop and remove</td>
+                                    <td><code>docker rm -f selenium-chrome</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            Next: when you need Chrome <em>and</em> a database, or Chrome <em>and</em> your app server running together —
+                            that is where Docker Compose comes in.
+                        </p>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/docker/docker-dockerfile.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Your First Dockerfile</span>
+                    </a>
+                    <a href="/docker/docker-compose.html" class="nav-next">
+                        <span>Docker Compose</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

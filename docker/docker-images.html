@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Docker Images explained simply — pull images from Docker Hub, list and remove them. Learn the blueprint-vs-container concept with tiny examples.">
+    <title>Docker Images — The Blueprint - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Docker Images — The Blueprint</h1>
+                    <p class="article-subtitle">Understand what a Docker image is, how to find images on Docker Hub, and how to pull, list, and remove them with just four commands.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 10 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                        <span><i class="fab fa-docker"></i> Docker</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1 -->
+                    <section class="chapter" id="image-vs-container">
+                        <h2 class="chapter-title"><i class="fas fa-layer-group"></i> Image vs Container</h2>
+
+                        <p>
+                            People often mix these two words up. Here is the simplest way to think about it:
+                        </p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Container</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>A recipe (blueprint, template)</td>
+                                    <td>The cooked dish (the running thing)</td>
+                                </tr>
+                                <tr>
+                                    <td>Sits on disk, does nothing</td>
+                                    <td>Actually runs, uses CPU and RAM</td>
+                                </tr>
+                                <tr>
+                                    <td>One image can be reused</td>
+                                    <td>Many containers can come from the same image</td>
+                                </tr>
+                                <tr>
+                                    <td>Created with <code>docker build</code> or <code>docker pull</code></td>
+                                    <td>Created with <code>docker run</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            Think of it like a Java class vs an object.
+                            The class definition is the image.
+                            When you do <code>new MyClass()</code> you create a container — a live instance.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 2 -->
+                    <section class="chapter" id="docker-hub">
+                        <h2 class="chapter-title"><i class="fas fa-cloud"></i> Docker Hub — The Image Supermarket</h2>
+
+                        <p>
+                            Docker Hub (hub.docker.com) is a public registry full of ready-made images.
+                            Think of it like Maven Central — instead of downloading JARs, you download images.
+                        </p>
+
+                        <p>Some images you will use every day as a QA engineer:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>What it gives you</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>nginx</code></td>
+                                    <td>A web server — great for testing HTTP things</td>
+                                </tr>
+                                <tr>
+                                    <td><code>selenium/standalone-chrome</code></td>
+                                    <td>A full Chrome browser ready for Selenium tests</td>
+                                </tr>
+                                <tr>
+                                    <td><code>mysql</code></td>
+                                    <td>A MySQL database — no installation needed</td>
+                                </tr>
+                                <tr>
+                                    <td><code>openjdk:21</code></td>
+                                    <td>Java 21 runtime — run your test JARs anywhere</td>
+                                </tr>
+                                <tr>
+                                    <td><code>maven:3.9</code></td>
+                                    <td>Maven + Java — build and run tests in CI</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-shield-alt"></i> Official Images vs Community Images</h4>
+                            <p>
+                                Images labelled <strong>Official Image</strong> on Docker Hub are maintained by Docker or the software vendor.
+                                Always prefer official images — they are tested, updated regularly, and safe to use.
+                                Community images are also available but need more scrutiny.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 3 -->
+                    <section class="chapter" id="image-tags">
+                        <h2 class="chapter-title"><i class="fas fa-tag"></i> Image Tags — Choose Your Version</h2>
+
+                        <p>
+                            Every image has a <strong>tag</strong> that specifies the version.
+                            You write it after a colon: <code>image:tag</code>.
+                        </p>
+
+                        <pre><code class="language-bash">nginx          # same as nginx:latest (not recommended)
+nginx:1.25     # specific version (recommended)
+openjdk:21     # Java 21
+openjdk:17     # Java 17</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Avoid :latest in Real Projects</h4>
+                            <p>
+                                <code>:latest</code> always pulls the newest version. That sounds good, but it means
+                                your tests can break overnight when an image updates unexpectedly.
+                                Always pin a specific version tag in your automation projects.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 4 -->
+                    <section class="chapter" id="pull-images">
+                        <h2 class="chapter-title"><i class="fas fa-download"></i> Pulling an Image</h2>
+
+                        <p>
+                            <code>docker pull</code> downloads an image to your machine without running it.
+                        </p>
+
+                        <pre><code class="language-bash">docker pull nginx:1.25</code></pre>
+
+                        <p>Docker will show you a progress bar as it downloads each layer of the image:</p>
+
+                        <pre><code class="language-bash">1.25: Pulling from library/nginx
+a480a496ba95: Pull complete
+f3ace1b8ce45: Pull complete
+...
+Status: Downloaded newer image for nginx:1.25</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-layer-group"></i> What Are Those Layers?</h4>
+                            <p>
+                                Docker images are made of <strong>layers</strong> — each layer is one step in the image build process (install nginx, copy a config file, etc.).
+                                Layers are cached and shared between images. If two images share the same base OS layer, Docker only downloads it once.
+                                That is why Docker is so fast and efficient on disk.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 5 -->
+                    <section class="chapter" id="list-images">
+                        <h2 class="chapter-title"><i class="fas fa-list"></i> Listing Your Images</h2>
+
+                        <p>See all images currently stored on your machine:</p>
+
+                        <pre><code class="language-bash">docker images</code></pre>
+
+                        <p>Output:</p>
+
+                        <pre><code class="language-bash">REPOSITORY    TAG       IMAGE ID       CREATED       SIZE
+nginx         1.25      a480a496ba95   2 weeks ago   187MB
+hello-world   latest    d2c94e258dcb   1 year ago    13.3kB</code></pre>
+
+                        <p>The columns tell you exactly what you need:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>REPOSITORY</td>
+                                    <td>The image name</td>
+                                </tr>
+                                <tr>
+                                    <td>TAG</td>
+                                    <td>The version</td>
+                                </tr>
+                                <tr>
+                                    <td>IMAGE ID</td>
+                                    <td>Unique identifier (short form of a longer hash)</td>
+                                </tr>
+                                <tr>
+                                    <td>SIZE</td>
+                                    <td>How much disk space it uses</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 6 -->
+                    <section class="chapter" id="remove-images">
+                        <h2 class="chapter-title"><i class="fas fa-trash-alt"></i> Removing an Image</h2>
+
+                        <p>Images sit on your disk forever until you remove them. Clean up with:</p>
+
+                        <pre><code class="language-bash">docker rmi nginx:1.25</code></pre>
+
+                        <p>You can also use the image ID instead of the name:</p>
+
+                        <pre><code class="language-bash">docker rmi a480a496ba95</code></pre>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Cannot Remove a Running Image</h4>
+                            <p>
+                                If you have a container running from that image, Docker will refuse to remove it.
+                                Stop and remove the container first, then remove the image.
+                                We cover that in the next tutorial.
+                            </p>
+                        </div>
+
+                        <p>To remove all unused images at once (a quick cleanup command):</p>
+
+                        <pre><code class="language-bash">docker image prune</code></pre>
+                    </section>
+
+                    <!-- Chapter 7 -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-check-circle"></i> Four Commands, That Is All</h2>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>docker pull nginx:1.25</code></td>
+                                    <td>Download an image from Docker Hub</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker images</code></td>
+                                    <td>List all images on your machine</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker rmi nginx:1.25</code></td>
+                                    <td>Remove a specific image</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker image prune</code></td>
+                                    <td>Remove all unused images</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            Next up: take those images and actually run them as containers.
+                        </p>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/docker/docker-introduction.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>What is Docker?</span>
+                    </a>
+                    <a href="/docker/docker-containers.html" class="nav-next">
+                        <span>Running Containers</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

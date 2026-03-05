@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Write your first Dockerfile — learn 5 instructions, build your own Docker image, and run it. Beginner-friendly with tiny, clear examples.">
+    <title>Your First Dockerfile - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Your First Dockerfile</h1>
+                    <p class="article-subtitle">Learn just 5 Dockerfile instructions, write a tiny app, build your own image, and run it — all in one go.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 12 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                        <span><i class="fab fa-docker"></i> Docker</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1 -->
+                    <section class="chapter" id="what-is-dockerfile">
+                        <h2 class="chapter-title"><i class="fas fa-file-code"></i> What is a Dockerfile?</h2>
+
+                        <p>
+                            So far you have been using images that other people built — nginx, hello-world, Ubuntu.
+                            But what if you want to package <em>your own application</em>?
+                            That is what a Dockerfile is for.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> A Dockerfile Is a Recipe</h4>
+                            <p>
+                                A Dockerfile is a plain text file with step-by-step instructions that tell Docker
+                                how to build a custom image. Docker reads it top to bottom and executes each line.
+                            </p>
+                        </div>
+
+                        <p>
+                            The file is always named exactly <strong>Dockerfile</strong> (capital D, no extension).
+                        </p>
+                    </section>
+
+                    <!-- Chapter 2 -->
+                    <section class="chapter" id="five-instructions">
+                        <h2 class="chapter-title"><i class="fas fa-list-ol"></i> The 5 Instructions You Need to Know</h2>
+
+                        <p>Dockerfiles have many instructions. You only need five to start:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Instruction</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>FROM</code></td>
+                                    <td>Start from a base image (every Dockerfile must have this)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>WORKDIR</code></td>
+                                    <td>Set the working directory inside the container</td>
+                                </tr>
+                                <tr>
+                                    <td><code>COPY</code></td>
+                                    <td>Copy a file from your machine into the image</td>
+                                </tr>
+                                <tr>
+                                    <td><code>RUN</code></td>
+                                    <td>Run a shell command during the build (install something, compile, etc.)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>CMD</code></td>
+                                    <td>The command to run when the container starts</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 3 -->
+                    <section class="chapter" id="your-first-dockerfile">
+                        <h2 class="chapter-title"><i class="fas fa-pencil-alt"></i> Write Your First Dockerfile</h2>
+
+                        <p>
+                            Let us build a simple Java application. Create a folder called <code>my-app</code>
+                            and inside it create two files.
+                        </p>
+
+                        <h3>File 1: Hello.java</h3>
+
+                        <pre><code class="language-java">public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello from inside Docker!");
+    }
+}</code></pre>
+
+                        <h3>File 2: Dockerfile</h3>
+
+                        <pre><code class="language-dockerfile">FROM openjdk:21-slim
+
+WORKDIR /app
+
+COPY Hello.java .
+
+RUN javac Hello.java
+
+CMD ["java", "Hello"]</code></pre>
+
+                        <p>That is 5 lines. Let us read each one:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Line</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>FROM openjdk:21-slim</code></td>
+                                    <td>Start from an official Java 21 image (slim = smaller size)</td>
+                                </tr>
+                                <tr>
+                                    <td><code>WORKDIR /app</code></td>
+                                    <td>All following commands happen inside the <code>/app</code> folder</td>
+                                </tr>
+                                <tr>
+                                    <td><code>COPY Hello.java .</code></td>
+                                    <td>Copy Hello.java from your machine into <code>/app</code> inside the image</td>
+                                </tr>
+                                <tr>
+                                    <td><code>RUN javac Hello.java</code></td>
+                                    <td>Compile the Java file during build time</td>
+                                </tr>
+                                <tr>
+                                    <td><code>CMD ["java", "Hello"]</code></td>
+                                    <td>When the container starts, run the Java program</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 4 -->
+                    <section class="chapter" id="build-image">
+                        <h2 class="chapter-title"><i class="fas fa-hammer"></i> Build the Image</h2>
+
+                        <p>
+                            Open your terminal, navigate into the <code>my-app</code> folder, and run:
+                        </p>
+
+                        <pre><code class="language-bash">docker build -t my-hello-app .</code></pre>
+
+                        <p>Breaking that command down:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Part</th>
+                                    <th>Meaning</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>docker build</code></td>
+                                    <td>Build a new image</td>
+                                </tr>
+                                <tr>
+                                    <td><code>-t my-hello-app</code></td>
+                                    <td>Tag (name) the image as "my-hello-app"</td>
+                                </tr>
+                                <tr>
+                                    <td><code>.</code></td>
+                                    <td>Look for the Dockerfile in the current directory</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>Docker will print each step as it runs:</p>
+
+                        <pre><code class="language-bash">[1/4] FROM openjdk:21-slim
+[2/4] WORKDIR /app
+[3/4] COPY Hello.java .
+[4/4] RUN javac Hello.java
+Successfully built 7c3a9f1b2d8e
+Successfully tagged my-hello-app:latest</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-bolt"></i> Layers Are Cached</h4>
+                            <p>
+                                If you build again without changing the Dockerfile, Docker reuses cached layers and the build finishes almost instantly.
+                                Change one line and Docker only re-runs from that line downward.
+                                This is why build order matters — put things that change often near the bottom.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 5 -->
+                    <section class="chapter" id="run-image">
+                        <h2 class="chapter-title"><i class="fas fa-play"></i> Run Your Image</h2>
+
+                        <p>Now run it just like any other image:</p>
+
+                        <pre><code class="language-bash">docker run my-hello-app</code></pre>
+
+                        <p>Output:</p>
+
+                        <pre><code class="language-bash">Hello from inside Docker!</code></pre>
+
+                        <div class="info-box info-box-success">
+                            <h4><i class="fas fa-star"></i> You Just Built Your Own Docker Image</h4>
+                            <p>
+                                Your Java program ran inside a completely isolated container.
+                                Anyone with Docker can now run your app with a single command — no Java install required on their machine.
+                            </p>
+                        </div>
+
+                        <p>Verify your image is listed:</p>
+
+                        <pre><code class="language-bash">docker images</code></pre>
+
+                        <pre><code class="language-bash">REPOSITORY      TAG       IMAGE ID       SIZE
+my-hello-app    latest    7c3a9f1b2d8e   432MB</code></pre>
+                    </section>
+
+                    <!-- Chapter 6 -->
+                    <section class="chapter" id="run-vs-cmd">
+                        <h2 class="chapter-title"><i class="fas fa-question-circle"></i> RUN vs CMD — What is the Difference?</h2>
+
+                        <p>This confuses everyone at first:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Instruction</th>
+                                    <th>When it runs</th>
+                                    <th>Use it for</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>RUN</code></td>
+                                    <td>During <code>docker build</code></td>
+                                    <td>Installing software, compiling code, setting up the image</td>
+                                </tr>
+                                <tr>
+                                    <td><code>CMD</code></td>
+                                    <td>When you do <code>docker run</code></td>
+                                    <td>Starting your application</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            A Dockerfile can have many <code>RUN</code> instructions but should have only one <code>CMD</code>.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 7 -->
+                    <section class="chapter" id="summary">
+                        <h2 class="chapter-title"><i class="fas fa-check-circle"></i> What You Built</h2>
+
+                        <ul>
+                            <li>A <code>Dockerfile</code> with 5 instructions: FROM, WORKDIR, COPY, RUN, CMD</li>
+                            <li>A custom image using <code>docker build -t my-hello-app .</code></li>
+                            <li>A running container from your own image using <code>docker run my-hello-app</code></li>
+                        </ul>
+
+                        <p>
+                            Next: put this to work for QA — run Chrome, Selenium, and your test suite
+                            entirely inside Docker without installing anything on Jenkins.
+                        </p>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/docker/docker-containers.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Running Containers</span>
+                    </a>
+                    <a href="/docker/docker-for-qa.html" class="nav-next">
+                        <span>Docker for QA Engineers</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

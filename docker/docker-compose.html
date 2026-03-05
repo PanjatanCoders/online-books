@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Docker Compose for beginners — learn to run two containers together with a simple YAML file. Selenium Grid hub and Chrome node example in under 12 lines.">
+    <title>Docker Compose in 10 Lines - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">Docker Compose in 10 Lines</h1>
+                    <p class="article-subtitle">When you need two containers running together, Docker Compose saves you from typing long commands twice. Learn it with a tiny, real example.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 10 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                        <span><i class="fab fa-docker"></i> Docker</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1 -->
+                    <section class="chapter" id="why-compose">
+                        <h2 class="chapter-title"><i class="fas fa-question-circle"></i> Why Docker Compose?</h2>
+
+                        <p>
+                            In the previous tutorial you started one Selenium Chrome container with a single <code>docker run</code>.
+                            That works fine. But what happens when your setup grows?
+                        </p>
+
+                        <p>
+                            For example, a Selenium Grid has two parts:
+                            a <strong>hub</strong> (the coordinator) and one or more <strong>nodes</strong> (the actual browsers).
+                            You need both running at the same time, and the node needs to know the hub's address.
+                        </p>
+
+                        <p>
+                            You <em>could</em> run two separate <code>docker run</code> commands and wire them together manually.
+                            But that is tedious, error-prone, and hard to share with your team.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Compose = One File, One Command</h4>
+                            <p>
+                                Docker Compose lets you describe all your containers in a single YAML file.
+                                Then <code>docker compose up</code> starts everything at once.
+                                <code>docker compose down</code> stops everything at once.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 2 -->
+                    <section class="chapter" id="compose-file-structure">
+                        <h2 class="chapter-title"><i class="fas fa-file-alt"></i> The Compose File Structure</h2>
+
+                        <p>
+                            Create a file named <strong>docker-compose.yml</strong> in your project folder.
+                            Its structure is simple:
+                        </p>
+
+                        <pre><code class="language-yaml">services:
+  service-name-1:
+    image: some-image
+    ports:
+      - "host:container"
+
+  service-name-2:
+    image: another-image</code></pre>
+
+                        <p>
+                            Each item under <code>services</code> is one container.
+                            The name you give it (like <code>service-name-1</code>) is also how containers find each other on the network.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 3 -->
+                    <section class="chapter" id="selenium-grid-example">
+                        <h2 class="chapter-title"><i class="fas fa-th"></i> Real Example: Selenium Grid</h2>
+
+                        <p>Here is a complete Selenium Grid setup — hub plus one Chrome node:</p>
+
+                        <pre><code class="language-yaml">services:
+
+  hub:
+    image: selenium/hub:4.18.1
+    ports:
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome:4.18.1
+    depends_on:
+      - hub
+    environment:
+      - SE_EVENT_BUS_HOST=hub</code></pre>
+
+                        <p>That is 12 lines. Let us read each important part:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Part</th>
+                                    <th>What it means</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>hub:</code></td>
+                                    <td>The name of this service — also its hostname on the Docker network</td>
+                                </tr>
+                                <tr>
+                                    <td><code>ports: "4444:4444"</code></td>
+                                    <td>Expose the hub so your tests can reach it from outside</td>
+                                </tr>
+                                <tr>
+                                    <td><code>depends_on: - hub</code></td>
+                                    <td>Start the hub first, then start chrome</td>
+                                </tr>
+                                <tr>
+                                    <td><code>SE_EVENT_BUS_HOST=hub</code></td>
+                                    <td>Tell the Chrome node to register with the hub (using the service name "hub" as hostname)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="info-box info-box-success">
+                            <h4><i class="fas fa-network-wired"></i> Services See Each Other by Name</h4>
+                            <p>
+                                Containers in the same Compose file are automatically on the same network.
+                                The service named <code>hub</code> is reachable at hostname <code>hub</code> from any other container.
+                                No IP addresses needed.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 4 -->
+                    <section class="chapter" id="up-and-down">
+                        <h2 class="chapter-title"><i class="fas fa-power-off"></i> Up and Down</h2>
+
+                        <p>With the <code>docker-compose.yml</code> file in your project folder, start everything:</p>
+
+                        <pre><code class="language-bash">docker compose up -d</code></pre>
+
+                        <p>Docker starts both containers. Verify they are running:</p>
+
+                        <pre><code class="language-bash">docker compose ps</code></pre>
+
+                        <pre><code class="language-bash">NAME      SERVICE   STATUS    PORTS
+hub       hub       running   0.0.0.0:4444->4444/tcp
+chrome    chrome    running</code></pre>
+
+                        <p>Open <code>http://localhost:4444</code> — you will see the Selenium Grid UI with one Chrome node registered.</p>
+
+                        <p>When you are done, stop and remove everything with one command:</p>
+
+                        <pre><code class="language-bash">docker compose down</code></pre>
+
+                        <p>This stops all containers and removes them. Clean slate.</p>
+                    </section>
+
+                    <!-- Chapter 5 -->
+                    <section class="chapter" id="connect-tests">
+                        <h2 class="chapter-title"><i class="fas fa-plug"></i> Connect Your Tests to the Grid</h2>
+
+                        <p>Your tests connect the same way as before — using <code>RemoteWebDriver</code> pointing at the hub:</p>
+
+                        <pre><code class="language-java">ChromeOptions options = new ChromeOptions();
+
+WebDriver driver = new RemoteWebDriver(
+    new URL("http://localhost:4444"),
+    options
+);</code></pre>
+
+                        <p>
+                            The hub distributes your test to the Chrome node automatically.
+                            Add more nodes (Firefox, Edge) to the Compose file and the grid handles load balancing for you.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 6 -->
+                    <section class="chapter" id="scale-nodes">
+                        <h2 class="chapter-title"><i class="fas fa-expand-arrows-alt"></i> Scale Chrome Nodes for Parallel Tests</h2>
+
+                        <p>
+                            Want to run tests in parallel? Just tell Compose to start more Chrome nodes:
+                        </p>
+
+                        <pre><code class="language-bash">docker compose up -d --scale chrome=3</code></pre>
+
+                        <p>
+                            This starts 3 Chrome nodes, all registered to the same hub.
+                            Your parallel tests will now run on 3 browsers simultaneously.
+                            No extra configuration in your Compose file needed.
+                        </p>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-memory"></i> Watch Your RAM</h4>
+                            <p>
+                                Each Chrome node uses around 300-500 MB of RAM.
+                                Start with 2-3 nodes and see how your machine handles it before scaling higher.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 7 -->
+                    <section class="chapter" id="useful-commands">
+                        <h2 class="chapter-title"><i class="fas fa-terminal"></i> Useful Compose Commands</h2>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Command</th>
+                                    <th>What it does</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>docker compose up -d</code></td>
+                                    <td>Start all services in background</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker compose down</code></td>
+                                    <td>Stop and remove all containers</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker compose ps</code></td>
+                                    <td>List all running services</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker compose logs chrome</code></td>
+                                    <td>See logs from the chrome service</td>
+                                </tr>
+                                <tr>
+                                    <td><code>docker compose up -d --scale chrome=3</code></td>
+                                    <td>Start 3 Chrome nodes</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                    <!-- Chapter 8 -->
+                    <section class="chapter" id="what-you-learned">
+                        <h2 class="chapter-title"><i class="fas fa-graduation-cap"></i> What You Have Learned Across All 6 Tutorials</h2>
+
+                        <p>You started from zero and now you can:</p>
+
+                        <ul>
+                            <li>Explain what Docker is and why it matters for QA</li>
+                            <li>Pull images from Docker Hub and manage them</li>
+                            <li>Run containers with ports, names, and background mode</li>
+                            <li>Write a Dockerfile and build your own custom image</li>
+                            <li>Run Selenium Chrome in Docker — no browser install needed</li>
+                            <li>Spin up a full Selenium Grid with Docker Compose in seconds</li>
+                        </ul>
+
+                        <div class="info-box info-box-success">
+                            <h4><i class="fas fa-rocket"></i> Where to Go Next</h4>
+                            <p>
+                                Explore multi-stage Docker builds to reduce image size, look into container registries
+                                (Docker Hub, GitHub Container Registry) to share your images, and try integrating
+                                Docker Compose into your Jenkins or GitHub Actions pipeline.
+                            </p>
+                        </div>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/docker/docker-for-qa.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Docker for QA Engineers</span>
+                    </a>
+                    <a href="/docker/index.html" class="nav-next">
+                        <span>Docker Home</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>

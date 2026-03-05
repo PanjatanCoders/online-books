@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="What is Docker and why should you care? Learn the problem Docker solves, understand containers vs VMs, and run your very first Docker command.">
+    <title>What is Docker & Why Should You Care? - GyanCode</title>
+
+    <link rel="icon" type="image/png" href="/assets/images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Orbitron:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <aside class="sidebar" id="sidebar"></aside>
+    <div class="sidebar-overlay"></div>
+
+    <main class="page-content" id="main-content">
+        <div class="reading-progress" id="reading-progress"></div>
+        <div class="content-wrapper">
+            <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+
+            <article class="article-container">
+                <header class="article-header">
+                    <h1 class="article-title">What is Docker &amp; Why Should You Care?</h1>
+                    <p class="article-subtitle">Understand the problem Docker solves, see how containers work, and run your very first Docker command — all in under 10 minutes.</p>
+                    <div class="article-meta">
+                        <span><i class="fas fa-clock"></i> 8 min read</span>
+                        <span><i class="fas fa-signal"></i> Beginner</span>
+                        <span><i class="fab fa-docker"></i> Docker</span>
+                    </div>
+                </header>
+
+                <nav class="toc" id="toc" aria-label="Table of Contents"></nav>
+
+                <div class="article-body">
+
+                    <!-- Chapter 1 -->
+                    <section class="chapter" id="the-problem">
+                        <h2 class="chapter-title"><i class="fas fa-bug"></i> The Problem Docker Solves</h2>
+
+                        <p>
+                            Picture this: a developer writes code on their Windows laptop. It works perfectly.
+                            They push it to the server — which runs Linux — and it breaks.
+                            The classic phrase follows immediately:
+                        </p>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-quote-left"></i> The Most Famous Words in Software</h4>
+                            <p><strong>"It works on my machine."</strong></p>
+                            <p>This happens because different machines have different operating systems, different software versions, different environment variables, different folder structures.</p>
+                        </div>
+
+                        <p>
+                            The same problem hits QA engineers constantly. Your test environment has Chrome 120.
+                            CI has Chrome 118. The app behaves differently on both.
+                            Jenkins has Java 11, your laptop has Java 17. Tests pass locally, fail on the pipeline.
+                        </p>
+
+                        <p>
+                            Docker fixes this by packaging your application <em>together with everything it needs to run</em>
+                            — the OS layer, the runtime, the dependencies — into one neat bundle called a <strong>container</strong>.
+                            That container runs identically on your laptop, your teammate's Mac, and a Linux server in the cloud.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 2 -->
+                    <section class="chapter" id="container-analogy">
+                        <h2 class="chapter-title"><i class="fas fa-ship"></i> The Shipping Container Analogy</h2>
+
+                        <p>
+                            Before shipping containers existed, loading a ship was chaos. Each item had a different shape.
+                            Boxes, barrels, animals, fabric rolls — everything needed to be loaded differently,
+                            stacked differently, and unloaded differently. Ships took days to load.
+                        </p>
+
+                        <p>
+                            Then someone invented the <strong>standardised shipping container</strong>.
+                            Now it does not matter what is inside — electronics, bananas, furniture.
+                            The container is always the same size, has the same corners, fits the same cranes.
+                            You can load a ship in hours.
+                        </p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-lightbulb"></i> Docker Is the Same Idea</h4>
+                            <p>
+                                A Docker container packages your application so that every machine handles it
+                                exactly the same way — regardless of what is inside or what is outside.
+                            </p>
+                        </div>
+
+                        <p>
+                            That is literally where Docker got its name and its whale logo. The whale carries containers (boxes) on its back.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 3 -->
+                    <section class="chapter" id="container-vs-vm">
+                        <h2 class="chapter-title"><i class="fas fa-balance-scale"></i> Container vs Virtual Machine</h2>
+
+                        <p>
+                            You may have heard of Virtual Machines (VMs). They also let you run software in an isolated environment.
+                            What is the difference?
+                        </p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Virtual Machine</th>
+                                    <th>Docker Container</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Includes a full operating system (GB in size)</td>
+                                    <td>Shares the host OS kernel (MB in size)</td>
+                                </tr>
+                                <tr>
+                                    <td>Takes minutes to start</td>
+                                    <td>Starts in seconds</td>
+                                </tr>
+                                <tr>
+                                    <td>Heavy on RAM and CPU</td>
+                                    <td>Very lightweight</td>
+                                </tr>
+                                <tr>
+                                    <td>Great for running a different OS entirely</td>
+                                    <td>Great for running apps consistently</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            Think of a VM as buying a new house for each guest.
+                            A container is more like giving each guest their own room in the same house.
+                            Much cheaper, much faster.
+                        </p>
+                    </section>
+
+                    <!-- Chapter 4 -->
+                    <section class="chapter" id="key-terms">
+                        <h2 class="chapter-title"><i class="fas fa-book"></i> Three Terms You Must Know</h2>
+
+                        <p>Docker uses three words everywhere. Learn these once and everything else makes sense.</p>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-layer-group"></i> Image</h4>
+                            <p>
+                                A read-only <strong>blueprint</strong>. It defines what software should be installed and how the container should start.
+                                Think of it like a class in Java — the definition, not the running thing.
+                            </p>
+                        </div>
+
+                        <div class="info-box info-box-success">
+                            <h4><i class="fas fa-box"></i> Container</h4>
+                            <p>
+                                A <strong>running instance</strong> of an image. You can start many containers from the same image,
+                                just like you can create many objects from the same class.
+                            </p>
+                        </div>
+
+                        <div class="info-box info-box-warning">
+                            <h4><i class="fas fa-cloud"></i> Registry</h4>
+                            <p>
+                                A place to <strong>store and share images</strong>. Docker Hub is the public registry —
+                                like GitHub, but for Docker images. Official images for nginx, MySQL, Java,
+                                Selenium and thousands more are available there for free.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 5 -->
+                    <section class="chapter" id="install-docker">
+                        <h2 class="chapter-title"><i class="fas fa-download"></i> Install Docker</h2>
+
+                        <p>
+                            Download <strong>Docker Desktop</strong> — it includes everything you need and comes with a GUI.
+                            It is free for personal use.
+                        </p>
+
+                        <ul>
+                            <li><strong>Windows / Mac:</strong> Download Docker Desktop from docker.com/products/docker-desktop</li>
+                            <li><strong>Linux:</strong> Install Docker Engine via your package manager (<code>apt</code>, <code>yum</code>, etc.)</li>
+                        </ul>
+
+                        <p>After installing, open a terminal and check that it works:</p>
+
+                        <pre><code class="language-bash">docker --version</code></pre>
+
+                        <p>You should see something like:</p>
+
+                        <pre><code class="language-bash">Docker version 26.1.0, build a5ee5b1</code></pre>
+
+                        <div class="info-box info-box-primary">
+                            <h4><i class="fas fa-check-circle"></i> That's All the Setup</h4>
+                            <p>No configuration files. No environment variables. Docker Desktop is ready to use immediately.</p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 6 -->
+                    <section class="chapter" id="first-command">
+                        <h2 class="chapter-title"><i class="fas fa-terminal"></i> Your First Docker Command</h2>
+
+                        <p>
+                            Docker ships with a special image called <code>hello-world</code> — designed exactly for this moment.
+                            Run this:
+                        </p>
+
+                        <pre><code class="language-bash">docker run hello-world</code></pre>
+
+                        <p>The output will look like this:</p>
+
+                        <pre><code class="language-bash">Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+...
+Hello from Docker!
+This message shows that your installation appears to be working correctly.</code></pre>
+
+                        <p>Let us read that output together — every line tells a story:</p>
+
+                        <table class="styled-table">
+                            <thead>
+                                <tr>
+                                    <th>Output line</th>
+                                    <th>What it means</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>Unable to find image locally</code></td>
+                                    <td>Docker looked for the image on your machine first — not found</td>
+                                </tr>
+                                <tr>
+                                    <td><code>Pulling from library/hello-world</code></td>
+                                    <td>Docker downloaded the image from Docker Hub automatically</td>
+                                </tr>
+                                <tr>
+                                    <td><code>Hello from Docker!</code></td>
+                                    <td>A container was created from the image and ran successfully</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <p>
+                            That is the whole Docker flow in one command: <strong>find image → download if missing → create container → run it</strong>.
+                            You will repeat this pattern for every Docker command you ever use.
+                        </p>
+
+                        <div class="info-box info-box-success">
+                            <h4><i class="fas fa-star"></i> You Just Used Docker</h4>
+                            <p>
+                                Seriously. You pulled an image from the internet, created a container, ran a program inside it,
+                                and the container exited cleanly. That is Docker.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Chapter 7 -->
+                    <section class="chapter" id="what-next">
+                        <h2 class="chapter-title"><i class="fas fa-road"></i> What You Just Learned</h2>
+
+                        <ul>
+                            <li>Docker solves the "it works on my machine" problem</li>
+                            <li>A container is a lightweight, isolated environment for running software</li>
+                            <li>An <strong>image</strong> is the blueprint; a <strong>container</strong> is the running thing</li>
+                            <li>Docker Hub is where images live</li>
+                            <li><code>docker run</code> does everything in one step: pull, create, run</li>
+                        </ul>
+
+                        <p>
+                            Next up: learn where images come from, how to find what you need on Docker Hub,
+                            and how to manage images on your machine.
+                        </p>
+                    </section>
+
+                </div>
+
+                <footer class="article-nav">
+                    <a href="/docker/index.html" class="nav-prev">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Docker Home</span>
+                    </a>
+                    <a href="/docker/docker-images.html" class="nav-next">
+                        <span>Docker Images</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <footer class="site-footer" id="site-footer"></footer>
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="/js/navigation-data.js"></script>
+    <script src="/js/components.js"></script>
+</body>
+
+</html>
